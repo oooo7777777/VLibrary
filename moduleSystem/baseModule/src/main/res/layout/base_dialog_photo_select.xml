@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="v"
+            type="com.v.base.dialog.PhotoSelectDialog" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/base_white"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvCamera"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="拍照"
+            app:click="@{v}"
+            android:textColor="@color/base_black"
+            android:textSize="14.5sp" />
+
+        <View style="@style/base_line_horizontal" />
+
+        <TextView
+            android:id="@+id/tvPhoto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="相册选择"
+            app:click="@{v}"
+            android:textColor="@color/base_black"
+            android:textSize="14.5sp" />
+
+
+    </LinearLayout>
+</layout>

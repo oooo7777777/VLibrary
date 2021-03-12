@@ -1,0 +1,47 @@
+/**
+ * 在主项目的根目录下创建config.gradle文件
+ * 在这里单独处理统一依赖问题
+ * 注意需要在根目录的build.gradle中进行引入
+ */
+ext {
+    android = [
+            compileSdkVersion: 29,
+            minSdkVersion    : 21,
+            targetSdkVersion : 29,
+            buildToolsVersion: "29.0.2",
+            versionCode      : 100,
+            versionName      : "1.0.0"
+
+    ]
+
+    appId = ["app" : "com.zlzw.main",
+             "home": "com.zlzw.home",
+             "me"  : "com.zlzw.me"
+    ]
+
+    urlPathSegment = "appapi"
+
+    url = [
+            "debugUrl"  : "https://gank.io/api/v2/",
+            "releaseUrl": "http://203.107.44.102:9112/${urlPathSegment}/"
+    ]
+
+    urlWeb = [
+            "debugUrl"  : "http://203.107.44.102:9113/index.html#/",
+            "releaseUrl": "http://203.107.44.102:9113/index.html#/"
+    ]
+
+    dependencies = [
+            "appUpdate"     : "com.azhon:appupdateX:3.0.3",//版本更新
+            "magicIndicator": "com.github.hackware1993:MagicIndicator:1.7.0",//指示器
+            "imgSelect"     : "com.qw:coco:1.1.2",//图片选择库
+            "imgBrowse"     : "com.github.Hitomis.transferee:Transferee:1.6.1",//图片浏览库
+            "imgBrowseGlide": "com.github.Hitomis.transferee:GlideImageLoader:1.6.1"//图片浏览库Glide
+
+    ]
+
+    kapt = [
+            "arouter": "com.alibaba:arouter-compiler:1.5.1",//arouter
+
+    ]
+}

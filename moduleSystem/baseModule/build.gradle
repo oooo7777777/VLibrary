@@ -1,0 +1,71 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'kotlin-android-extensions'
+}
+
+def cfg = rootProject.ext.android
+def librarys = rootProject.ext.dependencies
+
+android {
+    compileSdkVersion cfg.compileSdkVersion
+    buildToolsVersion cfg.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion cfg.minSdkVersion
+        targetSdkVersion cfg.targetSdkVersion
+        versionCode cfg.versionCode
+        versionName cfg.versionName
+
+
+    }
+
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildTypes {
+        release {
+            consumerProguardFiles 'proguard-rules.pro'
+        }
+    }
+
+    buildFeatures {
+        dataBinding = true
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    api "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    api "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
+    api "com.google.android.material:material:1.2.1"
+    api "androidx.appcompat:appcompat:1.2.0"
+    api "androidx.recyclerview:recyclerview:1.1.0"
+    api "androidx.activity:activity:1.2.0-beta01"
+    api "androidx.fragment:fragment:1.3.0-beta01"
+    api "androidx.constraintlayout:constraintlayout:2.0.2"
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9"//协程
+    api "com.squareup.retrofit2:retrofit:2.9.0"//retrofit
+    api "com.alibaba:fastjson:1.2.73"//fastjson
+    api "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2"
+    api "com.orhanobut:logger:2.2.0"//logger
+    api "com.alibaba:arouter-api:1.5.1"//arouter
+    api "com.scwang.smart:refresh-layout-kernel:2.0.1"//refresh
+    api "com.scwang.smart:refresh-header-material:2.0.3"//refresh
+    api "com.scwang.smart:refresh-footer-classics:2.0.0-alpha-1"//refresh
+    api "com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4"//BaseRecyclerViewAdapterHelper
+    api "com.github.niorgai:StatusBarCompat:2.3.3"//状态栏颜色
+    api "com.noober.background:core:1.6.5"//BackgroundLibrary  （通过标签直接生成shape，无需再写shape.xml）
+
+    implementation 'com.github.bumptech.glide:glide:4.11.0'//glide
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'//glide
+
+    librarys.each { k, v -> api v }
+
+}
+
+apply from: 'bintray.gradle'

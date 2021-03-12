@@ -1,0 +1,123 @@
+package com.v.base
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.v.base.net.AppException
+import com.v.base.net.BaseResponse
+import com.v.base.net.ExceptionHandle
+import kotlinx.coroutines.*
+
+abstract class BaseViewModel: ViewModel() {
+
+    val loadingChange: UiLoadingChange by lazy { UiLoadingChange() }
+
+    inner class UiLoadingChange {
+        val showDialog by lazy { EventLiveData<String>() }
+        val dismissDialog by lazy { EventLiveData<Boolean>() }
+    }
+
+
+    fun <T> request(
+        block: suspend CoroutineScope.() -> BaseResponse<T>,
+        success: (T) -> Unit,
+        error: (AppException) -> Unit ={},
+        dialog: Boolean = false
+    ): Job {
+        return viewModelScope.launch {
+            runCatching {
+                if (dialog) {
+                    loadingChange.showDialog.postValue("")
+                }
+                block()
+            }.onSuccess {
+                loadingChange.dismissDialog.postValue(false)
+                runCatching {
+                    executeResponse(it) { t -> success(t) }
+                }.onFailure { e ->
+                    error(ExceptionHandle.handleException(e))
+                }
+            }.onFailure { e ->
+                loadingChange.dismissDialog.postValue(false)
+                error(ExceptionHandle.handleException(e))
+            }
+        }
+    }
+
+
+    fun <T> requestDefault(
+        block: suspend () -> T,
+        success: (T) -> Unit,
+        error: (AppException) -> Unit ={},
+        dialog: Boolean = false
+    ): Job {
+        return viewModelScope.launch {
+            runCatching {
+                if (dialog) {
+                    loadingChange.showDialog.postValue("")
+                }
+                block()
+            }.onSuccess {
+                loadingChange.dismissDialog.postValue(false)
+                runCatching {
+                    success(it)
+                }.onFailure { e ->
+                    error(ExceptionHandle.handleException(e))
+                }
+            }.onFailure { e ->
+                loadingChange.dismissDialog.postValue(false)
+                error(ExceptionHandle.handleException(e))
+            }
+        }
+    }
+
+    private suspend fun <T> executeResponse(
+        response: BaseResponse<T>,
+        success: suspend CoroutineScope.(T) -> Unit
+    ) {
+        coroutineScope {
+            if (!response.isSuccess()) {
+                throw AppException(
+                    response.getResponseCode(),
+                    response.getResponseMsg()
+                )
+            } else {
+                success(response.getResponseData())
+            }
+        }
+    }
+
+    /**
+     *  调用携程
+     * @param block 操作耗时操作任务
+     * @param success 成功回调
+     * @param error 失败回调 可不给
+     */
+    fun <T> BaseViewModel.launch(
+        block: () -> T,
+        success: (T) -> Unit,
+        error: (Throwable) -> Unit = {},
+                dialog: Boolean = false
+    ) {
+        viewModelScope.launch {
+            kotlin.runCatching {
+                if (dialog) {
+                    loadingChange.showDialog.postValue("")
+                }
+                withContext(Dispatchers.IO) {
+                    block()
+                }
+            }.onSuccess {
+                loadingChange.dismissDialog.postValue(false)
+                success(it)
+            }.onFailure {
+                loadingChange.dismissDialog.postValue(false)
+                error(it)
+            }
+        }
+    }
+
+}
+
+
+
+

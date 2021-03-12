@@ -1,0 +1,12 @@
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <string name="base_app_name">baseModule</string>
+    <string name="base_send">发送</string>
+    <string name="base_cancel">取消</string>
+    <string name="base_confirm">确定</string>
+    <string name="base_i_know">我知道了</string>
+
+
+    <string name="base_input_empty">内容不能为空</string>
+    <string name="base_input_limit">字数超过限制</string>
+
+</resources>

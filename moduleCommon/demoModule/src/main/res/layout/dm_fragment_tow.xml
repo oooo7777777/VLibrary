@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <data>
+
+        <import type="com.v.demo.R" />
+
+        <variable
+            name="v"
+            type="com.v.demo.TwoFragment" />
+
+        <variable
+            name="userBean"
+            type="com.v.demo.bean.UserBane" />
+    </data>
+
+
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            android:scrollbars="none">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:hint="全局的ViewModel监听"
+                    android:text="@{userBean.name}"
+                    android:layout_width="match_parent"
+                    android:padding="10dp"
+                    android:gravity="center"
+                    android:background="@color/base_yellow"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:gravity="center"
+                    android:text="DataBinding示例"
+                    android:textColor="@color/base_black" />
+
+                <Button
+                    android:id="@+id/btAppUpdate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAllCaps="false"
+                    android:text="版本更新"
+                    app:click="@{v}" />
+
+                <Button
+                    android:id="@+id/bt0"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAllCaps="false"
+                    android:text="点击间隔默认500"
+                    app:click="@{v}" />
+
+                <Button
+                    android:id="@+id/bt1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="点击间隔1000"
+                    android:textAllCaps="false"
+                    app:click="@{v}"
+                    app:clickTime="@{1000}" />
+
+
+                <Button
+                    android:id="@+id/bt2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="toast"
+                    android:textAllCaps="false"
+                    app:click="@{v}" />
+
+
+                <Button
+                    android:id="@+id/bt3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="日志"
+                    android:textAllCaps="false"
+                    app:click="@{v}"
+                    app:clickTime="@{2000}" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textAllCaps="false"
+                    android:text="打电话"
+                    app:callPhone="@{123123}" />
+
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textAllCaps="false"
+                    android:text="复制文本到粘贴板"
+                    app:copyToClipboard="@{3231}" />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="图片设置角度 同时占位图跟加载失败图也会设置角度"
+                    android:textColor="@color/base_black" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="设置DrawableLeft"
+                    android:textAllCaps="false"
+                    app:drawableHeight="@{50}"
+                    app:drawableLeft="@{R.mipmap.dm_ic_launcher}"
+                    app:drawableWidth="@{50}" />
+
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="设置DrawableRight"
+                    android:textAllCaps="false"
+                    app:drawableHeight="@{30}"
+                    app:drawableRight="@{R.mipmap.dm_ic_launcher}"
+                    app:drawableWidth="@{30}" />
+
+
+                <ImageView
+                    android:id="@+id/ivIcon"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:scaleType="centerCrop"
+                    app:circle="@{true}"
+                    app:imgUrl="@{R.mipmap.base_iv_avatar_default}"
+                    tools:src="@mipmap/dm_ic_launcher" />
+
+
+
+                <Button
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/bt4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAllCaps="false"
+                    android:text="dialog"
+                    app:click="@{v}" />
+
+                <Button
+                    android:id="@+id/bt5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAllCaps="false"
+                    android:text="dialog List"
+                    app:click="@{v}" />
+
+                <Button
+                    android:id="@+id/bt6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAllCaps="false"
+                    android:text="img Select"
+                    app:click="@{v}" />
+
+
+
+            </LinearLayout>
+        </ScrollView>
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+</layout>
