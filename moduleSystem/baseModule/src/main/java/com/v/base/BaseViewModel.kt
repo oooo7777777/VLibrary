@@ -7,7 +7,7 @@ import com.v.base.net.BaseResponse
 import com.v.base.net.ExceptionHandle
 import kotlinx.coroutines.*
 
-abstract class BaseViewModel: ViewModel() {
+abstract class BaseViewModel : ViewModel() {
 
     val loadingChange: UiLoadingChange by lazy { UiLoadingChange() }
 
@@ -20,7 +20,7 @@ abstract class BaseViewModel: ViewModel() {
     fun <T> request(
         block: suspend CoroutineScope.() -> BaseResponse<T>,
         success: (T) -> Unit,
-        error: (AppException) -> Unit ={},
+        error: (AppException) -> Unit = {},
         dialog: Boolean = false
     ): Job {
         return viewModelScope.launch {
@@ -47,7 +47,7 @@ abstract class BaseViewModel: ViewModel() {
     fun <T> requestDefault(
         block: suspend () -> T,
         success: (T) -> Unit,
-        error: (AppException) -> Unit ={},
+        error: (AppException) -> Unit = {},
         dialog: Boolean = false
     ): Job {
         return viewModelScope.launch {
@@ -92,14 +92,14 @@ abstract class BaseViewModel: ViewModel() {
      * @param success 成功回调
      * @param error 失败回调 可不给
      */
-    fun <T> BaseViewModel.launch(
-        block: () -> T,
+    fun <T> scopeAsy(
+        block: suspend () -> T,
         success: (T) -> Unit,
         error: (Throwable) -> Unit = {},
-                dialog: Boolean = false
+        dialog: Boolean = false
     ) {
         viewModelScope.launch {
-            kotlin.runCatching {
+            runCatching {
                 if (dialog) {
                     loadingChange.showDialog.postValue("")
                 }

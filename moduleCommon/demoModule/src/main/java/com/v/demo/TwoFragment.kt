@@ -11,6 +11,7 @@ import com.v.base.dialog.PhotoSelectDialog
 import com.v.base.utils.ext.*
 import com.v.demo.databinding.DmFragmentTowBinding
 import com.v.demo.model.AppViewModel
+import com.v.demo.model.DemoViewModel
 import java.io.File
 
 
@@ -19,7 +20,7 @@ import java.io.File
  * desc    :
  * time    : 2021/1/11 15:44
  */
-class TwoFragment : BaseFragment<DmFragmentTowBinding, BlankViewModel>(), View.OnClickListener {
+class TwoFragment : BaseFragment<DmFragmentTowBinding, DemoViewModel>(), View.OnClickListener {
     override fun initData() {
         mViewBinding.v = this
     }
@@ -100,7 +101,12 @@ class TwoFragment : BaseFragment<DmFragmentTowBinding, BlankViewModel>(), View.O
                     .setPhotoSelectDialogListener(object :
                         PhotoSelectDialog.PhotoSelectDialogListener {
                         override fun onSuccess(file: File) {
-                            mViewBinding.ivIcon.loadCircle(file)
+//                            mViewBinding.ivIcon.loadCircle(file)
+
+                            mViewModel.imgC(file,success = {
+                                mViewBinding.ivIcon.setImageBitmap(it)
+
+                            })
                         }
 
                     }).show(mContext)
