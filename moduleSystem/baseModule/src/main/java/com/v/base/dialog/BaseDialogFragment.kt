@@ -8,8 +8,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.v.base.BaseViewModel
+import com.v.base.EventLiveData
+import com.v.base.LoadingDialog
 import com.v.base.R
 import com.v.base.utils.ext.logI
 import java.lang.reflect.ParameterizedType
@@ -19,6 +22,9 @@ abstract class BaseDialogFragment<VB : ViewDataBinding, VM : BaseViewModel> : Di
 
     protected lateinit var mViewBinding: VB
 
+    private val loadDialog by lazy {
+        LoadingDialog(mContext).setDialogCancelable(true)
+    }
 
     protected val mViewModel: VM by lazy {
         val type = javaClass.genericSuperclass as ParameterizedType
@@ -60,6 +66,8 @@ abstract class BaseDialogFragment<VB : ViewDataBinding, VM : BaseViewModel> : Di
         )
         mViewBinding = method.invoke(null, layoutInflater, container, false) as VB
         setStyle()
+        registerUiChange()
+
         return mViewBinding.root
     }
 
@@ -164,9 +172,23 @@ abstract class BaseDialogFragment<VB : ViewDataBinding, VM : BaseViewModel> : Di
         return this
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    /**
+     * 注册UI 事件
+     */
+    private fun registerUiChange() {
+        //显示弹窗
+        mViewModel.loadingChange.showDialog.observe(this, Observer {
+            if (!loadDialog.isShowing) {
+                loadDialog.show()
+            }
+
+        })
+        //关闭弹窗
+        mViewModel.loadingChange.dismissDialog.observe(this, Observer {
+
+            if (loadDialog.isShowing) {
+                loadDialog.dismiss()
+            }
+        })
     }
-
-
 }

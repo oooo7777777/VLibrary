@@ -98,15 +98,12 @@ class TwoFragment : BaseFragment<DmFragmentTowBinding, DemoViewModel>(), View.On
             }
             R.id.bt6 -> {
                 PhotoSelectDialog()
+                    .setImageCompression(true)
+                    .setIgnoreBy(100)
                     .setPhotoSelectDialogListener(object :
                         PhotoSelectDialog.PhotoSelectDialogListener {
                         override fun onSuccess(file: File) {
-//                            mViewBinding.ivIcon.loadCircle(file)
-
-                            mViewModel.imgC(file,success = {
-                                mViewBinding.ivIcon.setImageBitmap(it)
-
-                            })
+                            mViewBinding.ivIcon.loadCircle(file)
                         }
 
                     }).show(mContext)

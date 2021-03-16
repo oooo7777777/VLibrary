@@ -60,6 +60,7 @@ dependencies {
     api "com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4"//BaseRecyclerViewAdapterHelper
     api "com.github.niorgai:StatusBarCompat:2.3.3"//状态栏颜色
     api "com.noober.background:core:1.6.5"//BackgroundLibrary  （通过标签直接生成shape，无需再写shape.xml）
+    api "com.github.forJrking:KLuban:1.0.5"//基于Luban算法，重构后实现的图片压缩框架
 
     implementation 'com.github.bumptech.glide:glide:4.11.0'//glide
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'//glide

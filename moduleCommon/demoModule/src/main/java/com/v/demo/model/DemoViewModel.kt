@@ -56,13 +56,12 @@ class DemoViewModel : BaseViewModel() {
     }
 
 
-    fun imgC(file: File,success: (Bitmap) -> Unit) {
+    fun imgC(file: File, success: (Bitmap) -> Unit) {
         scopeAsy({ getBitmapFromFile(file, 800, 800) }, success = {
             "成功了".logD()
             success(it!!)
         }, dialog = true)
     }
-
 
 
     private fun getBitmapFromFile(dst: File, width: Int, height: Int): Bitmap? {
