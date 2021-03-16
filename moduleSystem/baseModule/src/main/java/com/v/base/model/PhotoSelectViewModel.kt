@@ -22,7 +22,7 @@ import java.util.*
  */
 class PhotoSelectViewModel : BaseViewModel() {
 
-//    var fileSuccess = MutableLiveData<File>()
+    var fileSuccess = MutableLiveData<File>()
 
     fun createSDCardFile(mContext: Context): File {
         // Create an image file name
@@ -86,7 +86,7 @@ class PhotoSelectViewModel : BaseViewModel() {
         return Formatter.formatFileSize(mContext, size)
     }
 
-    fun imageCompression(mContext: Fragment, file: File, ignoreBy: Long, success: (File) -> Unit) {
+    fun imageCompression(mContext: Fragment, file: File, ignoreBy: Long) {
 
 //        .quality(100)                     //(可选)质量压缩系数  0-100
         Luban.with(mContext)
@@ -96,7 +96,7 @@ class PhotoSelectViewModel : BaseViewModel() {
                 onSuccess = {
                     loadingChange.dismissDialog.postValue(false)
                     (formatSize(mContext.requireContext(), it.length())).log()
-                    success(it)
+                    fileSuccess.value = it
                 }
                 onStart = {
                     loadingChange.showDialog.postValue("")

@@ -46,7 +46,12 @@ class PhotoSelectDialog : BaseDialogFragment<BaseDialogPhotoSelectBinding, Photo
     }
 
     override fun createObserver() {
-
+        mViewModel.fileSuccess.observe(this, androidx.lifecycle.Observer {
+            listener?.run {
+                onSuccess(it)
+            }
+            dismiss()
+        })
     }
 
 
@@ -85,20 +90,11 @@ class PhotoSelectDialog : BaseDialogFragment<BaseDialogPhotoSelectBinding, Photo
     private fun dispose(file: File) {
         (mViewModel.formatSize(mContext, file.length())).log()
         if (isImageCompression) {
-            mViewModel.imageCompression(this@PhotoSelectDialog, file, ignoreBy, success = {
-                listener?.run {
-                    onSuccess(it)
-                }
-                dismiss()
-            })
+            mViewModel.imageCompression(this@PhotoSelectDialog, file, ignoreBy)
         } else {
-            listener?.run {
-                onSuccess(file)
-            }
-            dismiss()
+            mViewModel.fileSuccess.value = file
         }
 
     }
-
 
 }

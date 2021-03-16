@@ -19,7 +19,7 @@ private val features = arrayOf(
  */
 fun <T> Any.toJson(cls: Class<T>): String =
     run {
-        JSON.toJSONString(cls, *features)
+        JSON.toJSONString(this@toJson, *features)
     }
 
 /**

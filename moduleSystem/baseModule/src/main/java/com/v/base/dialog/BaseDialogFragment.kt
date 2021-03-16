@@ -29,7 +29,8 @@ abstract class BaseDialogFragment<VB : ViewDataBinding, VM : BaseViewModel> : Di
     protected val mViewModel: VM by lazy {
         val type = javaClass.genericSuperclass as ParameterizedType
         val aClass = type.actualTypeArguments[1] as Class<VM>
-        ViewModelProvider(requireActivity()).get(aClass)
+        ViewModelProvider(this).get(aClass)//绑定当前的DialogFragment
+//        ViewModelProvider(requireActivity()).get(aClass)//绑定当前的打开DialogFragment的载体
     }
 
     companion object {
@@ -190,5 +191,11 @@ abstract class BaseDialogFragment<VB : ViewDataBinding, VM : BaseViewModel> : Di
                 loadDialog.dismiss()
             }
         })
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        this.viewModelStore.clear()
+
     }
 }
