@@ -2,7 +2,6 @@ package com.v.demo
 
 import android.view.View
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.RecyclerView
 import com.hitomi.tilibrary.style.index.NumberIndexIndicator
 import com.hitomi.tilibrary.transfer.TransferConfig
 import com.hitomi.tilibrary.transfer.Transferee
@@ -56,25 +55,6 @@ class OneFragment : BaseFragment<DmFragmentOneBinding, DemoViewModel>() {
 
     override fun initData() {
         mAdapter.setHeaderView(mAdapterHeaderView.root)
-
-        mViewBinding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-
-            /*
-              我这里通过的是停止滚动后屏幕上可见view。如果滚动过程中的可见view也要统计，你可以根据newState去做区分
-              SCROLL_STATE_IDLE:停止滚动
-              SCROLL_STATE_DRAGGING: 用户慢慢拖动
-              SCROLL_STATE_SETTLING：惯性滚动
-              */
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-
-                }
-            }
-
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-            }
-        })
         mViewBinding.refreshLayout.autoRefresh()
         mViewModel.getList(page)
     }

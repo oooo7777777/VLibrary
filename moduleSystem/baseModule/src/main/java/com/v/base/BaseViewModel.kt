@@ -87,12 +87,12 @@ abstract class BaseViewModel : ViewModel() {
     }
 
     /**
-     *  调用携程
+     *  调用协程
      * @param block 操作耗时操作任务
      * @param success 成功回调
      * @param error 失败回调 可不给
      */
-    fun <T> scopeAsy(
+    fun <T> scopeAsync(
         block: suspend () -> T,
         success: (T) -> Unit,
         error: (Throwable) -> Unit = {},

@@ -35,13 +35,13 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:hint="全局的ViewModel监听"
-                    android:text="@{userBean.name}"
                     android:layout_width="match_parent"
-                    android:padding="10dp"
-                    android:gravity="center"
+                    android:layout_height="wrap_content"
                     android:background="@color/base_yellow"
-                    android:layout_height="wrap_content"/>
+                    android:gravity="center"
+                    android:hint="全局的ViewModel监听"
+                    android:padding="10dp"
+                    android:text="@{userBean.name}" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -52,19 +52,27 @@
                     android:textColor="@color/base_black" />
 
                 <Button
+                    android:id="@+id/btAsync"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="协程异步加载"
+                    android:textAllCaps="false"
+                    app:click="@{v}" />
+
+                <Button
                     android:id="@+id/btAppUpdate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAllCaps="false"
                     android:text="版本更新"
+                    android:textAllCaps="false"
                     app:click="@{v}" />
 
                 <Button
                     android:id="@+id/bt0"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAllCaps="false"
                     android:text="点击间隔默认500"
+                    android:textAllCaps="false"
                     app:click="@{v}" />
 
                 <Button
@@ -99,8 +107,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textAllCaps="false"
                     android:text="打电话"
+                    android:textAllCaps="false"
                     app:callPhone="@{123123}" />
 
 
@@ -108,8 +116,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textAllCaps="false"
                     android:text="复制文本到粘贴板"
+                    android:textAllCaps="false"
                     app:copyToClipboard="@{3231}" />
 
 
@@ -154,32 +162,30 @@
                     tools:src="@mipmap/dm_ic_launcher" />
 
 
-
                 <Button
-                    android:layout_marginTop="10dp"
                     android:id="@+id/bt4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAllCaps="false"
+                    android:layout_marginTop="10dp"
                     android:text="dialog"
+                    android:textAllCaps="false"
                     app:click="@{v}" />
 
                 <Button
                     android:id="@+id/bt5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAllCaps="false"
                     android:text="dialog List"
+                    android:textAllCaps="false"
                     app:click="@{v}" />
 
                 <Button
                     android:id="@+id/bt6"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAllCaps="false"
                     android:text="img Select"
+                    android:textAllCaps="false"
                     app:click="@{v}" />
-
 
 
             </LinearLayout>

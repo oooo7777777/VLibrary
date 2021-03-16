@@ -1,7 +1,5 @@
 package com.v.demo
 
-//import com.v.base.utils.ext.getAppViewModel
-
 import android.view.View
 import com.v.base.BaseFragment
 import com.v.base.utils.ext.getApplicationViewModel
@@ -26,24 +24,17 @@ class FourFragment : BaseFragment<DmFragmentFourBinding, DataViewModel>(), View.
         })
 
 
-
         getApplicationViewModel(mContext.application, AppViewModel::class.java).userBane.observe(
             this,
             androidx.lifecycle.Observer {
                 mViewBinding.userBean = it
             })
 
-
-//        LiveDataBus.with<String>("Key").postData("")
-//        LiveDataBus.with<String>("Key").observe(this, Observer {
-//
-//
-//        })
     }
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.bt0 -> {
+            mViewBinding.bt0.id -> {
                 mViewModel.setContent("我是FourFragment的数据~~~~~~~~~")
             }
         }

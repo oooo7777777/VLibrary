@@ -4,7 +4,6 @@ import android.view.View
 import com.azhon.appupdate.config.UpdateConfiguration
 import com.azhon.appupdate.manager.DownloadManager
 import com.v.base.BaseFragment
-import com.v.base.BlankViewModel
 import com.v.base.dialog.HintDialog
 import com.v.base.dialog.ListDialog
 import com.v.base.dialog.PhotoSelectDialog
@@ -37,7 +36,13 @@ class TwoFragment : BaseFragment<DmFragmentTowBinding, DemoViewModel>(), View.On
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.btAppUpdate -> {
+            mViewBinding.btAsync.id->
+            {
+                mViewModel.demoAsync {
+                    it.toast()
+                }
+            }
+            mViewBinding.btAppUpdate.id -> {
 
                 val configuration = UpdateConfiguration()
                     .setUsePlatform(false)
@@ -54,21 +59,21 @@ class TwoFragment : BaseFragment<DmFragmentTowBinding, DemoViewModel>(), View.On
                     .setSmallIcon(R.mipmap.dm_ic_launcher)
                     .download()
             }
-            R.id.bt0 -> {
+            mViewBinding.bt0.id -> {
                 "点击间隔默认500".log()
             }
-            R.id.bt1 -> {
+            mViewBinding.bt1.id -> {
                 "点击间隔1000".log()
             }
-            R.id.bt2 -> {
+            mViewBinding.bt2.id -> {
                 "显示toast".toast()
             }
 
-            R.id.bt3 -> {
+            mViewBinding.bt3.id -> {
                 "打印日志".logE()
             }
 
-            R.id.bt4 -> {
+            mViewBinding.bt4.id -> {
                 HintDialog()
                     .setTitle("提示")
                     .setContent("确定保存吗?")
@@ -81,7 +86,7 @@ class TwoFragment : BaseFragment<DmFragmentTowBinding, DemoViewModel>(), View.On
 
                     }).show(mContext)
             }
-            R.id.bt5 -> {
+            mViewBinding.bt5.id -> {
                 var list = ArrayList<String>()
                 for (i in 0 until 3) {
                     list.add("Content$i")
@@ -96,7 +101,7 @@ class TwoFragment : BaseFragment<DmFragmentTowBinding, DemoViewModel>(), View.On
 
                     }).show(mContext)
             }
-            R.id.bt6 -> {
+            mViewBinding.bt6.id -> {
                 PhotoSelectDialog()
                     .setImageCompression(true)
                     .setIgnoreBy(100)

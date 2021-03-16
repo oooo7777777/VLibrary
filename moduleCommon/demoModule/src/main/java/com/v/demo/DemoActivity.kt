@@ -91,7 +91,7 @@ class DemoActivity : BaseActivity<DmActivityBinding, BlankViewModel>(), View.OnC
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.tvTitle -> {
+            mViewBinding.tvTitle.id -> {
                 var bean = UserBane()
                 bean.name = "name" + randomNumber(100)
                 getApplicationViewModel(
