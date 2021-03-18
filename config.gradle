@@ -48,7 +48,6 @@ ext {
             "coroutines-adapter"           : "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2",
             "logger"                       : "com.orhanobut:logger:2.2.0",
             "statusbar"                    : "com.github.niorgai:StatusBarCompat:2.3.3",//状态栏颜色
-            "indicator"                    : "com.github.hackware1993:MagicIndicator:1.6.0",//指示器
             "arouter"                      : "com.alibaba:arouter-api:1.5.1",//arouter
             "smartRefreshLayout"           : "com.scwang.smart:refresh-layout-kernel:2.0.1",//refresh
             "smartRefreshLayout-header"    : "com.scwang.smart:refresh-header-material:2.0.3",//refresh
