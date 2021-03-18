@@ -7,6 +7,8 @@ plugins {
 
 
 def cfg = rootProject.ext.android
+def librarys = rootProject.ext.dependencies
+
 android {
     compileSdkVersion cfg.compileSdkVersion
     buildToolsVersion cfg.buildToolsVersion
@@ -42,10 +44,11 @@ android {
 
     buildTypes {
         release {
-            consumerProguardFiles   'proguard-rules.pro'
-        }}
+            consumerProguardFiles 'proguard-rules.pro'
+        }
+    }
 
-    buildFeatures{
+    buildFeatures {
         dataBinding = true
     }
 
@@ -54,5 +57,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     api fileTree(dir: 'libs', include: ['*.aar'])
     api project(':moduleSystem:baseModule')
+    librarys.each { k, v -> api v }
+
 
 }
