@@ -1,4 +1,4 @@
-package com.ww.appmodule.net
+package com.v.common.net
 
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory

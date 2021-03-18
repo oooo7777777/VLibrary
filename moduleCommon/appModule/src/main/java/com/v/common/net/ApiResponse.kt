@@ -1,4 +1,4 @@
-package com.ww.appmodule.net
+package com.v.common.net
 
 import com.v.base.net.BaseResponse
 

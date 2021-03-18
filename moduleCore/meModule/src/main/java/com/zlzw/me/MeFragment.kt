@@ -2,9 +2,8 @@ package com.zlzw.me
 
 import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.ww.appmodule.RouterConstant
+import com.v.common.RouterConstant
 import com.v.base.BaseFragment
-import com.v.base.BlankViewModel
 import com.v.base.utils.log
 import com.zlzw.me.databinding.MeFragmentBinding
 import com.zlzw.me.model.MeViewModel

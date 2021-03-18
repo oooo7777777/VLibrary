@@ -1,6 +1,6 @@
 package com.zlzw.home.debug
 
-import com.ww.appmodule.MyApplication
+import com.v.common.MyApplication
 
 class HomeApplication : MyApplication() {
     override fun initData() {

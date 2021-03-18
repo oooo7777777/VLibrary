@@ -1,4 +1,4 @@
-package com.ww.appmodule.views.mg
+package com.v.common.views.mg
 
 import android.content.Context
 import android.graphics.Canvas

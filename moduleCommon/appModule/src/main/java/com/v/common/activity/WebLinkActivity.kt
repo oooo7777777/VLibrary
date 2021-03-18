@@ -1,4 +1,4 @@
-package com.ww.appmodule.activity
+package com.v.common.activity
 
 import android.view.View
 import android.webkit.JavascriptInterface

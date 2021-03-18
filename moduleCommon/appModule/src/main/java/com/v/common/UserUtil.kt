@@ -1,4 +1,4 @@
-package com.ww.appmodule
+package com.v.common
 
 import android.text.TextUtils
 import com.v.base.bean.UserBean

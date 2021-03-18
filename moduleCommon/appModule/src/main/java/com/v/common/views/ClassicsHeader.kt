@@ -1,4 +1,4 @@
-package com.ww.appmodule.views
+package com.v.common.views
 
 import android.content.Context
 import android.util.AttributeSet

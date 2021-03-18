@@ -3,7 +3,7 @@ package com.zlzw.me.model
 import androidx.lifecycle.MutableLiveData
 import com.v.base.BaseViewModel
 import com.v.base.utils.toList
-import com.ww.appmodule.net.RetrofitManager
+import com.v.common.net.RetrofitManager
 import com.zlzw.me.bean.MeBean
 
 /**

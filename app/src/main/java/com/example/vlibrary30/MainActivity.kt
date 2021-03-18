@@ -7,7 +7,7 @@ import com.v.base.BaseActivity
 import com.v.base.BaseFragmentAdapter
 import com.v.base.BlankViewModel
 import com.v.base.utils.toast
-import com.ww.appmodule.RouterConstant
+import com.v.common.RouterConstant
 
 
 class MainActivity : BaseActivity<ActivityMainBinding, BlankViewModel>() {

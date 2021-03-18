@@ -3,7 +3,7 @@
     package="com.example.vlibrary30">
 
     <application
-        android:name="com.ww.appmodule.MyApplication"
+        android:name="com.v.common.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"

@@ -1,4 +1,4 @@
-package com.ww.appmodule
+package com.v.common
 
 import com.v.app.BuildConfig
 import com.v.base.BaseApplication

@@ -1,9 +1,9 @@
-package com.ww.appmodule.net
+package com.v.common.net
 
 import android.text.TextUtils
 import com.v.base.BaseApplication
 import com.v.base.utils.getAppVersionCode
-import com.ww.appmodule.UserUtil
+import com.v.common.UserUtil
 import okhttp3.FormBody
 import okhttp3.Interceptor
 import okhttp3.Request

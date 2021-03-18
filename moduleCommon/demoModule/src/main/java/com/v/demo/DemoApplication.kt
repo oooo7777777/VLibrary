@@ -1,6 +1,6 @@
 package com.v.demo
 
-import com.ww.appmodule.MyApplication
+import com.v.common.MyApplication
 
 class DemoApplication : MyApplication() {
 

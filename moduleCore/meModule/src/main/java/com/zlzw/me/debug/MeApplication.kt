@@ -1,6 +1,6 @@
 package com.zlzw.me.debug
 
-import com.ww.appmodule.MyApplication
+import com.v.common.MyApplication
 
 class MeApplication : MyApplication() {
     override fun initData() {
