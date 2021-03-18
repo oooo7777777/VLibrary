@@ -13,8 +13,10 @@ implementation 'com.vlibrary:VLibrary:Latest'
 
 ### 运行moduleCommon -> demoModule可查看所有示例
 
+### 也可以直接下载此项目([TTProject](https://github.com/oooo7777777/TTProject)) 直接开发 无需任何配置
 
-### 此库配合https://github.com/oooo7777777/VLibraryPlugin代码模板插件开发效率提升80%
+
+### 此库配合 ([VLibraryPlugin](https://github.com/oooo7777777/VLibraryPlugin))代码模板插件开发效率提升80%
 ### 此代码模板插件功能
 - [x]1.可一键约束资源命名(在组件化开发模式使用)
 - [x]2.可一键约束是否生成ModelView代码
