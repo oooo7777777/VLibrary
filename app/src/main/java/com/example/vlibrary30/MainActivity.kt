@@ -6,7 +6,7 @@ import com.example.vlibrary30.databinding.ActivityMainBinding
 import com.v.base.BaseActivity
 import com.v.base.BaseFragmentAdapter
 import com.v.base.BlankViewModel
-import com.v.base.utils.ext.toast
+import com.v.base.utils.toast
 import com.ww.appmodule.RouterConstant
 
 

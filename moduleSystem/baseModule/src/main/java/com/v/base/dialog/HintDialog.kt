@@ -5,9 +5,14 @@ import android.view.Gravity
 import android.view.View
 import com.v.base.BlankViewModel
 import com.v.base.databinding.BaseDialogHintBinding
-import com.v.base.utils.ext.onClickAnimator
+import com.v.base.utils.onClickAnimator
 
 
+/**
+ * author  : ww
+ * desc    : 提示框
+ * time    : 2021-03-16 09:52:45
+ */
 class HintDialog : BaseDialogFragment<BaseDialogHintBinding, BlankViewModel>() {
 
     private var title: String = ""
@@ -15,7 +20,6 @@ class HintDialog : BaseDialogFragment<BaseDialogHintBinding, BlankViewModel>() {
     private var contentGravity: Int = Gravity.CENTER
     private var btTexts = ArrayList<String>()
     private var btTextColors = ArrayList<String>()
-
 
     private var listener: HintDialogClickListener? = null
 
@@ -94,8 +98,8 @@ class HintDialog : BaseDialogFragment<BaseDialogHintBinding, BlankViewModel>() {
 
     /**
      * 设置按钮文字内容
-     * btnTexts size 1, left
-     * btnTexts size 2, left right
+     * @param btTexts size 1, left
+     * @param btTexts size 2, left right
      */
     fun setButtonText(vararg btTexts: String): HintDialog {
         if (btTexts.isEmpty() || btTexts.size > 2) {
@@ -109,8 +113,8 @@ class HintDialog : BaseDialogFragment<BaseDialogHintBinding, BlankViewModel>() {
 
     /**
      * 设置按钮文字颜色
-     * btnColors size 1, left
-     * btnColors size 2, left right
+     * @param btTextColors size 1, left
+     * @param btTextColors size 2, left right
      */
     fun setButtonTextColor(vararg btTextColors: String): HintDialog {
         if (btTextColors.isEmpty() || btTextColors.size > 2) {

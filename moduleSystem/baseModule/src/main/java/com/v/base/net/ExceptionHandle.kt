@@ -1,12 +1,18 @@
 package com.v.base.net
 
-import com.v.base.utils.ext.logE
+import com.v.base.annotaion.Error
+import com.v.base.utils.logE
 import org.apache.http.conn.ConnectTimeoutException
 import org.json.JSONException
 import retrofit2.HttpException
 import java.net.ConnectException
 
 
+/**
+ * author  : ww
+ * desc    : 错误处理
+ * time    : 2021-03-16 09:52:45
+ */
 object ExceptionHandle {
 
     fun handleException(e: Throwable): AppException {

@@ -1,57 +1,90 @@
-package com.v.base.utils.ext
+package com.v.base.utils
 
 import android.view.View
+import androidx.annotation.DrawableRes
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.animation.AlphaInAnimation
-import com.chad.library.adapter.base.animation.SlideInBottomAnimation
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.v.base.R
-import com.v.base.utils.FastClickUtils
-import com.v.base.views.LineItemDecoration
+import com.v.base.annotaion.RecyclerViewItemOrientation
 
 
+/**
+ * 线性列表
+ */
 fun RecyclerView.linear(
-    adapter: BaseQuickAdapter<*, *>,
-    interval: Float = 10f
+    adapter: BaseQuickAdapter<*, *>
 ): BaseQuickAdapter<*, *> {
     layoutManager = LinearLayoutManager(context)
-    this.addItemDecoration(LineItemDecoration(LineItemDecoration.Type.VERTICAL, interval))
     this.adapter = adapter
     return adapter
 }
 
+/**
+ * 横向列表
+ */
 fun RecyclerView.linearHorizontal(
-    adapter: BaseQuickAdapter<*, *>,
-    interval: Float = 10f
+    adapter: BaseQuickAdapter<*, *>
 ): BaseQuickAdapter<*, *> {
     layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
-    this.addItemDecoration(LineItemDecoration(LineItemDecoration.Type.HORIZONTAL, interval))
     this.adapter = adapter
     return adapter
 }
 
+/**
+ * 表格列表
+ * @param count 每一列的数据
+ */
 fun RecyclerView.grid(
     adapter: BaseQuickAdapter<*, *>,
-    count: Int,
-    interval: Float = 10f,
-    isHeader: Boolean = false
+    count: Int
 ): BaseQuickAdapter<*, *> {
     layoutManager = GridLayoutManager(context, count)
-
-    this.addItemDecoration(
-        LineItemDecoration(
-            if (isHeader) LineItemDecoration.Type.GRID_HEAD else LineItemDecoration.Type.ALL,
-            interval
-        )
-    )
     this.adapter = adapter
     return adapter
 }
 
 
+/**
+ * 函数配置分割线
+ * 具体配置参数查看[RecyclerViewItemDecoration]
+ */
+fun RecyclerView.divider(
+    block: RecyclerViewItemDecoration.() -> Unit
+): RecyclerView {
+    val itemDecoration = RecyclerViewItemDecoration(context).apply(block)
+    addItemDecoration(itemDecoration)
+    return this
+}
+
+/**
+ * 指定Drawable资源为分割线, 分割线的间距和宽度应在资源文件中配置
+ * @param drawable 描述分割线的drawable
+ */
+fun RecyclerView.divider(
+    @DrawableRes drawable: Int,
+    orientation: RecyclerViewItemOrientation = RecyclerViewItemOrientation.VERTICAL
+): RecyclerView {
+    return divider {
+        setDrawable(drawable)
+        this.orientation = orientation
+    }
+}
+
+
+/**
+ * 列表数据的加载
+ * @param refreshLayout SmartRefreshLayout
+ * @param list 数据集合
+ * @param mCurrentPageNum 当前分页的
+ * @param onRefresh 是否要下拉加载
+ * @param onLoadMore 是否要上拉加载
+ * @param onItemClick item的点击
+ * @param onItemChildClick itemChild的点击
+ * @param emptyView 空布局设置
+ */
 fun <T> BaseQuickAdapter<T, *>.loadData(
     refreshLayout: SmartRefreshLayout,
     list: List<T>,
@@ -86,7 +119,7 @@ fun <T> BaseQuickAdapter<T, *>.loadData(
 
     setOnItemClickListener { _, view, position ->
         onItemClick?.run {
-            if (!FastClickUtils().isInvalidClick(view)) {
+            if (!FastClickUtil().isInvalidClick(view)) {
                 invoke(view, position)
             }
         }
@@ -95,7 +128,7 @@ fun <T> BaseQuickAdapter<T, *>.loadData(
 
     setOnItemChildClickListener { _, view, position ->
         onItemChildClick?.run {
-            if (!FastClickUtils().isInvalidClick(view)) {
+            if (!FastClickUtil().isInvalidClick(view)) {
                 invoke(view, position)
             }
         }

@@ -1,4 +1,4 @@
-package com.v.base.utils.ext
+package com.v.base.utils
 
 import android.content.Context
 import android.view.View
@@ -27,7 +27,6 @@ fun View.dp2px(dp: Int): Int =
 
 /**
  * 获取屏幕的高度（单位：px
-
  */
 fun Context.getScreenHeight(): Int =run{
     resources.displayMetrics.heightPixels

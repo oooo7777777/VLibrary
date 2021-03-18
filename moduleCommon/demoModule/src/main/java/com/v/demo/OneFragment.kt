@@ -7,9 +7,8 @@ import com.hitomi.tilibrary.transfer.TransferConfig
 import com.hitomi.tilibrary.transfer.Transferee
 import com.v.base.BaseApplication
 import com.v.base.BaseFragment
-import com.v.base.utils.ext.getViewBinding
-import com.v.base.utils.ext.grid
-import com.v.base.utils.ext.loadData
+import com.v.base.utils.*
+import com.v.base.annotaion.RecyclerViewItemOrientation
 import com.v.demo.adapter.BannerAdapter
 import com.v.demo.adapter.OneFragmentAdapter
 import com.v.demo.databinding.DmFragmentOneBinding
@@ -27,7 +26,11 @@ class OneFragment : BaseFragment<DmFragmentOneBinding, DemoViewModel>() {
     private var page = 1
 
     private val mAdapter by lazy {
-        mViewBinding.recyclerView.grid(OneFragmentAdapter(), 2, 5f, true) as OneFragmentAdapter
+        mViewBinding.recyclerView.divider {
+            setDrawable(R.drawable.dm_divider_horizontal)
+            orientation = RecyclerViewItemOrientation.GRID
+            startVisible = true
+        }.grid(OneFragmentAdapter(),5) as OneFragmentAdapter
     }
 
     private val mAdapterHeaderView by lazy {

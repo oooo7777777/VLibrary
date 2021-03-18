@@ -1,4 +1,4 @@
-package com.v.base.utils.ext
+package com.v.base.utils
 
 import android.util.Log
 import com.orhanobut.logger.Logger

@@ -7,17 +7,16 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.ScaleAnimation
-import com.v.base.R
 import java.lang.Exception
 import kotlin.math.roundToInt
 
 /**
  * @Author : ww
- * desc    :
+ * desc    : 点击动画
  * time    : 2020/12/29 15:22
  */
 
-class ViewClickAnimator(
+class ViewClickAnimatorUtil(
     var view: View,
     var clickTime: Long = 500L,
     var onClick: ((v: View) -> Unit)
@@ -99,7 +98,7 @@ class ViewClickAnimator(
 
 //                            ("onAnimationEnd" ).log()
 
-                            if (!FastClickUtils().isInvalidClick(view, clickTime) && b) {
+                            if (!FastClickUtil().isInvalidClick(view, clickTime) && b) {
                                 onClick(view)
                             }
 
@@ -113,7 +112,6 @@ class ViewClickAnimator(
 
         }
     }
-
 
 
 }

@@ -3,7 +3,7 @@ package com.ww.appmodule
 import android.text.TextUtils
 import com.v.base.bean.UserBean
 import com.v.base.utils.SPUtil
-import com.v.base.utils.ext.toBean
+import com.v.base.utils.toBean
 
 
 object UserUtil {

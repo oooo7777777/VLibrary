@@ -9,15 +9,15 @@ import androidx.lifecycle.MutableLiveData
 import com.forjrking.lubankt.Luban
 import com.orhanobut.logger.Logger
 import com.v.base.BaseViewModel
-import com.v.base.utils.ext.log
+import com.v.base.utils.log
 import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
 /**
- * author  :
- * desc    :
+ * author  : ww
+ * desc    : 图片处理
  * time    : 2021-03-16 09:52:45
  */
 class PhotoSelectViewModel : BaseViewModel() {

@@ -1,4 +1,4 @@
-package com.v.base.utils.ext
+package com.v.base.utils
 
 import android.content.Intent
 import android.net.Uri
@@ -44,8 +44,6 @@ fun TextView.setDrawable(anyLeft: Any?, anyRight: Any?, w: Int, h: Int) {
             success = {
                 it.setBounds(0, 0, it.intrinsicWidth, it.intrinsicHeight)
                 this@setDrawable.setCompoundDrawables(it, null, null, null)
-            }, error = {
-
             })
     }
     if (anyRight != null) {
@@ -53,8 +51,6 @@ fun TextView.setDrawable(anyLeft: Any?, anyRight: Any?, w: Int, h: Int) {
             success = {
                 it.setBounds(0, 0, it.intrinsicWidth, it.intrinsicHeight)
                 this@setDrawable.setCompoundDrawables(null, null, it, null)
-            }, error = {
-
             })
     }
 }

@@ -7,7 +7,7 @@ import com.v.base.BaseFragment
 import com.v.base.dialog.HintDialog
 import com.v.base.dialog.ListDialog
 import com.v.base.dialog.PhotoSelectDialog
-import com.v.base.utils.ext.*
+import com.v.base.utils.*
 import com.v.demo.databinding.DmFragmentTowBinding
 import com.v.demo.model.AppViewModel
 import com.v.demo.model.DemoViewModel

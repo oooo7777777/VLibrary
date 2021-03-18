@@ -17,6 +17,13 @@ abstract class BaseViewModel : ViewModel() {
     }
 
 
+    /**
+     * 协程请求(返回处理过的数据)
+     * @param block 协程体
+     * @param success 成功回调
+     * @param error 失败回调
+     * @param dialog 是否显示请求框
+     */
     fun <T> request(
         block: suspend CoroutineScope.() -> BaseResponse<T>,
         success: (T) -> Unit,
@@ -44,6 +51,13 @@ abstract class BaseViewModel : ViewModel() {
     }
 
 
+    /**
+     * 协程请求(返回最原始的数据)
+     * @param block 协程体
+     * @param success 成功回调
+     * @param error 失败回调
+     * @param dialog 是否显示请求框
+     */
     fun <T> requestDefault(
         block: suspend () -> T,
         success: (T) -> Unit,
@@ -70,6 +84,9 @@ abstract class BaseViewModel : ViewModel() {
         }
     }
 
+    /**
+     * 原始的数据处理
+     */
     private suspend fun <T> executeResponse(
         response: BaseResponse<T>,
         success: suspend CoroutineScope.(T) -> Unit

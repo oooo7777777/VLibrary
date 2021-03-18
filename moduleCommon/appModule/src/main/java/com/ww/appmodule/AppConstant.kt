@@ -1,8 +1,7 @@
 package com.ww.appmodule
 
 
-object AppConstant
-{
+object AppConstant {
 
 
 }

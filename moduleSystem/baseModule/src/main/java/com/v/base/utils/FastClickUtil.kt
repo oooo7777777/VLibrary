@@ -2,17 +2,21 @@ package com.v.base.utils
 
 import android.view.View
 import com.v.base.R
-import com.v.base.utils.ext.log
 
 /**
  * @Author : ww
- * desc    :
+ * desc    : 点击防抖动
  * time    : 2020/12/29 15:22
  */
 
-class FastClickUtils {
+class FastClickUtil {
 
-     fun isInvalidClick(target: View, defaultTime: Long=500L): Boolean {
+    /**
+     * 点击防抖动
+     * @param target view
+     * @param defaultTime 间隔时间
+     */
+    fun isInvalidClick(target: View, defaultTime: Long = 500L): Boolean {
         val curTimeStamp = System.currentTimeMillis()
         var lastClickTimeStamp: Long = 0
         val o = target.getTag(R.id.invalid_click)

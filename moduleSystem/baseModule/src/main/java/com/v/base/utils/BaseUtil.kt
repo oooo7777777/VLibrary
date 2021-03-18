@@ -1,6 +1,5 @@
-package com.v.base.utils.ext
+package com.v.base.utils
 
-import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.view.LayoutInflater
@@ -13,13 +12,9 @@ import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.viewbinding.ViewBinding
-import com.v.base.utils.ViewClickAnimator
-import java.lang.reflect.ParameterizedType
-import java.util.HashMap
+import java.util.*
 
 
 private val viewModelMap: MutableMap<Class<*>, ViewModel?> =
@@ -35,7 +30,10 @@ private val viewModelMap: MutableMap<Class<*>, ViewModel?> =
  * @param <T>
  * @return
  */
-fun <T : ViewModel?> getApplicationViewModel(application: Application?, viewModelClass: Class<T>): T {
+fun <T : ViewModel?> getApplicationViewModel(
+    application: Application?,
+    viewModelClass: Class<T>
+): T {
     if (viewModelMap.containsKey(viewModelClass)) {
         return viewModelMap[viewModelClass] as T
     }
@@ -44,7 +42,6 @@ fun <T : ViewModel?> getApplicationViewModel(application: Application?, viewMode
     viewModelMap[viewModelClass] = t
     return t
 }
-
 
 
 /**
@@ -86,6 +83,6 @@ fun <VB : ViewDataBinding> Context.getViewBinding(
  * 点击动画效果
  */
 fun View.onClickAnimator(clickTime: Long = 500L, onClick: ((v: View) -> Unit)) = run {
-    ViewClickAnimator(this, clickTime, onClick)
+    ViewClickAnimatorUtil(this, clickTime, onClick)
     this
 }

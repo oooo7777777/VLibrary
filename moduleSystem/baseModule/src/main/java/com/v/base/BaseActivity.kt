@@ -16,8 +16,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.noober.background.BackgroundLibrary
 import com.v.base.databinding.BaseLayoutBinding
 import com.v.base.utils.ActivityManager
-import com.v.base.utils.ext.log
-import com.v.base.utils.ext.logD
+import com.v.base.utils.log
+import com.v.base.utils.logD
 import qiu.niorgai.StatusBarCompat
 import java.lang.reflect.ParameterizedType
 
@@ -28,12 +28,18 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel> : AppCompa
 
     lateinit var mContext: AppCompatActivity
 
+    /**
+     * 通过反射拿到ViewModel并且注册
+     */
     protected val mViewModel: VM by lazy {
         val type = javaClass.genericSuperclass as ParameterizedType
         val aClass = type.actualTypeArguments[1] as Class<VM>
         ViewModelProvider(this).get(aClass)
     }
 
+    /**
+     * 通过反射拿到ViewBinding
+     */
     protected val mViewBinding: VB by lazy {
         val type = javaClass.genericSuperclass as ParameterizedType
         val aClass = type.actualTypeArguments[0] as Class<*>
@@ -42,25 +48,35 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel> : AppCompa
     }
 
 
+    /**
+     * 初始化加载框
+     */
     private val loadDialog by lazy {
         LoadingDialog(this).setDialogCancelable(false)
     }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        //注册BackgroundLibrary 可以直接在xml里面写shape
         BackgroundLibrary.inject2(this)
         super.onCreate(savedInstanceState)
+        //添加当前activity 统一管理
         ActivityManager.appManager.addActivity(this)
+        //设置屏幕反向为竖向
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         mContext = this
+        //获取base ViewBinding
         mBaseViewBinding = DataBindingUtil.setContentView(
             this,
             R.layout.base_layout
         )
         val rootView: View = mBaseViewBinding.root
+        //把mViewBinding添加到base ViewBinding里面去
         mBaseViewBinding.layoutContent.addView(mViewBinding.root)
         super.setContentView(rootView)
+        //注册加载框
         registerUiChange()
+        //设置TitleBar
         showTitleBar(showTitleBar())
 
         if (useTranslucentStatusBar()) {
@@ -86,11 +102,28 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel> : AppCompa
     }
 
 
-    protected open fun statusBarColor(color: Int = ContextCompat.getColor(mContext, R.color.base_black)) {
+    /**
+     * 设置状态栏颜色
+     * @param color 颜色
+     */
+    protected open fun statusBarColor(
+        color: Int = ContextCompat.getColor(
+            mContext,
+            R.color.base_black
+        )
+    ) {
         mBaseViewBinding.ivStatusBar.setBackgroundColor(color)
     }
 
-    protected open fun toolBarLift(resId: Int = R.mipmap.base_icon_back_black, listener: View.OnClickListener = View.OnClickListener { mContext.onBackPressed() }) {
+    /**
+     * 设置TitleBar左边图片
+     * @param resId 图片
+     * @param listener 点击事件(默认是点击返回)
+     */
+    protected open fun toolBarLift(
+        resId: Int = R.mipmap.base_icon_back_black,
+        listener: View.OnClickListener = View.OnClickListener { mContext.onBackPressed() }
+    ) {
 
         mBaseViewBinding.ivLeft?.run {
             setImageResource(resId)
@@ -99,6 +132,12 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel> : AppCompa
 
     }
 
+    /**
+     * 设置TitleBar右边文字
+     * @param text 文字
+     * @param textColor 文字颜色
+     * @param listener 点击事件
+     */
     protected open fun toolBarRight(text: String, textColor: Int, listener: View.OnClickListener?) {
         mBaseViewBinding.tvRight?.run {
             setText(text)
@@ -107,6 +146,11 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel> : AppCompa
         }
     }
 
+    /**
+     * 设置TitleBar右边图片
+     * @param resId 图片资源
+     * @param listener 点击事件
+     */
     protected open fun toolBarRight(resId: Int, listener: View.OnClickListener?) {
         mBaseViewBinding.ivRight?.run {
             setImageResource(resId)
@@ -115,6 +159,11 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel> : AppCompa
 
     }
 
+    /**
+     * 显示TitleBar [title]不为空才会显示TitleBar
+     * @param title TitleBar文字
+     * @param titleColor TitleBar文字颜色
+     */
     protected open fun toolBarTitle(
         title: String = "",
         titleColor: Int = ContextCompat.getColor(
@@ -132,18 +181,36 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel> : AppCompa
         }
     }
 
+    /**
+     * 显示TitleBar
+     */
     protected open fun showTitleBar(visible: Int) {
         mBaseViewBinding.toolbar.visibility = visible
     }
 
+    /**
+     * 显示TitleBar
+     */
     protected open fun showTitleBar(): Int = View.VISIBLE
 
+    /**
+     * 初始化数据
+     */
     protected abstract fun initData()
 
+    /**
+     * liveData 数据监听
+     */
     protected abstract fun createObserver()
 
+    /**
+     * 是否全透明状态栏
+     */
     protected open fun useTranslucentStatusBar(): Boolean = false
 
+    /**
+     * 状态栏文字 是否深色
+     */
     protected open fun useLightBar(): Boolean = false
 
     override fun onDestroy() {

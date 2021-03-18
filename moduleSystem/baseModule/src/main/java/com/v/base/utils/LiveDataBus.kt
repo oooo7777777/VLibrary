@@ -12,11 +12,11 @@ object LiveDataBus {
 
     //一个事件对应多个页面
     private val lifecycleMap =
-            ConcurrentHashMap<String, CopyOnWriteArrayList<LifecycleOwner>>()
+        ConcurrentHashMap<String, CopyOnWriteArrayList<LifecycleOwner>>()
 
     //一个页面对应多个事件
     private val eventTypeMap =
-            ConcurrentHashMap<LifecycleOwner, CopyOnWriteArrayList<String>>()
+        ConcurrentHashMap<LifecycleOwner, CopyOnWriteArrayList<String>>()
 
     //获取对应事件的LiveData
     fun <T> with(eventName: String): StickLiveData<T> {
@@ -97,7 +97,11 @@ object LiveDataBus {
             observeStick(owner, observer, false)
         }
 
-        private fun observeStick(owner: LifecycleOwner, observer: Observer<in T>, stick: Boolean = true) {
+        private fun observeStick(
+            owner: LifecycleOwner,
+            observer: Observer<in T>,
+            stick: Boolean = true
+        ) {
             super.observe(owner, StickWarpObserver(this, observer, stick))
             addLifecycleOwner(eventName, owner)
             addEventType(eventName, owner)
@@ -118,9 +122,9 @@ object LiveDataBus {
 
     //装饰者模式对原先的Observer进行包装
     class StickWarpObserver<T>(
-            private val stickLiveData: StickLiveData<T>,
-            private val observer: Observer<in T>,
-            private val stick: Boolean//是否支持黏性事件
+        private val stickLiveData: StickLiveData<T>,
+        private val observer: Observer<in T>,
+        private val stick: Boolean//是否支持黏性事件
     ) : Observer<T> {
 
         //创建Observer时mLastVersion的默认赋值为LiveData的Version,规避黏性事件

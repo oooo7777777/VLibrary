@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
-import com.v.base.utils.ext.log
+import com.v.base.utils.log
 import java.lang.reflect.ParameterizedType
 
 
@@ -186,7 +186,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel> : Fragment() {
     private fun dispatchChildVisibleState(visible: Boolean) {
         val childFragmentManager = childFragmentManager
         val fragments = childFragmentManager.fragments
-        if (!fragments.isEmpty()) {
+        if (fragments.isNotEmpty()) {
             for (child in fragments) {
                 if (child is BaseFragment<*, *> && !child.isHidden && child.userVisibleHint) {
                     (child as BaseFragment<*, *>).dispatchUserVisibleHint(
@@ -197,20 +197,26 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel> : Fragment() {
         }
     }
 
+    /**
+     * 对用户第一次可见
+     */
     open fun onFragmentFirstVisible() {
-//        (javaClass.simpleName + "  对用户第一次可见").logE()
         javaClass.log()
         registerUiChange()
         initData()
         createObserver()
     }
 
+    /**
+     * 对用户可见
+     */
     open fun onFragmentResume() {
-//        (javaClass.simpleName + "  对用户可见").logE()
     }
 
+    /**
+     * 对用户不可见
+     */
     open fun onFragmentPause() {
-//        (javaClass.simpleName + "  对用户不可见").logE()
     }
 
     protected abstract fun initData()

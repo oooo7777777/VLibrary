@@ -10,17 +10,19 @@ import java.io.IOException
 import java.lang.reflect.Type
 import java.nio.charset.Charset
 
-class FastJsonConverterFactory(val charset: Charset) : Converter.Factory()
-{
-
+/**
+ * author  : ww
+ * desc    :
+ * time    : 2021-03-16 09:52:45
+ */
+class FastJsonConverterFactory(val charset: Charset) : Converter.Factory() {
 
     override fun requestBodyConverter(
         type: Type?,
         parameterAnnotations: Array<Annotation>?,
         methodAnnotations: Array<Annotation>?,
         retrofit: Retrofit?
-    ): Converter<*, RequestBody>?
-    {
+    ): Converter<*, RequestBody>? {
         return JsonRequestBodyConverter<String>() //请求
     }
 
@@ -28,35 +30,29 @@ class FastJsonConverterFactory(val charset: Charset) : Converter.Factory()
         type: Type?,
         annotations: Array<Annotation>?,
         retrofit: Retrofit?
-    ): Converter<ResponseBody, *>?
-    {
+    ): Converter<ResponseBody, *>? {
         return JsonResponseBodyConverter<String>(type!!) //响应
     }
 
-    private inner class JsonRequestBodyConverter<T> : Converter<T, RequestBody>
-    {
+    private inner class JsonRequestBodyConverter<T> : Converter<T, RequestBody> {
         private val MEDIA_TYPE = MediaType.parse("application/json; charset=UTF-8")
 
         @Throws(IOException::class)
-        override fun convert(value: T): RequestBody
-        {
+        override fun convert(value: T): RequestBody {
             return RequestBody.create(MEDIA_TYPE, value.toString())
         }
     }
 
-    private inner class JsonResponseBodyConverter<T>(private val type: Type) : Converter<ResponseBody, T>
-    {
+    private inner class JsonResponseBodyConverter<T>(private val type: Type) :
+        Converter<ResponseBody, T> {
 
         @Throws(IOException::class)
-        override fun convert(value: ResponseBody): T?
-        {
+        override fun convert(value: ResponseBody): T? {
             val bytes = value.bytes()
-            try
-            {
+            try {
                 val result = String(bytes)
                 return JSON.parseObject<T>(result, type)
-            } finally
-            {
+            } finally {
                 value.close()
             }
 
@@ -65,13 +61,11 @@ class FastJsonConverterFactory(val charset: Charset) : Converter.Factory()
 
     }
 
-    companion object
-    {
+    companion object {
         private val UTF_8 = Charset.forName("UTF-8")
 
         @JvmOverloads
-        fun create(charset: Charset = UTF_8): FastJsonConverterFactory
-        {
+        fun create(charset: Charset = UTF_8): FastJsonConverterFactory {
             return FastJsonConverterFactory(charset)
         }
     }

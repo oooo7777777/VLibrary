@@ -1,4 +1,4 @@
-package com.v.base.utils.ext
+package com.v.base.utils
 
 import android.content.Context
 import android.os.Bundle
@@ -17,6 +17,12 @@ private fun FragmentManager.inTransaction(func: FragmentTransaction.() -> Fragme
     beginTransaction().func().commit()
 }
 
+/**
+ * 添加Fragment
+ * @param fragment Fragment对象
+ * @param frameId 需要显示Fragment的layout
+ * @param bundle 传值
+ */
 fun Context.addFragment(fragment: Fragment, frameId: Int, bundle: Bundle? = null) = run {
     if (bundle == null) {
         fragment.arguments = bundle
@@ -28,7 +34,13 @@ fun Context.addFragment(fragment: Fragment, frameId: Int, bundle: Bundle? = null
     }
 }
 
-fun Context.replaceFragment(fragment: Fragment,frameId: Int, bundle: Bundle? = null) =
+/**
+ * 替换Fragment
+ * @param fragment Fragment对象
+ * @param frameId 需要显示Fragment的layout
+ * @param bundle 传值
+ */
+fun Context.replaceFragment(fragment: Fragment, frameId: Int, bundle: Bundle? = null) =
     run {
         if (bundle == null) {
             fragment.arguments = bundle
@@ -41,6 +53,10 @@ fun Context.replaceFragment(fragment: Fragment,frameId: Int, bundle: Bundle? = n
 
     }
 
+/**
+ * 移除Fragment
+ * @param fragment Fragment对象
+ */
 fun Context.removeFragment(fragment: Fragment) = run {
     if (this is AppCompatActivity) {
         supportFragmentManager.inTransaction { remove(fragment) }
@@ -50,6 +66,10 @@ fun Context.removeFragment(fragment: Fragment) = run {
 }
 
 
+/**
+ * 隐藏Fragment
+ * @param fragment Fragment对象
+ */
 fun Context.hideFragment(fragment: Fragment) = run {
 
     if (this is AppCompatActivity) {
@@ -60,6 +80,10 @@ fun Context.hideFragment(fragment: Fragment) = run {
 }
 
 
+/**
+ * 显示Fragment
+ * @param fragment Fragment对象
+ */
 fun Context.showFragment(fragment: Fragment) = run {
 
     if (this is AppCompatActivity) {
@@ -70,6 +94,13 @@ fun Context.showFragment(fragment: Fragment) = run {
 }
 
 
+/**
+ * Activity 获取Fragment
+ * 如果通过tag能获取得到Fragment则返回 否则新建
+ * @param tag Fragment tag
+ * @param clazz Fragment对象
+ * @param bundle 传值
+ */
 fun <T : Fragment> AppCompatActivity.getFragment(
     tag: String,
     clazz: Class<T>,
@@ -86,6 +117,13 @@ fun <T : Fragment> AppCompatActivity.getFragment(
 }
 
 
+/**
+ * Fragment  获取Fragment
+ * 如果通过tag能获取得到Fragment则返回 否则新建
+ * @param tag Fragment tag
+ * @param clazz Fragment对象
+ * @param bundle 传值
+ */
 fun <T : Fragment> Fragment.getFragment(
     tag: String,
     clazz: Class<T>,
@@ -103,6 +141,9 @@ fun <T : Fragment> Fragment.getFragment(
     }
 
 
+/**
+ *清空所有Fragment
+ */
 fun Any.removeAllFragment() = run {
     if (this is AppCompatActivity) {
         for (fragment in supportFragmentManager.fragments) {

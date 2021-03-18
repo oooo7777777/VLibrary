@@ -8,16 +8,13 @@ import android.widget.Toast
 import com.v.base.R
 
 
-object ToastUtil
-{
+object ToastUtil {
     private var isJumpWhenMore = true
     private var mToast: Toast? = null
     private var mText: TextView? = null
-    fun showToast(context: Context, content: String)
-    {
+    fun showToast(context: Context, content: String) {
         if (isJumpWhenMore) cancelToast()
-        if (mToast == null)
-        {
+        if (mToast == null) {
             mToast = Toast(context)
             mToast?.let {
                 it.setGravity(Gravity.CENTER, 0, 0)
@@ -38,10 +35,8 @@ object ToastUtil
     }
 
 
-    private fun cancelToast()
-    {
-        if (mToast != null)
-        {
+    private fun cancelToast() {
+        if (mToast != null) {
             mToast!!.cancel()
             mToast = null
             mText = null

@@ -7,22 +7,28 @@ import com.qw.photo.callback.CoCoCallBack
 import com.qw.photo.pojo.PickResult
 import com.qw.photo.pojo.TakeResult
 import com.v.base.R
+import com.v.base.annotaion.DialogOrientation
 import com.v.base.databinding.BaseDialogPhotoSelectBinding
 import com.v.base.model.PhotoSelectViewModel
-import com.v.base.utils.ext.log
+import com.v.base.utils.log
 import java.io.File
 import java.util.*
 
-
+/**
+ * author  : ww
+ * desc    : 图片选择框
+ * time    : 2021-03-16 09:52:45
+ */
 class PhotoSelectDialog : BaseDialogFragment<BaseDialogPhotoSelectBinding, PhotoSelectViewModel>(),
     View.OnClickListener {
 
     private var ignoreBy = 200L//期望压缩大小,大小和图片呈现质量不能均衡所以压缩后不一定小于此值
     private var isImageCompression = false//是否开启压缩
 
-    override fun useDirection(): Int {
-        return DIRECTION_BOTTOM
+    override fun useDirection(): DialogOrientation {
+        return DialogOrientation.BOTTOM
     }
+
 
     private var listener: PhotoSelectDialogListener? = null
 

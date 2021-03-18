@@ -5,7 +5,7 @@ import android.graphics.Color
 import android.graphics.LinearGradient
 import android.graphics.RectF
 import android.graphics.Shader
-import com.v.base.utils.ext.dp2px
+import com.v.base.utils.dp2px
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator
 
 class MagPagerIndicatorDefault(context: Context?) : LinePagerIndicator(context) {

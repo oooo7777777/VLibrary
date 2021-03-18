@@ -23,6 +23,9 @@ abstract class BaseApplication : Application() {
         }
     }
 
+    /**
+     *    是否开启debug模式 关联输出日志
+     */
     protected open fun isDebug(): Boolean = true
 
 
@@ -40,6 +43,9 @@ abstract class BaseApplication : Application() {
 
     }
 
+    /**
+     * 初始化 ARouter
+     */
     private fun initARouter() {
         if (isDebug()) {
             ARouter.openLog()
@@ -48,6 +54,9 @@ abstract class BaseApplication : Application() {
         ARouter.init(this)
     }
 
+    /**
+     * 全局设置SmartRefreshLayout
+     */
     private fun initSmartRefreshLayout() {
         //设置全局的Header构建器
         SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, layout ->

@@ -1,32 +1,39 @@
 package com.v.base.dialog
 
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.v.base.BlankViewModel
 import com.v.base.R
+import com.v.base.annotaion.DialogOrientation
 import com.v.base.databinding.BaseDialogListBinding
-import com.v.base.views.LineItemDecoration
+import com.v.base.utils.divider
+import com.v.base.utils.linear
+import com.v.base.annotaion.RecyclerViewItemOrientation
 
+/**
+ * author  : ww
+ * desc    : 列表提示框
+ * time    : 2021-03-16 09:52:45
+ */
 class ListDialog : BaseDialogFragment<BaseDialogListBinding, BlankViewModel>() {
 
     private var list = ArrayList<String>()
 
     private var listener: ListDialogListener? = null
 
-    override fun useDirection(): Int {
-        return DIRECTION_BOTTOM
+    override fun useDirection(): DialogOrientation {
+        return DialogOrientation.BOTTOM
+    }
+
+    private val mAdapter by lazy {
+        mViewBinding.recyclerView.divider {
+            orientation = RecyclerViewItemOrientation.VERTICAL
+        }.linear(MyAdapter()) as MyAdapter
     }
 
 
     override fun initData() {
-
-        var mAdapter = MyAdapter(list)
-        mViewBinding.recyclerView.adapter = mAdapter
-        mViewBinding.recyclerView.layoutManager = LinearLayoutManager(context)
-        val decoration = LineItemDecoration(LineItemDecoration.Type.VERTICAL, 1f)
-        mViewBinding.recyclerView.addItemDecoration(decoration)
-
+        mAdapter.setList(list)
         mAdapter.setOnItemChildClickListener { adapter, view, position ->
             listener?.run {
                 onItem(
@@ -55,10 +62,7 @@ class ListDialog : BaseDialogFragment<BaseDialogListBinding, BlankViewModel>() {
         fun onItem(dialog: ListDialog, result: String, position: Int)
     }
 
-    class MyAdapter(list: List<String>) : BaseQuickAdapter<String, BaseViewHolder>(
-        R.layout.base_dialog_list_item,
-        list.toMutableList()
-    ) {
+    class MyAdapter : BaseQuickAdapter<String, BaseViewHolder>(R.layout.base_dialog_list_item) {
         init {
             addChildClickViewIds(R.id.tvContent)
         }

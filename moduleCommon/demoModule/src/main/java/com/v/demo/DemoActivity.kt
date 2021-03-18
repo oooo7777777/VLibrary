@@ -6,9 +6,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import com.v.base.BaseActivity
 import com.v.base.BlankViewModel
-import com.v.base.utils.ext.getApplicationViewModel
-import com.v.base.utils.ext.getFragment
-import com.v.base.utils.ext.randomNumber
+import com.v.base.utils.getApplicationViewModel
+import com.v.base.utils.getFragment
+import com.v.base.utils.randomNumber
 import com.v.demo.bean.UserBane
 import com.v.demo.databinding.DmActivityBinding
 import com.v.demo.model.AppViewModel

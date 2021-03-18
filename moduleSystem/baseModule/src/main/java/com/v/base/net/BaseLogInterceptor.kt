@@ -1,8 +1,8 @@
 package com.v.base.net
 
 import android.text.TextUtils
-import com.v.base.utils.ext.logD
-import com.v.base.utils.ext.logE
+import com.v.base.utils.logD
+import com.v.base.utils.logE
 import okhttp3.Headers
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -17,9 +17,10 @@ import java.nio.charset.Charset
 import java.nio.charset.UnsupportedCharsetException
 import java.util.concurrent.TimeUnit
 
-
 /**
- * 日志打印
+ * author  : ww
+ * desc    : 网络请求日志打印
+ * time    : 2021-03-16 09:52:45
  */
 open class BaseLogInterceptor : Interceptor {
 

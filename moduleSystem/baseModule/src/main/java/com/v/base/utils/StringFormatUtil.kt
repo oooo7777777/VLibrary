@@ -1,4 +1,4 @@
-package com.v.base.utils.ext
+package com.v.base.utils
 
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -8,9 +8,6 @@ import com.v.base.utils.ToastUtil
 import java.util.*
 
 
-/**
- * 字符串相关工具类
- */
 
 
 /**

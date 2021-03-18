@@ -2,7 +2,7 @@ package com.ww.appmodule.net
 
 import android.text.TextUtils
 import com.v.base.BaseApplication
-import com.v.base.utils.ext.getAppVersionCode
+import com.v.base.utils.getAppVersionCode
 import com.ww.appmodule.UserUtil
 import okhttp3.FormBody
 import okhttp3.Interceptor

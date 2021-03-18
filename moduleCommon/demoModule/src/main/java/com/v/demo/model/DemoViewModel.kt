@@ -4,8 +4,8 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import androidx.lifecycle.MutableLiveData
 import com.v.base.BaseViewModel
-import com.v.base.utils.ext.logD
-import com.v.base.utils.ext.toList
+import com.v.base.utils.logD
+import com.v.base.utils.toList
 import com.v.demo.bean.BannerBean
 import com.v.demo.bean.OneBean
 import com.ww.appmodule.net.RetrofitManager

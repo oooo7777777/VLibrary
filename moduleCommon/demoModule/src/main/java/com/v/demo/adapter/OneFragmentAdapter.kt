@@ -2,7 +2,7 @@ package com.v.demo.adapter
 
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
-import com.v.base.utils.ext.load
+import com.v.base.utils.load
 import com.v.demo.R
 import com.v.demo.bean.OneBean
 import com.v.demo.databinding.DmFragmentOneItemBinding

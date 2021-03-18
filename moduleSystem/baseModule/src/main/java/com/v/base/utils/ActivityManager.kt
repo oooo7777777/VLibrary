@@ -4,6 +4,11 @@ import android.app.Activity
 import android.content.Context
 import java.util.*
 
+/**
+ * author  : ww
+ * desc    : Activity管理
+ * time    : 2021-03-16 09:52:45
+ */
 class ActivityManager private constructor()
 {
 

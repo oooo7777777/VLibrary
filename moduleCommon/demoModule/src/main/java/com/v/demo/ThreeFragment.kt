@@ -3,7 +3,7 @@ package com.v.demo
 import android.view.View
 import androidx.lifecycle.Observer
 import com.v.base.BaseFragment
-import com.v.base.utils.ext.getApplicationViewModel
+import com.v.base.utils.getApplicationViewModel
 import com.v.demo.databinding.DmFragmentThreeBinding
 import com.v.demo.model.AppViewModel
 import com.v.demo.model.DataViewModel

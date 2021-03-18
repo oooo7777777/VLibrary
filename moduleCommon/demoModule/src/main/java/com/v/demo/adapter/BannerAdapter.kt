@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.viewpager.widget.PagerAdapter
-import com.v.base.utils.ext.getViewBinding
+import com.v.base.utils.getViewBinding
 import com.v.demo.R
 import com.v.demo.bean.BannerBean
 import com.v.demo.databinding.DmFragmentOneHeaderItemBinding

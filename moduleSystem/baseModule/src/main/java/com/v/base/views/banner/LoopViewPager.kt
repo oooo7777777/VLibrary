@@ -10,8 +10,7 @@ import android.view.animation.Interpolator
 import androidx.viewpager.widget.ViewPager
 import java.lang.ref.WeakReference
 
-class LoopViewPager : ViewPager
-{
+class LoopViewPager : ViewPager {
 
     /** auto scroll time in milliseconds, default is [.DEFAULT_INTERVAL]  */
     /**
@@ -25,6 +24,7 @@ class LoopViewPager : ViewPager
      * @param interval the interval to set
      */
     var interval = DEFAULT_INTERVAL.toLong()
+
     /** auto scroll direction, default is [.RIGHT]  */
     private var direction = RIGHT
     /** whether automatic cycle when auto scroll reaching the last or first item, default is true  */
@@ -41,8 +41,10 @@ class LoopViewPager : ViewPager
     var isCycle = true
     var isStopScrollWhenTouch = true
     var isBorderAnimation = true
+
     /** scroll factor for auto scroll animation, default is 1.0  */
     private var autoScrollFactor = 1.0
+
     /** scroll factor for swipe scroll animation, default is 1.0  */
     private var swipeScrollFactor = 1.0
 
@@ -56,7 +58,10 @@ class LoopViewPager : ViewPager
         init()
     }
 
-    constructor(paramContext: Context, paramAttributeSet: AttributeSet) : super(paramContext, paramAttributeSet) {
+    constructor(paramContext: Context, paramAttributeSet: AttributeSet) : super(
+        paramContext,
+        paramAttributeSet
+    ) {
         init()
     }
 
@@ -135,7 +140,7 @@ class LoopViewPager : ViewPager
     fun scrollOnce() {
         val adapter = adapter
         var currentItem = currentItem
-        var totalCount =adapter!!.count
+        var totalCount = adapter!!.count
         if (adapter == null || totalCount <= 1) {
             return
         }
@@ -161,17 +166,13 @@ class LoopViewPager : ViewPager
      *  * if event is up, start auto scroll again.
      *
      */
-    override fun dispatchTouchEvent(ev: MotionEvent): Boolean
-    {
+    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
         val action = MotionEventCompat.getActionMasked(ev)
-        if (isStopScrollWhenTouch)
-        {
-            if (action == MotionEvent.ACTION_DOWN && isAutoScroll)
-            {
+        if (isStopScrollWhenTouch) {
+            if (action == MotionEvent.ACTION_DOWN && isAutoScroll) {
                 isStopByTouch = true
                 stopAutoScroll()
-            } else if (ev.action == MotionEvent.ACTION_UP && isStopByTouch)
-            {
+            } else if (ev.action == MotionEvent.ACTION_UP && isStopByTouch) {
                 startAutoScroll()
             }
         }
@@ -233,8 +234,10 @@ class LoopViewPager : ViewPager
 
         /** do nothing when sliding at the last or first item  */
         val SLIDE_BORDER_MODE_NONE = 0
+
         /** cycle when sliding at the last or first item  */
         val SLIDE_BORDER_MODE_CYCLE = 1
+
         /** deliver event to parent when sliding at the last or first item  */
         val SLIDE_BORDER_MODE_TO_PARENT = 2
 

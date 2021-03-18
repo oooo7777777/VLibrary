@@ -14,9 +14,15 @@ import com.v.base.BaseViewModel
 import com.v.base.EventLiveData
 import com.v.base.LoadingDialog
 import com.v.base.R
-import com.v.base.utils.ext.logI
+import com.v.base.annotaion.DialogOrientation
+import com.v.base.utils.logI
 import java.lang.reflect.ParameterizedType
 
+/**
+ * author  : ww
+ * desc    :
+ * time    : 2021-03-16 09:52:45
+ */
 abstract class BaseDialogFragment<VB : ViewDataBinding, VM : BaseViewModel> : DialogFragment() {
     lateinit var mContext: Context
 
@@ -31,14 +37,6 @@ abstract class BaseDialogFragment<VB : ViewDataBinding, VM : BaseViewModel> : Di
         val aClass = type.actualTypeArguments[1] as Class<VM>
         ViewModelProvider(this).get(aClass)//绑定当前的DialogFragment
 //        ViewModelProvider(requireActivity()).get(aClass)//绑定当前的打开DialogFragment的载体
-    }
-
-    companion object {
-        const val DIRECTION_TOP: Int = 0
-        const val DIRECTION_BOTTOM: Int = 1
-        const val DIRECTION_LEFT: Int = 2
-        const val DIRECTION_RIGHT: Int = 3
-        const val DIRECTION_CENTRE: Int = 4
     }
 
 
@@ -86,18 +84,31 @@ abstract class BaseDialogFragment<VB : ViewDataBinding, VM : BaseViewModel> : Di
 
     protected abstract fun createObserver()
 
-    open fun useDirection(): Int = DIRECTION_CENTRE
+    /**
+     * 设置dialog弹出方向
+     */
+    open fun useDirection(): DialogOrientation = DialogOrientation.CENTRE
 
+    /**
+     * 设置Y轴偏移量
+     */
     open fun useY(): Int = 0
 
+    /**
+     * 设置X轴偏移量
+     */
     open fun useX(): Int = 0
 
-    open fun useGravity(): Int = -1
-
+    /**
+     * 是否变暗
+     */
     open fun useDim(): Boolean {
         return true
     }
 
+    /**
+     * 设置返回键不缺席dialog
+     */
     open fun useCancellation(): Boolean {
         return true
     }
@@ -126,34 +137,29 @@ abstract class BaseDialogFragment<VB : ViewDataBinding, VM : BaseViewModel> : Di
 
 
         when (useDirection()) {
-            DIRECTION_TOP -> {
-                wlp.gravity = if (useGravity() == -1) Gravity.TOP else useGravity()
+            DialogOrientation.TOP -> {
+                wlp.gravity = Gravity.TOP
                 window.setWindowAnimations(R.style.base_top_dialog_anim)
             }
-            DIRECTION_BOTTOM -> {
-                wlp.gravity = if (useGravity() == -1) Gravity.BOTTOM else useGravity()
+            DialogOrientation.BOTTOM -> {
+                wlp.gravity = Gravity.BOTTOM
                 window.setWindowAnimations(R.style.base_bottom_dialog_anim)
             }
-            DIRECTION_LEFT -> {
-                wlp.gravity = if (useGravity() == -1) Gravity.CENTER else useGravity()
+            DialogOrientation.LEFT -> {
+                wlp.gravity = Gravity.CENTER
                 window.setWindowAnimations(R.style.base_left_dialog_anim)
             }
 
-            DIRECTION_RIGHT -> {
-                wlp.gravity = if (useGravity() == -1) Gravity.CENTER else useGravity()
+            DialogOrientation.RIGHT -> {
+                wlp.gravity = Gravity.CENTER
                 window.setWindowAnimations(R.style.base_right_dialog_anim)
             }
 
-            DIRECTION_CENTRE -> {
-                wlp.gravity = if (useGravity() == -1) Gravity.CENTER else useGravity()
+            DialogOrientation.CENTRE -> {
+                wlp.gravity = Gravity.CENTER
                 window.setWindowAnimations(R.style.base_dialog_anim)
             }
-
-
         }
-
-
-
 
         window.attributes = wlp
     }
