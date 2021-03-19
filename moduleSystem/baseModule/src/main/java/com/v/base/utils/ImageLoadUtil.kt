@@ -31,20 +31,6 @@ fun ImageView.load(
 
 
 /**
- * 加载头像图片(默认头像占位图)
- * @param any 图片资源Glide所支持的
- * @param roundingRadius 图片圆角角度
- * @param errorResId 加载错误占位图
- */
-fun ImageView.loadAvatar(
-    any: Any,
-    roundingRadius: Float = 0f,
-    errorResId: Int = R.mipmap.base_iv_avatar_default
-) =
-    loadDispose(this, any, roundingRadius, errorResId)
-
-
-/**
  * 加载圆形图片
  * @param any 图片资源Glide所支持的
  * @param errorResId 加载错误占位图

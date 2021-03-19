@@ -23,7 +23,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:hint="全局的ViewModel监听"
+            android:hint="全局的liveData监听"
             android:text="@{userBean.name}"
             android:layout_width="match_parent"
             android:padding="10dp"

@@ -6,7 +6,7 @@ import com.azhon.appupdate.manager.DownloadManager
 import com.v.base.BaseFragment
 import com.v.base.dialog.HintDialog
 import com.v.base.dialog.ListDialog
-import com.v.base.dialog.PhotoSelectDialog
+import com.v.base.dialog.ImgSelectDialog
 import com.v.base.utils.*
 import com.v.demo.databinding.DmFragmentTowBinding
 import com.v.demo.model.AppViewModel
@@ -36,8 +36,7 @@ class TwoFragment : BaseFragment<DmFragmentTowBinding, DemoViewModel>(), View.On
 
     override fun onClick(v: View) {
         when (v.id) {
-            mViewBinding.btAsync.id->
-            {
+            mViewBinding.btAsync.id -> {
                 mViewModel.demoAsync {
                     it.toast()
                 }
@@ -60,15 +59,14 @@ class TwoFragment : BaseFragment<DmFragmentTowBinding, DemoViewModel>(), View.On
                     .download()
             }
             mViewBinding.bt0.id -> {
-                "点击间隔默认500".log()
+                "点击间隔默认500".toast()
             }
             mViewBinding.bt1.id -> {
-                "点击间隔1000".log()
+                "点击间隔1000".toast()
             }
             mViewBinding.bt2.id -> {
                 "显示toast".toast()
             }
-
             mViewBinding.bt3.id -> {
                 "打印日志".logE()
             }
@@ -88,7 +86,7 @@ class TwoFragment : BaseFragment<DmFragmentTowBinding, DemoViewModel>(), View.On
             }
             mViewBinding.bt5.id -> {
                 var list = ArrayList<String>()
-                for (i in 0 until 3) {
+                for (i in 1..3) {
                     list.add("Content$i")
                 }
                 ListDialog()
@@ -102,13 +100,16 @@ class TwoFragment : BaseFragment<DmFragmentTowBinding, DemoViewModel>(), View.On
                     }).show(mContext)
             }
             mViewBinding.bt6.id -> {
-                PhotoSelectDialog()
+                ImgSelectDialog()
                     .setImageCompression(true)
                     .setIgnoreBy(100)
                     .setPhotoSelectDialogListener(object :
-                        PhotoSelectDialog.PhotoSelectDialogListener {
+                        ImgSelectDialog.PhotoSelectDialogListener {
                         override fun onSuccess(file: File) {
+
                             mViewBinding.ivIcon.loadCircle(file)
+                            mViewBinding.ivIcon.load(file, 10f)
+
                         }
 
                     }).show(mContext)

@@ -1,6 +1,5 @@
 package com.v.base
 
-import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
@@ -17,7 +16,7 @@ import com.noober.background.BackgroundLibrary
 import com.v.base.databinding.BaseLayoutBinding
 import com.v.base.utils.ActivityManager
 import com.v.base.utils.log
-import com.v.base.utils.logD
+import com.v.base.utils.onClickAnimator
 import qiu.niorgai.StatusBarCompat
 import java.lang.reflect.ParameterizedType
 
@@ -93,7 +92,7 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel> : AppCompa
             )
         )
         statusBarColor()
-        toolBarLift(0)
+        toolBarLift()
         toolBarRight("", 0, null)
         toolBarRight(0, null)
         initData()
@@ -124,10 +123,12 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel> : AppCompa
         resId: Int = R.mipmap.base_icon_back_black,
         listener: View.OnClickListener = View.OnClickListener { mContext.onBackPressed() }
     ) {
-
         mBaseViewBinding.ivLeft?.run {
             setImageResource(resId)
-            setOnClickListener(listener)
+            this.onClickAnimator() {
+                listener.onClick(it)
+            }
+
         }
 
     }

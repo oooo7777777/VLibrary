@@ -85,19 +85,9 @@ abstract class BaseDialogFragment<VB : ViewDataBinding, VM : BaseViewModel> : Di
     protected abstract fun createObserver()
 
     /**
-     * 设置dialog弹出方向
+     * 设置dialog弹出方向 [DialogOrientation]
      */
     open fun useDirection(): DialogOrientation = DialogOrientation.CENTRE
-
-    /**
-     * 设置Y轴偏移量
-     */
-    open fun useY(): Int = 0
-
-    /**
-     * 设置X轴偏移量
-     */
-    open fun useX(): Int = 0
 
     /**
      * 是否变暗
@@ -107,7 +97,7 @@ abstract class BaseDialogFragment<VB : ViewDataBinding, VM : BaseViewModel> : Di
     }
 
     /**
-     * 设置返回键不缺席dialog
+     * 设置返回键不退出dialog
      */
     open fun useCancellation(): Boolean {
         return true
@@ -126,8 +116,7 @@ abstract class BaseDialogFragment<VB : ViewDataBinding, VM : BaseViewModel> : Di
         val wlp = window.attributes
         wlp.width = WindowManager.LayoutParams.MATCH_PARENT
         wlp.height = WindowManager.LayoutParams.WRAP_CONTENT
-        wlp.y = useY()
-        wlp.x = useX()
+
         if (useDim()) {
             wlp.dimAmount = 0.5f
         } else {

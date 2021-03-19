@@ -10,16 +10,16 @@
         android:orientation="vertical">
 
         <ImageView
-            android:background="@color/base_black"
             android:id="@+id/ivStatusBar"
             android:layout_width="match_parent"
-            android:layout_height="30dp"/>
+            android:layout_height="30dp"
+            android:background="@color/base_black" />
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/base_toolbar_height"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            android:background="@color/base_white"
             app:contentInsetStart="0dp">
 
             <RelativeLayout
@@ -44,8 +44,8 @@
                     android:gravity="center"
                     android:singleLine="true"
                     android:textColor="@color/base_black"
-                    android:textSize="@dimen/sp_18"
-                    android:textStyle="bold"
+                    android:textSize="@dimen/sp_14"
+                    app:textBold="@{true}"
                     tools:text="title" />
 
                 <TextView

@@ -4,7 +4,9 @@ import androidx.lifecycle.*
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.CopyOnWriteArrayList
 
-
+/**
+ * 使用liveData 代替EventBus
+ */
 object LiveDataBus {
 
     //一个事件对应一个LiveData

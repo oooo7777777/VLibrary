@@ -30,17 +30,14 @@ class OneFragment : BaseFragment<DmFragmentOneBinding, DemoViewModel>() {
             setDrawable(R.drawable.dm_divider_horizontal)
             orientation = RecyclerViewItemOrientation.GRID
             startVisible = true
-        }.grid(OneFragmentAdapter(),5) as OneFragmentAdapter
+        }.grid(OneFragmentAdapter(), 4) as OneFragmentAdapter
     }
 
     private val mAdapterHeaderView by lazy {
         mContext.getViewBinding<DmFragmentOneHeaderBinding>(R.layout.dm_fragment_one_header)
     }
 
-    private val mTransferee by lazy {
-        Transferee.getDefault(mContext).apply {
-        }
-    }
+    private val mTransferee by lazy { Transferee.getDefault(mContext) }
 
     private fun getTransferConfig(index: Int): TransferConfig {
         return TransferConfig.build()

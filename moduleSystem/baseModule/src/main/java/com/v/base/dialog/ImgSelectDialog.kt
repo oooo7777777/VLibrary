@@ -8,8 +8,8 @@ import com.qw.photo.pojo.PickResult
 import com.qw.photo.pojo.TakeResult
 import com.v.base.R
 import com.v.base.annotaion.DialogOrientation
-import com.v.base.databinding.BaseDialogPhotoSelectBinding
-import com.v.base.model.PhotoSelectViewModel
+import com.v.base.databinding.BaseDialogImgSelectBinding
+import com.v.base.model.ImgSelectViewModel
 import com.v.base.utils.log
 import java.io.File
 import java.util.*
@@ -19,7 +19,7 @@ import java.util.*
  * desc    : 图片选择框
  * time    : 2021-03-16 09:52:45
  */
-class PhotoSelectDialog : BaseDialogFragment<BaseDialogPhotoSelectBinding, PhotoSelectViewModel>(),
+class ImgSelectDialog : BaseDialogFragment<BaseDialogImgSelectBinding, ImgSelectViewModel>(),
     View.OnClickListener {
 
     private var ignoreBy = 200L//期望压缩大小,大小和图片呈现质量不能均衡所以压缩后不一定小于此值
@@ -32,17 +32,17 @@ class PhotoSelectDialog : BaseDialogFragment<BaseDialogPhotoSelectBinding, Photo
 
     private var listener: PhotoSelectDialogListener? = null
 
-    fun setPhotoSelectDialogListener(listener: PhotoSelectDialogListener): PhotoSelectDialog {
+    fun setPhotoSelectDialogListener(listener: PhotoSelectDialogListener): ImgSelectDialog {
         this.listener = listener
         return this
     }
 
-    fun setImageCompression(isImageCompression: Boolean): PhotoSelectDialog {
+    fun setImageCompression(isImageCompression: Boolean): ImgSelectDialog {
         this.isImageCompression = isImageCompression
         return this
     }
 
-    fun setIgnoreBy(ignoreBy: Long): PhotoSelectDialog {
+    fun setIgnoreBy(ignoreBy: Long): ImgSelectDialog {
         this.ignoreBy = ignoreBy
         return this
     }
@@ -96,7 +96,7 @@ class PhotoSelectDialog : BaseDialogFragment<BaseDialogPhotoSelectBinding, Photo
     private fun dispose(file: File) {
         (mViewModel.formatSize(mContext, file.length())).log()
         if (isImageCompression) {
-            mViewModel.imageCompression(this@PhotoSelectDialog, file, ignoreBy)
+            mViewModel.imageCompression(this@ImgSelectDialog, file, ignoreBy)
         } else {
             mViewModel.fileSuccess.value = file
         }

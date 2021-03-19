@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
         <variable
             name="bean"
             type="com.v.demo.bean.OneBean" />
@@ -19,6 +18,8 @@
             android:layout_width="match_parent"
             android:scaleType="centerCrop"
             app:imgUrl="@{bean.url}"
+            app:imgRadius="@{10f}"
+            app:circle="@{true}"
             android:layout_height="match_parent" />
 
     </LinearLayout>

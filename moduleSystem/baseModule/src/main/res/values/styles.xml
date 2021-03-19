@@ -39,11 +39,7 @@
         <item name="android:windowEnterAnimation">@anim/base_anim_push_up_in</item>
         <item name="android:windowExitAnimation">@anim/base_anim_push_up_out</item>
     </style>
-
-    <style name="base_fadein_dialog_anim">
-        <item name="android:windowEnterAnimation">@anim/base_anim_fadein_in</item>
-        <item name="android:windowExitAnimation">@anim/base_anim_fadein_out</item>
-    </style>
+    
 
     <style name="base_right_dialog_anim">
         <item name="android:windowEnterAnimation">@anim/base_anim_slide_right_in</item>

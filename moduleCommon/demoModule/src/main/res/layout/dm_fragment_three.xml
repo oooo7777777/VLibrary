@@ -15,6 +15,10 @@
             name="userBean"
             type="com.v.demo.bean.UserBane" />
 
+        <variable
+            name="content"
+            type="String" />
+
     </data>
 
     <LinearLayout
@@ -23,31 +27,51 @@
         android:orientation="vertical">
 
         <TextView
-            android:hint="全局的ViewModel监听"
-            android:text="@{userBean.name}"
             android:layout_width="match_parent"
-            android:padding="10dp"
-            android:gravity="center"
+            android:layout_height="wrap_content"
             android:background="@color/base_yellow"
-            android:layout_height="wrap_content"/>
+            android:gravity="center"
+            android:hint="全局的liveData监听"
+            android:padding="10dp"
+            android:text="@{userBean.name}" />
 
-        <View style="@style/base_line_horizontal_bold"/>
+        <View style="@style/base_line_horizontal_bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/base_blue"
+            android:gravity="center"
+            android:hint="单独的liveData监听 (EventBus)"
+            android:padding="10dp"
+            android:text="@{content}" />
+
+
+        <View style="@style/base_line_horizontal_bold" />
 
         <TextView
             android:id="@+id/tvContent"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:background="@color/base_black"
-            android:minHeight="200dp"
-            android:textColor="@color/base_white"
             android:gravity="center"
+            android:minHeight="200dp"
             android:text="ViewModel 数据共享"
-            android:layout_height="wrap_content"/>
+            android:textColor="@color/base_white" />
 
         <Button
             android:id="@+id/bt0"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="send Msg"
+            android:textAllCaps="false"
+            app:click="@{v}" />
+
+        <Button
+            android:id="@+id/bt1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Event Bus"
             android:textAllCaps="false"
             app:click="@{v}" />
 

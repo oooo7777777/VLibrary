@@ -20,7 +20,7 @@ class DemoActivity : BaseActivity<DmActivityBinding, BlankViewModel>(), View.OnC
 
     // 请求一组权限
     private var permissions =
-        arrayOf(Manifest.permission.ACCESS_WIFI_STATE, Manifest.permission.READ_EXTERNAL_STORAGE)
+        arrayOf(Manifest.permission.ACCESS_WIFI_STATE, Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.CAMERA)
     private var permissionsCount = 0
 
     private val requestMultiplePermissions =

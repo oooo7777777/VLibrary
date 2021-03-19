@@ -15,7 +15,7 @@
 
         <TextView
             android:id="@+id/tvTitle"
-            android:text="全局的ViewModel修改"
+            android:text="全局的liveData修改"
             android:layout_width="match_parent"
             android:padding="10dp"
             android:gravity="center"

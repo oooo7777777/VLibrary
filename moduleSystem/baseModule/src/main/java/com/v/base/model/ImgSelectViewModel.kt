@@ -20,7 +20,7 @@ import java.util.*
  * desc    : 图片处理
  * time    : 2021-03-16 09:52:45
  */
-class PhotoSelectViewModel : BaseViewModel() {
+class ImgSelectViewModel : BaseViewModel() {
 
     var fileSuccess = MutableLiveData<File>()
 

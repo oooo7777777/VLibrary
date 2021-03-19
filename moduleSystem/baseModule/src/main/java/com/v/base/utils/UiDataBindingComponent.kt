@@ -57,22 +57,6 @@ fun TextView.setDrawable(anyLeft: Any?, anyRight: Any?, w: Int, h: Int) {
 
 
 /**
- * 价格
- */
-@BindingAdapter(value = ["price"], requireAll = false)
-fun TextView.setPrice(price: String) {
-    text = if (price.isNullOrEmpty()) {
-        "¥0"
-    } else {
-        if (price.startsWith("¥")) {
-            price
-        } else {
-            "¥$price"
-        }
-    }
-}
-
-/**
  * 打电话
  */
 @BindingAdapter(value = ["callPhone"], requireAll = false)

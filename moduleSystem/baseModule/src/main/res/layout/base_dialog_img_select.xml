@@ -7,7 +7,7 @@
 
         <variable
             name="v"
-            type="com.v.base.dialog.PhotoSelectDialog" />
+            type="com.v.base.dialog.ImgSelectDialog" />
     </data>
 
     <LinearLayout

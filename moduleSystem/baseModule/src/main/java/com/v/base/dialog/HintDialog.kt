@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.view.Gravity
 import android.view.View
 import com.v.base.BlankViewModel
+import com.v.base.annotaion.DialogOrientation
 import com.v.base.databinding.BaseDialogHintBinding
 import com.v.base.utils.onClickAnimator
 
@@ -22,6 +23,7 @@ class HintDialog : BaseDialogFragment<BaseDialogHintBinding, BlankViewModel>() {
     private var btTextColors = ArrayList<String>()
 
     private var listener: HintDialogClickListener? = null
+
 
     override fun initData() {
 
