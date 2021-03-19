@@ -32,7 +32,7 @@ allprojects {
 ```
 dependencies {
   ...
-  implementation 'me.hegj:JetpackMvvm:1.2.1'
+  implementation  'com.vlibrary:VLibrary:Latest'
 }
 ```
 
