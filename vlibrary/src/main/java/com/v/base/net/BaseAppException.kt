@@ -7,7 +7,7 @@ import com.v.base.annotaion.Error
  * desc    : 错误日志处理
  * time    : 2021-03-16 09:52:45
  */
-class AppException : Exception {
+class BaseAppException : Exception {
 
     var errorMsg: String //错误消息
     var errCode: Int = 0 //错误码
@@ -23,5 +23,10 @@ class AppException : Exception {
         errCode = error.getKey()
         errorMsg = error.getValue()
         errorLog = e?.message
+    }
+
+    override fun toString(): String {
+        return "errCode=$errCode\nerrorMsg=$errorMsg\nerrorLog=$errorLog"
+
     }
 }

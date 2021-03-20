@@ -17,7 +17,7 @@ private val features = arrayOf(
 /**
  * 对象转JSON
  */
-fun <T> Any.toJson(cls: Class<T>): String =
+fun  Any.toJson(): String =
     run {
         JSON.toJSONString(this@toJson, *features)
     }

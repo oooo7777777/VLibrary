@@ -1,7 +1,7 @@
 package com.v.base.net
 
 
-class ApiResponse<T> : BaseResponse<T>() {
+class BaseApiResponse<T> : BaseResponse<T>() {
 
     var status = 0
     var msg = ""

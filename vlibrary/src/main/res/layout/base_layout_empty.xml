@@ -13,8 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:text="暂无数据"
-        android:textColor="@color/base_black"
-        android:textSize="@dimen/sp_13" />
+        android:textColor="@android:color/black" />
 
 </RelativeLayout>
 

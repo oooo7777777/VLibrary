@@ -4,23 +4,22 @@
     <!-- 默认主题，没有标题栏 -->
     <style name="Base_AppTheme" parent="Theme.AppCompat.NoActionBar">
         <!--用于默认操作栏的背景-->
-        <item name="colorPrimary">@color/base_colorTheme</item>
+        <item name="colorPrimary">@android:color/black</item>
         <!-- 主要用于状态栏-->
-        <item name="colorPrimaryDark">@color/base_colorTheme</item>
+        <item name="colorPrimaryDark">@android:color/black</item>
         <!--用于色彩控制器的默认值，用来给小部件着色-->
-        <item name="colorAccent">@color/base_gray</item>
+        <item name="colorAccent">@android:color/black</item>
         <!-- 窗口的背景颜色 -->
-        <item name="android:windowBackground">@color/base_background</item>
+        <item name="android:windowBackground">#EDEDED</item>
 
-        <item name="android:windowTranslucentStatus">false</item>
-        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
         <!--Android 5.x开始需要把颜色设置透明，否则导航栏会呈现系统默认的浅灰色-->
         <item name="android:statusBarColor">@android:color/transparent</item>
 
     </style>
 
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
-        <item name="android:windowBackground">@color/base_white</item>
+        <item name="android:windowBackground">@android:color/white</item>
         <item name="android:windowFullscreen">true</item>
     </style>
 
@@ -39,7 +38,7 @@
         <item name="android:windowEnterAnimation">@anim/base_anim_push_up_in</item>
         <item name="android:windowExitAnimation">@anim/base_anim_push_up_out</item>
     </style>
-    
+
 
     <style name="base_right_dialog_anim">
         <item name="android:windowEnterAnimation">@anim/base_anim_slide_right_in</item>
@@ -55,7 +54,7 @@
     <style name="base_line_horizontal">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>
-        <item name="android:background">@color/base_line</item>
+        <item name="android:background">#EDEDED</item>
         <item name="android:layerType">software</item>
     </style>
 
@@ -63,7 +62,7 @@
     <style name="base_line_horizontal_bold">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">8dp</item>
-        <item name="android:background">@color/base_line</item>
+        <item name="android:background">#EDEDED</item>
         <item name="android:layerType">software</item>
     </style>
 
@@ -71,7 +70,7 @@
     <style name="base_line_horizontal_bold_transparent">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">8dp</item>
-        <item name="android:background">@color/base_line</item>
+        <item name="android:background">#EDEDED</item>
         <item name="android:layerType">software</item>
     </style>
 
@@ -80,7 +79,7 @@
     <style name="base_line_vertical">
         <item name="android:layout_width">1dp</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="android:background">@color/base_line</item>
+        <item name="android:background">#EDEDED</item>
         <item name="android:layerType">software</item>
     </style>
 
@@ -88,7 +87,7 @@
     <style name="base_line_vertical_bold">
         <item name="android:layout_width">8dp</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="android:background">@color/base_line</item>
+        <item name="android:background">#EDEDED</item>
         <item name="android:layerType">software</item>
     </style>
 

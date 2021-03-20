@@ -11,8 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.v.base.BaseViewModel
-import com.v.base.EventLiveData
-import com.v.base.LoadingDialog
 import com.v.base.R
 import com.v.base.annotaion.DialogOrientation
 import com.v.base.utils.logI

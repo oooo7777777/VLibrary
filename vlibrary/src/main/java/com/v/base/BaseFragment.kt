@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
+import com.v.base.dialog.LoadingDialog
 import com.v.base.utils.log
 import java.lang.reflect.ParameterizedType
 

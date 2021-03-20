@@ -15,7 +15,7 @@
             android:layout_marginRight="40dp"
             android:orientation="vertical"
             app:bl_corners_radius="6dp"
-            app:bl_solid_color="@color/base_white">
+            app:bl_solid_color="@android:color/white">
 
 
             <RelativeLayout
@@ -69,7 +69,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:padding="15dp"
-                        android:text="@string/base_cancel"
+                        android:text="取消"
                         android:textColor="#999999"
                         android:textSize="12.5sp"
                         android:visibility="gone"
@@ -88,7 +88,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:padding="15dp"
-                        android:text="@string/base_i_know"
+                        android:text="确定"
                         android:textColor="#FF5369"
                         android:textSize="12.5sp" />
                 </LinearLayout>

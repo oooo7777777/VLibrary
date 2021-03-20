@@ -1,5 +1,4 @@
-rootProject.name = "VLibrary4.0"
+rootProject.name = "VLibrary"
 include ':app'
-include ':moduleSystem:baseModule'
-include ':moduleCommon:appModule', ':moduleCommon:demoModule'
-include ':moduleCore:homeModule', ':moduleCore:meModule'
+include ':vlibrary'
+

@@ -39,15 +39,6 @@ dependencies {
 - **3. 在app build.gradle中，android 模块下开启ViewDataBinding
 
 ```
-AndroidStudio 4.0 以下版本------>
-android {
-    ...
-    dataBinding {
-        enabled = true 
-    }
-}
-
-AndroidStudio 4.0及以上版本 ------>
 android {
     ...
    buildFeatures {
@@ -63,7 +54,7 @@ android {
 open class MyApplication : BaseApplication() {
 
     override fun isDebug(): Boolean {
-        return BuildConfig.LOG_DEBUG//是否开启日志打印(日志TAG为 PRETTY_LOGGER)
+        return true//是否开启日志打印(日志TAG为 PRETTY_LOGGER)
     }
 
     override fun initData() {
@@ -89,7 +80,7 @@ open class MyApplication : BaseApplication() {
 class MeActivity : BaseActivity<MeActivityBinding, BlankViewModel>() {
     
     /**
-     * 覆写显示Toolbar
+     * 重写显示Toolbar
      * @param title 标题(默认是空字符串 空字符则表示不显示Toolbar)
      * @param title 标题颜色
      */
@@ -98,7 +89,7 @@ class MeActivity : BaseActivity<MeActivityBinding, BlankViewModel>() {
     }
 
     /**
-     * 覆写Toolbar左边按钮事件
+     * 重写Toolbar左边按钮事件
      * @param resId 按钮图片资源(默认箭头)
      * @param listener 按钮事件(默认onBackPressed)
      */
@@ -107,7 +98,7 @@ class MeActivity : BaseActivity<MeActivityBinding, BlankViewModel>() {
     }
 
     /**
-     * 覆写Toolbar右边按钮图片事件
+     * 重写Toolbar右边按钮图片事件
      * @param resId 按钮资源
      * @param listener 按钮事件
      */
@@ -116,7 +107,7 @@ class MeActivity : BaseActivity<MeActivityBinding, BlankViewModel>() {
     }
 
     /**
-     * 覆写Toolbar右边按钮文字事件
+     * 重写Toolbar右边按钮文字事件
      * @param text 按钮资源
      * @param listener 按钮事件
      */
@@ -149,21 +140,21 @@ class MeFragment : BaseFragment<MeFragmentBinding, MeViewModel>() {
     }
 
     /**
-     * 对用户第一次可见
+     *懒加载 对用户第一次可见
      */
     override fun onFragmentFirstVisible() {
         super.onFragmentFirstVisible()
     }
 
     /**
-     * 对用户可见
+     *懒加载 对用户可见
      */
     override fun onFragmentPause() {
         super.onFragmentPause()
     }
     
     /**
-     * 对用户不可见
+     *懒加载 对用户不可见
      */
     override fun onFragmentResume() {
         super.onFragmentResume()

@@ -13,40 +13,40 @@ import java.net.ConnectException
  * desc    : 错误处理
  * time    : 2021-03-16 09:52:45
  */
-object ExceptionHandle {
+object BaseExceptionHandle {
 
-    fun handleException(e: Throwable): AppException {
-        val ex: AppException
+    fun handleException(e: Throwable): BaseAppException {
+        val ex: BaseAppException
         e.let {
             when (it) {
                 is HttpException -> {
-                    ex = AppException(Error.NETWORK_ERROR, e)
+                    ex = BaseAppException(Error.NETWORK_ERROR, e)
                 }
                 is ConnectException -> {
-                    ex = AppException(Error.NETWORK_ERROR, e)
+                    ex = BaseAppException(Error.NETWORK_ERROR, e)
                 }
                 is javax.net.ssl.SSLException -> {
-                    ex = AppException(Error.SSL_ERROR, e)
+                    ex = BaseAppException(Error.SSL_ERROR, e)
                 }
                 is ConnectTimeoutException -> {
-                    ex = AppException(Error.TIMEOUT_ERROR, e)
+                    ex = BaseAppException(Error.TIMEOUT_ERROR, e)
                 }
                 is java.net.SocketTimeoutException -> {
-                    ex = AppException(Error.TIMEOUT_ERROR, e)
+                    ex = BaseAppException(Error.TIMEOUT_ERROR, e)
                 }
                 is java.net.UnknownHostException -> {
-                    ex = AppException(Error.TIMEOUT_ERROR, e)
+                    ex = BaseAppException(Error.TIMEOUT_ERROR, e)
 
                 }
                 is JSONException -> {
-                    ex = AppException(Error.PARSE_ERROR, e)
+                    ex = BaseAppException(Error.PARSE_ERROR, e)
                 }
-                is AppException -> {
+                is BaseAppException -> {
                     return it
                 }
 
                 else -> {
-                    ex = AppException(Error.UNKNOWN, e)
+                    ex = BaseAppException(Error.UNKNOWN, e)
                 }
             }
         }

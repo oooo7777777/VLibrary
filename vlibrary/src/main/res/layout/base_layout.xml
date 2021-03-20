@@ -13,13 +13,13 @@
             android:id="@+id/ivStatusBar"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:background="@color/base_black" />
+            android:background="@android:color/black" />
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/base_toolbar_height"
-            android:background="@color/base_white"
+            android:layout_height="45dp"
+            android:background="@android:color/white"
             app:contentInsetStart="0dp">
 
             <RelativeLayout
@@ -43,7 +43,7 @@
                     android:layout_marginRight="60dp"
                     android:gravity="center"
                     android:singleLine="true"
-                    android:textColor="@color/base_black"
+                    android:textColor="@android:color/black"
                     android:textSize="@dimen/sp_14"
                     app:textBold="@{true}"
                     tools:text="title" />
@@ -56,7 +56,7 @@
                     android:gravity="center"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
-                    android:textColor="@color/base_black"
+                    android:textColor="@android:color/black"
                     tools:src="@mipmap/base_icon_back_white"
                     tools:text="忽略全部" />
 
@@ -69,7 +69,6 @@
                     android:gravity="center"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
-                    android:textColor="@color/base_white"
                     android:visibility="gone"
                     tools:src="@mipmap/base_icon_back_white"
                     tools:visibility="visible" />

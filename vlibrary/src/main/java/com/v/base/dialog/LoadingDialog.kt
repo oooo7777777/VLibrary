@@ -1,10 +1,11 @@
-package com.v.base
+package com.v.base.dialog
 
 import android.app.Dialog
 import android.content.Context
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.Window
+import com.v.base.R
 
 class LoadingDialog(context: Context) : Dialog(context) {
 

@@ -2,6 +2,7 @@ package com.v.base
 
 import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,10 +15,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.noober.background.BackgroundLibrary
 import com.v.base.databinding.BaseLayoutBinding
-import com.v.base.utils.ActivityManager
+import com.v.base.dialog.LoadingDialog
 import com.v.base.utils.log
 import com.v.base.utils.onClickAnimator
-import qiu.niorgai.StatusBarCompat
 import java.lang.reflect.ParameterizedType
 
 
@@ -59,8 +59,6 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel> : AppCompa
         //注册BackgroundLibrary 可以直接在xml里面写shape
         BackgroundLibrary.inject2(this)
         super.onCreate(savedInstanceState)
-        //添加当前activity 统一管理
-        ActivityManager.appManager.addActivity(this)
         //设置屏幕反向为竖向
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         mContext = this
@@ -78,18 +76,8 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel> : AppCompa
         //设置TitleBar
         showTitleBar(showTitleBar())
 
-        if (useTranslucentStatusBar()) {
-            mBaseViewBinding.ivStatusBar.visibility = View.GONE
-        }
-        if (useLightBar()) {
-            StatusBarCompat.changeToLightStatusBar(mContext)
-        } else {
-            StatusBarCompat.cancelLightStatusBar(mContext)
-        }
         toolBarTitle(
-            "", ContextCompat.getColor(
-                mContext, R.color.base_colorTheme
-            )
+            "", Color.BLACK
         )
         statusBarColor()
         toolBarLift()
@@ -106,10 +94,7 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel> : AppCompa
      * @param color 颜色
      */
     protected open fun statusBarColor(
-        color: Int = ContextCompat.getColor(
-            mContext,
-            R.color.base_black
-        )
+        color: Int = Color.BLACK
     ) {
         mBaseViewBinding.ivStatusBar.setBackgroundColor(color)
     }
@@ -167,9 +152,7 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel> : AppCompa
      */
     protected open fun toolBarTitle(
         title: String = "",
-        titleColor: Int = ContextCompat.getColor(
-            mContext, R.color.base_black
-        )
+        titleColor: Int = Color.BLACK
     ) {
         if (title.isNotEmpty()) {
             mBaseViewBinding.toolbar.visibility = View.VISIBLE
@@ -203,21 +186,6 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel> : AppCompa
      * liveData 数据监听
      */
     protected abstract fun createObserver()
-
-    /**
-     * 是否全透明状态栏
-     */
-    protected open fun useTranslucentStatusBar(): Boolean = false
-
-    /**
-     * 状态栏文字 是否深色
-     */
-    protected open fun useLightBar(): Boolean = false
-
-    override fun onDestroy() {
-        super.onDestroy()
-        ActivityManager.appManager.finishActivity(this)
-    }
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

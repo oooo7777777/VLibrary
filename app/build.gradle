@@ -1,25 +1,28 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'kotlin-kapt'
     id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
 }
-
-def cfg = rootProject.ext.android
-def appId = rootProject.ext.appId
 
 android {
 
-    compileSdkVersion cfg.compileSdkVersion
-    buildToolsVersion cfg.buildToolsVersion
+    compileSdkVersion 29
+    buildToolsVersion "29.0.2"
 
     defaultConfig {
-        applicationId appId["app"]
-        minSdkVersion cfg.minSdkVersion
-        targetSdkVersion cfg.targetSdkVersion
-        versionCode cfg.versionCode
-        versionName cfg.versionName
+        minSdkVersion 21
+        targetSdkVersion 29
+        versionCode 260
+        versionName "2.6.0"
 
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+
+    }
+
+    buildFeatures {
+        dataBinding = true
     }
 
     buildTypes {
@@ -35,29 +38,13 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-
-    buildFeatures{
-        dataBinding = true
-    }
-
 }
-
-//编译期组件隔离，运行期组件按需依赖
-//mainModule需要跟cartModule,goodsModule,usersModule进行交互，所以在运行期添加了依赖
-if (!isModuleRun.toBoolean()) {
-    //获取当前运行的task
-    def tasks = project.gradle.startParameter.taskNames
-    for (String task : tasks) {
-        def upperName = task.toUpperCase()
-        //判断task是编译期还是运行期
-        if (upperName.contains("ASSEMBLE") || upperName.contains("INSTALL")) {
-            dependencies.add("implementation", project.project(':' + ':moduleCore:homeModule'))
-            dependencies.add("implementation", project.project(':' + ':moduleCore:meModule'))
-        }
-    }
-}
-
 
 dependencies {
-    implementation project(':moduleCommon:appModule')
+    implementation project(':vlibrary')
+
+    implementation "com.azhon:appupdateX:3.0.3"
+    implementation "com.github.hackware1993:MagicIndicator:1.7.0"
+    implementation "com.github.Hitomis.transferee:Transferee:1.6.1"
+    implementation "com.github.Hitomis.transferee:GlideImageLoader:1.6.1"
 }

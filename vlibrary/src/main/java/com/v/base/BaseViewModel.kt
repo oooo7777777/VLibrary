@@ -2,9 +2,10 @@ package com.v.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.v.base.net.AppException
+import com.v.base.net.BaseAppException
 import com.v.base.net.BaseResponse
-import com.v.base.net.ExceptionHandle
+import com.v.base.net.BaseExceptionHandle
+import com.v.base.utils.EventLiveData
 import kotlinx.coroutines.*
 
 abstract class BaseViewModel : ViewModel() {
@@ -27,7 +28,7 @@ abstract class BaseViewModel : ViewModel() {
     fun <T> request(
         block: suspend CoroutineScope.() -> BaseResponse<T>,
         success: (T) -> Unit,
-        error: (AppException) -> Unit = {},
+        error: (BaseAppException) -> Unit = {},
         dialog: Boolean = false
     ): Job {
         return viewModelScope.launch {
@@ -41,11 +42,11 @@ abstract class BaseViewModel : ViewModel() {
                 runCatching {
                     executeResponse(it) { t -> success(t) }
                 }.onFailure { e ->
-                    error(ExceptionHandle.handleException(e))
+                    error(BaseExceptionHandle.handleException(e))
                 }
             }.onFailure { e ->
                 loadingChange.dismissDialog.postValue(false)
-                error(ExceptionHandle.handleException(e))
+                error(BaseExceptionHandle.handleException(e))
             }
         }
     }
@@ -61,7 +62,7 @@ abstract class BaseViewModel : ViewModel() {
     fun <T> requestDefault(
         block: suspend () -> T,
         success: (T) -> Unit,
-        error: (AppException) -> Unit = {},
+        error: (BaseAppException) -> Unit = {},
         dialog: Boolean = false
     ): Job {
         return viewModelScope.launch {
@@ -75,11 +76,11 @@ abstract class BaseViewModel : ViewModel() {
                 runCatching {
                     success(it)
                 }.onFailure { e ->
-                    error(ExceptionHandle.handleException(e))
+                    error(BaseExceptionHandle.handleException(e))
                 }
             }.onFailure { e ->
                 loadingChange.dismissDialog.postValue(false)
-                error(ExceptionHandle.handleException(e))
+                error(BaseExceptionHandle.handleException(e))
             }
         }
     }
@@ -93,7 +94,7 @@ abstract class BaseViewModel : ViewModel() {
     ) {
         coroutineScope {
             if (!response.isSuccess()) {
-                throw AppException(
+                throw BaseAppException(
                     response.getResponseCode(),
                     response.getResponseMsg()
                 )

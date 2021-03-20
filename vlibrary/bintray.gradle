@@ -14,7 +14,6 @@ artifacts {
     archives sourcesJar
 }
 
-
 install {
     repositories.mavenInstaller {
         // This generates POM.xml with proper parameters
