@@ -1,4 +1,0 @@
-<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
-    <string name="hm_app_name">HomeModule</string>
-    <string name="h_string_activity_test_title">activity_test</string>
-</resources>
