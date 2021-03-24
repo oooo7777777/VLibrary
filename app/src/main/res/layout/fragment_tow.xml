@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <data>
+
+        <import type="com.v.demo.R" />
+
+        <variable
+            name="v"
+            type="com.v.demo.TwoFragment" />
+
+
+    </data>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <Button
+                android:id="@+id/bt0"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="点击间隔默认500"
+                android:textAllCaps="false"
+                app:click="@{v}" />
+
+            <Button
+                android:id="@+id/bt1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="点击间隔1000"
+                android:textAllCaps="false"
+                app:click="@{v}"
+                app:clickTime="@{1000}" />
+
+
+            <Button
+                android:id="@+id/bt2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="toast"
+                android:textAllCaps="false"
+                app:click="@{v}" />
+
+
+            <Button
+                android:id="@+id/bt3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="日志"
+                android:textAllCaps="false"
+                app:click="@{v}"
+                app:clickTime="@{2000}" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="打电话"
+                android:textAllCaps="false"
+                app:callPhone="@{123123}" />
+
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="复制文本到粘贴板"
+                android:textAllCaps="false"
+                app:copyToClipboard="@{3231}" />
+
+
+            <Button
+                android:id="@+id/bt4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                app:click="@{v}"
+                android:text="设置DrawableLeft"
+                android:textAllCaps="false"
+                app:drawableHeight="@{50}"
+                app:drawableLeft="@{R.mipmap.ic_launcher}"
+                app:drawableWidth="@{50}" />
+
+
+            <Button
+                android:id="@+id/bt5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                app:click="@{v}"
+                android:text="设置DrawableRight"
+                android:textAllCaps="false"
+                app:drawableHeight="@{30}"
+                app:drawableRight="@{R.mipmap.ic_launcher}"
+                app:drawableWidth="@{30}" />
+
+
+            <Button
+                android:id="@+id/bt6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                app:click="@{v}"
+                android:text="设置图片圆角"
+                android:textAllCaps="false" />
+
+
+            <Button
+                android:id="@+id/bt7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                app:click="@{v}"
+                android:text="设置图片圆形"
+                android:textAllCaps="false" />
+
+            <ImageView
+                android:id="@+id/ivIcon"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:scaleType="centerCrop"
+                app:imgUrl="@{R.mipmap.ic_movie}"
+                tools:src="@mipmap/ic_movie" />
+
+
+        </LinearLayout>
+    </ScrollView>
+</layout>
