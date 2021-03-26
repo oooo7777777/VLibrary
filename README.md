@@ -7,10 +7,10 @@
 - 加入Retrofit网络请求,协程，帮你简化各种操作，让你快速请求网络
 - 封装Base类，添加常用工具类
 
-#### 搭配代码模板插件[VLibraryPlugin](https://github.com/oooo7777777/VLibrary40)使用开发效率翻倍 :exclamation:  :exclamation: 
+#### 搭配代码模板插件[VLibraryPlugin](https://github.com/oooo7777777/VLibraryPlugin)使用开发效率翻倍 :exclamation:  :exclamation: 
 
 #### APK下载
-[APK下载](http://d.zqapps.com/uvpj?release_id=6054588c23389f29bcb025ad)
+[APK下载](http://d.zqapps.com/uvpj)
 
 
 #### 使用集成

@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
-    <string name="dm_app_name">DemoModule</string>
+    <string name="dm_app_name">VLibrary</string>
 
     <string-array name="dm_tab">
         <item> One </item>

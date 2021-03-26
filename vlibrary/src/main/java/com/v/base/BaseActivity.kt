@@ -3,6 +3,7 @@ package com.v.base
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +20,7 @@ import com.v.base.utils.getStatusBarHeight
 import com.v.base.utils.log
 import com.v.base.utils.onClickAnimator
 import com.v.base.utils.setViewLayoutParams
+import java.lang.reflect.Field
 import java.lang.reflect.ParameterizedType
 
 
@@ -99,10 +101,15 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel> : AppCompa
         color: Int = BaseApplication.getStatusBarColor()
     ) {
 
-        var decorViewClazz = Class.forName("com.android.internal.policy.DecorView");
-        var field = decorViewClazz.getDeclaredField("mSemiTransparentStatusBarColor");
-        field.isAccessible = true;
-        field.setInt(window.decorView, Color.TRANSPARENT) //改为透明
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            try {
+                val decorViewClazz = Class.forName("com.android.internal.policy.DecorView")
+                val field: Field = decorViewClazz.getDeclaredField("mSemiTransparentStatusBarColor")
+                field.isAccessible = true
+                field.setInt(window.decorView, Color.TRANSPARENT) //改为透明
+            } catch (e: Exception) {
+            }
+        }
 
         mBaseViewBinding.ivStatusBar.setViewLayoutParams(h = getStatusBarHeight())
         mBaseViewBinding.ivStatusBar.setBackgroundColor(color)
