@@ -4,6 +4,7 @@ package com.v.base.utils
 import com.alibaba.fastjson.JSON
 import com.alibaba.fastjson.JSONObject
 import com.alibaba.fastjson.serializer.SerializerFeature
+import java.lang.reflect.Type
 
 
 private val features = arrayOf(
@@ -17,7 +18,7 @@ private val features = arrayOf(
 /**
  * 对象转JSON
  */
-fun  Any.toJson(): String =
+fun Any.toJson(): String =
     run {
         JSON.toJSONString(this@toJson, *features)
     }
@@ -47,6 +48,18 @@ fun <T> String.toBean(cls: Class<T>): T =
             JSON.parseObject("{$this}", cls)
         } else {
             JSON.parseObject(this, cls)
+        }
+    }
+
+/**
+ * JSON转对象
+ */
+fun <T> String.toBean(type: Type): T =
+    run {
+        if (!this.startsWith("{") && !this.endsWith("}")) {
+            JSON.parseObject("{$this}", type)
+        } else {
+            JSON.parseObject(this, type)
         }
     }
 

@@ -1,6 +1,5 @@
 package com.v.demo
 
-import android.graphics.Color
 import android.view.View
 import androidx.lifecycle.Observer
 import com.v.base.BaseActivity
@@ -8,8 +7,6 @@ import com.v.base.BlankViewModel
 import com.v.base.utils.LiveDataBus
 import com.v.base.utils.getApplicationViewModel
 import com.v.base.utils.randomNumber
-import com.v.base.utils.toast
-import com.v.demo.bean.UserBane
 import com.v.demo.databinding.ActivityEventBusDemoBinding
 import com.v.demo.model.AppViewModel
 

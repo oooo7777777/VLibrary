@@ -20,7 +20,6 @@ import com.v.demo.bean.GirlBean
 class NetworkActivity : BaseActivity<ActivityNetworkBinding, NetworkViewModel>(),
     View.OnClickListener {
 
-
     override fun toolBarTitle(title: String, titleColor: Int) {
         super.toolBarTitle(this.getString(R.string.string_activity_network_title), titleColor)
     }
@@ -50,11 +49,7 @@ class NetworkActivity : BaseActivity<ActivityNetworkBinding, NetworkViewModel>()
                 mViewModel.getBase()
             }
 
-            mViewBinding.bt3.id -> {
-                mViewModel.demoAsync {
-                    mViewBinding.tvContent.text = it
-                }
-            }
+
         }
     }
 

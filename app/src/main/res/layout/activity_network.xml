@@ -45,13 +45,6 @@
             android:textAllCaps="false"
             app:click="@{v}" />
 
-        <Button
-            android:id="@+id/bt3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="使用协程加载数据"
-            android:textAllCaps="false"
-            app:click="@{v}" />
 
         <ScrollView
             android:layout_width="wrap_content"

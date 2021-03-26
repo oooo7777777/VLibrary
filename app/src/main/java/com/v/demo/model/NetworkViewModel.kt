@@ -1,8 +1,8 @@
 package com.v.demo.model
 
 import androidx.lifecycle.MutableLiveData
+import com.v.base.BaseApplication.Companion.apiBase
 import com.v.base.BaseViewModel
-import com.v.base.apiBase
 import com.v.base.utils.toJson
 import com.v.demo.net.Network.Companion.apiService
 import kotlinx.coroutines.delay
@@ -18,7 +18,6 @@ class NetworkViewModel : BaseViewModel() {
 
     //自定义api 网络请求 获取去壳数据
     fun getCustom() {
-
         request({
             //协程请求体
             apiService.getBanner()
@@ -32,7 +31,6 @@ class NetworkViewModel : BaseViewModel() {
 
     //自定义api 网络请求 获取原始数据
     fun getCustomDefault() {
-
         requestDefault({
             apiService.getBanner()
         }, success = {
@@ -40,32 +38,16 @@ class NetworkViewModel : BaseViewModel() {
         }, dialog = true)
     }
 
-
     //使用VLibrary库 网络请求
     fun getBase() {
-
-        requestDefault({
-            apiBase.get("banners")
-        }, success = {
-            string.value = it.toString()
-        }, dialog = true, error = {
-            string.value = it.toString()
-        })
-
+        //此处返回得数据是泛型,即你传入得是什么类型,得到得就是什么类型
+        request({ apiBase.get("banners") },
+            resultState = string,
+            dialog = true,
+            error = {
+                string.value = it.toString()
+            })
     }
 
 
-    //使用协程加载数据
-    fun demoAsync(success: (String) -> Unit) {
-        scopeAsync({
-            delay(1000)
-            getData()
-        }, success = {
-            success(it!!)
-        }, dialog = true)
-    }
-
-    private fun getData(): String {
-        return "使用协程加载数据"
-    }
 }

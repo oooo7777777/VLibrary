@@ -18,20 +18,20 @@ import java.nio.charset.Charset
 class FastJsonConverterFactory(val charset: Charset) : Converter.Factory() {
 
     override fun requestBodyConverter(
-        type: Type?,
-        parameterAnnotations: Array<Annotation>?,
-        methodAnnotations: Array<Annotation>?,
-        retrofit: Retrofit?
+        type: Type,
+        parameterAnnotations: Array<Annotation>,
+        methodAnnotations: Array<Annotation>,
+        retrofit: Retrofit
     ): Converter<*, RequestBody>? {
         return JsonRequestBodyConverter<String>() //请求
     }
 
     override fun responseBodyConverter(
-        type: Type?,
-        annotations: Array<Annotation>?,
-        retrofit: Retrofit?
-    ): Converter<ResponseBody, *>? {
-        return JsonResponseBodyConverter<String>(type!!) //响应
+        type: Type,
+        annotations: Array<Annotation>,
+        retrofit: Retrofit
+    ): Converter<ResponseBody, *> {
+        return JsonResponseBodyConverter<String>(type) //响应
     }
 
     private inner class JsonRequestBodyConverter<T> : Converter<T, RequestBody> {

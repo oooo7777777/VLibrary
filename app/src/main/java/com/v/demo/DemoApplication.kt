@@ -27,7 +27,7 @@ class DemoApplication : BaseApplication() {
     }
 
     /**
-     * 使用 VLibrary库自带的网络请求时候请重写此方法
+     * 使用VLibrary库自带的网络请求时候请重写此方法
      * 传入baseUrl
      */
     override fun baseUrl(): String {
@@ -35,8 +35,9 @@ class DemoApplication : BaseApplication() {
     }
 
     /**
-     * 使用 VLibrary库自带的网络请求时候请重写此方法
-     * 在这里可以对Retrofit.Builder做任意操作，比如添加json解析器
+     * 一般不用动~~~~~
+     * 如需要对VLibrary库自带的网络请求Retrofit.Builder做任意操作，比如添加json解析器，请重写此方法
+     *
      */
     override fun retrofitBuilder(): Retrofit.Builder {
         return Retrofit.Builder().apply {
@@ -46,8 +47,7 @@ class DemoApplication : BaseApplication() {
     }
 
     /**
-     * 使用 VLibrary库自带的网络请求时候请重写此方法
-     * 在这里可以添加拦截器
+     * 如需要对VLibrary库自带的网络请求OkHttpClient做任意操作，在这里可以添加拦截器，请求头
      */
     override fun okHttpClient(): OkHttpClient {
 
@@ -55,8 +55,8 @@ class DemoApplication : BaseApplication() {
             .connectTimeout(10, TimeUnit.SECONDS)   //超时时间 连接、读、写
             .readTimeout(5, TimeUnit.SECONDS)
             .writeTimeout(5, TimeUnit.SECONDS)
-            .addInterceptor(NetworkHeadInterceptor())  //示例：添加公共heads 注意要设置在日志拦截器之前，不然Log中会不显示head信息
-            .addInterceptor(BaseLogInterceptor())// 日志拦截器
+            .addInterceptor(NetworkHeadInterceptor())  //添加公共heads 注意要设置在日志拦截器之前，不然Log中会不显示head信息
+            .addInterceptor(BaseLogInterceptor())// 日志拦截器（这里请使用BaseLogInterceptor，不然网络请求日志不会打印出来）
             .build()
     }
 

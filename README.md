@@ -1,4 +1,4 @@
-# VLibrary
+# VLibrary40
 
 #### 介绍
 
@@ -112,27 +112,24 @@ class *** : BaseDialogFragment<***Binding, BlankViewModel>() {
 - BaseApplication
 
 ```
-class *** : BaseApplication() {
-    
+class ***: BaseApplication() {
+
     /**
-     * 重写此方法
-     * 开启日志打印(日志TAG为 PRETTY_LOGGER)
+     * 重写此方法 开启日志打印(日志TAG为 PRETTY_LOGGER)
      */
     override fun isDebug(): Boolean {
         return true
     }
 
     /**
-     * 重写此方法 
-     * 设置全局状态栏颜色
+     * 重写此方法 设置全局状态栏颜色
      */
     override fun statusBarColor(): Int {
         return randomColor
     }
 
     /**
-     * 重写此方法
-     * 使用 VLibrary库自带的网络请求
+     * 使用VLibrary库自带的网络请求时候请重写此方法
      * 传入baseUrl
      */
     override fun baseUrl(): String {
@@ -140,9 +137,9 @@ class *** : BaseApplication() {
     }
 
     /**
-     * 重写此方法
-     * 使用 VLibrary库自带的网络请求
-     * 在这里可以对Retrofit.Builder做任意操作，比如添加json解析器
+     * 一般不用动~~~~~
+     * 如需要对VLibrary库自带的网络请求Retrofit.Builder做任意操作，比如添加json解析器，请重写此方法
+     *
      */
     override fun retrofitBuilder(): Retrofit.Builder {
         return Retrofit.Builder().apply {
@@ -152,9 +149,7 @@ class *** : BaseApplication() {
     }
 
     /**
-     * 重写此方法
-     * 使用 VLibrary库自带的网络请求
-     * 在这里可以添加拦截器
+     * 如需要对VLibrary库自带的网络请求OkHttpClient做任意操作，在这里可以添加拦截器，请求头
      */
     override fun okHttpClient(): OkHttpClient {
 
@@ -162,10 +157,11 @@ class *** : BaseApplication() {
             .connectTimeout(10, TimeUnit.SECONDS)   //超时时间 连接、读、写
             .readTimeout(5, TimeUnit.SECONDS)
             .writeTimeout(5, TimeUnit.SECONDS)
-            .addInterceptor(NetworkHeadInterceptor())  //示例：添加公共heads 注意要设置在日志拦截器之前，不然Log中会不显示head信息
-            .addInterceptor(BaseLogInterceptor())// 日志拦截器
+            .addInterceptor(NetworkHeadInterceptor())  //添加公共heads 注意要设置在日志拦截器之前，不然Log中会不显示head信息
+            .addInterceptor(BaseLogInterceptor())// 日志拦截器（这里请使用BaseLogInterceptor，不然网络请求日志不会打印出来）
             .build()
     }
+
 }
 ```
 - BaseActivity
@@ -312,11 +308,10 @@ class ***: BaseDialogFragment<***Binding, BlankViewModel>() {
 1. 继承BaseApplication
 
 ```
-class *** : BaseApplication() {
-    
+class DemoApplication : BaseApplication() {
+
     /**
-     * 重写此方法
-     * 使用 VLibrary库自带的网络请求
+     * 使用VLibrary库自带的网络请求时候请重写此方法
      * 传入baseUrl
      */
     override fun baseUrl(): String {
@@ -324,9 +319,9 @@ class *** : BaseApplication() {
     }
 
     /**
-     * 重写此方法
-     * 使用 VLibrary库自带的网络请求
-     * 在这里可以对Retrofit.Builder做任意操作，比如添加json解析器
+     * 一般不用动~~~~~
+     * 如需要对VLibrary库自带的网络请求Retrofit.Builder做任意操作，比如添加json解析器，请重写此方法
+     *
      */
     override fun retrofitBuilder(): Retrofit.Builder {
         return Retrofit.Builder().apply {
@@ -336,9 +331,7 @@ class *** : BaseApplication() {
     }
 
     /**
-     * 重写此方法
-     * 使用 VLibrary库自带的网络请求
-     * 在这里可以添加拦截器
+     * 如需要对VLibrary库自带的网络请求OkHttpClient做任意操作，在这里可以添加拦截器，请求头
      */
     override fun okHttpClient(): OkHttpClient {
 
@@ -346,10 +339,13 @@ class *** : BaseApplication() {
             .connectTimeout(10, TimeUnit.SECONDS)   //超时时间 连接、读、写
             .readTimeout(5, TimeUnit.SECONDS)
             .writeTimeout(5, TimeUnit.SECONDS)
-            .addInterceptor(NetworkHeadInterceptor())  //示例：添加公共heads 注意要设置在日志拦截器之前，不然Log中会不显示head信息
-            .addInterceptor(BaseLogInterceptor())// 日志拦截器
+            .addInterceptor(NetworkHeadInterceptor())  //添加公共heads 注意要设置在日志拦截器之前，不然Log中会不显示head信息
+            .addInterceptor(BaseLogInterceptor())// 日志拦截器（这里请使用BaseLogInterceptor，不然网络请求日志不会打印出来）
             .build()
     }
+
+ 
+
 }
 ```
 
@@ -367,17 +363,17 @@ class ***: BaseViewModel() {
 //apiBase.post("url",map)
 
 
-    var string = MutableLiveData<String>()
+    var bean = MutableLiveData<Bean>()
 
     fun getData() {
-
-        requestDefault({
-            apiBase.get("url")
-        }, success = {
-            string.value = it.toString()
-        }, dialog = true, error = {
-            string.value = it.toString()
-        })
+        
+        //此处返回得数据是泛型,即你传入得是什么类型,得到得就是什么类型
+        request(
+            {
+                apiBase.get("banners")
+            },
+            bean
+        )
 
     }
 
@@ -748,5 +744,4 @@ LiveDataBus.with<String>(ConstData.CONTENT).observe(this, Observer {
 "com.noober.background:core:1.6.5",
 "com.github.forJrking:KLuban:1.0.5"
 ```
-
 

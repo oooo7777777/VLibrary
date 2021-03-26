@@ -2,7 +2,6 @@ package com.v.demo.model
 
 import androidx.lifecycle.MutableLiveData
 import com.v.base.BaseViewModel
-import com.v.demo.bean.UserBane
 
 /**
  * @Author : ww

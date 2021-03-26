@@ -31,7 +31,7 @@ class OneFragment : BaseFragment<FragmentOneBinding, DemoViewModel>() {
             orientation = RecyclerViewItemOrientation.GRID
             startVisible = true
             endVisible = true
-        }.grid(OneFragmentAdapter(), 4) as OneFragmentAdapter
+        }.grid(OneFragmentAdapter(), 2) as OneFragmentAdapter
     }
 
     private val mAdapterHeaderView by lazy {
@@ -80,10 +80,13 @@ class OneFragment : BaseFragment<FragmentOneBinding, DemoViewModel>() {
         })
 
 
+
         mViewModel.bannerBean.observe(this, Observer {
-            val mBannerAdapter = BannerAdapter(mContext, it)
-            mAdapterHeaderView.loopViewPager.adapter = mBannerAdapter
-            mAdapterHeaderView.loopViewPager.startAutoScroll()
+            it?.apply {
+                val mBannerAdapter = BannerAdapter(mContext, this.data!!)
+                mAdapterHeaderView.loopViewPager.adapter = mBannerAdapter
+                mAdapterHeaderView.loopViewPager.startAutoScroll()
+            }
         })
     }
 }

@@ -18,13 +18,6 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import java.util.concurrent.TimeUnit
 
-//直接使用base库里面的网络请求
-val apiBase: BaseNetApi by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
-    if (BaseApplication.getBaseUrl().isNullOrEmpty()) {
-        throw IllegalStateException("baseUrl为空,请继承BaseApplication重写baseUrl()")
-    }
-    BaseApplication.getRetrofitBuilder()?.build()!!.create(BaseNetApi::class.java)
-}
 
 abstract class BaseApplication : Application() {
 
@@ -52,6 +45,14 @@ abstract class BaseApplication : Application() {
         fun getStatusBarColor():Int
         {
             return statusBarColor
+        }
+
+        //直接使用base库里面的网络请求
+        val apiBase: BaseNetApi by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
+            if (getBaseUrl().isNullOrEmpty()) {
+                throw IllegalStateException("baseUrl为空,请继承BaseApplication重写baseUrl()")
+            }
+            getRetrofitBuilder()?.build()!!.create(BaseNetApi::class.java)
         }
     }
 

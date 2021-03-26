@@ -10,7 +10,7 @@ import com.v.demo.bean.BannerBean
 import com.v.demo.databinding.FragmentOneHeaderItemBinding
 
 
-class BannerAdapter(internal var context: Context, var data: List<BannerBean>?) : PagerAdapter() {
+class BannerAdapter( var context: Context, var data: List<BannerBean>) : PagerAdapter() {
     private var listener: ItemClickListener? = null
 
     override fun getCount(): Int {
