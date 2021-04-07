@@ -35,7 +35,7 @@ dependencies {
 }
 ```
 
-- **3. 在app build.gradle中，android 模块下开启ViewDataBinding
+- **3. 在app build.gradle中，android 模块下开启ViewDataBinding**
 
 ```
 
@@ -48,7 +48,7 @@ android {
  
 ```
 
-- **4. 继承BaseApplication
+- **4. 继承BaseApplication**
 
 ```
 open class *** : BaseApplication() {
@@ -56,7 +56,7 @@ open class *** : BaseApplication() {
 }
 ```
 
-- **5. 设置AndroidManifest.xml主题
+- **5. 设置AndroidManifest.xml主题**
 
 ```
  android:theme="@style/Base_AppTheme"
@@ -68,7 +68,7 @@ open class *** : BaseApplication() {
 
 
 
-- 使用Activity(基类为AppCompatActivity)
+- **使用Activity(基类为AppCompatActivity)**
 ```
 /**
  * @param MeActivityBinding ViewDataBinding
@@ -80,7 +80,7 @@ class *** : BaseActivity<***Binding, BlankViewModel>() {
 }
 ```
 
-- 使用Fragment(基类为Fragment)
+- **使用Fragment(基类为Fragment)**
 ```
 /**
  * @param MeFragmentBinding ViewDataBinding
@@ -92,7 +92,7 @@ class *** : BaseFragment<***Binding, MeViewModel>() {
 }
 ```
 
-- 使用ViewModel
+- **使用ViewModel**
 
 ```
 class ***ViewModel : BaseViewModel() {
@@ -102,7 +102,7 @@ class ***ViewModel : BaseViewModel() {
 ```
 
 
-- 使用Dialog(基类为DialogFragment)
+- **使用Dialog(基类为DialogFragment)**
 
 ```
 class *** : BaseDialogFragment<***Binding, BlankViewModel>() {
@@ -115,7 +115,7 @@ class *** : BaseDialogFragment<***Binding, BlankViewModel>() {
 
 #### 功能展示
 
-- BaseApplication
+- **BaseApplication**
 
 ```
 class ***: BaseApplication() {
@@ -170,7 +170,7 @@ class ***: BaseApplication() {
 
 }
 ```
-- BaseActivity
+- **BaseActivity**
 
 ```
 class ***: BaseActivity<***Binding, BlankViewModel>() {
@@ -242,7 +242,7 @@ class ***: BaseActivity<***Binding, BlankViewModel>() {
 }
 ```
 
-- BaseFragment
+- **BaseFragment**
 
 ```
 class ***: BaseFragment<***Binding, MeViewModel>() {
@@ -273,7 +273,7 @@ class ***: BaseFragment<***Binding, MeViewModel>() {
 }
 ```
 
-- BaseDialogFragment
+- **BaseDialogFragment**
 
 ```
 class ***: BaseDialogFragment<***Binding, BlankViewModel>() {
@@ -311,7 +311,7 @@ class ***: BaseDialogFragment<***Binding, BlankViewModel>() {
 
 > 第一种方法
 
-1. 继承BaseApplication
+- **1. 继承BaseApplication**
 
 ```
 class DemoApplication : BaseApplication() {
@@ -355,7 +355,7 @@ class DemoApplication : BaseApplication() {
 }
 ```
 
-2. 继承BaseViewModel
+- **2. 继承BaseViewModel**
 
 ```
 class ***: BaseViewModel() {
@@ -390,7 +390,7 @@ class ***: BaseViewModel() {
 
 > 第二种方法
 
-1. 新建请求配置类继承BaseNetwork
+- **1. 新建请求配置类继承BaseNetwork**
 
 ```
 class Network : BaseNetwork() {
@@ -440,7 +440,7 @@ class Network : BaseNetwork() {
 }
 ```
 
-2.如果你请求服务器返回的数据有基类（没有可忽略这一步）例如:**
+- **2.如果你请求服务器返回的数据有基类（没有可忽略这一步）**
 
 ```
 {
@@ -468,7 +468,7 @@ class ApiResponse<T>(var status: Int, var msg: String, var data: T)  : BaseRespo
 }
 ```
 
-3. 在ViewModel中发起请求，所有请求都是在viewModelScope中启动，请求会发生在IO线程，最终回调在主线程上，当页面销毁的时候，请求会统一取消，不用担心内存泄露的风险，框架做了2种请求使用方式**  
+- **3. 在ViewModel中发起请求，所有请求都是在viewModelScope中启动，请求会发生在IO线程，最终回调在主线程上，当页面销毁的时候，请求会统一取消，不用担心内存泄露的风险，框架做了2种请求使用方式**  
 
 ```
 class ***: BaseViewModel {
@@ -502,7 +502,7 @@ class ***: BaseViewModel {
 
 #### 其他功能
 
-- HintDialog(提示弹出框)
+- **HintDialog(提示弹出框)**
 
 ```
 HintDialog()
@@ -518,7 +518,7 @@ HintDialog()
     }).show(mContext)
 ```
 
-- ListDialog(列表弹出框)
+- **ListDialog(列表弹出框)**
 
 ```
  var list = ArrayList<String>()
@@ -536,11 +536,11 @@ HintDialog()
     }).show(mContext)
 ```
 
-- ImgSelectDialog(图片选择弹出框,此Dialog只是做了简单的使用,如需自定义请自行处理)
+- **ImgSelectDialog(图片选择弹出框,此Dialog只是做了简单的使用,如需自定义请自行处理)**
   1. 可选择拍照,相册
-  1. 直接拿到选择图片file
-  1. 通过CoCo[一款小而美的的Android系统相机拍照、系统相册选择、裁剪库](https://github.com/soulqw/CoCo)
-  1. 图片是否压缩 KLuban[基于Luban算法，重构后实现的图片压缩框架](https://github.com/forJrking/KLuban)
+  2. 直接拿到选择图片file
+  3. 通过CoCo[一款小而美的的Android系统相机拍照、系统相册选择、裁剪库](https://github.com/soulqw/CoCo)
+  4. 图片是否压缩 KLuban[基于Luban算法，重构后实现的图片压缩框架](https://github.com/forJrking/KLuban)
 
 ```
 ImgSelectDialog()
@@ -556,26 +556,26 @@ ImgSelectDialog()
 ```
 
 #### 列表数据展示
-- Adapter使用[BaseRecyclerViewAdapterHelper](https://github.com/CymChad/BaseRecyclerViewAdapterHelper)
-- 刷新框架使用[SmartRefreshLayout](https://github.com/scwang90/SmartRefreshLayout)
+- **Adapter使用[BaseRecyclerViewAdapterHelper](https://github.com/CymChad/BaseRecyclerViewAdapterHelper)**
+- **刷新框架使用[SmartRefreshLayout](https://github.com/scwang90/SmartRefreshLayout)**
 
-- 表格布局
+- **表格布局**
 
 ```
 recyclerView.grid(**Adapter(), 4) as **Adapter      
 ```
 
-- 竖向布局
+- **竖向布局**
 ```
 recyclerView.linear(**Adapter()) as **Adapter
 ```
 
-- 横向布局
+- **横向布局**
 ```
 recyclerView.linearHorizontal(**Adapter()) as **Adapter
 ```
 
-- 设置分割线(其他用法请自行查看 com.v.base.utils\RecyclerViewItemDecoration)
+- **设置分割线(其他用法请自行查看 com.v.base.utils\RecyclerViewItemDecoration)**
 ```
 recyclerView.divider {
             setDrawable(R.drawable.dm_divider_horizontal)
@@ -675,13 +675,13 @@ fun ImageView.loadCircle(any: Any, errorResId: Int = R.mipmap.base_iv_default) =
 
 ```
 
-- 代码使用
+- **代码使用**
 ```
 imageView.loadCircle(file)
 imageView.load(file, 10f)
 ```
 
-- xml里面使用
+- **xml里面使用**
 ```
 <ImageView
       android:layout_width="match_parent"
