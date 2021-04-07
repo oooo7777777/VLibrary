@@ -211,14 +211,12 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel> : Fragment() {
     /**
      * 对用户可见
      */
-    open fun onFragmentResume() {
-    }
+    open fun onFragmentResume() {}
 
     /**
      * 对用户不可见
      */
-    open fun onFragmentPause() {
-    }
+    open fun onFragmentPause() {}
 
     protected abstract fun initData()
 
@@ -228,8 +226,6 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel> : Fragment() {
         super.onDestroyView()
         isViewCreated = false
         mIsFirstVisible = true
-
-
     }
 
 

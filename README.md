@@ -48,7 +48,7 @@ android {
  
 ```
 
-- 继承BaseApplication
+- **4. 继承BaseApplication
 
 ```
 open class *** : BaseApplication() {
@@ -56,7 +56,7 @@ open class *** : BaseApplication() {
 }
 ```
 
-- 设置AndroidManifest.xml主题
+- **5. 设置AndroidManifest.xml主题
 
 ```
  android:theme="@style/Base_AppTheme"
