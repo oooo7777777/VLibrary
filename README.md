@@ -1,6 +1,6 @@
 # VLibrary40
 
-[！[]（https://jitpack.io/v/oooo7777777/VLibrary.svg）]（https://jitpack.io/#oooo7777777/VLibrary）
+[![](https://jitpack.io/v/oooo7777777/VLibrary.svg)](https://jitpack.io/#oooo7777777/VLibrary)
 
 
 #### 介绍
@@ -34,7 +34,7 @@ allprojects {
 ```
 dependencies {
   ...
-  implementation 'com.vlibrary:VLibrary:Latest'
+  implementation 'com.github.oooo7777777:VLibrary:Latest'
 }
 ```
 
