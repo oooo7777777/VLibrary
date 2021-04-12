@@ -3,8 +3,9 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'kotlin-android-extensions'
+    id 'com.github.dcendents.android-maven'
 }
-
+group='com.github.oooo7777777'
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
@@ -12,8 +13,8 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 260
-        versionName "2.6.0"
+        versionCode 290
+        versionName "2.9.0"
     }
 
     compileOptions {

@@ -24,7 +24,7 @@ private fun FragmentManager.inTransaction(func: FragmentTransaction.() -> Fragme
  * @param bundle 传值
  */
 fun Context.addFragment(fragment: Fragment, frameId: Int, bundle: Bundle? = null) = run {
-    if (bundle == null) {
+    if (bundle != null) {
         fragment.arguments = bundle
     }
     if (this is AppCompatActivity) {
@@ -42,7 +42,7 @@ fun Context.addFragment(fragment: Fragment, frameId: Int, bundle: Bundle? = null
  */
 fun Context.replaceFragment(fragment: Fragment, frameId: Int, bundle: Bundle? = null) =
     run {
-        if (bundle == null) {
+        if (bundle != null) {
             fragment.arguments = bundle
         }
         if (this is AppCompatActivity) {

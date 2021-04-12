@@ -1,5 +1,8 @@
 # VLibrary40
 
+[！[]（https://jitpack.io/v/oooo7777777/VLibrary.svg）]（https://jitpack.io/#oooo7777777/VLibrary）
+
+
 #### 介绍
 
 - 基于MVVM模式组件化集成谷歌官方推荐的JetPack组件库：LiveData、ViewModel、Lifecycle组件

@@ -109,7 +109,7 @@ fun View.click(onClickListener: View.OnClickListener?, clickTime: Long) {
  */
 @BindingAdapter(value = ["textBold"], requireAll = false)
 fun TextView.textBold(boolean: Boolean) {
-    this.paint.isFakeBoldText = true
+    this.paint.isFakeBoldText = boolean
 }
 
 
