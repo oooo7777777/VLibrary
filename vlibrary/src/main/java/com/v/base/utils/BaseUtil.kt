@@ -222,6 +222,12 @@ fun Float.dp2px(): Int =
         return (this * scale + 0.5f).toInt()
     }
 
+fun Int.dp2px(): Int =
+    run {
+        val scale = BaseApplication.getContext().resources.displayMetrics.density
+        return (this * scale + 0.5f).toInt()
+    }
+
 /**
  * dp转px
  */

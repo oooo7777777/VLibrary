@@ -110,7 +110,10 @@ fun <T> BaseQuickAdapter<T, *>.loadData(
         refreshLayout.setEnableLoadMore(true)
         refreshLayout.setOnLoadMoreListener {
             onLoadMore.run {
-                var page = mCurrentPageNum + 1
+                var page = mCurrentPageNum
+                if (list.isNotEmpty()) {
+                    page += 1
+                }
                 invoke(page)
             }
         }

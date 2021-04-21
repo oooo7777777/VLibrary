@@ -7,14 +7,18 @@ import com.hitomi.tilibrary.transfer.TransferConfig
 import com.hitomi.tilibrary.transfer.Transferee
 import com.v.base.BaseApplication
 import com.v.base.BaseFragment
-import com.v.base.utils.*
 import com.v.base.annotaion.RecyclerViewItemOrientation
+import com.v.base.utils.*
 import com.v.demo.adapter.BannerAdapter
 import com.v.demo.adapter.OneFragmentAdapter
+import com.v.demo.bean.BannerBean
 import com.v.demo.databinding.FragmentOneBinding
 import com.v.demo.databinding.FragmentOneHeaderBinding
 import com.v.demo.model.DemoViewModel
 import com.vansz.glideimageloader.GlideImageLoader
+import com.zhpan.bannerview.BannerViewPager
+import com.zhpan.bannerview.constants.PageStyle
+import com.zhpan.indicator.enums.IndicatorSlideMode
 
 /**
  * @Author : ww
@@ -38,6 +42,18 @@ class OneFragment : BaseFragment<FragmentOneBinding, DemoViewModel>() {
         mContext.getViewBinding<FragmentOneHeaderBinding>(R.layout.fragment_one_header)
     }
 
+    private val mViewPager by lazy {
+        (mAdapterHeaderView.bannerViewPager as BannerViewPager<BannerBean>).apply {
+            adapter = BannerAdapter()
+            setLifecycleRegistry(lifecycle)
+            setPageMargin(15.dp2px())
+            setRevealWidth(15.dp2px())
+            setPageStyle(PageStyle.MULTI_PAGE_OVERLAP)
+            setIndicatorSlideMode(IndicatorSlideMode.WORM)
+        }
+    }
+
+
     private val mTransferee by lazy { Transferee.getDefault(mContext) }
 
     private fun getTransferConfig(index: Int): TransferConfig {
@@ -57,6 +73,7 @@ class OneFragment : BaseFragment<FragmentOneBinding, DemoViewModel>() {
     override fun initData() {
         mAdapter.setHeaderView(mAdapterHeaderView.root)
         mViewBinding.refreshLayout.autoRefresh()
+//        setupViewPager()
         mViewModel.getList(page)
     }
 
@@ -80,13 +97,19 @@ class OneFragment : BaseFragment<FragmentOneBinding, DemoViewModel>() {
         })
 
 
-
         mViewModel.bannerBean.observe(this, Observer {
             it?.apply {
-                val mBannerAdapter = BannerAdapter(mContext, this.data!!)
-                mAdapterHeaderView.loopViewPager.adapter = mBannerAdapter
-                mAdapterHeaderView.loopViewPager.startAutoScroll()
+                mViewPager.create(this.data)
             }
         })
     }
+
+
+//    private fun setupViewPager() {
+//        mViewPager = mAdapterHeaderView.bannerViewPager as BannerViewPager<BannerBean>
+//        mViewPager.apply {
+//            adapter =  BannerAdapter()
+//            setLifecycleRegistry(lifecycle)
+//        }.create()
+//    }
 }
