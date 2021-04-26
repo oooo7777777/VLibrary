@@ -38,7 +38,7 @@ dependencies {
 }
 ```
 
-- **3. 在app build.gradle中，android 模块下开启ViewDataBinding**
+- **3. 在app build.gradle中，android 模块下开启DataBinding**
 
 ```
 
@@ -74,7 +74,7 @@ open class *** : BaseApplication() {
 - **使用Activity(基类为AppCompatActivity)**
 ```
 /**
- * @param MeActivityBinding ViewDataBinding
+ * @param MeActivityBinding DataBinding
  * @param BlankViewModel BaseViewModel(如果该页面不使用ViewModel 使用BlankViewModel)
  */
 class *** : BaseActivity<***Binding, BlankViewModel>() {
@@ -86,7 +86,7 @@ class *** : BaseActivity<***Binding, BlankViewModel>() {
 - **使用Fragment(基类为Fragment)**
 ```
 /**
- * @param MeFragmentBinding ViewDataBinding
+ * @param MeFragmentBinding DataBinding
  * @param MeViewModel BaseViewModel(如果该页面不使用ViewModel 使用BlankViewModel)
  */
 class *** : BaseFragment<***Binding, MeViewModel>() {
