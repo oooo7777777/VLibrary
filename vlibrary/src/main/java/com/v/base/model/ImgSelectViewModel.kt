@@ -9,7 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import com.forjrking.lubankt.Luban
 import com.orhanobut.logger.Logger
 import com.v.base.BaseViewModel
-import com.v.base.utils.log
+import com.v.base.utils.ext.log
 import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat

@@ -13,7 +13,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.v.base.BaseViewModel
 import com.v.base.R
 import com.v.base.annotaion.DialogOrientation
-import com.v.base.utils.logI
+import com.v.base.utils.ext.logI
+import com.v.base.utils.otherwise
+import com.v.base.utils.yes
 import java.lang.reflect.ParameterizedType
 
 /**
@@ -40,7 +42,7 @@ abstract class BaseDialogFragment<VB : ViewDataBinding, VM : BaseViewModel> : Di
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is Activity) {
+         (context is Activity).yes {
             this.mContext = context
         }
         javaClass.name.logI()
@@ -115,9 +117,9 @@ abstract class BaseDialogFragment<VB : ViewDataBinding, VM : BaseViewModel> : Di
         wlp.width = WindowManager.LayoutParams.MATCH_PARENT
         wlp.height = WindowManager.LayoutParams.WRAP_CONTENT
 
-        if (useDim()) {
+         (useDim()).yes {
             wlp.dimAmount = 0.5f
-        } else {
+        } .otherwise {
             wlp.dimAmount = 0f
             window.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
         }

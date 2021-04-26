@@ -100,7 +100,7 @@ private fun loadDispose(
             when {
                 roundingRadius > 0 -> {
                     this.scaleType = ImageView.ScaleType.CENTER_CROP
-                    var radius = roundingRadius.dp2px()
+                    var radius = roundingRadius.toInt().dp2px()
                     options.transform(CenterCrop(), RoundedCorners(radius)) //圆角
 
                     Glide.with(this.context)

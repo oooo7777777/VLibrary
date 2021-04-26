@@ -73,7 +73,6 @@ class OneFragment : BaseFragment<FragmentOneBinding, DemoViewModel>() {
     override fun initData() {
         mAdapter.setHeaderView(mAdapterHeaderView.root)
         mViewBinding.refreshLayout.autoRefresh()
-//        setupViewPager()
         mViewModel.getList(page)
     }
 
@@ -105,11 +104,4 @@ class OneFragment : BaseFragment<FragmentOneBinding, DemoViewModel>() {
     }
 
 
-//    private fun setupViewPager() {
-//        mViewPager = mAdapterHeaderView.bannerViewPager as BannerViewPager<BannerBean>
-//        mViewPager.apply {
-//            adapter =  BannerAdapter()
-//            setLifecycleRegistry(lifecycle)
-//        }.create()
-//    }
 }

@@ -1,6 +1,8 @@
 package com.v.base.net
 
 import com.v.base.annotaion.Error
+import com.v.base.utils.otherwise
+import com.v.base.utils.yes
 
 /**
  * author  : ww
@@ -14,9 +16,19 @@ class BaseAppException : Exception {
     var errorLog: String? //错误日志
 
     constructor(errCode: Int, error: String?, errorLog: String? = "") : super(error) {
-        this.errorMsg = error ?: "请求失败，请稍后再试"
+        this.errorMsg = error.isNullOrEmpty().yes {
+            "请求失败，请稍后再试"
+        }.otherwise {
+            error.toString()
+        }
+
+        this.errorLog = errorLog.isNullOrEmpty().yes {
+            this.errorMsg
+        }.otherwise {
+            errorLog.toString()
+        }
+
         this.errCode = errCode
-        this.errorLog = errorLog ?: this.errorMsg
     }
 
     constructor(error: Error, e: Throwable?) {

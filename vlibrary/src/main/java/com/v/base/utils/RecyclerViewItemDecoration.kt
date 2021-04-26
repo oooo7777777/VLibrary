@@ -22,8 +22,6 @@ import kotlin.math.ceil
 import kotlin.math.roundToInt
 
 /**
- * 最强大的分割线工具
- *
  * 1. 分隔图片
  * 2. 分隔颜色
  * 3. 分隔间距

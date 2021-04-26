@@ -22,7 +22,6 @@ class LoadingDialog(context: Context) : Dialog(context) {
     fun setDialogCancelable(isCancelable: Boolean): LoadingDialog {
         setCanceledOnTouchOutside(isCancelable)
         setCancelable(isCancelable)
-
         return this
     }
 

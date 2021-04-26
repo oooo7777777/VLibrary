@@ -6,9 +6,8 @@ import com.v.base.BaseFragment
 import com.v.base.dialog.HintDialog
 import com.v.base.dialog.ImgSelectDialog
 import com.v.base.dialog.ListDialog
-import com.v.base.utils.*
+import com.v.base.utils.goActivity
 import com.v.demo.databinding.FragmentThreeBinding
-import com.v.demo.model.AppViewModel
 import com.v.demo.model.DataViewModel
 import java.io.File
 

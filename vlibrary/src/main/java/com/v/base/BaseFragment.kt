@@ -13,7 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.v.base.dialog.LoadingDialog
-import com.v.base.utils.log
+import com.v.base.utils.ext.log
 import java.lang.reflect.ParameterizedType
 
 

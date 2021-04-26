@@ -2,9 +2,7 @@ package com.v.demo
 
 import android.view.View
 import com.v.base.BaseFragment
-import com.v.base.utils.getApplicationViewModel
 import com.v.demo.databinding.FragmentFourBinding
-import com.v.demo.model.AppViewModel
 import com.v.demo.model.DataViewModel
 
 /**
@@ -22,7 +20,6 @@ class FourFragment : BaseFragment<FragmentFourBinding, DataViewModel>(), View.On
         mViewModel.content.observe(this, androidx.lifecycle.Observer {
             mViewBinding.tvContent.text = it
         })
-
 
     }
 

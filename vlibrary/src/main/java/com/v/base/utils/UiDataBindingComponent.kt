@@ -40,14 +40,14 @@ fun ImageView.setImgUrl(
 fun TextView.setDrawable(anyLeft: Any?, anyRight: Any?, w: Int, h: Int) {
 
     if (anyLeft != null) {
-        this.context.loadListener(anyLeft, this.dp2px(w), this.dp2px(h),
+        this.context.loadListener(anyLeft, w.dp2px(), h.dp2px(),
             success = {
                 it.setBounds(0, 0, it.intrinsicWidth, it.intrinsicHeight)
                 this@setDrawable.setCompoundDrawables(it, null, null, null)
             })
     }
     if (anyRight != null) {
-        this.context.loadListener(anyRight, this.dp2px(w), this.dp2px(h),
+        this.context.loadListener(anyRight, w.dp2px(), h.dp2px(),
             success = {
                 it.setBounds(0, 0, it.intrinsicWidth, it.intrinsicHeight)
                 this@setDrawable.setCompoundDrawables(null, null, it, null)

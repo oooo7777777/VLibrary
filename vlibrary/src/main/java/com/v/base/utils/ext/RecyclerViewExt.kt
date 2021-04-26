@@ -122,7 +122,7 @@ fun <T> BaseQuickAdapter<T, *>.loadData(
 
     setOnItemClickListener { _, view, position ->
         onItemClick?.run {
-            if (!FastClickUtil().isInvalidClick(view)) {
+            if (!view.isInvalidClick()) {
                 invoke(view, position)
             }
         }
@@ -131,7 +131,7 @@ fun <T> BaseQuickAdapter<T, *>.loadData(
 
     setOnItemChildClickListener { _, view, position ->
         onItemChildClick?.run {
-            if (!FastClickUtil().isInvalidClick(view)) {
+            if (!view.isInvalidClick()) {
                 invoke(view, position)
             }
         }

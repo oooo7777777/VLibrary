@@ -1,7 +1,7 @@
 package com.v.base.net
 
 import com.v.base.annotaion.Error
-import com.v.base.utils.logE
+import com.v.base.utils.ext.logE
 import org.apache.http.conn.ConnectTimeoutException
 import org.json.JSONException
 import retrofit2.HttpException
@@ -19,6 +19,9 @@ object BaseExceptionHandle {
         val ex: BaseAppException
         e.let {
             when (it) {
+                is BaseAppException -> {
+                    ex = it
+                }
                 is HttpException -> {
                     ex = BaseAppException(Error.NETWORK_ERROR, e)
                 }
@@ -36,21 +39,16 @@ object BaseExceptionHandle {
                 }
                 is java.net.UnknownHostException -> {
                     ex = BaseAppException(Error.TIMEOUT_ERROR, e)
-
                 }
                 is JSONException -> {
                     ex = BaseAppException(Error.PARSE_ERROR, e)
                 }
-                is BaseAppException -> {
-                    return it
-                }
-
                 else -> {
                     ex = BaseAppException(Error.UNKNOWN, e)
                 }
             }
         }
-        (ex.errorMsg + "\n" + ex.errorLog).logE()
+        (ex.toString()).logE()
         return ex
     }
 }

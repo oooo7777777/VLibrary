@@ -47,16 +47,15 @@ class EventBusDemoActivity : BaseActivity<ActivityEventBusDemoBinding, BlankView
     override fun onClick(v: View) {
         when (v.id) {
             mViewBinding.bt0.id -> {
-
                 getApplicationViewModel(
                     mContext.application,
                     AppViewModel::class.java
-                ).string.postValue("我是全局数据" + randomNumber(99))
+                ).string.postValue("我是全局数据" + 99.randomNumber())
 
             }
             mViewBinding.bt1.id -> {
                 LiveDataBus.with<String>(ConstData.CONTENT)
-                    .postData("模拟eventBus" + randomNumber(99))
+                    .postData("模拟eventBus" + 99.randomNumber())
             }
         }
     }

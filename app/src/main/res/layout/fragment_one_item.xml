@@ -17,7 +17,7 @@
             android:id="@+id/ivIcon"
             android:layout_width="match_parent"
             android:scaleType="centerCrop"
-            app:imgUrl="@{bean.url}"
+            app:imgUrl="@{bean.title}"
             android:layout_height="match_parent" />
 
     </LinearLayout>

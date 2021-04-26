@@ -24,7 +24,7 @@ import java.util.ArrayList
  * time    : 2021/1/11 15:44
  */
 class IndicatorZoom(
-    context: Context?,
+    context: Context,
     viewPager: ViewPager,
     fragments: ArrayList<Fragment>,
     titles: Array<String>,

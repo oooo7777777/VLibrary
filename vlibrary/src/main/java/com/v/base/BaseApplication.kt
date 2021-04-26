@@ -12,8 +12,6 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.v.base.net.BaseLogInterceptor
 import com.v.base.net.BaseNetApi
 import com.v.base.net.FastJsonConverterFactory
-import com.v.base.utils.log
-import com.v.base.utils.logE
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import java.util.concurrent.TimeUnit

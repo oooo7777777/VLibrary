@@ -1,8 +1,8 @@
 package com.v.base.net
 
 import android.text.TextUtils
-import com.v.base.utils.logD
-import com.v.base.utils.logE
+import com.v.base.utils.ext.logD
+import com.v.base.utils.ext.logE
 import okhttp3.Headers
 import okhttp3.Interceptor
 import okhttp3.Response

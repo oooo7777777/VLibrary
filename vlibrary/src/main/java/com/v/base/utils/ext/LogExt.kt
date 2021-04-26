@@ -1,8 +1,7 @@
-package com.v.base.utils
+package com.v.base.utils.ext
 
 import android.util.Log
 import com.orhanobut.logger.Logger
-import com.v.base.BuildConfig
 
 const val TAG = "PRETTY_LOGGER"
 

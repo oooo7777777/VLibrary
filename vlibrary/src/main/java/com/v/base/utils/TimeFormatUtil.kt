@@ -14,7 +14,7 @@ fun getNowTimeMills(): Long {
 /**
  * 获取当前时间戳转为时间字符串
  */
-fun getNowTimeString(): String? {
+fun getNowTimeString(): String {
     return System.currentTimeMillis().formatTime()
 }
 

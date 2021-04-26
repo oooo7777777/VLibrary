@@ -7,6 +7,8 @@ import com.v.base.BlankViewModel
 import com.v.base.annotaion.DialogOrientation
 import com.v.base.databinding.BaseDialogHintBinding
 import com.v.base.utils.onClickAnimator
+import com.v.base.utils.otherwise
+import com.v.base.utils.yes
 
 
 /**
@@ -31,18 +33,17 @@ class HintDialog : BaseDialogFragment<BaseDialogHintBinding, BlankViewModel>() {
         mViewBinding?.run {
 
             tvLeft.onClickAnimator {
-                if (listener == null) {
+                (listener == null).yes {
                     dismiss()
-                } else {
+                }.otherwise {
                     listener!!.onClick(this@HintDialog, 0)
                 }
-
             }
 
             tvRight.onClickAnimator {
-                if (listener == null) {
+                (listener == null).yes {
                     dismiss()
-                } else {
+                }.otherwise {
                     listener!!.onClick(this@HintDialog, 1)
                 }
             }
@@ -104,11 +105,11 @@ class HintDialog : BaseDialogFragment<BaseDialogHintBinding, BlankViewModel>() {
      * @param btTexts size 2, left right
      */
     fun setButtonText(vararg btTexts: String): HintDialog {
-        if (btTexts.isEmpty() || btTexts.size > 2) {
+       (btTexts.isEmpty() || btTexts.size > 2).yes {
             throw IllegalStateException(" range of param btnTexts length is [1,2]!")
         }
-        for (text in btTexts) {
-            this.btTexts.add(text)
+        btTexts.forEach {
+            this.btTexts.add(it)
         }
         return this
     }
@@ -119,12 +120,13 @@ class HintDialog : BaseDialogFragment<BaseDialogHintBinding, BlankViewModel>() {
      * @param btTextColors size 2, left right
      */
     fun setButtonTextColor(vararg btTextColors: String): HintDialog {
-        if (btTextColors.isEmpty() || btTextColors.size > 2) {
+         (btTextColors.isEmpty() || btTextColors.size > 2).yes {
             throw IllegalStateException(" range of param btnTexts length is [1,2]!")
         }
-        for (text in btTextColors) {
-            this.btTextColors.add(text)
+        btTextColors.forEach {
+            this.btTextColors.add(it)
         }
+
         return this
     }
 

@@ -26,7 +26,11 @@ class NetworkViewModel : BaseViewModel() {
             string.value = it.toJson()
         }, error = {
             //失败数据
-        }, dialog = true)//是否显示加载框
+            string.value = it.errorMsg
+        }, code = {
+            //code返回 不管成功或者失败
+        }, dialog = true//是否显示加载框
+        )
     }
 
     //自定义api 网络请求 获取原始数据

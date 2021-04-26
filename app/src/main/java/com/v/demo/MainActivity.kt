@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import com.v.base.BaseActivity
 import com.v.base.BlankViewModel
 import com.v.base.utils.getFragment
+import com.v.base.utils.otherwise
+import com.v.base.utils.yes
 import com.v.demo.databinding.MainActivityBinding
 import com.v.demo.view.IndicatorZoom
 import net.lucode.hackware.magicindicator.ViewPagerHelper
@@ -25,9 +27,11 @@ class MainActivity : BaseActivity<MainActivityBinding, BlankViewModel>() {
                 if (it.value) {
                     permissionsCount++
                 }
-                if (permissionsCount == permissions.size) {
+                 (permissionsCount == permissions.size).yes {
                     //权限全部申请成功
-                }
+                }.otherwise {
+                     //部分权限申请失败
+                 }
             }
         }
 

@@ -10,7 +10,9 @@ import com.v.base.R
 import com.v.base.annotaion.DialogOrientation
 import com.v.base.databinding.BaseDialogImgSelectBinding
 import com.v.base.model.ImgSelectViewModel
-import com.v.base.utils.log
+import com.v.base.utils.ext.log
+import com.v.base.utils.otherwise
+import com.v.base.utils.yes
 import java.io.File
 import java.util.*
 
@@ -95,9 +97,9 @@ class ImgSelectDialog : BaseDialogFragment<BaseDialogImgSelectBinding, ImgSelect
 
     private fun dispose(file: File) {
         (mViewModel.formatSize(mContext, file.length())).log()
-        if (isImageCompression) {
+        (isImageCompression).yes {
             mViewModel.imageCompression(this@ImgSelectDialog, file, ignoreBy)
-        } else {
+        }.otherwise {
             mViewModel.fileSuccess.value = file
         }
 

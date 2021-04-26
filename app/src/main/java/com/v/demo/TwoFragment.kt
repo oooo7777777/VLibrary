@@ -1,17 +1,11 @@
 package com.v.demo
 
 import android.view.View
-import com.azhon.appupdate.config.UpdateConfiguration
-import com.azhon.appupdate.manager.DownloadManager
 import com.v.base.BaseFragment
-import com.v.base.dialog.HintDialog
-import com.v.base.dialog.ImgSelectDialog
-import com.v.base.dialog.ListDialog
 import com.v.base.utils.*
+import com.v.base.utils.ext.*
 import com.v.demo.databinding.FragmentTowBinding
-import com.v.demo.model.AppViewModel
 import com.v.demo.model.DemoViewModel
-import java.io.File
 
 
 /**
@@ -55,7 +49,7 @@ class TwoFragment : BaseFragment<FragmentTowBinding, DemoViewModel>(), View.OnCl
                 mViewBinding.bt5.setDrawable(null, R.mipmap.ic_movie, h = 80, w = 80)
             }
             mViewBinding.bt6.id -> {
-                mViewBinding.ivIcon.load(R.mipmap.ic_movie, randomNumber(90).toFloat())
+                mViewBinding.ivIcon.load(R.mipmap.ic_movie, 90.randomNumber().toFloat())
             }
             mViewBinding.bt7.id -> {
                 mViewBinding.ivIcon.loadCircle(R.mipmap.ic_movie)

@@ -3,6 +3,9 @@ package com.v.demo.model
 import androidx.lifecycle.MutableLiveData
 import com.v.base.BaseApplication.Companion.apiBase
 import com.v.base.BaseViewModel
+import com.v.base.net.BaseAppException
+import com.v.base.utils.ext.log
+import com.v.base.utils.ext.logE
 import com.v.demo.bean.BannerBean
 import com.v.demo.bean.GirlBean
 import com.v.demo.net.ApiResponse
@@ -25,11 +28,12 @@ class DemoViewModel : BaseViewModel() {
         if (page == 1) {
             getBanner()
         }
-
         request({
             apiService.getGirlBean(page)
         }, success = {
             girlBean.value = it
+        },code = {
+            "code:$it".logE()
         })
     }
 
@@ -42,5 +46,7 @@ class DemoViewModel : BaseViewModel() {
             bannerBean
         )
     }
+
+
 
 }

@@ -1,16 +1,10 @@
 package com.v.demo
 
-import com.v.base.BaseActivity
 import android.view.View
 import androidx.lifecycle.Observer
-import com.v.base.utils.linear
-import com.v.base.utils.loadData
-import com.v.base.utils.toJson
-import com.v.demo.adapter.NetworkActivityAdapter
-import com.v.demo.model.NetworkViewModel
+import com.v.base.BaseActivity
 import com.v.demo.databinding.ActivityNetworkBinding
-import com.v.demo.R
-import com.v.demo.bean.GirlBean
+import com.v.demo.model.NetworkViewModel
 
 /**
  * author  :

@@ -98,7 +98,7 @@ class ViewClickAnimatorUtil(
 
 //                            ("onAnimationEnd" ).log()
 
-                            if (!FastClickUtil().isInvalidClick(view, clickTime) && b) {
+                            if (!view.isInvalidClick(clickTime) && b) {
                                 onClick(view)
                             }
 
