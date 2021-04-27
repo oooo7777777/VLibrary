@@ -14,8 +14,8 @@ import com.v.base.BaseViewModel
 import com.v.base.R
 import com.v.base.annotaion.DialogOrientation
 import com.v.base.utils.ext.logI
-import com.v.base.utils.otherwise
-import com.v.base.utils.yes
+import com.v.base.utils.ext.otherwise
+import com.v.base.utils.ext.yes
 import java.lang.reflect.ParameterizedType
 
 /**

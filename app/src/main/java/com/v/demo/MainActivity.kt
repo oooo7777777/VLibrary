@@ -5,9 +5,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import com.v.base.BaseActivity
 import com.v.base.BlankViewModel
-import com.v.base.utils.getFragment
-import com.v.base.utils.otherwise
-import com.v.base.utils.yes
+import com.v.base.utils.ext.getFragment
+import com.v.base.utils.ext.otherwise
+import com.v.base.utils.ext.yes
 import com.v.demo.databinding.MainActivityBinding
 import com.v.demo.view.IndicatorZoom
 import net.lucode.hackware.magicindicator.ViewPagerHelper

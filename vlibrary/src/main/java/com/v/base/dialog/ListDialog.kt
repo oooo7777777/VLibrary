@@ -6,9 +6,9 @@ import com.v.base.BlankViewModel
 import com.v.base.R
 import com.v.base.annotaion.DialogOrientation
 import com.v.base.databinding.BaseDialogListBinding
-import com.v.base.utils.divider
-import com.v.base.utils.linear
 import com.v.base.annotaion.RecyclerViewItemOrientation
+import com.v.base.utils.ext.divider
+import com.v.base.utils.ext.linear
 
 /**
  * author  : ww

@@ -9,6 +9,10 @@ import com.v.base.BaseApplication
 import com.v.base.BaseFragment
 import com.v.base.annotaion.RecyclerViewItemOrientation
 import com.v.base.utils.*
+import com.v.base.utils.ext.divider
+import com.v.base.utils.ext.getViewBinding
+import com.v.base.utils.ext.grid
+import com.v.base.utils.ext.loadData
 import com.v.demo.adapter.BannerAdapter
 import com.v.demo.adapter.OneFragmentAdapter
 import com.v.demo.bean.BannerBean

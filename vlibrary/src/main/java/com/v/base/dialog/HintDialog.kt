@@ -4,11 +4,10 @@ import android.graphics.Color
 import android.view.Gravity
 import android.view.View
 import com.v.base.BlankViewModel
-import com.v.base.annotaion.DialogOrientation
 import com.v.base.databinding.BaseDialogHintBinding
-import com.v.base.utils.onClickAnimator
-import com.v.base.utils.otherwise
-import com.v.base.utils.yes
+import com.v.base.utils.ext.onClickAnimator
+import com.v.base.utils.ext.otherwise
+import com.v.base.utils.ext.yes
 
 
 /**

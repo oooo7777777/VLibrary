@@ -1,4 +1,4 @@
-package com.v.base.utils
+package com.v.base.utils.ext
 
 import android.app.Activity
 import android.content.ClipData
@@ -15,9 +15,12 @@ import androidx.annotation.ColorRes
 import androidx.annotation.LayoutRes
 import androidx.annotation.Nullable
 import androidx.annotation.StringRes
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import com.v.base.utils.DeviceIdUtil
+import com.v.base.utils.toast
 
 /**
  * @Author : ww
@@ -178,14 +181,12 @@ fun Activity.goActivity(cls: Class<*>, bundle: Bundle? = null, requestCode: Int 
 /**
  * activity跳转
  */
-fun Activity.finish(requestCode: Int = 0, bundle: Bundle? = null) = run {
+fun Activity.finish(requestCode: Int = AppCompatActivity.RESULT_OK, bundle: Bundle? = null) = run {
     val intent = Intent()
     if (bundle != null) {
         intent.putExtras(bundle)
     }
-    if (requestCode != 0) {
-        this.setResult(requestCode, intent)
-    }
+    this.setResult(requestCode, intent)
     this.finish()
 }
 

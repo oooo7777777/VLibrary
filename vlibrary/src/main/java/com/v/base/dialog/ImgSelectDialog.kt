@@ -11,8 +11,8 @@ import com.v.base.annotaion.DialogOrientation
 import com.v.base.databinding.BaseDialogImgSelectBinding
 import com.v.base.model.ImgSelectViewModel
 import com.v.base.utils.ext.log
-import com.v.base.utils.otherwise
-import com.v.base.utils.yes
+import com.v.base.utils.ext.otherwise
+import com.v.base.utils.ext.yes
 import java.io.File
 import java.util.*
 

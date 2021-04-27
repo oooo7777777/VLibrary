@@ -1,8 +1,9 @@
 package com.v.base.net
 
 import com.v.base.annotaion.Error
-import com.v.base.utils.otherwise
-import com.v.base.utils.yes
+import com.v.base.utils.ext.otherwise
+import com.v.base.utils.ext.yes
+
 
 /**
  * author  : ww

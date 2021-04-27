@@ -6,6 +6,8 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import com.v.base.utils.ext.copyToClipboard
+import com.v.base.utils.ext.onClickAnimator
 
 
 /**

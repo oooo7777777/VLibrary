@@ -16,10 +16,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.noober.background.BackgroundLibrary
 import com.v.base.databinding.BaseLayoutBinding
 import com.v.base.dialog.LoadingDialog
+import com.v.base.utils.ext.getStatusBarHeight
 import com.v.base.utils.ext.log
-import com.v.base.utils.getStatusBarHeight
-import com.v.base.utils.onClickAnimator
-import com.v.base.utils.setViewLayoutParams
+import com.v.base.utils.ext.onClickAnimator
+import com.v.base.utils.ext.setViewLayoutParams
+
 import java.lang.reflect.Field
 import java.lang.reflect.ParameterizedType
 

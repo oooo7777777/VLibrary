@@ -7,7 +7,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.ScaleAnimation
-import java.lang.Exception
+import com.v.base.utils.ext.isInvalidClick
 import kotlin.math.roundToInt
 
 /**
