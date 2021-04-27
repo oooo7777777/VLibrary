@@ -260,7 +260,7 @@ class ***: BaseFragment<***Binding, MeViewModel>() {
 
     /**
      * 重写此方法
-     *懒加载 对用户可见
+     *懒加载 对用户不可见
      */
     override fun onFragmentPause() {
         super.onFragmentPause()
@@ -268,7 +268,7 @@ class ***: BaseFragment<***Binding, MeViewModel>() {
     
     /**
      * 重写此方法
-     *懒加载 对用户不可见
+     *懒加载 对用户可见
      */
     override fun onFragmentResume() {
         super.onFragmentResume()
