@@ -25,7 +25,6 @@ class ImgSelectViewModel : BaseViewModel() {
     var fileSuccess = MutableLiveData<File>()
 
     fun createSDCardFile(mContext: Context): File {
-        // Create an image file name
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         val storageDir = File(mContext.externalCacheDir!!.path + "/" + timeStamp)
         if (!storageDir.exists()) {
