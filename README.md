@@ -1,4 +1,4 @@
-# VLibrary40
+# VLibrary
 
 [![](https://jitpack.io/v/oooo7777777/VLibrary.svg)](https://jitpack.io/#oooo7777777/VLibrary)
 
