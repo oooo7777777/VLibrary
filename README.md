@@ -131,7 +131,7 @@ class ***: BaseApplication() {
     }
 
     /**
-     * 重写此方法 设置全局状态栏颜色
+     * 重写此方法 设置全局状态栏颜色 状态栏颜色趋近于白色时 会智能将状态栏字体颜色变换为黑色
      */
     override fun statusBarColor(): Int {
         return randomColor
@@ -147,7 +147,7 @@ class ***: BaseApplication() {
 
     /**
      * 一般不用动~~~~~
-     * 如需要对VLibrary库自带的网络请求Retrofit.Builder做任意操作，比如添加json解析器，请重写此方法
+     * 如需要对VLibrary库自带的网络请求Retrofit.Builder做任意操作 比如添加json解析器 请重写此方法
      *
      */
     override fun retrofitBuilder(): Retrofit.Builder {
@@ -158,7 +158,7 @@ class ***: BaseApplication() {
     }
 
     /**
-     * 如需要对VLibrary库自带的网络请求OkHttpClient做任意操作，在这里可以添加拦截器，请求头
+     * 如需要对VLibrary库自带的网络请求OkHttpClient做任意操作 在这里可以添加拦截器 请求头
      */
     override fun okHttpClient(): OkHttpClient {
 
@@ -596,7 +596,6 @@ private var page = 1
 //设置表格布局
 private val mAdapter by lazy {
      mViewBinding.recyclerView.divider {
-         orientation = RecyclerViewItemOrientation.GRID
          includeVisible = true
          setColor(Color.parseColor("#ff0000"))
          setDivider(20)

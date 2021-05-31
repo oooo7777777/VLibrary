@@ -84,7 +84,7 @@ abstract class BaseApplication : Application() {
     /**
      * 设置状态栏颜色
      */
-    protected open fun statusBarColor(): Int = Color.parseColor("#ff0000")
+    protected open fun statusBarColor(): Int = Color.parseColor("#000000")
 
     /**
      * 是否开启debug模式 关联输出日志
