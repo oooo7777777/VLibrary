@@ -1,5 +1,6 @@
 package com.v.demo
 
+import android.graphics.Color
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.v.base.BaseApplication
 import com.v.base.net.BaseLogInterceptor
@@ -23,7 +24,7 @@ class DemoApplication : BaseApplication() {
      * 重写此方法 设置全局状态栏颜色
      */
     override fun statusBarColor(): Int {
-        return randomColor
+        return Color.parseColor("#000000")
     }
 
     /**

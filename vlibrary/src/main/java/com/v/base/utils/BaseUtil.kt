@@ -1,25 +1,7 @@
 package com.v.base.utils
 
-import android.app.Activity
 import android.app.Application
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
-import android.content.Intent
-import android.content.pm.ApplicationInfo
-import android.content.pm.PackageManager
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
-import androidx.annotation.ColorRes
-import androidx.annotation.LayoutRes
-import androidx.annotation.Nullable
-import androidx.annotation.StringRes
-import androidx.core.content.ContextCompat
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.v.base.BaseApplication
@@ -108,4 +90,21 @@ fun String.phoneNumberFormat(): String = run {
  */
 fun Any.toast() {
     Toast.makeText(BaseApplication.getContext(), this.toString(), Toast.LENGTH_SHORT).show()
+}
+
+/**
+ * 颜色转换成灰度值
+ * @param rgb 颜色
+ * @return　灰度值
+ */
+fun toGrey(rgb: Int): Int {
+    val blue = rgb and 0x000000FF
+    val green = rgb and 0x0000FF00 shr 8
+    val red = rgb and 0x00FF0000 shr 16
+    return red * 38 + green * 75 + blue * 15 shr 7
+}
+
+fun isWhiteColor(color: Int): Boolean {
+    val grey = toGrey(color)
+    return grey > 200
 }

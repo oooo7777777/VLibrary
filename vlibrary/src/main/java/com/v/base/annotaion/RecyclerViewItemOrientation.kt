@@ -6,5 +6,5 @@ package com.v.base.annotaion
  * time    : 2021-03-16 09:52:45
  */
 enum class RecyclerViewItemOrientation {
-    VERTICAL, HORIZONTAL, GRID
+    VERTICAL, HORIZONTAL, GRID,NO
 }

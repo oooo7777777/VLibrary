@@ -27,7 +27,6 @@ class ListDialog : BaseDialogFragment<BaseDialogListBinding, BlankViewModel>() {
 
     private val mAdapter by lazy {
         mViewBinding.recyclerView.divider {
-            orientation = RecyclerViewItemOrientation.VERTICAL
         }.linear(MyAdapter()) as MyAdapter
     }
 

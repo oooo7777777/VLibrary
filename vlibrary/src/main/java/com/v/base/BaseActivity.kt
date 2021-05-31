@@ -20,6 +20,7 @@ import com.v.base.utils.ext.getStatusBarHeight
 import com.v.base.utils.ext.log
 import com.v.base.utils.ext.onClickAnimator
 import com.v.base.utils.ext.setViewLayoutParams
+import com.v.base.utils.isWhiteColor
 
 import java.lang.reflect.Field
 import java.lang.reflect.ParameterizedType
@@ -110,6 +111,13 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel> : AppCompa
                 field.setInt(window.decorView, Color.TRANSPARENT) //改为透明
             } catch (e: Exception) {
             }
+        }
+
+        //状态栏颜色趋近于白色时，会智能将状态栏字体颜色变换为黑色
+        if (isWhiteColor(color)) {
+            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR//黑色
+        } else {
+            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE//白色
         }
 
         mBaseViewBinding.ivStatusBar.setViewLayoutParams(h = getStatusBarHeight())

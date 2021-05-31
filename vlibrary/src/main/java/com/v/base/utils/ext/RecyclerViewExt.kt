@@ -1,16 +1,13 @@
 package com.v.base.utils.ext
 
 import android.view.View
-import androidx.annotation.DrawableRes
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.v.base.R
-import com.v.base.annotaion.RecyclerViewItemOrientation
 import com.v.base.utils.RecyclerViewItemDecoration
-import com.v.base.utils.ext.isInvalidClick
 
 
 /**
@@ -59,20 +56,6 @@ fun RecyclerView.divider(
     val itemDecoration = RecyclerViewItemDecoration(context).apply(block)
     addItemDecoration(itemDecoration)
     return this
-}
-
-/**
- * 指定Drawable资源为分割线, 分割线的间距和宽度应在资源文件中配置
- * @param drawable 描述分割线的drawable
- */
-fun RecyclerView.divider(
-    @DrawableRes drawable: Int,
-    orientation: RecyclerViewItemOrientation = RecyclerViewItemOrientation.VERTICAL
-): RecyclerView {
-    return divider {
-        setDrawable(drawable)
-        this.orientation = orientation
-    }
 }
 
 

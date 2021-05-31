@@ -35,9 +35,9 @@ import kotlin.math.roundToInt
  * @property startVisible 在[GridLayoutManager]/[StaggeredGridLayoutManager]中控制上下是否显示分割线, 在[LinearLayoutManager]中控制顶部是否显示分割线
  * @property endVisible 在[GridLayoutManager]/[StaggeredGridLayoutManager]中控制左右是否显示分割线, 在[LinearLayoutManager]中控制底部是否显示分割线
  * @property orientation 分割线的方向, 仅支持[GridLayoutManager], 其他LayoutManager都是根据其方向自动适应
- * @property typePool 集合内包含的类型才显示分割线
  */
-class RecyclerViewItemDecoration constructor(private val context: Context) : RecyclerView.ItemDecoration() {
+class RecyclerViewItemDecoration constructor(private val context: Context) :
+    RecyclerView.ItemDecoration() {
 
     /**
      * 第一个条目之前是否显示分割线, 当处于[RecyclerViewItemOrientation.GRID] 时水平方向顶端和末端是否显示分割线
@@ -57,7 +57,7 @@ class RecyclerViewItemDecoration constructor(private val context: Context) : Rec
         }
 
 
-    var orientation = RecyclerViewItemOrientation.VERTICAL
+    var orientation = RecyclerViewItemOrientation.NO
 
     private var size = 1
     private var marginStart = 0
@@ -65,7 +65,6 @@ class RecyclerViewItemDecoration constructor(private val context: Context) : Rec
     private var divider: Drawable? = null
 
 
-    var typePool: MutableList<Int>? = null
 
 
     /**
@@ -332,11 +331,14 @@ class RecyclerViewItemDecoration constructor(private val context: Context) : Rec
      * 自动调整不同布局管理器应该对应的[orientation]
      */
     private fun adjustOrientation(layoutManager: RecyclerView.LayoutManager) {
-        if (layoutManager !is GridLayoutManager && layoutManager is LinearLayoutManager) {
-            orientation =
-                if ((layoutManager as? LinearLayoutManager)?.orientation == RecyclerView.VERTICAL) RecyclerViewItemOrientation.HORIZONTAL else RecyclerViewItemOrientation.VERTICAL
-        } else if (layoutManager is StaggeredGridLayoutManager) {
-            orientation = RecyclerViewItemOrientation.GRID
+
+        if (orientation == RecyclerViewItemOrientation.NO) {
+            if (layoutManager !is GridLayoutManager && layoutManager is LinearLayoutManager) {
+                orientation =
+                    if ((layoutManager as? LinearLayoutManager)?.orientation == RecyclerView.VERTICAL) RecyclerViewItemOrientation.HORIZONTAL else RecyclerViewItemOrientation.VERTICAL
+            } else if (layoutManager is StaggeredGridLayoutManager || layoutManager is GridLayoutManager) {
+                orientation = RecyclerViewItemOrientation.GRID
+            }
         }
     }
 

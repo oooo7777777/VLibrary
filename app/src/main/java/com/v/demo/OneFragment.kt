@@ -36,7 +36,6 @@ class OneFragment : BaseFragment<FragmentOneBinding, DemoViewModel>() {
     private val mAdapter by lazy {
         mViewBinding.recyclerView.divider {
             setDrawable(R.drawable.shape_divider_horizontal)
-            orientation = RecyclerViewItemOrientation.GRID
             startVisible = true
             endVisible = true
         }.grid(OneFragmentAdapter(), 2) as OneFragmentAdapter

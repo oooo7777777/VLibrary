@@ -8,6 +8,7 @@ import android.view.View
 import android.view.animation.Animation
 import android.view.animation.ScaleAnimation
 import com.v.base.utils.ext.isInvalidClick
+import com.v.base.utils.ext.logE
 import kotlin.math.roundToInt
 
 /**
@@ -109,7 +110,8 @@ class ViewClickAnimatorUtil(
 
             this.view.startAnimation(animation)
         } catch (e: Exception) {
-
+            e.printStackTrace()
+            e.toString().logE()
         }
     }
 
