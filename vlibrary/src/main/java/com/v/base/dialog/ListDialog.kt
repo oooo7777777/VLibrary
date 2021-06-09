@@ -26,7 +26,7 @@ class ListDialog : BaseDialogFragment<BaseDialogListBinding, BlankViewModel>() {
     }
 
     private val mAdapter by lazy {
-        mViewBinding.recyclerView.divider {
+        mDataBinding.recyclerView.divider {
         }.linear(MyAdapter()) as MyAdapter
     }
 

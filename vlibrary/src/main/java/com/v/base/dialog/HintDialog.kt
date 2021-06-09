@@ -29,7 +29,7 @@ class HintDialog : BaseDialogFragment<BaseDialogHintBinding, BlankViewModel>() {
     override fun initData() {
 
 
-        mViewBinding?.run {
+        mDataBinding?.run {
 
             tvLeft.onClickAnimator {
                 (listener == null).yes {

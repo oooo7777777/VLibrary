@@ -24,7 +24,7 @@ class EventBusDemoActivity : BaseActivity<ActivityEventBusDemoBinding, BlankView
     }
 
     override fun initData() {
-        mViewBinding.v = this
+        mDataBinding.v = this
     }
 
     override fun createObserver() {
@@ -33,27 +33,27 @@ class EventBusDemoActivity : BaseActivity<ActivityEventBusDemoBinding, BlankView
         getApplicationViewModel(mContext.application, AppViewModel::class.java).string.observe(
             this,
             androidx.lifecycle.Observer {
-                mViewBinding.tvContent.text = it
+                mDataBinding.tvContent.text = it
             })
 
 
         //单项数据监听
         LiveDataBus.with<String>(ConstData.CONTENT).observe(this, Observer {
-            mViewBinding.tvContent.text = it
+            mDataBinding.tvContent.text = it
         })
 
     }
 
     override fun onClick(v: View) {
         when (v.id) {
-            mViewBinding.bt0.id -> {
+            mDataBinding.bt0.id -> {
                 getApplicationViewModel(
                     mContext.application,
                     AppViewModel::class.java
                 ).string.postValue("我是全局数据" + 99.randomNumber())
 
             }
-            mViewBinding.bt1.id -> {
+            mDataBinding.bt1.id -> {
                 LiveDataBus.with<String>(ConstData.CONTENT)
                     .postData("模拟eventBus" + 99.randomNumber())
             }

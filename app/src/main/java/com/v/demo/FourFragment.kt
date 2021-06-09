@@ -12,20 +12,20 @@ import com.v.demo.model.DataViewModel
  */
 class FourFragment : BaseFragment<FragmentFourBinding, DataViewModel>(), View.OnClickListener {
     override fun initData() {
-        mViewBinding.v = this
+        mDataBinding.v = this
     }
 
     override fun createObserver() {
 
         mViewModel.content.observe(this, androidx.lifecycle.Observer {
-            mViewBinding.tvContent.text = it
+            mDataBinding.tvContent.text = it
         })
 
     }
 
     override fun onClick(v: View) {
         when (v.id) {
-            mViewBinding.bt0.id -> {
+            mDataBinding.bt0.id -> {
                 mViewModel.setContent("我是FourFragment的数据~~~~~~~~~")
             }
         }

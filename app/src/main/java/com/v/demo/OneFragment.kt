@@ -9,10 +9,7 @@ import com.v.base.BaseApplication
 import com.v.base.BaseFragment
 import com.v.base.annotaion.RecyclerViewItemOrientation
 import com.v.base.utils.*
-import com.v.base.utils.ext.divider
-import com.v.base.utils.ext.getViewBinding
-import com.v.base.utils.ext.grid
-import com.v.base.utils.ext.loadData
+import com.v.base.utils.ext.*
 import com.v.demo.adapter.BannerAdapter
 import com.v.demo.adapter.OneFragmentAdapter
 import com.v.demo.bean.BannerBean
@@ -34,7 +31,7 @@ class OneFragment : BaseFragment<FragmentOneBinding, DemoViewModel>() {
     private var page = 1
 
     private val mAdapter by lazy {
-        mViewBinding.recyclerView.divider {
+        mDataBinding.recyclerView.divider {
             setDrawable(R.drawable.shape_divider_horizontal)
             startVisible = true
             endVisible = true
@@ -42,7 +39,7 @@ class OneFragment : BaseFragment<FragmentOneBinding, DemoViewModel>() {
     }
 
     private val mAdapterHeaderView by lazy {
-        mContext.getViewBinding<FragmentOneHeaderBinding>(R.layout.fragment_one_header)
+        mContext.getDataBinding<FragmentOneHeaderBinding>(R.layout.fragment_one_header)
     }
 
     private val mViewPager by lazy {
@@ -67,7 +64,7 @@ class OneFragment : BaseFragment<FragmentOneBinding, DemoViewModel>() {
             .setImageLoader(GlideImageLoader.with(BaseApplication.getContext()))
             .enableScrollingWithPageChange(true) // 是否启动列表随着页面的切换而滚动你的列表，默认关闭
             .bindRecyclerView(
-                mViewBinding.recyclerView,
+                mDataBinding.recyclerView,
                 R.id.ivIcon
             )
     }
@@ -75,14 +72,14 @@ class OneFragment : BaseFragment<FragmentOneBinding, DemoViewModel>() {
 
     override fun initData() {
         mAdapter.setHeaderView(mAdapterHeaderView.root)
-        mViewBinding.refreshLayout.autoRefresh()
+        mDataBinding.refreshLayout.autoRefresh()
         mViewModel.getList(page)
     }
 
 
     override fun createObserver() {
         mViewModel.girlBean.observe(this, Observer {
-            mAdapter.loadData(mViewBinding.refreshLayout,
+            mAdapter.loadData(mDataBinding.refreshLayout,
                 it,
                 page,
                 onRefresh = {

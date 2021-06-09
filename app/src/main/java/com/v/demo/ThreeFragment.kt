@@ -20,32 +20,32 @@ import java.io.File
 class ThreeFragment : BaseFragment<FragmentThreeBinding, DataViewModel>(), View.OnClickListener {
 
     override fun initData() {
-        mViewBinding.v = this
+        mDataBinding.v = this
     }
 
     override fun createObserver() {
 
         mViewModel.content.observe(this, Observer {
-            mViewBinding.content = it
+            mDataBinding.content = it
         })
 
     }
 
     override fun onClick(v: View) {
         when (v.id) {
-            mViewBinding.bt0.id -> {
+            mDataBinding.bt0.id -> {
                 mViewModel.setContent("ViewModel 对象存在的时间范围是获取 ViewModel 时传递给 ViewModelProvider 的 Lifecycle。ViewModel 将一直留在内存中，直到限定其存在时间范围的 Lifecycle 永久消失：对于 Activity，是在 Activity 完成时；而对于 Fragment，是在 Fragment 分离时。")
             }
 
-            mViewBinding.bt1.id -> {
+            mDataBinding.bt1.id -> {
                 mContext.goActivity(EventBusDemoActivity::class.java)
             }
 
-            mViewBinding.bt2.id -> {
+            mDataBinding.bt2.id -> {
                 mContext.goActivity(NetworkActivity::class.java)
             }
 
-            mViewBinding.bt3.id -> {
+            mDataBinding.bt3.id -> {
                 HintDialog()
                     .setTitle("提示")
                     .setContent("确定保存吗?")
@@ -59,7 +59,7 @@ class ThreeFragment : BaseFragment<FragmentThreeBinding, DataViewModel>(), View.
 
                     }).show(mContext)
             }
-            mViewBinding.bt4.id -> {
+            mDataBinding.bt4.id -> {
                 var list = ArrayList<String>()
                 for (i in 1..3) {
                     list.add("Content$i")
@@ -75,7 +75,7 @@ class ThreeFragment : BaseFragment<FragmentThreeBinding, DataViewModel>(), View.
 
                     }).show(mContext)
             }
-            mViewBinding.bt5.id -> {
+            mDataBinding.bt5.id -> {
                 ImgSelectDialog()
                     .setImageCompression(true)
                     .setIgnoreBy(100)

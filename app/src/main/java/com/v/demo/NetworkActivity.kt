@@ -19,27 +19,27 @@ class NetworkActivity : BaseActivity<ActivityNetworkBinding, NetworkViewModel>()
     }
 
     override fun initData() {
-        mViewBinding.v = this
+        mDataBinding.v = this
     }
 
     override fun createObserver() {
         mViewModel.string.observe(this, Observer {
             val string = it
-            mViewBinding.tvContent.text = string
+            mDataBinding.tvContent.text = string
         })
     }
 
     override fun onClick(v: View) {
         when (v.id) {
-            mViewBinding.bt0.id -> {
+            mDataBinding.bt0.id -> {
                 mViewModel.getCustom()
             }
 
-            mViewBinding.bt1.id -> {
+            mDataBinding.bt1.id -> {
                 mViewModel.getCustomDefault()
             }
 
-            mViewBinding.bt2.id -> {
+            mDataBinding.bt2.id -> {
                 mViewModel.getBase()
             }
 

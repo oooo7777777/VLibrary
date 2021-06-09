@@ -50,7 +50,7 @@ class ImgSelectDialog : BaseDialogFragment<BaseDialogImgSelectBinding, ImgSelect
     }
 
     override fun initData() {
-        mViewBinding.v = this
+        mDataBinding.v = this
     }
 
     override fun createObserver() {

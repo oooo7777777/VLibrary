@@ -26,7 +26,7 @@ import java.lang.reflect.ParameterizedType
 abstract class BaseDialogFragment<VB : ViewDataBinding, VM : BaseViewModel> : DialogFragment() {
     lateinit var mContext: Context
 
-    protected lateinit var mViewBinding: VB
+    protected lateinit var mDataBinding: VB
 
     private val loadDialog by lazy {
         LoadingDialog(mContext).setDialogCancelable(true)
@@ -63,11 +63,12 @@ abstract class BaseDialogFragment<VB : ViewDataBinding, VM : BaseViewModel> : Di
             ViewGroup::class.java,
             Boolean::class.java
         )
-        mViewBinding = method.invoke(null, layoutInflater, container, false) as VB
+        mDataBinding = method.invoke(null, layoutInflater, container, false) as VB
+        mDataBinding.lifecycleOwner = this
         setStyle()
         registerUiChange()
 
-        return mViewBinding.root
+        return mDataBinding.root
     }
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {

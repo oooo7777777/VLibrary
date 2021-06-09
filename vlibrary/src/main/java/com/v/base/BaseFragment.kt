@@ -8,21 +8,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.NonNull
 import androidx.annotation.Nullable
+import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.viewbinding.ViewBinding
 import com.v.base.dialog.LoadingDialog
 import com.v.base.utils.ext.log
 import java.lang.reflect.ParameterizedType
 
 
-abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel> : Fragment() {
+abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel> : Fragment() {
 
 
     protected lateinit var mContext: Activity
 
-    protected lateinit var mViewBinding: VB
+    protected lateinit var mDataBinding: VB
 
     private var mIsFirstVisible = true
 
@@ -63,13 +63,15 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel> : Fragment() {
             ViewGroup::class.java,
             Boolean::class.java
         )
-        mViewBinding = method.invoke(null, layoutInflater, container, false) as VB
-        return mViewBinding.root
+        mDataBinding = method.invoke(null, layoutInflater, container, false) as VB
+        mDataBinding.lifecycleOwner = this
+        return mDataBinding.root
     }
 
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
+
         // 对于默认 tab 和 间隔 checked tab 需要等到 isViewCreated = true 后才可以通过此通知用户可见
         // 这种情况下第一次可见不是在这里通知 因为 isViewCreated = false 成立,等从别的界面回到这里后会使用 onFragmentResume 通知可见
         // 对于非默认 tab mIsFirstVisible = true 会一直保持到选择则这个 tab 的时候，因为在 onActivityCreated 会返回 false

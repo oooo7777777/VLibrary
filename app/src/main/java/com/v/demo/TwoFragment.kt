@@ -15,7 +15,7 @@ import com.v.demo.model.DemoViewModel
  */
 class TwoFragment : BaseFragment<FragmentTowBinding, DemoViewModel>(), View.OnClickListener {
     override fun initData() {
-        mViewBinding.v = this
+        mDataBinding.v = this
     }
 
     override fun createObserver() {
@@ -25,16 +25,16 @@ class TwoFragment : BaseFragment<FragmentTowBinding, DemoViewModel>(), View.OnCl
     override fun onClick(v: View) {
         when (v.id) {
 
-            mViewBinding.bt0.id -> {
+            mDataBinding.bt0.id -> {
                 "点击间隔默认500".toast()
             }
-            mViewBinding.bt1.id -> {
+            mDataBinding.bt1.id -> {
                 "点击间隔1000".toast()
             }
-            mViewBinding.bt2.id -> {
+            mDataBinding.bt2.id -> {
                 "显示toast".toast()
             }
-            mViewBinding.bt3.id -> {
+            mDataBinding.bt3.id -> {
                 "打印日志".logE()
                 "打印日志".logV()
                 "打印日志".logD()
@@ -42,17 +42,17 @@ class TwoFragment : BaseFragment<FragmentTowBinding, DemoViewModel>(), View.OnCl
                 "打印日志".logW()
                 "打印日志".log()
             }
-            mViewBinding.bt4.id -> {
-                mViewBinding.bt4.setDrawable(R.mipmap.ic_movie, null, h = 50, w = 50)
+            mDataBinding.bt4.id -> {
+                mDataBinding.bt4.setDrawable(R.mipmap.ic_movie, null, h = 50, w = 50)
             }
-            mViewBinding.bt5.id -> {
-                mViewBinding.bt5.setDrawable(null, R.mipmap.ic_movie, h = 80, w = 80)
+            mDataBinding.bt5.id -> {
+                mDataBinding.bt5.setDrawable(null, R.mipmap.ic_movie, h = 80, w = 80)
             }
-            mViewBinding.bt6.id -> {
-                mViewBinding.ivIcon.load(R.mipmap.ic_movie, 90.randomNumber().toFloat())
+            mDataBinding.bt6.id -> {
+                mDataBinding.ivIcon.load(R.mipmap.ic_movie, 90.randomNumber().toFloat())
             }
-            mViewBinding.bt7.id -> {
-                mViewBinding.ivIcon.loadCircle(R.mipmap.ic_movie)
+            mDataBinding.bt7.id -> {
+                mDataBinding.ivIcon.loadCircle(R.mipmap.ic_movie)
             }
 
         }

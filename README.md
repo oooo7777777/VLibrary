@@ -5,7 +5,7 @@
 
 #### 介绍
 
-- 基于MVVM模式组件化集成谷歌官方推荐的JetPack组件库：LiveData、ViewModel、Lifecycle组件
+- 基于MVVM模式组件化集成谷歌官方推荐的JetPack组件库：DataBinding、LiveData、ViewModel、Lifecycle组件
 - 使用kotlin语言，添加大量拓展函数，简化代码
 - 加入Retrofit网络请求,协程，帮你简化各种操作，让你快速请求网络
 - 封装Base类，添加常用工具类
@@ -595,7 +595,7 @@ private var page = 1
 
 //设置表格布局
 private val mAdapter by lazy {
-     mViewBinding.recyclerView.divider {
+     mDataBinding.recyclerView.divider {
          includeVisible = true
          setColor(Color.parseColor("#ff0000"))
          setDivider(20)
@@ -604,7 +604,7 @@ private val mAdapter by lazy {
 
 override fun initData() {
      //开启自动刷新
-     mViewBinding.refreshLayout.autoRefresh()
+     mDataBinding.refreshLayout.autoRefresh()
      //ViewModel获取数据
      mViewModel.getList(page)
  }
@@ -612,7 +612,7 @@ override fun initData() {
 override fun createObserver() {
      //得到数据
      mViewModel.listBean.observe(this, Observer {
-         mAdapter.loadData(mViewBinding.refreshLayout,
+         mAdapter.loadData(mDataBinding.refreshLayout,
              it,//列表数据
              page,//当前页数
              onRefresh = {//下拉刷新
@@ -639,7 +639,7 @@ override fun createObserver() {
                 
    //方法可按需使用(以下为我只要item点击)
     mViewModel.listBean.observe(this, Observer {
-         mAdapter.loadData(mViewBinding.refreshLayout,
+         mAdapter.loadData(mDataBinding.refreshLayout,
              it,
              page,
              onItemClick = { view: View, i: Int ->
@@ -718,7 +718,7 @@ LiveDataBus.with<String>(ConstData.CONTENT).observe(this, Observer {
  getApplicationViewModel(mContext.application, AppViewModel::class.java).userBane.observe(
             this,
             androidx.lifecycle.Observer {
-                mViewBinding.userBean = it
+                mDataBinding.userBean = it
             })
 ```
 

@@ -60,7 +60,7 @@ class MainActivity : BaseActivity<MainActivityBinding, BlankViewModel>() {
 
         IndicatorZoom(
             this,
-            mViewBinding.viewPager,
+            mDataBinding.viewPager,
             fragments,
             titles,
             iconOffs,
@@ -70,7 +70,7 @@ class MainActivity : BaseActivity<MainActivityBinding, BlankViewModel>() {
     }
 
     override fun initData() {
-        mViewBinding.v = this
+        mDataBinding.v = this
         initMg()
 
         requestMultiplePermissions.launch(permissions)
@@ -82,9 +82,9 @@ class MainActivity : BaseActivity<MainActivityBinding, BlankViewModel>() {
 
     private fun initMg() {
 
-        mViewBinding.magicIndicator.navigator = commonNavigator
-        ViewPagerHelper.bind(mViewBinding.magicIndicator, mViewBinding.viewPager);
-        mViewBinding.viewPager.currentItem = 0
+        mDataBinding.magicIndicator.navigator = commonNavigator
+        ViewPagerHelper.bind(mDataBinding.magicIndicator, mDataBinding.viewPager);
+        mDataBinding.viewPager.currentItem = 0
     }
 
 

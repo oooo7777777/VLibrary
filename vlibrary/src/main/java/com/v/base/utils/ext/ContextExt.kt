@@ -81,9 +81,9 @@ fun Context.getStatusBarHeight(): Int = run {
 
 
 /**
- * 获取ViewBinding
+ * 获取getDataBinding
  */
-fun <VB : ViewDataBinding> Context.getViewBinding(
+fun <VB : ViewDataBinding> Context.getDataBinding(
     @LayoutRes id: Int,
     @Nullable root: ViewGroup? = null
 ): VB =
