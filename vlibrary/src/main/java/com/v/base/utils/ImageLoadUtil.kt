@@ -86,8 +86,8 @@ fun Context.loadListener(
 private fun loadDispose(
     image: ImageView,
     any: Any,
-    roundingRadius: Float = 0f,
-    errorResId: Int = R.mipmap.base_iv_default
+    roundingRadius: Float,
+    errorResId: Int
 ) {
     image.run {
         try {

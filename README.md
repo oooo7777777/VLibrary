@@ -539,24 +539,6 @@ HintDialog()
     }).show(mContext)
 ```
 
-- **ImgSelectDialog(图片选择弹出框,此Dialog只是做了简单的使用,如需自定义请自行处理)**
-  1. 可选择拍照,相册
-  2. 直接拿到选择图片file
-  3. 通过CoCo[一款小而美的的Android系统相机拍照、系统相册选择、裁剪库](https://github.com/soulqw/CoCo)
-  4. 图片是否压缩 KLuban[基于Luban算法，重构后实现的图片压缩框架](https://github.com/forJrking/KLuban)
-
-```
-ImgSelectDialog()
-    .setImageCompression(true)//是否开启压缩
-    .setIgnoreBy(100)///期望压缩大小,大小和图片呈现质量不能均衡所以压缩后不一定小于此值
-    .setPhotoSelectDialogListener(object :
-        ImgSelectDialog.PhotoSelectDialogListener {
-        override fun onSuccess(file: File) {
-
-        }
-
-    }).show(mContext)
-```
 
 #### 列表数据展示
 - **Adapter使用[BaseRecyclerViewAdapterHelper](https://github.com/CymChad/BaseRecyclerViewAdapterHelper)**

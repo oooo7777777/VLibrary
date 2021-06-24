@@ -13,11 +13,11 @@ data class GirlBean(
     val createdAt: String,
     val desc: String,
     val images: List<String>,
-    val likeCounts: Int,
+    val likeCounts: String,
     val publishedAt: String,
-    val stars: Int,
+    val stars: String,
     val title: String,
     val type: String,
     val url: String,
-    val views: Int
+    val views: String
 )

@@ -54,9 +54,7 @@ dependencies {
     api "com.scwang.smart:refresh-header-material:2.0.3"
     api "com.scwang.smart:refresh-footer-classics:2.0.0-alpha-1"
     api "com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4"
-    api "com.qw:coco:1.1.2"
     api "com.noober.background:core:1.6.5"//BackgroundLibrary  （通过标签直接生成shape，无需再写shape.xml）
-    api "com.github.forJrking:KLuban:1.0.5"
 
 }
 

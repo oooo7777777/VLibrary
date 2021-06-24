@@ -15,8 +15,6 @@
         android:orientation="vertical">
 
         <com.zhpan.bannerview.BannerViewPager
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
             android:id="@+id/bannerViewPager"
             android:layout_width="match_parent"
             android:layout_height="150dp" />

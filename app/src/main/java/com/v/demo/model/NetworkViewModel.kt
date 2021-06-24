@@ -45,7 +45,10 @@ class NetworkViewModel : BaseViewModel() {
     //使用VLibrary库 网络请求
     fun getBase() {
         //此处返回得数据是泛型,即你传入得是什么类型,得到得就是什么类型
-        request({ apiBase.get("banners") },
+        request({
+            delay(3000)
+            apiBase.get("banners")
+        },
             resultState = string,
             dialog = true,
             error = {

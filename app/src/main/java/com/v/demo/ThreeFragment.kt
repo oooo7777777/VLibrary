@@ -4,12 +4,10 @@ import android.view.View
 import androidx.lifecycle.Observer
 import com.v.base.BaseFragment
 import com.v.base.dialog.HintDialog
-import com.v.base.dialog.ImgSelectDialog
 import com.v.base.dialog.ListDialog
 import com.v.base.utils.ext.goActivity
 import com.v.demo.databinding.FragmentThreeBinding
 import com.v.demo.model.DataViewModel
-import java.io.File
 
 
 /**
@@ -76,16 +74,7 @@ class ThreeFragment : BaseFragment<FragmentThreeBinding, DataViewModel>(), View.
                     }).show(mContext)
             }
             mDataBinding.bt5.id -> {
-                ImgSelectDialog()
-                    .setImageCompression(true)
-                    .setIgnoreBy(100)
-                    .setPhotoSelectDialogListener(object :
-                        ImgSelectDialog.PhotoSelectDialogListener {
-                        override fun onSuccess(file: File) {
-                            mViewModel.content.value = file.toString()
-                        }
 
-                    }).show(mContext)
 
 
             }

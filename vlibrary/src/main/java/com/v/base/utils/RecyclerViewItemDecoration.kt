@@ -22,6 +22,8 @@ import kotlin.math.ceil
 import kotlin.math.roundToInt
 
 /**
+ * 最强大的分割线工具
+ *
  * 1. 分隔图片
  * 2. 分隔颜色
  * 3. 分隔间距
@@ -35,9 +37,15 @@ import kotlin.math.roundToInt
  * @property startVisible 在[GridLayoutManager]/[StaggeredGridLayoutManager]中控制上下是否显示分割线, 在[LinearLayoutManager]中控制顶部是否显示分割线
  * @property endVisible 在[GridLayoutManager]/[StaggeredGridLayoutManager]中控制左右是否显示分割线, 在[LinearLayoutManager]中控制底部是否显示分割线
  * @property orientation 分割线的方向, 仅支持[GridLayoutManager], 其他LayoutManager都是根据其方向自动适应
+ * @property typePool 集合内包含的类型才显示分割线
  */
 class RecyclerViewItemDecoration constructor(private val context: Context) :
     RecyclerView.ItemDecoration() {
+
+    /**
+     *  如果这里设置为true position=0 四周边距则强制改成0 这里适用于addHeadView
+     */
+    var isHeadView = false
 
     /**
      * 第一个条目之前是否显示分割线, 当处于[RecyclerViewItemOrientation.GRID] 时水平方向顶端和末端是否显示分割线
@@ -57,7 +65,7 @@ class RecyclerViewItemDecoration constructor(private val context: Context) :
         }
 
 
-    var orientation = RecyclerViewItemOrientation.NO
+    var orientation = RecyclerViewItemOrientation.VERTICAL
 
     private var size = 1
     private var marginStart = 0
@@ -65,6 +73,7 @@ class RecyclerViewItemDecoration constructor(private val context: Context) :
     private var divider: Drawable? = null
 
 
+    var typePool: MutableList<Int>? = null
 
 
     /**
@@ -154,9 +163,9 @@ class RecyclerViewItemDecoration constructor(private val context: Context) :
      * 设置分割线宽度
      * 如果使用[setDrawable]则无效
      * @param width 分割线的尺寸 (分割线垂直时为宽, 水平时为高 )
-     * @param dp 是否单位为dp, 默认为false即使用像素单位
+     * @param dp 是否单位为dp, false即使用像素单位
      */
-    fun setDivider(width: Int = 1, dp: Boolean = false) {
+    fun setDivider(width: Int = 1, dp: Boolean = true) {
         if (!dp) {
             this.size = width
         } else {
@@ -306,9 +315,13 @@ class RecyclerViewItemDecoration constructor(private val context: Context) :
                     else -> height - (spanGroupIndex + 1) * height / spanGroupCount
                 }
 
-                if (orientation == RecyclerView.VERTICAL) {
-                    outRect.set(left, top, right, bottom)
-                } else outRect.set(top, left, bottom, right)
+                if (position == 0 && isHeadView) {
+                    outRect.set(0, 0, 0, 0)
+                } else {
+                    if (orientation == RecyclerView.VERTICAL) {
+                        outRect.set(left, top, right, bottom)
+                    } else outRect.set(top, left, bottom, right)
+                }
             }
         }
     }
@@ -331,14 +344,11 @@ class RecyclerViewItemDecoration constructor(private val context: Context) :
      * 自动调整不同布局管理器应该对应的[orientation]
      */
     private fun adjustOrientation(layoutManager: RecyclerView.LayoutManager) {
-
-        if (orientation == RecyclerViewItemOrientation.NO) {
-            if (layoutManager !is GridLayoutManager && layoutManager is LinearLayoutManager) {
-                orientation =
-                    if ((layoutManager as? LinearLayoutManager)?.orientation == RecyclerView.VERTICAL) RecyclerViewItemOrientation.HORIZONTAL else RecyclerViewItemOrientation.VERTICAL
-            } else if (layoutManager is StaggeredGridLayoutManager || layoutManager is GridLayoutManager) {
-                orientation = RecyclerViewItemOrientation.GRID
-            }
+        if (layoutManager !is GridLayoutManager && layoutManager is LinearLayoutManager) {
+            orientation =
+                if ((layoutManager as? LinearLayoutManager)?.orientation == RecyclerView.VERTICAL) RecyclerViewItemOrientation.HORIZONTAL else RecyclerViewItemOrientation.VERTICAL
+        } else if (layoutManager is StaggeredGridLayoutManager || layoutManager is GridLayoutManager) {
+            orientation = RecyclerViewItemOrientation.GRID
         }
     }
 

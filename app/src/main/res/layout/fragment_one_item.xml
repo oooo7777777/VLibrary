@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="bean"
             type="com.v.demo.bean.GirlBean" />
@@ -16,9 +17,9 @@
         <ImageView
             android:id="@+id/ivIcon"
             android:layout_width="match_parent"
+            android:layout_height="400dp"
             android:scaleType="centerCrop"
-            app:imgUrl="@{bean.title}"
-            android:layout_height="match_parent" />
+            app:imgUrl="@{bean.url}" />
 
     </LinearLayout>
 </layout>
