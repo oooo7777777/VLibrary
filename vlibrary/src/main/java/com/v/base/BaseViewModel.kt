@@ -79,11 +79,7 @@ abstract class BaseViewModel : ViewModel() {
                 block()
             }.onSuccess {
                 loadingChange.dismissDialog.postValue(false)
-                runCatching {
-                    success(it)
-                }.onFailure { e ->
-                    error(BaseExceptionHandle.handleException(e))
-                }
+                success(it)
             }.onFailure { e ->
                 loadingChange.dismissDialog.postValue(false)
                 error(BaseExceptionHandle.handleException(e))
@@ -102,7 +98,7 @@ abstract class BaseViewModel : ViewModel() {
     inline fun <reified T> request(
         crossinline block: suspend CoroutineScope.() -> Any,
         resultState: MutableLiveData<T>,
-        crossinline  error: (BaseAppException) -> Unit = {},
+        crossinline error: (BaseAppException) -> Unit = {},
         dialog: Boolean = false
     ): Job {
         return viewModelScope.launch {

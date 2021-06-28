@@ -11,7 +11,6 @@ interface BaseNetApi {
     suspend fun get(@Url url: String, @QueryMap map: Map<String, @JvmSuppressWildcards Any>): String
 
 
-    @FormUrlEncoded
     @POST
     suspend fun post(@Url url: String): String
 
