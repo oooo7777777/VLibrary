@@ -21,6 +21,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.v.base.utils.DeviceIdUtil
 import com.v.base.utils.toast
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
 
 /**
  * @Author : ww
@@ -200,4 +202,23 @@ fun Context.copyToClipboard(text: String) = run {
     val mClipData = ClipData.newPlainText("Label", text)
     cm!!.setPrimaryClip(mClipData)
     "内容已复制到粘贴板".toast()
+}
+
+/**
+ * 倒计时
+ */
+fun countDownCoroutines(
+    total: Int, onTick: (Int) -> Unit, onFinish: () -> Unit,
+    scope: CoroutineScope = GlobalScope
+): Job {
+    return flow {
+        for (i in total downTo 0) {
+            emit(i)
+            delay(1000)
+        }
+    }.flowOn(Dispatchers.Default)
+        .onCompletion { onFinish.invoke() }
+        .onEach { onTick.invoke(it) }
+        .flowOn(Dispatchers.Main)
+        .launchIn(scope)
 }
