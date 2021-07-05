@@ -208,14 +208,18 @@ fun Context.copyToClipboard(text: String) = run {
  * 倒计时
  */
 fun countDownCoroutines(
-    total: Int, onTick: (Int) -> Unit, onFinish: () -> Unit,
+    total: Long = Long.MAX_VALUE,
+    onTick: (Long) -> Unit,
+    onFinish: () -> Unit,
     scope: CoroutineScope = GlobalScope
 ): Job {
     return flow {
+
         for (i in total downTo 0) {
             emit(i)
             delay(1000)
         }
+
     }.flowOn(Dispatchers.Default)
         .onCompletion { onFinish.invoke() }
         .onEach { onTick.invoke(it) }

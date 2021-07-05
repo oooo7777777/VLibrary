@@ -5,7 +5,7 @@ plugins {
     id 'kotlin-android-extensions'
     id 'com.github.dcendents.android-maven'
 }
-group='com.github.oooo7777777'
+group = 'com.github.oooo7777777'
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
@@ -13,8 +13,8 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 323
-        versionName "3.2.3"
+        versionCode 324
+        versionName "3.2.4"
     }
 
     compileOptions {
@@ -38,6 +38,7 @@ dependencies {
     api 'com.github.bumptech.glide:glide:4.11.0'//glide
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'//glide
 
+    api "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0"
     api "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
     api "com.google.android.material:material:1.2.1"
     api "androidx.appcompat:appcompat:1.2.0"

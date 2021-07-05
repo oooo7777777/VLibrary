@@ -39,6 +39,21 @@
             android:textAllCaps="false"
             app:click="@{v}" />
 
+        <Button
+            android:id="@+id/bt1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="倒计时"
+            android:textAllCaps="false"
+            app:click="@{v}" />
+
+        <Button
+            android:id="@+id/bt2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="心跳"
+            android:textAllCaps="false"
+            app:click="@{v}" />
 
     </LinearLayout>
 </layout>
