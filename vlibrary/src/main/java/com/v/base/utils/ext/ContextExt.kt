@@ -208,7 +208,7 @@ fun Context.copyToClipboard(text: String) = run {
  * 倒计时
  */
 fun countDownCoroutines(
-    total: Long = Long.MAX_VALUE,
+    total: Long,
     onTick: (Long) -> Unit,
     onFinish: () -> Unit,
     scope: CoroutineScope = GlobalScope
