@@ -209,6 +209,7 @@ fun Context.copyToClipboard(text: String) = run {
  */
 fun countDownCoroutines(
     total: Long,
+    timeMillis: Long = 1000,
     onTick: (Long) -> Unit,
     onFinish: () -> Unit,
     scope: CoroutineScope = GlobalScope
@@ -217,7 +218,7 @@ fun countDownCoroutines(
 
         for (i in total downTo 0) {
             emit(i)
-            delay(1000)
+            delay(timeMillis)
         }
 
     }.flowOn(Dispatchers.Default)
