@@ -1,0 +1,116 @@
+<templateSet group="VLibrary">
+  <template name="vb_img_url" value="app:vb_img_url=&quot;$value$&quot;" description="图片地址" toReformat="false" toShortenFQNames="true">
+    <variable name="value" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="XML" value="true" />
+    </context>
+  </template>
+  <template name="vb_img_radius" value="app:vb_img_radius=&quot;$value$&quot;" description="图片圆角宽度" toReformat="true" toShortenFQNames="true">
+    <variable name="value" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="XML" value="true" />
+    </context>
+  </template>
+  <template name="vb_img_circle" value="app:vb_img_circle=&quot;$value$&quot;" description="图片是否设置为圆形" toReformat="false" toShortenFQNames="true">
+    <variable name="value" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="XML" value="true" />
+    </context>
+  </template>
+  <template name="vb_img_error_res_id" value="app:vb_img_error_res_id=&quot;$value$&quot;" description="图片加载失败占位图" toReformat="false" toShortenFQNames="true">
+    <variable name="value" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="XML" value="true" />
+    </context>
+  </template>
+  <template name="vb_drawable_Left" value="app:vb_drawable_Left=&quot;$value$&quot;" description="左边drawable图片" toReformat="false" toShortenFQNames="true">
+    <variable name="value" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="XML" value="true" />
+    </context>
+  </template>
+  <template name="vb_drawable_right" value="app:vb_drawable_right=&quot;$value$&quot;" description="右边drawable图片" toReformat="false" toShortenFQNames="true">
+    <variable name="value" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="XML" value="true" />
+    </context>
+  </template>
+  <template name="vb_drawable_width" value="app:vb_drawable_width=&quot;$value$&quot;" description="drawable图片的宽度" toReformat="true" toShortenFQNames="true">
+    <variable name="value" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="XML" value="true" />
+    </context>
+  </template>
+  <template name="vb_drawable_height" value="app:vb_drawable_height=&quot;$value$&quot;" description="drawable图片的高度" toReformat="false" toShortenFQNames="true">
+    <variable name="value" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="XML" value="true" />
+    </context>
+  </template>
+  <template name="vb_call_phone" value="app:vb_call_phone=&quot;$value$&quot;" description="打电话" toReformat="true" toShortenFQNames="true">
+    <variable name="value" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="XML" value="true" />
+    </context>
+  </template>
+  <template name="vb_copy_to_clipboard" value="app:vb_copy_to_clipboard=&quot;$value$&quot;" description="复制文本到粘贴板" toReformat="true" toShortenFQNames="true">
+    <variable name="value" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="XML" value="true" />
+    </context>
+  </template>
+  <template name="vb_click" value="app:vb_click=&quot;$value$&quot;" description="添加OnClickListener" toReformat="true" toShortenFQNames="true">
+    <variable name="value" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="XML" value="true" />
+    </context>
+  </template>
+  <template name="vb_click_time" value="app:vb_click_time=&quot;$value$&quot;" description="添加OnClickListener点击间隔时间" toReformat="true" toShortenFQNames="true">
+    <variable name="value" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="XML" value="true" />
+    </context>
+  </template>
+  <template name="vb_text_bold" value="app:vb_text_bold=&quot;$value$&quot;" description="字体加粗" toReformat="true" toShortenFQNames="true">
+    <variable name="value" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="XML" value="true" />
+    </context>
+  </template>
+  <template name="vb_finish" value="app:vb_finish=&quot;$value$&quot;" description="关闭当前activity" toReformat="true" toShortenFQNames="true">
+    <variable name="value" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="XML" value="true" />
+    </context>
+  </template>
+  <template name="vb_text_invisible" value="app:vb_text_invisible=&quot;$value$&quot;" description="如果文字等于NullOrEmpty 就INVISIBLE TextView" toReformat="true" toShortenFQNames="true">
+    <variable name="value" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="XML" value="true" />
+    </context>
+  </template>
+  <template name="vb_text_gone" value="app:vb_text_gone=&quot;$value$&quot;" description="如果文字等于NullOrEmpty 就GONE TextView" toReformat="true" toShortenFQNames="true">
+    <variable name="value" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="XML" value="true" />
+    </context>
+  </template>
+  <template name="vb_view_visible" value="app:vb_view_visible=&quot;$value$&quot;" description="如果文字等于NullOrEmpty 就INVISIBLE VIEW" toReformat="true" toShortenFQNames="true">
+    <variable name="value" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="XML" value="true" />
+    </context>
+  </template>
+  <template name="vb_view_gone" value="app:vb_view_gone=&quot;$value$&quot;" description="如果文字等于NullOrEmpty 就GONE VIEW" toReformat="true" toShortenFQNames="true">
+    <variable name="value" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="XML" value="true" />
+    </context>
+  </template>
+  <template name="vb_text_line" value="app:vb_text_line=&quot;$value$&quot;" description="设置文字中间横线" toReformat="true" toShortenFQNames="true">
+    <variable name="value" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="XML" value="true" />
+    </context>
+  </template>
+</templateSet>

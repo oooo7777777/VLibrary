@@ -691,6 +691,14 @@ LiveDataBus.with<String>(ConstData.CONTENT).observe(this, Observer {
             })
 ```
 
-
-
+#### BindingAdapter代码提示
+配置Live Templates步骤:
+以Android studio3.2为例:
+mac:进入目录MacintoshHD\user\xxx\Library\Preferences\AndroidStudio3.2\templates
+mac as4.0 之后目录进行了修改:
+/Users/xxx/Library/Application Support/Google/AndroidStudio4.1/templates
+windows:进入目录C:\Users\XXX\.AndroidStudio3.2\config\templates
+windows as4.0之后：
+C:\Users\xxx\AppData\Roaming\Google\AndroidStudio4.0\templates
+如果templates不存在，手动创建文件夹即可； 在templates下面加入文件[VLibrary](https://github.com/oooo7777777/VLibrary/blob/master/VLibrary.xml) 重启as即可。
 

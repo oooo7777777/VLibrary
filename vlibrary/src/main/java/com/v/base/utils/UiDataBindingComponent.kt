@@ -19,7 +19,7 @@ import com.v.base.utils.ext.vbOnClickAnimator
  * 设置ImageView图片
  */
 @BindingAdapter(
-    value = ["vb_img_url", "vb_img_radius", "vb_img_circle", "vb_img_errorResId"],
+    value = ["vb_img_url", "vb_img_radius", "vb_img_circle", "vb_img_error_res_id"],
     requireAll = false
 )
 fun ImageView.vbImgUrl(
