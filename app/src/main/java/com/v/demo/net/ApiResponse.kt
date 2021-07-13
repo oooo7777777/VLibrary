@@ -1,8 +1,8 @@
 package com.v.demo.net
 
-import com.v.base.net.BaseResponse
+import com.v.base.bean.VBResponse
 
-class ApiResponse<T> : BaseResponse<T>() {
+class ApiResponse<T> : VBResponse<T>() {
 
     var status = 0
     var msg = ""

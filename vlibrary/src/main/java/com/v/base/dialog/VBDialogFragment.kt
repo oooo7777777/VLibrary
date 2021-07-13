@@ -10,9 +10,9 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.v.base.BaseViewModel
+import com.v.base.VBViewModel
 import com.v.base.R
-import com.v.base.annotaion.DialogOrientation
+import com.v.base.annotaion.VBDialogOrientation
 import com.v.base.utils.ext.logI
 import com.v.base.utils.ext.otherwise
 import com.v.base.utils.ext.yes
@@ -23,13 +23,13 @@ import java.lang.reflect.ParameterizedType
  * desc    :
  * time    : 2021-03-16 09:52:45
  */
-abstract class BaseDialogFragment<VB : ViewDataBinding, VM : BaseViewModel> : DialogFragment() {
+abstract class VBDialogFragment<VB : ViewDataBinding, VM : VBViewModel> : DialogFragment() {
     lateinit var mContext: Context
 
     protected lateinit var mDataBinding: VB
 
     private val loadDialog by lazy {
-        LoadingDialog(mContext).setDialogCancelable(true)
+        VBLoadingDialog(mContext).setDialogCancelable(true)
     }
 
     protected val mViewModel: VM by lazy {
@@ -86,9 +86,9 @@ abstract class BaseDialogFragment<VB : ViewDataBinding, VM : BaseViewModel> : Di
     protected abstract fun createObserver()
 
     /**
-     * 设置dialog弹出方向 [DialogOrientation]
+     * 设置dialog弹出方向 [VBDialogOrientation]
      */
-    open fun useDirection(): DialogOrientation = DialogOrientation.CENTRE
+    open fun useDirection(): VBDialogOrientation = VBDialogOrientation.CENTRE
 
     /**
      * 是否变暗
@@ -127,27 +127,27 @@ abstract class BaseDialogFragment<VB : ViewDataBinding, VM : BaseViewModel> : Di
 
 
         when (useDirection()) {
-            DialogOrientation.TOP -> {
+            VBDialogOrientation.TOP -> {
                 wlp.gravity = Gravity.TOP
-                window.setWindowAnimations(R.style.base_top_dialog_anim)
+                window.setWindowAnimations(R.style.vb_top_dialog_anim)
             }
-            DialogOrientation.BOTTOM -> {
+            VBDialogOrientation.BOTTOM -> {
                 wlp.gravity = Gravity.BOTTOM
-                window.setWindowAnimations(R.style.base_bottom_dialog_anim)
+                window.setWindowAnimations(R.style.vb_bottom_dialog_anim)
             }
-            DialogOrientation.LEFT -> {
+            VBDialogOrientation.LEFT -> {
                 wlp.gravity = Gravity.CENTER
-                window.setWindowAnimations(R.style.base_left_dialog_anim)
-            }
-
-            DialogOrientation.RIGHT -> {
-                wlp.gravity = Gravity.CENTER
-                window.setWindowAnimations(R.style.base_right_dialog_anim)
+                window.setWindowAnimations(R.style.vb_left_dialog_anim)
             }
 
-            DialogOrientation.CENTRE -> {
+            VBDialogOrientation.RIGHT -> {
                 wlp.gravity = Gravity.CENTER
-                window.setWindowAnimations(R.style.base_dialog_anim)
+                window.setWindowAnimations(R.style.vb_right_dialog_anim)
+            }
+
+            VBDialogOrientation.CENTRE -> {
+                wlp.gravity = Gravity.CENTER
+                window.setWindowAnimations(R.style.vb_dialog_anim)
             }
         }
 
@@ -163,7 +163,7 @@ abstract class BaseDialogFragment<VB : ViewDataBinding, VM : BaseViewModel> : Di
         }
     }
 
-    fun noCancellation(): BaseDialogFragment<*, *> {
+    fun noCancellation(): VBDialogFragment<*, *> {
         isCancelable = false
         dialog!!.setCanceledOnTouchOutside(useCancellation())
         return this

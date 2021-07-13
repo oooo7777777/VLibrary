@@ -1,6 +1,6 @@
 package com.v.base.net
 
-import com.v.base.annotaion.Error
+import com.v.base.annotaion.VBError
 import com.v.base.utils.ext.logE
 import org.apache.http.conn.ConnectTimeoutException
 import org.json.JSONException
@@ -13,38 +13,38 @@ import java.net.ConnectException
  * desc    : 错误处理
  * time    : 2021-03-16 09:52:45
  */
-object BaseExceptionHandle {
+object VBExceptionHandle {
 
-    fun handleException(e: Throwable): BaseAppException {
-        val ex: BaseAppException
+    fun handleException(e: Throwable): VBAppException {
+        val ex: VBAppException
         e.let {
             when (it) {
-                is BaseAppException -> {
+                is VBAppException -> {
                     ex = it
                 }
                 is HttpException -> {
-                    ex = BaseAppException(Error.NETWORK_ERROR, e)
+                    ex = VBAppException(VBError.NETWORK_ERROR, e)
                 }
                 is ConnectException -> {
-                    ex = BaseAppException(Error.NETWORK_ERROR, e)
+                    ex = VBAppException(VBError.NETWORK_ERROR, e)
                 }
                 is javax.net.ssl.SSLException -> {
-                    ex = BaseAppException(Error.SSL_ERROR, e)
+                    ex = VBAppException(VBError.SSL_ERROR, e)
                 }
                 is ConnectTimeoutException -> {
-                    ex = BaseAppException(Error.TIMEOUT_ERROR, e)
+                    ex = VBAppException(VBError.TIMEOUT_ERROR, e)
                 }
                 is java.net.SocketTimeoutException -> {
-                    ex = BaseAppException(Error.TIMEOUT_ERROR, e)
+                    ex = VBAppException(VBError.TIMEOUT_ERROR, e)
                 }
                 is java.net.UnknownHostException -> {
-                    ex = BaseAppException(Error.TIMEOUT_ERROR, e)
+                    ex = VBAppException(VBError.TIMEOUT_ERROR, e)
                 }
                 is JSONException -> {
-                    ex = BaseAppException(Error.PARSE_ERROR, e)
+                    ex = VBAppException(VBError.PARSE_ERROR, e)
                 }
                 else -> {
-                    ex = BaseAppException(Error.UNKNOWN, e)
+                    ex = VBAppException(VBError.UNKNOWN, e)
                 }
             }
         }

@@ -2,9 +2,9 @@ package com.v.demo
 
 import android.view.View
 import androidx.lifecycle.Observer
-import com.v.base.BaseFragment
-import com.v.base.dialog.HintDialog
-import com.v.base.dialog.ListDialog
+import com.v.base.VBFragment
+import com.v.base.dialog.VBHintDialog
+import com.v.base.dialog.VBListDialog
 import com.v.base.utils.ext.goActivity
 import com.v.demo.databinding.FragmentThreeBinding
 import com.v.demo.model.DataViewModel
@@ -15,7 +15,7 @@ import com.v.demo.model.DataViewModel
  * desc    :
  * time    : 2021/1/11 15:44
  */
-class ThreeFragment : BaseFragment<FragmentThreeBinding, DataViewModel>(), View.OnClickListener {
+class ThreeFragment : VBFragment<FragmentThreeBinding, DataViewModel>(), View.OnClickListener {
 
     override fun initData() {
         mDataBinding.v = this
@@ -44,40 +44,28 @@ class ThreeFragment : BaseFragment<FragmentThreeBinding, DataViewModel>(), View.
             }
 
             mDataBinding.bt3.id -> {
-                HintDialog()
+                VBHintDialog()
                     .setTitle("提示")
                     .setContent("确定保存吗?")
                     .setButtonText("取消", "确定")
-                    .setHintDialogClickListener(object : HintDialog.HintDialogClickListener {
-                        override fun onClick(hintDialog: HintDialog, position: Int) {
-                            hintDialog.dismiss()
-
-                            mViewModel.content.value = "点击$position"
-                        }
-
-                    }).show(mContext)
+                    .setClickListener { hintDialog, position ->
+                        hintDialog.dismiss()
+                        mViewModel.content.value = "点击$position"
+                    }.show(mContext)
             }
             mDataBinding.bt4.id -> {
                 var list = ArrayList<String>()
                 for (i in 1..3) {
                     list.add("Content$i")
                 }
-                ListDialog()
+                VBListDialog()
                     .setList(list)
-                    .setListDialogListener(object : ListDialog.ListDialogListener {
-                        override fun onItem(dialog: ListDialog, result: String, position: Int) {
-                            dialog.dismiss()
-
-                            mViewModel.content.value = result
-                        }
-
-                    }).show(mContext)
+                    .setClickListener { dialog, result, position ->
+                        dialog.dismiss()
+                        mViewModel.content.value = result
+                    }.show(mContext)
             }
-            mDataBinding.bt5.id -> {
 
-
-
-            }
         }
     }
 

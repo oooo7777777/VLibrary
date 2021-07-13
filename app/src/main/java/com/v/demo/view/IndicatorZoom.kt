@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
-import com.v.base.BaseFragmentAdapter
+import com.v.base.VBFragmentAdapter
 import com.v.demo.R
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter
@@ -39,14 +39,14 @@ class IndicatorZoom(
 
         if (context is AppCompatActivity) {
             val fragmentAdapter =
-                BaseFragmentAdapter(context.supportFragmentManager, fragments, titles)
+                VBFragmentAdapter(context.supportFragmentManager, fragments, titles)
             viewPager.adapter = fragmentAdapter
 
         } else if (context is Fragment) {
 
             context.childFragmentManager
             val fragmentAdapter =
-                BaseFragmentAdapter(context.childFragmentManager, fragments, titles)
+                VBFragmentAdapter(context.childFragmentManager, fragments, titles)
             viewPager.adapter = fragmentAdapter
         }
 

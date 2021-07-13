@@ -4,16 +4,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alibaba.fastjson.TypeReference
-import com.v.base.net.BaseAppException
-import com.v.base.net.BaseExceptionHandle
-import com.v.base.net.BaseResponse
+import com.v.base.net.VBAppException
+import com.v.base.net.VBExceptionHandle
+import com.v.base.bean.VBResponse
 import com.v.base.utils.EventLiveData
 import com.v.base.utils.toBean
 import kotlinx.coroutines.*
 import java.lang.reflect.Type
 
 
-abstract class BaseViewModel : ViewModel() {
+abstract class VBViewModel : ViewModel() {
 
     val loadingChange: UiLoadingChange by lazy { UiLoadingChange() }
 
@@ -31,9 +31,9 @@ abstract class BaseViewModel : ViewModel() {
      * @param dialog 是否显示请求框
      */
     fun <T> request(
-        block: suspend () -> BaseResponse<T>,
+        block: suspend () -> VBResponse<T>,
         success: (T) -> Unit,
-        error: (BaseAppException) -> Unit = {},
+        error: (VBAppException) -> Unit = {},
         code: (Int) -> Unit = {},
         dialog: Boolean = false
     ): Job {
@@ -49,11 +49,11 @@ abstract class BaseViewModel : ViewModel() {
                 runCatching {
                     executeResponse(it) { t -> success(t) }
                 }.onFailure { e ->
-                    error(BaseExceptionHandle.handleException(e))
+                    error(VBExceptionHandle.handleException(e))
                 }
             }.onFailure { e ->
                 loadingChange.dismissDialog.postValue(false)
-                error(BaseExceptionHandle.handleException(e))
+                error(VBExceptionHandle.handleException(e))
             }
         }
     }
@@ -68,7 +68,7 @@ abstract class BaseViewModel : ViewModel() {
     fun <T> requestDefault(
         block: suspend () -> T,
         success: (T) -> Unit,
-        error: (BaseAppException) -> Unit = {},
+        error: (VBAppException) -> Unit = {},
         dialog: Boolean = false
     ): Job {
         return viewModelScope.launch {
@@ -82,7 +82,7 @@ abstract class BaseViewModel : ViewModel() {
                 success(it)
             }.onFailure { e ->
                 loadingChange.dismissDialog.postValue(false)
-                error(BaseExceptionHandle.handleException(e))
+                error(VBExceptionHandle.handleException(e))
             }
         }
     }
@@ -98,7 +98,7 @@ abstract class BaseViewModel : ViewModel() {
     inline fun <reified T> request(
         crossinline block: suspend CoroutineScope.() -> Any,
         resultState: MutableLiveData<T>,
-        crossinline error: (BaseAppException) -> Unit = {},
+        crossinline error: (VBAppException) -> Unit = {},
         dialog: Boolean = false
     ): Job {
         return viewModelScope.launch {
@@ -113,11 +113,11 @@ abstract class BaseViewModel : ViewModel() {
                     resultState.postValue(it.toString().toBean(type) as T)
                     loadingChange.dismissDialog.postValue(false)
                 }.onFailure { e ->
-                    error(BaseExceptionHandle.handleException(e))
+                    error(VBExceptionHandle.handleException(e))
                 }
             }.onFailure { e ->
                 loadingChange.dismissDialog.postValue(false)
-                error(BaseExceptionHandle.handleException(e))
+                error(VBExceptionHandle.handleException(e))
             }
         }
     }
@@ -127,12 +127,12 @@ abstract class BaseViewModel : ViewModel() {
      * 原始的数据处理
      */
     private suspend fun <T> executeResponse(
-        response: BaseResponse<T>,
+        response: VBResponse<T>,
         success: suspend CoroutineScope.(T) -> Unit
     ) {
         coroutineScope {
             if (!response.isSuccess()) {
-                throw BaseAppException(
+                throw VBAppException(
                     response.getResponseCode(),
                     response.getResponseMsg()
                 )

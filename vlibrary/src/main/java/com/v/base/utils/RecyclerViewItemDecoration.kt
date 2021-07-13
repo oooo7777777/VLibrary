@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.v.base.annotaion.RecyclerViewItemOrientation
+import com.v.base.annotaion.VBRecyclerViewItemOrientation
 import com.v.base.utils.RecyclerViewItemDecoration.Edge.Companion.computeEdge
 import kotlin.math.ceil
 import kotlin.math.roundToInt
@@ -48,24 +48,24 @@ class RecyclerViewItemDecoration constructor(private val context: Context) :
     var isHeadView = false
 
     /**
-     * 第一个条目之前是否显示分割线, 当处于[RecyclerViewItemOrientation.GRID] 时水平方向顶端和末端是否显示分割线
+     * 第一个条目之前是否显示分割线, 当处于[VBRecyclerViewItemOrientation.GRID] 时水平方向顶端和末端是否显示分割线
      */
-    var startVisible = false
+    var isStartVisible = false
 
     /**
-     * 最后一个条目是否显示分割线, 当处于[RecyclerViewItemOrientation.GRID] 时垂直方向顶端和末端是否显示分割线
+     * 最后一个条目是否显示分割线, 当处于[VBRecyclerViewItemOrientation.GRID] 时垂直方向顶端和末端是否显示分割线
      */
-    var endVisible = false
+    var isEndVisible = false
 
     var includeVisible
-        get() = startVisible && endVisible
+        get() = isStartVisible && isEndVisible
         set(value) {
-            startVisible = value
-            endVisible = value
+            isStartVisible = value
+            isEndVisible = value
         }
 
 
-    var orientation = RecyclerViewItemOrientation.VERTICAL
+    var orientation = VBRecyclerViewItemOrientation.VERTICAL
 
     private var size = 1
     private var marginStart = 0
@@ -221,17 +221,17 @@ class RecyclerViewItemDecoration constructor(private val context: Context) :
         adjustOrientation(layoutManager)
 
         when (orientation) {
-            RecyclerViewItemOrientation.HORIZONTAL -> {
-                val top = if (startVisible && edge.top) height else 0
-                val bottom = if ((endVisible && edge.bottom) || !edge.bottom) height else 0
+            VBRecyclerViewItemOrientation.HORIZONTAL -> {
+                val top = if (isStartVisible && edge.top) height else 0
+                val bottom = if ((isEndVisible && edge.bottom) || !edge.bottom) height else 0
                 outRect.set(0, top, 0, bottom)
             }
-            RecyclerViewItemOrientation.VERTICAL -> {
-                val left = if (startVisible && edge.left) width else 0
-                val right = if ((endVisible && edge.right) || !edge.right) width else 0
+            VBRecyclerViewItemOrientation.VERTICAL -> {
+                val left = if (isStartVisible && edge.left) width else 0
+                val right = if ((isEndVisible && edge.right) || !edge.right) width else 0
                 outRect.set(left, 0, right, 0)
             }
-            RecyclerViewItemOrientation.GRID -> {
+            VBRecyclerViewItemOrientation.GRID -> {
 
                 val spanCount = when (layoutManager) {
                     is GridLayoutManager -> layoutManager.spanCount
@@ -278,26 +278,26 @@ class RecyclerViewItemDecoration constructor(private val context: Context) :
                 }
 
                 val left = when {
-                    endVisible && orientation == RecyclerView.VERTICAL -> width - spanIndex * width / spanCount
-                    startVisible && orientation == RecyclerView.HORIZONTAL -> width - spanIndex * width / spanCount
+                    isEndVisible && orientation == RecyclerView.VERTICAL -> width - spanIndex * width / spanCount
+                    isStartVisible && orientation == RecyclerView.HORIZONTAL -> width - spanIndex * width / spanCount
                     else -> spanIndex * width / spanCount
                 }
 
                 val right = when {
-                    endVisible && orientation == RecyclerView.VERTICAL -> (spanIndex + spanSize) * width / spanCount
-                    startVisible && orientation == RecyclerView.HORIZONTAL -> (spanIndex + spanSize) * width / spanCount
+                    isEndVisible && orientation == RecyclerView.VERTICAL -> (spanIndex + spanSize) * width / spanCount
+                    isStartVisible && orientation == RecyclerView.HORIZONTAL -> (spanIndex + spanSize) * width / spanCount
                     else -> width - (spanIndex + spanSize) * width / spanCount
                 }
 
                 val top = when {
                     layoutManager is StaggeredGridLayoutManager -> {
                         if (orientation == RecyclerView.VERTICAL) {
-                            if (edge.top) if (startVisible) height else 0 else 0
+                            if (edge.top) if (isStartVisible) height else 0 else 0
                         } else {
-                            if (edge.left) if (endVisible) width else 0 else 0
+                            if (edge.left) if (isEndVisible) width else 0 else 0
                         }
                     }
-                    (startVisible || endVisible) && orientation == RecyclerView.VERTICAL -> height - spanGroupIndex * height / spanGroupCount
+                    (isStartVisible || isEndVisible) && orientation == RecyclerView.VERTICAL -> height - spanGroupIndex * height / spanGroupCount
                     else -> spanGroupIndex * height / spanGroupCount
                 }
 
@@ -305,13 +305,13 @@ class RecyclerViewItemDecoration constructor(private val context: Context) :
                 val bottom = when {
                     layoutManager is StaggeredGridLayoutManager -> {
                         if (orientation == RecyclerView.VERTICAL) {
-                            if (edge.bottom) if (startVisible) height else 0 else height
+                            if (edge.bottom) if (isStartVisible) height else 0 else height
                         } else {
-                            if (edge.right) if (endVisible) width else 0 else height
+                            if (edge.right) if (isEndVisible) width else 0 else height
                         }
                     }
-                    startVisible && orientation == RecyclerView.VERTICAL && layoutManager is StaggeredGridLayoutManager -> if (spanGroupIndex == 0) height else 0
-                    (startVisible || endVisible) && orientation == RecyclerView.VERTICAL -> (spanGroupIndex + 1) * height / spanGroupCount
+                    isStartVisible && orientation == RecyclerView.VERTICAL && layoutManager is StaggeredGridLayoutManager -> if (spanGroupIndex == 0) height else 0
+                    (isStartVisible || isEndVisible) && orientation == RecyclerView.VERTICAL -> (spanGroupIndex + 1) * height / spanGroupCount
                     else -> height - (spanGroupIndex + 1) * height / spanGroupCount
                 }
 
@@ -334,9 +334,9 @@ class RecyclerViewItemDecoration constructor(private val context: Context) :
         adjustOrientation(layoutManager)
 
         when (orientation) {
-            RecyclerViewItemOrientation.HORIZONTAL -> drawHorizontal(canvas, parent)
-            RecyclerViewItemOrientation.VERTICAL -> drawVertical(canvas, parent)
-            RecyclerViewItemOrientation.GRID -> drawGrid(canvas, parent)
+            VBRecyclerViewItemOrientation.HORIZONTAL -> drawHorizontal(canvas, parent)
+            VBRecyclerViewItemOrientation.VERTICAL -> drawVertical(canvas, parent)
+            VBRecyclerViewItemOrientation.GRID -> drawGrid(canvas, parent)
         }
     }
 
@@ -346,9 +346,9 @@ class RecyclerViewItemDecoration constructor(private val context: Context) :
     private fun adjustOrientation(layoutManager: RecyclerView.LayoutManager) {
         if (layoutManager !is GridLayoutManager && layoutManager is LinearLayoutManager) {
             orientation =
-                if ((layoutManager as? LinearLayoutManager)?.orientation == RecyclerView.VERTICAL) RecyclerViewItemOrientation.HORIZONTAL else RecyclerViewItemOrientation.VERTICAL
+                if ((layoutManager as? LinearLayoutManager)?.orientation == RecyclerView.VERTICAL) VBRecyclerViewItemOrientation.HORIZONTAL else VBRecyclerViewItemOrientation.VERTICAL
         } else if (layoutManager is StaggeredGridLayoutManager || layoutManager is GridLayoutManager) {
-            orientation = RecyclerViewItemOrientation.GRID
+            orientation = VBRecyclerViewItemOrientation.GRID
         }
     }
 
@@ -375,7 +375,7 @@ class RecyclerViewItemDecoration constructor(private val context: Context) :
             val layoutManager = parent.layoutManager ?: return
             val edge = computeEdge(position, layoutManager)
 
-            if (orientation != RecyclerViewItemOrientation.GRID && !endVisible && edge.bottom) {
+            if (orientation != VBRecyclerViewItemOrientation.GRID && !isEndVisible && edge.bottom) {
                 continue@loop
             }
 
@@ -395,7 +395,7 @@ class RecyclerViewItemDecoration constructor(private val context: Context) :
                     paint.color = background
                     paint.style = Paint.Style.FILL
 
-                    if (startVisible && edge.top) {
+                    if (isStartVisible && edge.top) {
                         val firstRect = Rect(
                             parent.paddingLeft,
                             firstTop,
@@ -410,7 +410,7 @@ class RecyclerViewItemDecoration constructor(private val context: Context) :
                     canvas.drawRect(rect, paint)
                 }
 
-                if (startVisible && edge.top) {
+                if (isStartVisible && edge.top) {
                     setBounds(left, firstTop, right, firstBottom)
                     draw(canvas)
                 }
@@ -447,7 +447,7 @@ class RecyclerViewItemDecoration constructor(private val context: Context) :
             val layoutManager = parent.layoutManager ?: return
             val edge = computeEdge(position, layoutManager)
 
-            if (orientation != RecyclerViewItemOrientation.GRID && !endVisible && edge.right) {
+            if (orientation != VBRecyclerViewItemOrientation.GRID && !isEndVisible && edge.right) {
                 continue@loop
             }
 
@@ -467,7 +467,7 @@ class RecyclerViewItemDecoration constructor(private val context: Context) :
                     paint.color = background
                     paint.style = Paint.Style.FILL
 
-                    if (startVisible && edge.left) {
+                    if (isStartVisible && edge.left) {
                         val firstRect = Rect(
                             firstLeft,
                             parent.paddingTop,
@@ -482,7 +482,7 @@ class RecyclerViewItemDecoration constructor(private val context: Context) :
                     canvas.drawRect(rect, paint)
                 }
 
-                if (startVisible && edge.left) {
+                if (isStartVisible && edge.left) {
                     setBounds(firstLeft, top, firstRight, bottom)
                     draw(canvas)
                 }
@@ -534,7 +534,7 @@ class RecyclerViewItemDecoration constructor(private val context: Context) :
                 )
 
                 // top
-                if (!endVisible && edge.right) {
+                if (!isEndVisible && edge.right) {
                     setBounds(
                         bounds.left - width,
                         bounds.top - height,
@@ -542,7 +542,7 @@ class RecyclerViewItemDecoration constructor(private val context: Context) :
                         bounds.top
                     )
                     draw(canvas)
-                } else if (!endVisible && !edge.top && edge.left) {
+                } else if (!isEndVisible && !edge.top && edge.left) {
                     setBounds(
                         bounds.left + marginStart,
                         bounds.top - height,
@@ -550,7 +550,7 @@ class RecyclerViewItemDecoration constructor(private val context: Context) :
                         bounds.top
                     )
                     draw(canvas)
-                } else if (!edge.top || (startVisible && edge.top)) {
+                } else if (!edge.top || (isStartVisible && edge.top)) {
                     setBounds(
                         bounds.left - width,
                         bounds.top - height,
@@ -561,7 +561,7 @@ class RecyclerViewItemDecoration constructor(private val context: Context) :
                 }
 
                 // bottom
-                if (!endVisible && edge.right) {
+                if (!isEndVisible && edge.right) {
                     setBounds(
                         bounds.left - width,
                         bounds.bottom,
@@ -569,7 +569,7 @@ class RecyclerViewItemDecoration constructor(private val context: Context) :
                         bounds.bottom + height
                     )
                     draw(canvas)
-                } else if (!endVisible && !edge.bottom && edge.left) {
+                } else if (!isEndVisible && !edge.bottom && edge.left) {
                     setBounds(
                         bounds.left + marginStart,
                         bounds.bottom,
@@ -577,7 +577,7 @@ class RecyclerViewItemDecoration constructor(private val context: Context) :
                         bounds.bottom + height
                     )
                     draw(canvas)
-                } else if (!edge.bottom || (startVisible && edge.bottom)) {
+                } else if (!edge.bottom || (isStartVisible && edge.bottom)) {
                     setBounds(
                         bounds.left - width,
                         bounds.bottom,
@@ -588,7 +588,7 @@ class RecyclerViewItemDecoration constructor(private val context: Context) :
                 }
 
                 // left
-                if (edge.top && !endVisible && !edge.left) {
+                if (edge.top && !isEndVisible && !edge.left) {
                     setBounds(
                         bounds.left - width,
                         bounds.top + marginStart,
@@ -596,7 +596,7 @@ class RecyclerViewItemDecoration constructor(private val context: Context) :
                         bounds.bottom
                     )
                     draw(canvas)
-                } else if (edge.bottom && !endVisible && !edge.left) {
+                } else if (edge.bottom && !isEndVisible && !edge.left) {
                     setBounds(
                         bounds.left - width,
                         bounds.top,
@@ -604,13 +604,13 @@ class RecyclerViewItemDecoration constructor(private val context: Context) :
                         bounds.bottom - marginEnd
                     )
                     draw(canvas)
-                } else if (!edge.left || (endVisible && edge.left)) {
+                } else if (!edge.left || (isEndVisible && edge.left)) {
                     setBounds(bounds.left - width, bounds.top, bounds.left, bounds.bottom)
                     draw(canvas)
                 }
 
                 // right
-                if (edge.top && !endVisible && !edge.right) {
+                if (edge.top && !isEndVisible && !edge.right) {
                     setBounds(
                         bounds.right,
                         bounds.top + marginStart,
@@ -618,7 +618,7 @@ class RecyclerViewItemDecoration constructor(private val context: Context) :
                         bounds.bottom
                     )
                     draw(canvas)
-                } else if (edge.bottom && !endVisible && !edge.right) {
+                } else if (edge.bottom && !isEndVisible && !edge.right) {
                     setBounds(
                         bounds.right,
                         bounds.top,
@@ -626,7 +626,7 @@ class RecyclerViewItemDecoration constructor(private val context: Context) :
                         bounds.bottom - marginEnd
                     )
                     draw(canvas)
-                } else if (!edge.right || (endVisible && edge.right)) {
+                } else if (!edge.right || (isEndVisible && edge.right)) {
                     setBounds(bounds.right, bounds.top, bounds.right + width, bounds.bottom)
                     draw(canvas)
                 }

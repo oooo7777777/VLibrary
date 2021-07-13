@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:text="数据共享"
             android:textAllCaps="false"
-            app:click="@{v}" />
+            app:vb_click="@{v}" />
 
         <Button
             android:id="@+id/bt1"
@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:text="Event Bus"
             android:textAllCaps="false"
-            app:click="@{v}" />
+            app:vb_click="@{v}" />
 
         <Button
             android:id="@+id/bt2"
@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:text="网络请求"
             android:textAllCaps="false"
-            app:click="@{v}" />
+            app:vb_click="@{v}" />
 
 
         <Button
@@ -65,7 +65,7 @@
             android:layout_marginTop="10dp"
             android:text="dialog"
             android:textAllCaps="false"
-            app:click="@{v}" />
+            app:vb_click="@{v}" />
 
         <Button
             android:id="@+id/bt4"
@@ -73,15 +73,7 @@
             android:layout_height="wrap_content"
             android:text="dialog List"
             android:textAllCaps="false"
-            app:click="@{v}" />
-
-        <Button
-            android:id="@+id/bt5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="img Select"
-            android:textAllCaps="false"
-            app:click="@{v}" />
+            app:vb_click="@{v}" />
 
 
     </LinearLayout>

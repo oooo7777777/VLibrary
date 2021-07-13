@@ -1,10 +1,8 @@
 package com.v.demo.model
 
 import androidx.lifecycle.MutableLiveData
-import com.v.base.BaseApplication.Companion.apiBase
-import com.v.base.BaseViewModel
-import com.v.base.net.BaseAppException
-import com.v.base.utils.ext.log
+import com.v.base.VBApplication.Companion.apiBase
+import com.v.base.VBViewModel
 import com.v.base.utils.ext.logE
 import com.v.demo.bean.BannerBean
 import com.v.demo.bean.GirlBean
@@ -17,7 +15,7 @@ import com.v.demo.net.Network.Companion.apiService
  * desc    :
  * time    : 2021/1/12 16:11
  */
-class DemoViewModel : BaseViewModel() {
+class DemoViewModel : VBViewModel() {
 
     var girlBean = MutableLiveData<List<GirlBean>>()
 

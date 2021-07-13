@@ -2,7 +2,7 @@ package com.v.base.net
 
 import retrofit2.http.*
 
-interface BaseNetApi {
+interface VBNetApi {
 
     @GET
     suspend fun get(@Url url: String): String

@@ -23,10 +23,10 @@ import com.v.base.R
  * @param roundingRadius 图片圆角角度
  * @param errorResId 加载错误占位图
  */
-fun ImageView.load(
+fun ImageView.vbLoad(
     any: Any,
     roundingRadius: Float = 0f,
-    errorResId: Int = R.mipmap.base_iv_default
+    errorResId: Int = R.mipmap.vb_iv_empty
 ) = loadDispose(this, any, roundingRadius, errorResId)
 
 
@@ -35,7 +35,7 @@ fun ImageView.load(
  * @param any 图片资源Glide所支持的
  * @param errorResId 加载错误占位图
  */
-fun ImageView.loadCircle(any: Any, errorResId: Int = R.mipmap.base_iv_default) =
+fun ImageView.vbLoadCircle(any: Any, errorResId: Int = R.mipmap.vb_iv_empty) =
     loadDispose(this, any, -1f, errorResId)
 
 
@@ -47,7 +47,7 @@ fun ImageView.loadCircle(any: Any, errorResId: Int = R.mipmap.base_iv_default) =
  * @param success 图片加载成功
  * @param error 图片加载失败
  */
-fun Context.loadListener(
+fun Context.vbLoadListener(
     any: Any,
     w: Int,
     h: Int,
@@ -157,7 +157,7 @@ private fun loadRoundedTransform(
 /**
  * 对占位图的圆形处理
  */
-fun loadCircleTransform(
+private fun loadCircleTransform(
     context: Context,
     @DrawableRes placeholderId: Int
 ): RequestBuilder<Drawable?>? {

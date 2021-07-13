@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:text="点击间隔默认500"
                 android:textAllCaps="false"
-                app:click="@{v}" />
+                app:vb_click="@{v}" />
 
             <Button
                 android:id="@+id/bt1"
@@ -43,8 +43,8 @@
                 android:layout_height="wrap_content"
                 android:text="点击间隔1000"
                 android:textAllCaps="false"
-                app:click="@{v}"
-                app:clickTime="@{1000}" />
+                app:vb_click="@{v}"
+                app:vb_click_time="@{1000}" />
 
 
             <Button
@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:text="toast"
                 android:textAllCaps="false"
-                app:click="@{v}" />
+                app:vb_click="@{v}" />
 
 
             <Button
@@ -62,8 +62,8 @@
                 android:layout_height="wrap_content"
                 android:text="日志"
                 android:textAllCaps="false"
-                app:click="@{v}"
-                app:clickTime="@{2000}" />
+                app:vb_click="@{v}"
+                app:vb_click_time="@{2000}" />
 
             <Button
                 android:layout_width="match_parent"
@@ -71,7 +71,7 @@
                 android:gravity="center"
                 android:text="打电话"
                 android:textAllCaps="false"
-                app:callPhone="@{123123}" />
+                app:vb_call_phone="@{123123}" />
 
 
             <Button
@@ -80,7 +80,7 @@
                 android:gravity="center"
                 android:text="复制文本到粘贴板"
                 android:textAllCaps="false"
-                app:copyToClipboard="@{3231}" />
+                app:vb_copy_to_clipboard="@{3231}" />
 
 
             <Button
@@ -88,12 +88,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                app:click="@{v}"
                 android:text="设置DrawableLeft"
                 android:textAllCaps="false"
-                app:drawableHeight="@{50}"
-                app:drawableLeft="@{R.mipmap.ic_launcher}"
-                app:drawableWidth="@{50}" />
+                app:vb_click="@{v}"
+                app:vb_drawable_height="@{50}"
+                app:vb_drawable_Left="@{R.mipmap.ic_launcher}"
+                app:vb_drawable_width="@{50}" />
 
 
             <Button
@@ -101,12 +101,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                app:click="@{v}"
                 android:text="设置DrawableRight"
                 android:textAllCaps="false"
-                app:drawableHeight="@{30}"
-                app:drawableRight="@{R.mipmap.ic_launcher}"
-                app:drawableWidth="@{30}" />
+                app:vb_click="@{v}"
+                app:vb_drawable_height="@{30}"
+                app:vb_drawable_right="@{R.mipmap.ic_launcher}"
+                app:vb_drawable_width="@{30}" />
 
 
             <Button
@@ -114,9 +114,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                app:click="@{v}"
                 android:text="设置图片圆角"
-                android:textAllCaps="false" />
+                android:textAllCaps="false"
+                app:vb_click="@{v}" />
 
 
             <Button
@@ -124,9 +124,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                app:click="@{v}"
                 android:text="设置图片圆形"
-                android:textAllCaps="false" />
+                android:textAllCaps="false"
+                app:vb_click="@{v}" />
 
             <ImageView
                 android:id="@+id/ivIcon"
@@ -135,7 +135,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:scaleType="centerCrop"
-                app:imgUrl="@{R.mipmap.ic_movie}"
+                app:vb_img_url="@{R.mipmap.ic_movie}"
                 tools:src="@mipmap/ic_movie" />
 
 

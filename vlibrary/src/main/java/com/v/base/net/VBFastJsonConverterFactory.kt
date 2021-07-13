@@ -15,7 +15,7 @@ import java.nio.charset.Charset
  * desc    :
  * time    : 2021-03-16 09:52:45
  */
-class FastJsonConverterFactory(val charset: Charset) : Converter.Factory() {
+class VBFastJsonConverterFactory(val charset: Charset) : Converter.Factory() {
 
     override fun requestBodyConverter(
         type: Type,
@@ -65,8 +65,8 @@ class FastJsonConverterFactory(val charset: Charset) : Converter.Factory() {
         private val UTF_8 = Charset.forName("UTF-8")
 
         @JvmOverloads
-        fun create(charset: Charset = UTF_8): FastJsonConverterFactory {
-            return FastJsonConverterFactory(charset)
+        fun create(charset: Charset = UTF_8): VBFastJsonConverterFactory {
+            return VBFastJsonConverterFactory(charset)
         }
     }
 }

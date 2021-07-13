@@ -1,7 +1,7 @@
 package com.v.base.annotaion
 
 
-enum class Error(private val code: Int, private val err: String) {
+enum class VBError(private val code: Int, private val err: String) {
 
     /**
      * 未知错误

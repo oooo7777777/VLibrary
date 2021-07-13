@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit
  * desc    : 网络请求日志打印
  * time    : 2021-03-16 09:52:45
  */
-open class BaseLogInterceptor : Interceptor {
+open class VBLogInterceptor : Interceptor {
 
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {

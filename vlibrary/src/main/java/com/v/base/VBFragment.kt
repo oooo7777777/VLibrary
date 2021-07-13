@@ -12,12 +12,12 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.v.base.dialog.LoadingDialog
+import com.v.base.dialog.VBLoadingDialog
 import com.v.base.utils.ext.log
 import java.lang.reflect.ParameterizedType
 
 
-abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel> : Fragment() {
+abstract class VBFragment<VB : ViewDataBinding, VM : VBViewModel> : Fragment() {
 
 
     protected lateinit var mContext: Activity
@@ -31,7 +31,7 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel> : Fragment
     private var currentVisibleState = false
 
     private val loadDialog by lazy {
-        LoadingDialog(mContext).setDialogCancelable(false)
+        VBLoadingDialog(mContext).setDialogCancelable(false)
     }
 
     protected val mViewModel: VM by lazy {
@@ -164,7 +164,7 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel> : Fragment
      */
     private fun isParentInvisible(): Boolean {
         val fragment =
-            parentFragment as BaseFragment<*, *>?
+            parentFragment as VBFragment<*, *>?
         return fragment != null && !fragment.isSupportVisible()
     }
 
@@ -191,8 +191,8 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel> : Fragment
         val fragments = childFragmentManager.fragments
         if (fragments.isNotEmpty()) {
             for (child in fragments) {
-                if (child is BaseFragment<*, *> && !child.isHidden && child.userVisibleHint) {
-                    (child as BaseFragment<*, *>).dispatchUserVisibleHint(
+                if (child is VBFragment<*, *> && !child.isHidden && child.userVisibleHint) {
+                    (child as VBFragment<*, *>).dispatchUserVisibleHint(
                         visible
                     )
                 }

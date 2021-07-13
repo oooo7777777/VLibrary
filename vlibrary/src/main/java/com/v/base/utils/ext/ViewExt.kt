@@ -9,7 +9,7 @@ import com.v.base.utils.ViewClickAnimatorUtil
 /**
  * 重设 view 的宽高
  */
-fun View.setViewLayoutParams(
+fun View.vbViewLayoutParams(
     w: Int = ViewGroup.LayoutParams.MATCH_PARENT,
     h: Int = ViewGroup.LayoutParams.WRAP_CONTENT
 ) = run {
@@ -24,7 +24,7 @@ fun View.setViewLayoutParams(
 /**
  * 点击动画效果
  */
-fun View.onClickAnimator(clickTime: Long = 500L, onClick: ((v: View) -> Unit)) = run {
+fun View.vbOnClickAnimator(clickTime: Long = 500L, onClick: ((v: View) -> Unit)) = run {
     ViewClickAnimatorUtil(this, clickTime, onClick)
     this
 }
@@ -34,18 +34,18 @@ fun View.onClickAnimator(clickTime: Long = 500L, onClick: ((v: View) -> Unit)) =
  * 点击防抖动
  * @param defaultTime 间隔时间
  */
-fun View.isInvalidClick(defaultTime: Long = 500L): Boolean = run {
+fun View.vbInvalidClick(defaultTime: Long = 500L): Boolean = run {
     val curTimeStamp = System.currentTimeMillis()
     var lastClickTimeStamp: Long = 0
-    val o = this.getTag(R.id.invalid_click)
+    val o = this.getTag(R.id.vb_invalid_click)
     if (o == null) {
-        this.setTag(R.id.invalid_click, curTimeStamp)
+        this.setTag(R.id.vb_invalid_click, curTimeStamp)
         return false
     }
     lastClickTimeStamp = o as Long
     val isInvalid = curTimeStamp - lastClickTimeStamp < defaultTime
     if (!isInvalid) {
-        this.setTag(R.id.invalid_click, curTimeStamp)
+        this.setTag(R.id.vb_invalid_click, curTimeStamp)
     }
     return isInvalid
 }

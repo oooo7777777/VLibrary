@@ -14,21 +14,17 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.noober.background.BackgroundLibrary
-import com.v.base.databinding.BaseLayoutBinding
-import com.v.base.dialog.LoadingDialog
-import com.v.base.utils.ext.getStatusBarHeight
-import com.v.base.utils.ext.log
-import com.v.base.utils.ext.onClickAnimator
-import com.v.base.utils.ext.setViewLayoutParams
+import com.v.base.databinding.VbRootLayoutBinding
+import com.v.base.dialog.VBLoadingDialog
+import com.v.base.utils.ext.*
 import com.v.base.utils.isWhiteColor
-
 import java.lang.reflect.Field
 import java.lang.reflect.ParameterizedType
 
 
-abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel> : AppCompatActivity() {
+abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatActivity() {
 
-    private lateinit var mBaseDataBinding: BaseLayoutBinding
+    private lateinit var mRootDataBinding: VbRootLayoutBinding
 
     lateinit var mContext: AppCompatActivity
 
@@ -55,7 +51,7 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel> : AppCompa
      * 初始化加载框
      */
     private val loadDialog by lazy {
-        LoadingDialog(this).setDialogCancelable(false)
+        VBLoadingDialog(this).setDialogCancelable(false)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,16 +62,16 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel> : AppCompa
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         mContext = this
         //获取base DataBinding
-        mBaseDataBinding = DataBindingUtil.setContentView(
+        mRootDataBinding = DataBindingUtil.setContentView(
             this,
-            R.layout.base_layout
+            R.layout.vb_root_layout
         )
-        val rootView: View = mBaseDataBinding.root
+        val rootView: View = mRootDataBinding.root
         //把mDataBinding添加到baseDataBinding里面去
-        mBaseDataBinding.layoutContent.addView(mDataBinding.root)
+        mRootDataBinding.layoutContent.addView(mDataBinding.root)
         super.setContentView(rootView)
 
-        mBaseDataBinding.lifecycleOwner = this
+        mRootDataBinding.lifecycleOwner = this
         mDataBinding.lifecycleOwner = this
 
         //注册加载框
@@ -92,7 +88,7 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel> : AppCompa
         toolBarRight("", 0, null)
         toolBarRight(0, null)
         //设置是否隐藏状态栏
-        mBaseDataBinding.ivStatusBar.visibility = if (useStatusBar()) View.GONE else View.VISIBLE
+        mRootDataBinding.ivStatusBar.visibility = if (useStatusBar()) View.GONE else View.VISIBLE
         initData()
         createObserver()
         javaClass.name.log()
@@ -104,7 +100,7 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel> : AppCompa
      * @param color 颜色
      */
     protected open fun statusBarColor(
-        color: Int = BaseApplication.getStatusBarColor()
+        color: Int = VBApplication.getStatusBarColor()
     ) {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -124,8 +120,8 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel> : AppCompa
             window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE//白色
         }
 
-        mBaseDataBinding.ivStatusBar.setViewLayoutParams(h = getStatusBarHeight())
-        mBaseDataBinding.ivStatusBar.setBackgroundColor(color)
+        mRootDataBinding.ivStatusBar.vbViewLayoutParams(h = vbGetStatusBarHeight())
+        mRootDataBinding.ivStatusBar.setBackgroundColor(color)
     }
 
 
@@ -135,12 +131,12 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel> : AppCompa
      * @param listener 点击事件(默认是点击返回)
      */
     protected open fun toolBarLift(
-        resId: Int = R.mipmap.base_icon_back_black,
+        resId: Int = R.mipmap.vb_ic_back_black,
         listener: View.OnClickListener = View.OnClickListener { mContext.onBackPressed() }
     ) {
-        mBaseDataBinding.ivLeft?.run {
+        mRootDataBinding.ivLeft?.run {
             setImageResource(resId)
-            this.onClickAnimator() {
+            this.vbOnClickAnimator() {
                 listener.onClick(it)
             }
 
@@ -155,7 +151,7 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel> : AppCompa
      * @param listener 点击事件
      */
     protected open fun toolBarRight(text: String, textColor: Int, listener: View.OnClickListener?) {
-        mBaseDataBinding.tvRight?.run {
+        mRootDataBinding.tvRight?.run {
             setText(text)
             setTextColor(textColor)
             setOnClickListener(listener)
@@ -168,7 +164,7 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel> : AppCompa
      * @param listener 点击事件
      */
     protected open fun toolBarRight(resId: Int, listener: View.OnClickListener?) {
-        mBaseDataBinding.ivRight?.run {
+        mRootDataBinding.ivRight?.run {
             setImageResource(resId)
             setOnClickListener(listener)
         }
@@ -185,11 +181,11 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel> : AppCompa
         titleColor: Int = Color.BLACK
     ) {
         if (title.isNotEmpty()) {
-            mBaseDataBinding.toolbar.visibility = View.VISIBLE
+            mRootDataBinding.toolbar.visibility = View.VISIBLE
         } else {
-            mBaseDataBinding.toolbar.visibility = View.GONE
+            mRootDataBinding.toolbar.visibility = View.GONE
         }
-        mBaseDataBinding.tvTitle?.run {
+        mRootDataBinding.tvTitle?.run {
             text = title
             setTextColor(titleColor)
         }
@@ -199,7 +195,7 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel> : AppCompa
      * 显示Toolbar
      */
     protected open fun showTitleBar(visible: Int) {
-        mBaseDataBinding.toolbar.visibility = visible
+        mRootDataBinding.toolbar.visibility = visible
     }
 
     /**

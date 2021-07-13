@@ -2,11 +2,11 @@ package com.v.demo
 
 import android.view.View
 import androidx.lifecycle.Observer
-import com.v.base.BaseActivity
-import com.v.base.BlankViewModel
+import com.v.base.VBActivity
+import com.v.base.VBBlankViewModel
 import com.v.base.utils.LiveDataBus
 import com.v.base.utils.getApplicationViewModel
-import com.v.base.utils.randomNumber
+import com.v.base.utils.vbRandomNumber
 import com.v.demo.databinding.ActivityEventBusDemoBinding
 import com.v.demo.model.AppViewModel
 
@@ -15,7 +15,7 @@ import com.v.demo.model.AppViewModel
  * desc    : 通过liveData 模拟eventBus
  * time    : 2021-03-19 10:28:14
  */
-class EventBusDemoActivity : BaseActivity<ActivityEventBusDemoBinding, BlankViewModel>(),
+class EventBusDemoActivity : VBActivity<ActivityEventBusDemoBinding, VBBlankViewModel>(),
     View.OnClickListener {
 
 
@@ -50,12 +50,12 @@ class EventBusDemoActivity : BaseActivity<ActivityEventBusDemoBinding, BlankView
                 getApplicationViewModel(
                     mContext.application,
                     AppViewModel::class.java
-                ).string.postValue("我是全局数据" + 99.randomNumber())
+                ).string.postValue("我是全局数据" + 99.vbRandomNumber())
 
             }
             mDataBinding.bt1.id -> {
                 LiveDataBus.with<String>(ConstData.CONTENT)
-                    .postData("模拟eventBus" + 99.randomNumber())
+                    .postData("模拟eventBus" + 99.vbRandomNumber())
             }
         }
     }

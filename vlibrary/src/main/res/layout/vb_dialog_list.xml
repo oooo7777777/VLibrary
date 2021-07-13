@@ -5,7 +5,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/base_background"
+        android:background="@color/vb_color_background"
         android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView

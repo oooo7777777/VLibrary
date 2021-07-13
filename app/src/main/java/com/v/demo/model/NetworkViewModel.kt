@@ -1,8 +1,8 @@
 package com.v.demo.model
 
 import androidx.lifecycle.MutableLiveData
-import com.v.base.BaseApplication.Companion.apiBase
-import com.v.base.BaseViewModel
+import com.v.base.VBApplication.Companion.apiBase
+import com.v.base.VBViewModel
 import com.v.base.utils.toJson
 import com.v.demo.net.Network.Companion.apiService
 import kotlinx.coroutines.delay
@@ -12,7 +12,7 @@ import kotlinx.coroutines.delay
  * desc    :  网络请求演示
  * time    : 2021-03-20 11:47:48
  */
-class NetworkViewModel : BaseViewModel() {
+class NetworkViewModel : VBViewModel() {
 
     var string = MutableLiveData<String>()
 

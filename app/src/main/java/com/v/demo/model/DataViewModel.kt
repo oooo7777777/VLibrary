@@ -1,7 +1,7 @@
 package com.v.demo.model
 
 import androidx.lifecycle.MutableLiveData
-import com.v.base.BaseViewModel
+import com.v.base.VBViewModel
 
 
 /**
@@ -9,7 +9,7 @@ import com.v.base.BaseViewModel
  * desc    :
  * time    : 2021/1/12 16:11
  */
-class DataViewModel : BaseViewModel() {
+class DataViewModel : VBViewModel() {
 
     var content = MutableLiveData<String>()
 

@@ -9,19 +9,19 @@ import com.orhanobut.logger.Logger
 import com.scwang.smart.refresh.footer.ClassicsFooter
 import com.scwang.smart.refresh.header.MaterialHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
-import com.v.base.net.BaseLogInterceptor
-import com.v.base.net.BaseNetApi
-import com.v.base.net.FastJsonConverterFactory
+import com.v.base.net.VBLogInterceptor
+import com.v.base.net.VBNetApi
+import com.v.base.net.VBFastJsonConverterFactory
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import java.util.concurrent.TimeUnit
 
 
-abstract class BaseApplication : Application() {
+abstract class VBApplication : Application() {
 
 
     companion object {
-        private lateinit var context: BaseApplication
+        private lateinit var context: VBApplication
 
         private var baseUrl: String? = null
         private var builder: Retrofit.Builder? = null
@@ -46,11 +46,11 @@ abstract class BaseApplication : Application() {
         }
 
         //直接使用base库里面的网络请求
-        val apiBase: BaseNetApi by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
+        val apiBase: VBNetApi by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
             if (getBaseUrl().isNullOrEmpty()) {
                 throw IllegalStateException("baseUrl为空,请继承BaseApplication重写baseUrl()")
             }
-            getRetrofitBuilder()?.build()!!.create(BaseNetApi::class.java)
+            getRetrofitBuilder()?.build()!!.create(VBNetApi::class.java)
         }
     }
 
@@ -63,7 +63,7 @@ abstract class BaseApplication : Application() {
         connectTimeout(10, TimeUnit.SECONDS)   //超时时间 连接、读、写
         readTimeout(5, TimeUnit.SECONDS)
         writeTimeout(5, TimeUnit.SECONDS)
-        addInterceptor(BaseLogInterceptor())// 日志拦截器
+        addInterceptor(VBLogInterceptor())// 日志拦截器
     }.build()
 
     /**
@@ -72,7 +72,7 @@ abstract class BaseApplication : Application() {
      */
     protected open fun retrofitBuilder(): Retrofit.Builder = Retrofit.Builder()
         .apply {
-            addConverterFactory(FastJsonConverterFactory.create())
+            addConverterFactory(VBFastJsonConverterFactory.create())
             addCallAdapterFactory(CoroutineCallAdapterFactory())
         }
 

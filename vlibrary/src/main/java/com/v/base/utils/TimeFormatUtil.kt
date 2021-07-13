@@ -7,20 +7,20 @@ import java.util.*
 /**
  * 获取当前毫秒时间戳
  */
-fun getNowTimeMills(): Long {
+fun vbNowTimeMills(): Long {
     return System.currentTimeMillis()
 }
 
 /**
  * 获取当前时间戳转为时间字符串
  */
-fun getNowTimeString(): String {
-    return System.currentTimeMillis().formatTime()
+fun vbNowTimeString(): String {
+    return System.currentTimeMillis().vbFormatTime()
 }
 
 /**
  * 将时间戳转为时间字符串*/
-fun Long.formatTime(pattern: String = "yyyy-MM-dd HH:mm:ss"): String =
+fun Long.vbFormatTime(pattern: String = "yyyy-MM-dd HH:mm:ss"): String =
     run {
         SimpleDateFormat(pattern, Locale.getDefault())
             .format(Date(this))
@@ -30,7 +30,7 @@ fun Long.formatTime(pattern: String = "yyyy-MM-dd HH:mm:ss"): String =
 /**
  * 将毫秒数换算成x天x时x分x秒x毫秒
  */
-fun Long.formatTimeYMD(): String =
+fun Long.vbFormatTimeYMD(): String =
     run {
         val ss = 1000
         val mi = ss * 60
@@ -58,7 +58,7 @@ fun Long.formatTimeYMD(): String =
 /**
  * 友好时间
  */
-fun Long.formatTimeFriendly(): String =
+fun Long.vbFormatTimeFriendly(): String =
     run {
         //获取time距离当前的秒数
         val ct = ((System.currentTimeMillis() - this) / 1000).toInt()

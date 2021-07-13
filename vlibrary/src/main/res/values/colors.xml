@@ -2,8 +2,8 @@
 <resources>
 
     <!-- 背景色-->
-    <color name="base_background">#EDEDED</color>
+    <color name="vb_color_background">#EDEDED</color>
     <!-- 分割线-->
-    <color name="base_line">#EDEDED</color>
+    <color name="vb_color_line">#EDEDED</color>
 
 </resources>

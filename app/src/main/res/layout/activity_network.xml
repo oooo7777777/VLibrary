@@ -97,7 +97,7 @@
                         android:layout_height="wrap_content"
                         android:text="自定义网络请求(返回去壳数据)"
                         android:textAllCaps="false"
-                        app:click="@{v}" />
+                        app:vb_click="@{v}" />
 
 
                     <Button
@@ -106,7 +106,7 @@
                         android:layout_height="wrap_content"
                         android:text="自定义网络请求(返回未去壳数据)"
                         android:textAllCaps="false"
-                        app:click="@{v}" />
+                        app:vb_click="@{v}" />
 
 
                     <Button
@@ -116,7 +116,7 @@
                         android:layout_marginTop="30dp"
                         android:text="VLibrary库网络请求"
                         android:textAllCaps="false"
-                        app:click="@{v}" />
+                        app:vb_click="@{v}" />
 
 
                     <ScrollView

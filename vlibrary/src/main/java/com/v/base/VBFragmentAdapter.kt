@@ -8,7 +8,7 @@ import androidx.viewpager.widget.PagerAdapter
 
 
 @SuppressLint("WrongConstant")
-class BaseFragmentAdapter(
+class VBFragmentAdapter(
     fm: FragmentManager,
     private val list: List<Fragment>,
     private val titles: Array<String>

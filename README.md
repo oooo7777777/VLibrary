@@ -51,10 +51,10 @@ android {
  
 ```
 
-- **4. 继承BaseApplication**
+- **4. 继承VBApplication**
 
 ```
-open class *** : BaseApplication() {
+open class *** : VBApplication() {
 
 }
 ```
@@ -62,22 +62,22 @@ open class *** : BaseApplication() {
 - **5. 设置AndroidManifest.xml主题**
 
 ```
- android:theme="@style/Base_AppTheme"
+ android:theme="@style/vb_app_theme"
 ```
 
 #### 继承基类
 
-一般我们项目中都会有一套自己定义的符合业务需求的基类 ***BaseActivity/BaseFragment***，所以我们的基类需要**继承本框架的Base类**
+一般我们项目中都会有一套自己定义的符合业务需求的基类 ***VBActivity/VBFragment***，所以我们的基类需要**继承本框架的Base类**
 
 
 
 - **使用Activity(基类为AppCompatActivity)**
 ```
 /**
- * @param MeActivityBinding DataBinding
- * @param BlankViewModel BaseViewModel(如果该页面不使用ViewModel 使用BlankViewModel)
+ * @param MainActivityBinding DataBinding
+ * @param VBBlankViewModel VBViewModel(如果该页面不使用ViewModel 使用BlankViewModel)
  */
-class *** : BaseActivity<***Binding, BlankViewModel>() {
+class *** : VBActivity<MainActivityBinding, VBBlankViewModel>() {
     
  
 }
@@ -86,10 +86,10 @@ class *** : BaseActivity<***Binding, BlankViewModel>() {
 - **使用Fragment(基类为Fragment)**
 ```
 /**
- * @param MeFragmentBinding DataBinding
- * @param MeViewModel BaseViewModel(如果该页面不使用ViewModel 使用BlankViewModel)
+ * @param MainFragmentBinding DataBinding
+ * @param MeViewModel VBViewModel(如果该页面不使用ViewModel 使用BlankViewModel)
  */
-class *** : BaseFragment<***Binding, MeViewModel>() {
+class *** : VBFragment<MainFragmentBinding, VBBlankViewModel>() {
 
   
 }
@@ -98,7 +98,7 @@ class *** : BaseFragment<***Binding, MeViewModel>() {
 - **使用ViewModel**
 
 ```
-class ***ViewModel : BaseViewModel() {
+class MainViewModel : VBViewModel() {
     
     
 }
@@ -108,7 +108,7 @@ class ***ViewModel : BaseViewModel() {
 - **使用Dialog(基类为DialogFragment)**
 
 ```
-class *** : BaseDialogFragment<***Binding, BlankViewModel>() {
+class *** : VBDialogFragment<***Binding, VBBlankViewModel>() {
 
  
 }
@@ -118,10 +118,10 @@ class *** : BaseDialogFragment<***Binding, BlankViewModel>() {
 
 #### 功能展示
 
-- **BaseApplication**
+- **VBApplication**
 
 ```
-class ***: BaseApplication() {
+class ***: VBApplication() {
 
     /**
      * 重写此方法 开启日志打印(日志TAG为 PRETTY_LOGGER)
@@ -152,7 +152,7 @@ class ***: BaseApplication() {
      */
     override fun retrofitBuilder(): Retrofit.Builder {
         return Retrofit.Builder().apply {
-            addConverterFactory(FastJsonConverterFactory.create())
+            addConverterFactory(VBFastJsonConverterFactory.create())
             addCallAdapterFactory(CoroutineCallAdapterFactory())
         }
     }
@@ -167,16 +167,16 @@ class ***: BaseApplication() {
             .readTimeout(5, TimeUnit.SECONDS)
             .writeTimeout(5, TimeUnit.SECONDS)
             .addInterceptor(NetworkHeadInterceptor())  //添加公共heads 注意要设置在日志拦截器之前，不然Log中会不显示head信息
-            .addInterceptor(BaseLogInterceptor())// 日志拦截器（这里请使用BaseLogInterceptor，不然网络请求日志不会打印出来）
+            .addInterceptor(VBLogInterceptor())// 日志拦截器（这里请使用BaseLogInterceptor，不然网络请求日志不会打印出来）
             .build()
     }
 
 }
 ```
-- **BaseActivity**
+- **VBActivity**
 
 ```
-class ***: BaseActivity<***Binding, BlankViewModel>() {
+class ***: VBActivity<***Binding, VBBlankViewModel>() {
     
     /**
      * 重写此方法
@@ -245,10 +245,10 @@ class ***: BaseActivity<***Binding, BlankViewModel>() {
 }
 ```
 
-- **BaseFragment**
+- **VBFragment**
 
 ```
-class ***: BaseFragment<***Binding, MeViewModel>() {
+class ***: VBFragment<***Binding, MeViewModel>() {
 
     /**
      * 重写此方法
@@ -276,10 +276,10 @@ class ***: BaseFragment<***Binding, MeViewModel>() {
 }
 ```
 
-- **BaseDialogFragment**
+- **VBDialogFragment**
 
 ```
-class ***: BaseDialogFragment<***Binding, BlankViewModel>() {
+class ***: VBDialogFragment<***Binding, VBBlankViewModel>() {
 
     /**
      * 重写此方法
@@ -299,11 +299,11 @@ class ***: BaseDialogFragment<***Binding, BlankViewModel>() {
 
     /**
      * 重写此方法
-     * 设置dialog弹出方向 [DialogOrientation]
+     * 设置dialog弹出方向 [VBDialogOrientation]
      * 支持   TOP, BOTTOM, LEFT, RIGHT, CENTRE
      * 添加相对于的弹出动画
      */
-    override fun useDirection(): DialogOrientation {
+    override fun useDirection(): VBDialogOrientation {
         return super.useDirection()
     }
 
@@ -314,10 +314,10 @@ class ***: BaseDialogFragment<***Binding, BlankViewModel>() {
 
 > 第一种方法
 
-- **1. 继承BaseApplication**
+- **1. 继承VBApplication**
 
 ```
-class DemoApplication : BaseApplication() {
+class DemoApplication : VBApplication() {
 
     /**
      * 使用VLibrary库自带的网络请求时候请重写此方法
@@ -334,7 +334,7 @@ class DemoApplication : BaseApplication() {
      */
     override fun retrofitBuilder(): Retrofit.Builder {
         return Retrofit.Builder().apply {
-            addConverterFactory(FastJsonConverterFactory.create())
+            addConverterFactory(VBFastJsonConverterFactory.create())
             addCallAdapterFactory(CoroutineCallAdapterFactory())
         }
     }
@@ -349,7 +349,7 @@ class DemoApplication : BaseApplication() {
             .readTimeout(5, TimeUnit.SECONDS)
             .writeTimeout(5, TimeUnit.SECONDS)
             .addInterceptor(NetworkHeadInterceptor())  //添加公共heads 注意要设置在日志拦截器之前，不然Log中会不显示head信息
-            .addInterceptor(BaseLogInterceptor())// 日志拦截器（这里请使用BaseLogInterceptor，不然网络请求日志不会打印出来）
+            .addInterceptor(VBLogInterceptor())// 日志拦截器（这里请使用BaseLogInterceptor，不然网络请求日志不会打印出来）
             .build()
     }
 
@@ -358,19 +358,10 @@ class DemoApplication : BaseApplication() {
 }
 ```
 
-- **2. 继承BaseViewModel**
+- **2. 继承VBViewModel**
 
 ```
-class ***: BaseViewModel() {
-
-//get请求
-//apiBase.get("url")
-//apiBase.get("url",map)
-
-//post请求
-//apiBase.post("url")
-//apiBase.post("url",map)
-
+class ***: VBViewModel() {
 
     var bean = MutableLiveData<Bean>()
 
@@ -393,10 +384,10 @@ class ***: BaseViewModel() {
 
 > 第二种方法
 
-- **1. 新建请求配置类继承BaseNetwork**
+- **1. 新建请求配置类继承VBNetwork**
 
 ```
-class Network : BaseNetwork() {
+class Network : VBNetwork() {
 
     companion object {
 
@@ -457,7 +448,7 @@ class Network : BaseNetwork() {
 这时我们可以在服务器返回数据基类中继承BaseResponse，实现相关方法：
 
 ```
-class ApiResponse<T>(var status: Int, var msg: String, var data: T)  : BaseResponse<T>() {
+class ApiResponse<T>(var status: Int, var msg: String, var data: T)  : VBResponse<T>() {
 
     // 这里是示例，wanandroid 网站返回的 错误码为 0 就代表请求成功，请你根据自己的业务需求来编写
     override fun isSuccess() = status == 100
@@ -474,7 +465,7 @@ class ApiResponse<T>(var status: Int, var msg: String, var data: T)  : BaseRespo
 - **3. 在ViewModel中发起请求，所有请求都是在viewModelScope中启动，请求会发生在IO线程，最终回调在主线程上，当页面销毁的时候，请求会统一取消，不用担心内存泄露的风险，框架做了2种请求使用方式**  
 
 ```
-class ***: BaseViewModel {
+class ***: VBViewModel {
 
   ///自定义api 网络请求 获取去壳数据
     fun getCustom() {
@@ -505,38 +496,34 @@ class ***: BaseViewModel {
 
 #### 其他功能
 
-- **HintDialog(提示弹出框)**
+- **VBHintDialog(提示弹出框)**
 
 ```
 HintDialog()
     .setTitle("提示")//可选 输入则显示title
     .setContent("确定保存吗?")
     .setButtonText("取消", "确定")//最大支持两个按钮 输入一个参数 则只展示一个按钮
-    .setHintDialogClickListener(object : HintDialog.HintDialogClickListener {
-        override fun onClick(hintDialog: HintDialog, position: Int) {
-            hintDialog.dismiss()
-
-        }
-
-    }).show(mContext)
+    .setClickListener 
+        { hintDialog, position ->
+             hintDialog.dismiss()
+             mViewModel.content.value = "点击$position"
+        }.show(mContext)
 ```
 
-- **ListDialog(列表弹出框)**
+- **VBListDialog(列表弹出框)**
 
 ```
  var list = ArrayList<String>()
     for ( i in 1..3) {
         list.add("Content$i")
     }
-    ListDialog()
-    .setList(list)
-    .setListDialogListener(object : ListDialog.ListDialogListener {
-        override fun onItem(dialog: ListDialog, result: String, position: Int) {
-            dialog.dismiss()
-            result.toast()
-        }
-
-    }).show(mContext)
+     VBListDialog()
+       .setList(list)
+       .setClickListener 
+        { dialog, result, position ->
+              dialog.dismiss()
+              mViewModel.content.value = result
+         }.show(mContext)
 ```
 
 
@@ -547,25 +534,25 @@ HintDialog()
 - **表格布局**
 
 ```
-recyclerView.grid(**Adapter(), 4) as **Adapter      
+recyclerView.vbGrid(**Adapter(), 4) as **Adapter      
 ```
 
 - **竖向布局**
 ```
-recyclerView.linear(**Adapter()) as **Adapter
+recyclerView.vbLinear(**Adapter()) as **Adapter
 ```
 
 - **横向布局**
 ```
-recyclerView.linearHorizontal(**Adapter()) as **Adapter
+recyclerView.vbLinearHorizontal(**Adapter()) as **Adapter
 ```
 
 - **设置分割线(其他用法请自行查看 com.v.base.utils\RecyclerViewItemDecoration)**
 ```
-recyclerView.divider {
+recyclerView.vbDivider {
             setDrawable(R.drawable.dm_divider_horizontal)
             orientation = RecyclerViewItemOrientation.GRID
-            startVisible = true
+            isStartVisible = true
         }
 ```
 
@@ -577,11 +564,11 @@ private var page = 1
 
 //设置表格布局
 private val mAdapter by lazy {
-     mDataBinding.recyclerView.divider {
+     mDataBinding.recyclerView.vbDivider {
          includeVisible = true
          setColor(Color.parseColor("#ff0000"))
          setDivider(20)
-     }.grid(HomeFragmentAdapter(), 3) as HomeFragmentAdapter
+     }.vbGrid(HomeFragmentAdapter(), 3) as HomeFragmentAdapter
  }
 
 override fun initData() {
@@ -594,7 +581,7 @@ override fun initData() {
 override fun createObserver() {
      //得到数据
      mViewModel.listBean.observe(this, Observer {
-         mAdapter.loadData(mDataBinding.refreshLayout,
+         mAdapter.vbLoadData(mDataBinding.refreshLayout,
              it,//列表数据
              page,//当前页数
              onRefresh = {//下拉刷新
@@ -621,7 +608,7 @@ override fun createObserver() {
                 
    //方法可按需使用(以下为我只要item点击)
     mViewModel.listBean.observe(this, Observer {
-         mAdapter.loadData(mDataBinding.refreshLayout,
+         mAdapter.vbLoadData(mDataBinding.refreshLayout,
              it,
              page,
              onItemClick = { view: View, i: Int ->
@@ -642,7 +629,7 @@ override fun createObserver() {
  * @param roundingRadius 图片圆角角度
  * @param errorResId 加载错误占位图
  */
-fun ImageView.load(
+fun ImageView.vbLoad(
     any: Any,
     roundingRadius: Float = 0f,
     errorResId: Int = R.mipmap.base_iv_default
@@ -654,15 +641,15 @@ fun ImageView.load(
  * @param any 图片资源Glide所支持的
  * @param errorResId 加载错误占位图
  */
-fun ImageView.loadCircle(any: Any, errorResId: Int = R.mipmap.base_iv_default) =
+fun ImageView.vbLoadCircle(any: Any, errorResId: Int = R.mipmap.base_iv_default) =
     loadDispose(this, any, -1f, errorResId)
 
 ```
 
 - **代码使用**
 ```
-imageView.loadCircle(file)
-imageView.load(file, 10f)
+imageView.vbLoadCircle(file)
+imageView.vbLoad(file, 10f)
 ```
 
 - **xml里面使用**
@@ -670,9 +657,9 @@ imageView.load(file, 10f)
 <ImageView
       android:layout_width="match_parent"
       android:scaleType="centerCrop"
-      app:imgUrl="@{bean.url}"
-      app:imgRadius="@{10f}"
-      app:circle="@{true}"
+      app:vb_img_url="@{bean.url}"
+      app:vb_img_radius="@{10f}"
+      app:vb_circle="@{true}"
       android:layout_height="match_parent" />
 ```
 

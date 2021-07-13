@@ -5,7 +5,7 @@ import android.util.TypedValue
 import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.v.base.BaseApplication
+import com.v.base.VBApplication
 import java.util.*
 
 
@@ -37,23 +37,12 @@ fun <T : ViewModel?> getApplicationViewModel(
 
 
 /**
- * dp转px
- */
-
-//fun Int.dp2px(): Int =
-//    run {
-//        val scale = BaseApplication.getContext().resources.displayMetrics.density
-//        return (this * scale + 0.5f).toInt()
-//    }
-
-
-/**
  * dp2px
  */
 fun Int.dp2px(): Int = run {
     return TypedValue.applyDimension(
         TypedValue.COMPLEX_UNIT_DIP,
-        this.toFloat(), BaseApplication.getContext().resources.displayMetrics
+        this.toFloat(), VBApplication.getContext().resources.displayMetrics
     ).toInt()
 }
 
@@ -63,7 +52,7 @@ fun Int.dp2px(): Int = run {
 fun Int.sp2px(): Int = run {
     return TypedValue.applyDimension(
         TypedValue.COMPLEX_UNIT_SP,
-        this.toFloat(), BaseApplication.getContext().resources.displayMetrics
+        this.toFloat(), VBApplication.getContext().resources.displayMetrics
     ).toInt()
 }
 
@@ -71,7 +60,7 @@ fun Int.sp2px(): Int = run {
  * px2dp
  */
 fun Int.px2dp(): Int = run {
-    val scale: Float = BaseApplication.getContext().resources.displayMetrics.density
+    val scale: Float = VBApplication.getContext().resources.displayMetrics.density
     return (this / scale + 0.5f).toInt()
 }
 
@@ -79,14 +68,14 @@ fun Int.px2dp(): Int = run {
  * px2sp
  */
 fun Int.px2sp(): Int = run {
-    val fontScale: Float = BaseApplication.getContext().resources.displayMetrics.scaledDensity
+    val fontScale: Float = VBApplication.getContext().resources.displayMetrics.scaledDensity
     return (this / fontScale + 0.5).toInt()
 }
 
 /**
  * 随机颜色
  */
-val randomColor: Int
+val vbRandomColor: Int
     get() {
         var c = 0xffffff
         val random = Random()
@@ -99,7 +88,7 @@ val randomColor: Int
 /**
  * 生成随机数
  */
-fun Int.randomNumber(): Int = run {
+fun Int.vbRandomNumber(): Int = run {
     val random = Random()
     return random.nextInt(this)
 }
@@ -109,7 +98,7 @@ fun Int.randomNumber(): Int = run {
  * @param min 最小数字
  * @param max 最大数字
  */
-fun randomNumber(min: Int, max: Int): Int {
+fun vbRandomNumber(min: Int, max: Int): Int {
     val random = Random()
     return random.nextInt(max) % (max - min + 1) + min
 }
@@ -117,7 +106,7 @@ fun randomNumber(min: Int, max: Int): Int {
 /**
  * 手机星号
  */
-fun String.phoneNumberFormat(): String = run {
+fun String.vbPhoneNumberFormat(): String = run {
     return this.replace(("(\\d{3})\\d{4}(\\d{4})").toRegex(), "$1****$2")
 }
 
@@ -125,7 +114,7 @@ fun String.phoneNumberFormat(): String = run {
  * toast
  */
 fun Any.toast() {
-    Toast.makeText(BaseApplication.getContext(), this.toString(), Toast.LENGTH_SHORT).show()
+    Toast.makeText(VBApplication.getContext(), this.toString(), Toast.LENGTH_SHORT).show()
 }
 
 /**

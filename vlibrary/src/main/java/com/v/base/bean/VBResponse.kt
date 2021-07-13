@@ -1,4 +1,4 @@
-package com.v.base.net
+package com.v.base.bean
 
 
 /**
@@ -6,7 +6,7 @@ package com.v.base.net
  * desc    :
  * time    : 2021-03-16 09:52:45
  */
-abstract class BaseResponse<T> {
+abstract class VBResponse<T> {
 
     abstract fun isSuccess(): Boolean
 

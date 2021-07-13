@@ -5,9 +5,8 @@ import androidx.lifecycle.Observer
 import com.hitomi.tilibrary.style.index.NumberIndexIndicator
 import com.hitomi.tilibrary.transfer.TransferConfig
 import com.hitomi.tilibrary.transfer.Transferee
-import com.v.base.BaseApplication
-import com.v.base.BaseFragment
-import com.v.base.annotaion.RecyclerViewItemOrientation
+import com.v.base.VBApplication
+import com.v.base.VBFragment
 import com.v.base.utils.*
 import com.v.base.utils.ext.*
 import com.v.demo.adapter.BannerAdapter
@@ -26,20 +25,20 @@ import com.zhpan.indicator.enums.IndicatorSlideMode
  * desc    :
  * time    : 2021/1/11 15:44
  */
-class OneFragment : BaseFragment<FragmentOneBinding, DemoViewModel>() {
+class OneFragment : VBFragment<FragmentOneBinding, DemoViewModel>() {
 
     private var page = 1
 
     private val mAdapter by lazy {
-        mDataBinding.recyclerView.divider {
+        mDataBinding.recyclerView.vbDivider {
             setDrawable(R.drawable.shape_divider_horizontal)
-            startVisible = true
-            endVisible = true
-        }.grid(OneFragmentAdapter(), 2) as OneFragmentAdapter
+            isStartVisible = true
+            isEndVisible = true
+        }.vbGrid(OneFragmentAdapter(), 2) as OneFragmentAdapter
     }
 
     private val mAdapterHeaderView by lazy {
-        mContext.getDataBinding<FragmentOneHeaderBinding>(R.layout.fragment_one_header)
+        mContext.vbDataBinding<FragmentOneHeaderBinding>(R.layout.fragment_one_header)
     }
 
     private val mViewPager by lazy {
@@ -61,7 +60,7 @@ class OneFragment : BaseFragment<FragmentOneBinding, DemoViewModel>() {
             .setSourceUrlList(mAdapter.getImgList())
             .setNowThumbnailIndex(index)
             .setIndexIndicator(NumberIndexIndicator())
-            .setImageLoader(GlideImageLoader.with(BaseApplication.getContext()))
+            .setImageLoader(GlideImageLoader.with(VBApplication.getContext()))
             .enableScrollingWithPageChange(true) // 是否启动列表随着页面的切换而滚动你的列表，默认关闭
             .bindRecyclerView(
                 mDataBinding.recyclerView,
@@ -79,7 +78,7 @@ class OneFragment : BaseFragment<FragmentOneBinding, DemoViewModel>() {
 
     override fun createObserver() {
         mViewModel.girlBean.observe(this, Observer {
-            mAdapter.loadData(mDataBinding.refreshLayout,
+            mAdapter.vbLoadData(mDataBinding.refreshLayout,
                 it,
                 page,
                 onRefresh = {

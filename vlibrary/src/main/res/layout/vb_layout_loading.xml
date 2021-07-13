@@ -10,6 +10,6 @@
     <ProgressBar
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:indeterminateDrawable="@drawable/base_shape_loading"/>
+        android:indeterminateDrawable="@drawable/vb_shape_loading"/>
 
 </LinearLayout>

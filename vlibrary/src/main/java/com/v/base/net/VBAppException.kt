@@ -1,6 +1,6 @@
 package com.v.base.net
 
-import com.v.base.annotaion.Error
+import com.v.base.annotaion.VBError
 import com.v.base.utils.ext.otherwise
 import com.v.base.utils.ext.yes
 
@@ -10,7 +10,7 @@ import com.v.base.utils.ext.yes
  * desc    : 错误日志处理
  * time    : 2021-03-16 09:52:45
  */
-class BaseAppException : Exception {
+class VBAppException : Exception {
 
     var errorMsg: String //错误消息
     var errCode: Int = 0 //错误码
@@ -32,7 +32,7 @@ class BaseAppException : Exception {
         this.errCode = errCode
     }
 
-    constructor(error: Error, e: Throwable?) {
+    constructor(error: VBError, e: Throwable?) {
         errCode = error.getKey()
         errorMsg = error.getValue()
         errorLog = e?.message

@@ -7,8 +7,8 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.ScaleAnimation
-import com.v.base.utils.ext.isInvalidClick
 import com.v.base.utils.ext.logE
+import com.v.base.utils.ext.vbInvalidClick
 import kotlin.math.roundToInt
 
 /**
@@ -99,7 +99,7 @@ class ViewClickAnimatorUtil(
 
 //                            ("onAnimationEnd" ).log()
 
-                            if (!view.isInvalidClick(clickTime) && b) {
+                            if (!view.vbInvalidClick(clickTime) && b) {
                                 onClick(view)
                             }
 

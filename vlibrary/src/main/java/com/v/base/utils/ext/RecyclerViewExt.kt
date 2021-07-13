@@ -13,7 +13,7 @@ import com.v.base.utils.RecyclerViewItemDecoration
 /**
  * 线性列表
  */
-fun RecyclerView.linear(
+fun RecyclerView.vbLinear(
     adapter: BaseQuickAdapter<*, *>
 ): BaseQuickAdapter<*, *> {
     layoutManager = LinearLayoutManager(context)
@@ -24,7 +24,7 @@ fun RecyclerView.linear(
 /**
  * 横向列表
  */
-fun RecyclerView.linearHorizontal(
+fun RecyclerView.vbLinearHorizontal(
     adapter: BaseQuickAdapter<*, *>
 ): BaseQuickAdapter<*, *> {
     layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
@@ -36,7 +36,7 @@ fun RecyclerView.linearHorizontal(
  * 表格列表
  * @param count 每一列的数据
  */
-fun RecyclerView.grid(
+fun RecyclerView.vbGrid(
     adapter: BaseQuickAdapter<*, *>,
     count: Int
 ): BaseQuickAdapter<*, *> {
@@ -50,7 +50,7 @@ fun RecyclerView.grid(
  * 函数配置分割线
  * 具体配置参数查看[RecyclerViewItemDecoration]
  */
-fun RecyclerView.divider(
+fun RecyclerView.vbDivider(
     block: RecyclerViewItemDecoration.() -> Unit
 ): RecyclerView {
     val itemDecoration = RecyclerViewItemDecoration(context).apply(block)
@@ -70,7 +70,7 @@ fun RecyclerView.divider(
  * @param onItemChildClick itemChild的点击
  * @param emptyView 空布局设置
  */
-fun <T> BaseQuickAdapter<T, *>.loadData(
+fun <T> BaseQuickAdapter<T, *>.vbLoadData(
     refreshLayout: SmartRefreshLayout,
     list: List<T>,
     mCurrentPageNum: Int,
@@ -107,7 +107,7 @@ fun <T> BaseQuickAdapter<T, *>.loadData(
 
     setOnItemClickListener { _, view, position ->
         onItemClick?.run {
-            if (!view.isInvalidClick()) {
+            if (!view.vbInvalidClick()) {
                 invoke(view, position)
             }
         }
@@ -116,7 +116,7 @@ fun <T> BaseQuickAdapter<T, *>.loadData(
 
     setOnItemChildClickListener { _, view, position ->
         onItemChildClick?.run {
-            if (!view.isInvalidClick()) {
+            if (!view.vbInvalidClick()) {
                 invoke(view, position)
             }
         }
@@ -129,7 +129,7 @@ fun <T> BaseQuickAdapter<T, *>.loadData(
             if (emptyView != null) {
                 emptyView.invoke()
             } else if (headerLayout == null && footerLayout == null) {
-                setEmptyView(R.layout.base_layout_empty)
+                setEmptyView(R.layout.vb_layout_empty)
             }
         }
         refreshLayout.finishRefresh()

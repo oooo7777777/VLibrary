@@ -1,7 +1,7 @@
-package com.v.base.net
+package com.v.base.bean
 
 
-class BaseApiResponse<T> : BaseResponse<T>() {
+class VBApiResponse<T> : VBResponse<T>() {
 
     var status = 0
     var msg = ""

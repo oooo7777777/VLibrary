@@ -23,14 +23,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="全局修改"
-            app:click="@{v}" />
+            app:vb_click="@{v}" />
 
         <Button
             android:id="@+id/bt1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="单项修改"
-            app:click="@{v}" />
+            app:vb_click="@{v}" />
 
 
         <ScrollView

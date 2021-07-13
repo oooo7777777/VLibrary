@@ -32,7 +32,7 @@
                     android:layout_height="match_parent"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
-                    android:src="@mipmap/base_icon_back_black" />
+                    android:src="@mipmap/vb_ic_back_black" />
 
                 <TextView
                     android:id="@+id/tvTitle"
@@ -45,7 +45,7 @@
                     android:singleLine="true"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/sp_14"
-                    app:textBold="@{true}"
+                    app:vb_text_bold="@{true}"
                     tools:text="title" />
 
                 <TextView
@@ -57,7 +57,7 @@
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
                     android:textColor="@android:color/black"
-                    tools:src="@mipmap/base_icon_back_white"
+                    tools:src="@mipmap/vb_ic_back_white"
                     tools:text="忽略全部" />
 
 
@@ -70,7 +70,7 @@
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
                     android:visibility="gone"
-                    tools:src="@mipmap/base_icon_back_white"
+                    tools:src="@mipmap/vb_ic_back_white"
                     tools:visibility="visible" />
 
             </RelativeLayout>

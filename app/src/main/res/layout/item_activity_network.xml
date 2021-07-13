@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            app:imgUrl="@{bean.url}" />
+            app:vb_img_url="@{bean.url}" />
 
     </LinearLayout>
 

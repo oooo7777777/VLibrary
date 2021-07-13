@@ -2,7 +2,7 @@ package com.v.demo
 
 import android.view.View
 import androidx.lifecycle.Observer
-import com.v.base.BaseActivity
+import com.v.base.VBActivity
 import com.v.demo.databinding.ActivityNetworkBinding
 import com.v.demo.model.NetworkViewModel
 
@@ -11,7 +11,7 @@ import com.v.demo.model.NetworkViewModel
  * desc    :  网络请求演示
  * time    : 2021-03-20 11:47:48
  */
-class NetworkActivity : BaseActivity<ActivityNetworkBinding, NetworkViewModel>(),
+class NetworkActivity : VBActivity<ActivityNetworkBinding, NetworkViewModel>(),
     View.OnClickListener {
 
     override fun toolBarTitle(title: String, titleColor: Int) {

@@ -1,30 +1,39 @@
 package com.v.base.utils
 
+import android.app.Activity
+import android.content.ContextWrapper
 import android.content.Intent
+import android.graphics.Paint
 import android.net.Uri
+import android.os.Build
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import com.v.base.utils.ext.copyToClipboard
-import com.v.base.utils.ext.onClickAnimator
+import com.v.base.R
+import com.v.base.utils.ext.vbCopyToClipboard
+import com.v.base.utils.ext.vbOnClickAnimator
 
 
 /**
  * 设置ImageView图片
  */
-@BindingAdapter(value = ["imgUrl", "imgRadius", "circle"], requireAll = false)
-fun ImageView.setImgUrl(
+@BindingAdapter(
+    value = ["vb_img_url", "vb_img_radius", "vb_img_circle", "vb_img_errorResId"],
+    requireAll = false
+)
+fun ImageView.vbImgUrl(
     any: Any?,
     roundingRadius: Float = 0f,
-    circle: Boolean = false
+    circle: Boolean = false,
+    errorResId: Int = R.mipmap.vb_iv_empty
 ) {
 
     any?.let {
         if (circle) {
-            this.loadCircle(it)
+            this.vbLoadCircle(it,errorResId)
         } else {
-            this.load(it, roundingRadius)
+            this.vbLoad(it, roundingRadius,errorResId)
         }
     }
 
@@ -36,23 +45,23 @@ fun ImageView.setImgUrl(
  * 设置TextView DrawableLeft
  */
 @BindingAdapter(
-    value = ["drawableLeft", "drawableRight", "drawableWidth", "drawableHeight"],
+    value = ["vb_drawable_Left", "vb_drawable_right", "vb_drawable_width", "vb_drawable_height"],
     requireAll = false
 )
-fun TextView.setDrawable(anyLeft: Any?, anyRight: Any?, w: Int, h: Int) {
+fun TextView.vbDrawable(anyLeft: Any?, anyRight: Any?, w: Int, h: Int) {
 
     if (anyLeft != null) {
-        this.context.loadListener(anyLeft, w.dp2px(), h.dp2px(),
+        this.context.vbLoadListener(anyLeft, w.dp2px(), h.dp2px(),
             success = {
                 it.setBounds(0, 0, it.intrinsicWidth, it.intrinsicHeight)
-                this@setDrawable.setCompoundDrawables(it, null, null, null)
+                this@vbDrawable.setCompoundDrawables(it, null, null, null)
             })
     }
     if (anyRight != null) {
-        this.context.loadListener(anyRight, w.dp2px(), h.dp2px(),
+        this.context.vbLoadListener(anyRight, w.dp2px(), h.dp2px(),
             success = {
                 it.setBounds(0, 0, it.intrinsicWidth, it.intrinsicHeight)
-                this@setDrawable.setCompoundDrawables(null, null, it, null)
+                this@vbDrawable.setCompoundDrawables(null, null, it, null)
             })
     }
 }
@@ -61,10 +70,10 @@ fun TextView.setDrawable(anyLeft: Any?, anyRight: Any?, w: Int, h: Int) {
 /**
  * 打电话
  */
-@BindingAdapter(value = ["callPhone"], requireAll = false)
-fun View.callPhone(phone: Any) {
+@BindingAdapter(value = ["vb_call_phone"], requireAll = false)
+fun View.vbCallPhone(phone: Any) {
     if (!phone.toString().isNullOrEmpty()) {
-        onClickAnimator {
+        vbOnClickAnimator {
             try {
                 val intent = Intent(Intent.ACTION_DIAL)
                 val data = Uri.parse("tel:$phone")
@@ -81,12 +90,12 @@ fun View.callPhone(phone: Any) {
 /**
  * 复制文本到粘贴板
  */
-@BindingAdapter(value = ["copyToClipboard"], requireAll = false)
-fun View.copyToClipboard(result: Any) {
+@BindingAdapter(value = ["vb_copy_to_clipboard"], requireAll = false)
+fun View.vbCopyToClipboard(result: Any) {
 
     if (!result.toString().isNullOrEmpty()) {
-        onClickAnimator {
-            this.context.copyToClipboard(result.toString())
+        vbOnClickAnimator {
+            this.context.vbCopyToClipboard(result.toString())
         }
     }
 }
@@ -95,11 +104,11 @@ fun View.copyToClipboard(result: Any) {
 /**
  * view点击动画以及添加间隔做处理
  */
-@BindingAdapter(value = ["click", "clickTime"], requireAll = false)
-fun View.click(onClickListener: View.OnClickListener?, clickTime: Long) {
+@BindingAdapter(value = ["vb_click", "vb_click_time"], requireAll = false)
+fun View.vbClick(onClickListener: View.OnClickListener?, clickTime: Long) {
 
     if (onClickListener != null) {
-        onClickAnimator(if (clickTime <= 0) 500L else clickTime) {
+        vbOnClickAnimator(if (clickTime <= 0) 500L else clickTime) {
             onClickListener.onClick(it)
         }
     }
@@ -109,15 +118,103 @@ fun View.click(onClickListener: View.OnClickListener?, clickTime: Long) {
 /**
  * 字体加粗
  */
-@BindingAdapter(value = ["textBold"], requireAll = false)
-fun TextView.textBold(boolean: Boolean) {
+@BindingAdapter(value = ["vb_text_bold"], requireAll = false)
+fun TextView.vbTextBold(boolean: Boolean) {
     this.paint.isFakeBoldText = boolean
 }
 
 
+/**
+ * 关闭当前界面
+ * @param isFinish 是否启用
+ */
+@BindingAdapter(value = ["vb_finish"], requireAll = false)
+fun View.vbFinishActivity(isFinish: Boolean) {
+    if (isFinish) {
+        var temp = context
+        var activity: Activity? = null
+
+        while (temp is ContextWrapper) {
+            if (temp is Activity) {
+                activity = temp
+            }
+            temp = temp.baseContext
+        }
+
+        val finalActivity = activity
+        vbOnClickAnimator(500L) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                finalActivity!!.finishAfterTransition()
+            } else {
+                finalActivity!!.finish()
+            }
+        }
+
+    }
+}
 
 
+/**
+ * 设置文字
+ * 如果文字等于NullOrEmpty 就INVISIBLE TextView
+ */
+@BindingAdapter(value = ["vb_text_invisible"], requireAll = false)
+fun TextView.vbTextInVisible(text: String?) {
+    if (text.isNullOrEmpty()) {
+        this.visibility = View.INVISIBLE
+    } else {
+        this.text = text
+        this.visibility = View.VISIBLE
+
+    }
+}
+
+/**
+ * 设置文字
+ * 如果文字等于NullOrEmpty 就GONE TextView
+ */
+@BindingAdapter(value = ["vb_text_gone"], requireAll = false)
+fun TextView.vbTextGone(text: String?) {
+    if (text.isNullOrEmpty()) {
+        this.visibility = View.GONE
+    } else {
+        this.text = text
+        this.visibility = View.VISIBLE
+    }
+}
 
 
+/**
+ * 如果文字等于NullOrEmpty 就INVISIBLE VIEW
+ */
+@BindingAdapter(value = ["vb_view_visible"], requireAll = false)
+fun View.vbViewVisible(text: String?) {
+    if (text.isNullOrEmpty()) {
+        this.visibility = View.INVISIBLE
+    } else {
+        this.visibility = View.VISIBLE
+    }
+}
+
+/**
+ * 如果文字等于NullOrEmpty 就GONE VIEW
+ */
+@BindingAdapter(value = ["vb_view_gone"], requireAll = false)
+fun View.vbViewGone(text: String?) {
+    if (text.toString() == "null" || text.toString().isEmpty()) {
+        this.visibility = View.GONE
+    } else {
+        this.visibility = View.VISIBLE
+    }
+}
+
+/**
+ * 设置文字中间横线
+ */
+@BindingAdapter(value = ["vb_text_line"], requireAll = false)
+fun TextView.vbTextLine(boolean: Boolean) = run {
+    this.paint.flags = Paint.STRIKE_THRU_TEXT_FLAG //中间横线
+    this.paint.isAntiAlias = true
+}
 
 

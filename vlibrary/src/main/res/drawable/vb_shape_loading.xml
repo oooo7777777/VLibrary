@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <animated-rotate
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:drawable="@mipmap/base_iv_load"
+    android:drawable="@mipmap/vb_iv_load"
     android:pivotX="50%"
     android:pivotY="50%"/>

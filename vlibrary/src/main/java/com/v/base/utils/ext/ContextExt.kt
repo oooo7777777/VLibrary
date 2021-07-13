@@ -33,14 +33,14 @@ import kotlinx.coroutines.flow.*
 /**
  * 获取string 资源
  */
-fun Context.getStr(@StringRes id: Int): String = run {
+fun Context.vbString(@StringRes id: Int): String = run {
     return resources.getString(id)
 }
 
 /**
  * 获取color资源
  */
-fun Context.getCol(@ColorRes id: Int): Int = run {
+fun Context.vbColor(@ColorRes id: Int): Int = run {
     return ContextCompat.getColor(this, id)
 }
 
@@ -48,7 +48,7 @@ fun Context.getCol(@ColorRes id: Int): Int = run {
 /**
  * 获取LayoutView
  */
-fun Context.getLayoutView(@LayoutRes id: Int, @Nullable root: ViewGroup? = null): View =
+fun Context.vbLayoutView(@LayoutRes id: Int, @Nullable root: ViewGroup? = null): View =
     run {
         return LayoutInflater.from(this).inflate(id, root)
     }
@@ -57,7 +57,7 @@ fun Context.getLayoutView(@LayoutRes id: Int, @Nullable root: ViewGroup? = null)
 /**
  * 获取屏幕的高度（单位：px
  */
-fun Context.getScreenHeight(): Int = run {
+fun Context.vbScreenHeight(): Int = run {
     resources.displayMetrics.heightPixels
 }
 
@@ -65,14 +65,14 @@ fun Context.getScreenHeight(): Int = run {
 /**
  * 获取屏幕的宽度
  */
-fun Context.getScreenWidth(): Int = run {
+fun Context.vbScreenWidth(): Int = run {
     resources.displayMetrics.widthPixels
 }
 
 /**
  * 获取状态栏高度
  */
-fun Context.getStatusBarHeight(): Int = run {
+fun Context.vbGetStatusBarHeight(): Int = run {
     var result = -1
     val resourceId = this.resources.getIdentifier("status_bar_height", "dimen", "android")
     if (resourceId > 0) {
@@ -85,20 +85,21 @@ fun Context.getStatusBarHeight(): Int = run {
 /**
  * 获取getDataBinding
  */
-fun <VB : ViewDataBinding> Context.getDataBinding(
+fun <VB : ViewDataBinding> Context.vbDataBinding(
     @LayoutRes id: Int,
     @Nullable root: ViewGroup? = null
 ): VB =
     run {
-        return DataBindingUtil.bind(this.getLayoutView(id))!!
+        return DataBindingUtil.bind(this.vbLayoutView(id))!!
     }
 
 
 /**
  * 获取渠道名称
+ * 默认获取UMENG_CHANNEL
  */
-fun Context.getChannelName(): String = run {
-    var channelName: String = " "
+fun Context.vbChannelName(channel: String = "UMENG_CHANNEL"): String = run {
+    var channelName = " "
     var appInfo: ApplicationInfo? = null
     try {
         appInfo = this.packageManager
@@ -106,7 +107,7 @@ fun Context.getChannelName(): String = run {
                 this.packageName,
                 PackageManager.GET_META_DATA
             )
-        channelName = appInfo!!.metaData.getString("UMENG_CHANNEL").toString()
+        channelName = appInfo!!.metaData.getString(channel).toString()
     } catch (e: Exception) {
         e.printStackTrace()
     }
@@ -117,7 +118,7 @@ fun Context.getChannelName(): String = run {
 /**
  * 获取App版本码
  */
-fun Context.getAppVersionCode(packageName: String = this.packageName): Int {
+fun Context.vbAppVersionCode(packageName: String = this.packageName): Int {
     return try {
         val pm = this.packageManager
         val pi = pm.getPackageInfo(packageName, 0)
@@ -133,10 +134,11 @@ fun Context.getAppVersionCode(packageName: String = this.packageName): Int {
 /**
  * 判断应用是否存在
  */
-fun Context.checkBrowser(packageName: String): Boolean =
+fun Context.vbCheckBrowser(packageName: String): Boolean =
     run {
-        if (this == null || "" == packageName)
+        if (packageName.isNullOrEmpty()) {
             return false
+        }
         return try {
             val pm = this.packageManager
             val info = pm.getApplicationInfo(packageName, PackageManager.GET_META_DATA)
@@ -151,7 +153,7 @@ fun Context.checkBrowser(packageName: String): Boolean =
  * 获取App版本号
  * @return App版本号
  */
-fun Context.getAppVersionName(packageName: String = this.packageName): String = run {
+fun Context.vbAppVersionName(packageName: String = this.packageName): String = run {
     val pi = this.packageManager.getPackageInfo(packageName, 0)
     pi?.versionName.toString()
 }
@@ -160,7 +162,7 @@ fun Context.getAppVersionName(packageName: String = this.packageName): String = 
 /**
  * 获取设备唯一码
  */
-fun Context.getDeviceId(): String = run {
+fun Context.vbDeviceId(): String = run {
     DeviceIdUtil.getDeviceId(this)
 
 }
@@ -196,7 +198,7 @@ fun Activity.finish(requestCode: Int = AppCompatActivity.RESULT_OK, bundle: Bund
 /**
  * 复制文本到粘贴板
  */
-fun Context.copyToClipboard(text: String) = run {
+fun Context.vbCopyToClipboard(text: String) = run {
 
     val cm = this.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?
     val mClipData = ClipData.newPlainText("Label", text)
@@ -207,7 +209,7 @@ fun Context.copyToClipboard(text: String) = run {
 /**
  * 倒计时
  */
-fun countDownCoroutines(
+fun vbCountDownCoroutines(
     total: Long,
     timeMillis: Long = 1000,
     onTick: (Long) -> Unit,

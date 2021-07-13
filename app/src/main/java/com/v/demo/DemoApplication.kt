@@ -2,16 +2,15 @@ package com.v.demo
 
 import android.graphics.Color
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
-import com.v.base.BaseApplication
-import com.v.base.net.BaseLogInterceptor
-import com.v.base.net.FastJsonConverterFactory
-import com.v.base.utils.randomColor
+import com.v.base.VBApplication
+import com.v.base.net.VBLogInterceptor
+import com.v.base.net.VBFastJsonConverterFactory
 import com.v.demo.net.NetworkHeadInterceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import java.util.concurrent.TimeUnit
 
-class DemoApplication : BaseApplication() {
+class DemoApplication : VBApplication() {
 
     /**
      * 重写此方法 开启日志打印(日志TAG为 PRETTY_LOGGER)
@@ -42,7 +41,7 @@ class DemoApplication : BaseApplication() {
      */
     override fun retrofitBuilder(): Retrofit.Builder {
         return Retrofit.Builder().apply {
-            addConverterFactory(FastJsonConverterFactory.create())
+            addConverterFactory(VBFastJsonConverterFactory.create())
             addCallAdapterFactory(CoroutineCallAdapterFactory())
         }
     }
@@ -57,7 +56,7 @@ class DemoApplication : BaseApplication() {
             .readTimeout(5, TimeUnit.SECONDS)
             .writeTimeout(5, TimeUnit.SECONDS)
             .addInterceptor(NetworkHeadInterceptor())  //添加公共heads 注意要设置在日志拦截器之前，不然Log中会不显示head信息
-            .addInterceptor(BaseLogInterceptor())// 日志拦截器（这里请使用BaseLogInterceptor，不然网络请求日志不会打印出来）
+            .addInterceptor(VBLogInterceptor())// 日志拦截器（这里请使用BaseLogInterceptor，不然网络请求日志不会打印出来）
             .build()
     }
 

@@ -7,7 +7,7 @@ import retrofit2.Retrofit
 
  * 描述　: 网络请求构建器基类
  */
-abstract class BaseNetwork {
+abstract class VBNetwork {
 
     fun <T> getApi(serviceClass: Class<T>, baseUrl: String): T {
         val retrofitBuilder = Retrofit.Builder()
