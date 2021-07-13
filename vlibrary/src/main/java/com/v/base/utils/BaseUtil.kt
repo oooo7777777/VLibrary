@@ -1,6 +1,7 @@
 package com.v.base.utils
 
 import android.app.Application
+import android.util.TypedValue
 import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -35,17 +36,52 @@ fun <T : ViewModel?> getApplicationViewModel(
 }
 
 
-
 /**
  * dp转px
  */
 
-fun Int.dp2px(): Int =
-    run {
-        val scale = BaseApplication.getContext().resources.displayMetrics.density
-        return (this * scale + 0.5f).toInt()
-    }
+//fun Int.dp2px(): Int =
+//    run {
+//        val scale = BaseApplication.getContext().resources.displayMetrics.density
+//        return (this * scale + 0.5f).toInt()
+//    }
 
+
+/**
+ * dp2px
+ */
+fun Int.dp2px(): Int = run {
+    return TypedValue.applyDimension(
+        TypedValue.COMPLEX_UNIT_DIP,
+        this.toFloat(), BaseApplication.getContext().resources.displayMetrics
+    ).toInt()
+}
+
+/**
+ * sp2px
+ */
+fun Int.sp2px(): Int = run {
+    return TypedValue.applyDimension(
+        TypedValue.COMPLEX_UNIT_SP,
+        this.toFloat(), BaseApplication.getContext().resources.displayMetrics
+    ).toInt()
+}
+
+/**
+ * px2dp
+ */
+fun Int.px2dp(): Int = run {
+    val scale: Float = BaseApplication.getContext().resources.displayMetrics.density
+    return (this / scale + 0.5f).toInt()
+}
+
+/**
+ * px2sp
+ */
+fun Int.px2sp(): Int = run {
+    val fontScale: Float = BaseApplication.getContext().resources.displayMetrics.scaledDensity
+    return (this / fontScale + 0.5).toInt()
+}
 
 /**
  * 随机颜色
