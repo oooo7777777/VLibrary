@@ -12,9 +12,6 @@
 
 #### 搭配代码模板插件[VLibraryPlugin](https://github.com/oooo7777777/VLibraryPlugin)使用开发效率翻倍 :exclamation:  :exclamation: 
 
-#### APK下载
-[APK下载](http://d.zqapps.com/uvpj)
-
 
 #### 使用集成
 
