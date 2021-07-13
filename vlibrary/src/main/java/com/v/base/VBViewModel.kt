@@ -30,7 +30,7 @@ abstract class VBViewModel : ViewModel() {
      * @param code 返回的code
      * @param dialog 是否显示请求框
      */
-    fun <T> request(
+    fun <T> vbRequest(
         block: suspend () -> VBResponse<T>,
         success: (T) -> Unit,
         error: (VBAppException) -> Unit = {},
@@ -65,7 +65,7 @@ abstract class VBViewModel : ViewModel() {
      * @param error 失败回调
      * @param dialog 是否显示请求框
      */
-    fun <T> requestDefault(
+    fun <T> vbRequestDefault(
         block: suspend () -> T,
         success: (T) -> Unit,
         error: (VBAppException) -> Unit = {},
@@ -95,7 +95,7 @@ abstract class VBViewModel : ViewModel() {
      * @param error 失败回调
      * @param dialog 是否显示请求框
      */
-    inline fun <reified T> request(
+    inline fun <reified T> vbRequest(
         crossinline block: suspend CoroutineScope.() -> Any,
         resultState: MutableLiveData<T>,
         crossinline error: (VBAppException) -> Unit = {},
@@ -149,7 +149,7 @@ abstract class VBViewModel : ViewModel() {
      * @param success 成功回调
      * @param error 失败回调 可不给
      */
-    fun <T> scopeAsync(
+    fun <T> vbScopeAsync(
         block: suspend () -> T,
         success: (T) -> Unit,
         error: (Throwable) -> Unit = {},

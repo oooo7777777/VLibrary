@@ -18,7 +18,7 @@ class NetworkViewModel : VBViewModel() {
 
     //自定义api 网络请求 获取去壳数据
     fun getCustom() {
-        request({
+        vbRequest({
             //协程请求体
             apiService.getBanner()
         }, success = {
@@ -35,7 +35,7 @@ class NetworkViewModel : VBViewModel() {
 
     //自定义api 网络请求 获取原始数据
     fun getCustomDefault() {
-        requestDefault({
+        vbRequestDefault({
             apiService.getBanner()
         }, success = {
             string.value = it.toJson()
@@ -45,7 +45,7 @@ class NetworkViewModel : VBViewModel() {
     //使用VLibrary库 网络请求
     fun getBase() {
         //此处返回得数据是泛型,即你传入得是什么类型,得到得就是什么类型
-        request({
+        vbRequest({
             delay(3000)
             apiBase.get("banners")
         },

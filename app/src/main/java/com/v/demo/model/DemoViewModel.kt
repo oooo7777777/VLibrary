@@ -26,7 +26,7 @@ class DemoViewModel : VBViewModel() {
         if (page == 1) {
             getBanner()
         }
-        request({
+        vbRequest({
             apiService.getGirlBean(page)
         }, success = {
             girlBean.value = it
@@ -37,7 +37,7 @@ class DemoViewModel : VBViewModel() {
 
     //使用VLibrary库 网络请求
     private fun getBanner() {
-        request(
+        vbRequest(
             {
                 apiBase.get("banners")
             },
