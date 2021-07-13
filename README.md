@@ -62,8 +62,10 @@ open class *** : VBApplication() {
  android:theme="@style/vb_app_theme"
 ```
 
-####使用文档
+#### 使用文档
+
 **具体使用方法以及属性内容请查看wiki**
+
 **重要的事情说3遍!!!**
 [wiki](https://github.com/oooo7777777/VLibrary/wiki)
 [wiki](https://github.com/oooo7777777/VLibrary/wiki)
