@@ -19,10 +19,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.fragment.app.Fragment
+import com.v.base.VBViewModel
 import com.v.base.utils.DeviceIdUtil
 import com.v.base.utils.toast
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
+import java.lang.reflect.ParameterizedType
 
 /**
  * @Author : ww
@@ -72,7 +75,7 @@ fun Context.vbScreenWidth(): Int = run {
 /**
  * 获取状态栏高度
  */
-fun Context.vbGetStatusBarHeight(): Int = run {
+fun Context.vbStatusBarHeight(): Int = run {
     var result = -1
     val resourceId = this.resources.getIdentifier("status_bar_height", "dimen", "android")
     if (resourceId > 0) {
@@ -185,6 +188,21 @@ fun Activity.goActivity(cls: Class<*>, bundle: Bundle? = null, requestCode: Int 
 /**
  * activity跳转
  */
+fun Fragment.goActivity(cls: Class<*>, bundle: Bundle? = null, requestCode: Int = 0) = run {
+    val intent = Intent(this.context, cls)
+    if (bundle != null) {
+        intent.putExtras(bundle)
+    }
+    if (requestCode == 0) {
+        startActivity(intent)
+    } else {
+        this.startActivityForResult(intent, requestCode)
+    }
+}
+
+/**
+ * activity跳转
+ */
 fun Activity.finish(requestCode: Int = AppCompatActivity.RESULT_OK, bundle: Bundle? = null) = run {
     val intent = Intent()
     if (bundle != null) {
@@ -229,3 +247,16 @@ fun vbCountDownCoroutines(
         .flowOn(Dispatchers.Main)
         .launchIn(scope)
 }
+
+
+/**
+ * 反射获取类的所有属性
+ */
+inline fun <reified T : Any> T.vbDescription() = this.javaClass.declaredFields
+    .map {
+        //注意我们访问的 Kotlin 属性对于 Java 来说是 private 的，getter 是 public 的
+        it.isAccessible = true
+        "${it.name}: ${it.get(this@vbDescription)}"
+    }
+    .joinToString(separator = ";")
+

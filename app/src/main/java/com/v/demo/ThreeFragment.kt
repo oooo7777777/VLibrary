@@ -6,6 +6,8 @@ import com.v.base.VBFragment
 import com.v.base.dialog.VBHintDialog
 import com.v.base.dialog.VBListDialog
 import com.v.base.utils.ext.goActivity
+import com.v.base.utils.ext.log
+import com.v.demo.bean.BannerBean
 import com.v.demo.databinding.FragmentThreeBinding
 import com.v.demo.model.DataViewModel
 
@@ -36,11 +38,11 @@ class ThreeFragment : VBFragment<FragmentThreeBinding, DataViewModel>(), View.On
             }
 
             mDataBinding.bt1.id -> {
-                mContext.goActivity(EventBusDemoActivity::class.java)
+                goActivity(EventBusDemoActivity::class.java)
             }
 
             mDataBinding.bt2.id -> {
-                mContext.goActivity(NetworkActivity::class.java)
+                goActivity(NetworkActivity::class.java)
             }
 
             mDataBinding.bt3.id -> {
@@ -66,7 +68,12 @@ class ThreeFragment : VBFragment<FragmentThreeBinding, DataViewModel>(), View.On
                     }.show(mContext)
             }
 
+            mDataBinding.bt5.id -> {
+                goActivity(TestActivity::class.java)
+            }
+
         }
     }
 
 }
+

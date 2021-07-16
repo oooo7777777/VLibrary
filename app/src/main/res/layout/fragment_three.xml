@@ -75,6 +75,14 @@
             android:textAllCaps="false"
             app:vb_click="@{v}" />
 
+        <Button
+            android:id="@+id/bt5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Test"
+            android:textAllCaps="false"
+            app:vb_click="@{v}" />
+
 
     </LinearLayout>
 </layout>

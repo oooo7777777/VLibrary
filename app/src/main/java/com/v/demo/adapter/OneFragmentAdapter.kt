@@ -16,8 +16,8 @@ class OneFragmentAdapter :
 
     override fun convert(holder: BaseDataBindingHolder<FragmentOneItemBinding>, item: GirlBean) {
         holder.dataBinding?.run {
-            bean = item
-            executePendingBindings()
+//            bean = item
+//            executePendingBindings()
         }
     }
 

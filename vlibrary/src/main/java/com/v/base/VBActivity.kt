@@ -24,7 +24,7 @@ import java.lang.reflect.ParameterizedType
 
 abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatActivity() {
 
-    private lateinit var mRootDataBinding: VbRootLayoutBinding
+    lateinit var mRootDataBinding: VbRootLayoutBinding
 
     lateinit var mContext: AppCompatActivity
 
@@ -68,7 +68,9 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
         )
         val rootView: View = mRootDataBinding.root
         //把mDataBinding添加到baseDataBinding里面去
-        mRootDataBinding.layoutContent.addView(mDataBinding.root)
+        if (useAddViewVBRoot()) {
+            mRootDataBinding.layoutContent.addView(mDataBinding.root)
+        }
         super.setContentView(rootView)
 
         mRootDataBinding.lifecycleOwner = this
@@ -120,7 +122,7 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
             window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE//白色
         }
 
-        mRootDataBinding.ivStatusBar.vbViewLayoutParams(h = vbGetStatusBarHeight())
+        mRootDataBinding.ivStatusBar.vbViewLayoutParams(h = vbStatusBarHeight())
         mRootDataBinding.ivStatusBar.setBackgroundColor(color)
     }
 
@@ -207,6 +209,11 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
      * 设置隐藏状态栏(布局需要顶入状态栏的时候使用)
      */
     protected open fun useStatusBar(): Boolean = false
+
+    /**
+     * 是否addView vb的布局
+     */
+    protected open fun useAddViewVBRoot(): Boolean = true
 
     /**
      * 初始化数据

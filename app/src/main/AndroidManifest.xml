@@ -11,6 +11,8 @@
         android:supportsRtl="true"
         android:theme="@style/vb_app_theme"
         tools:replace="android:label">
+        <activity android:name=".TestActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"></activity>
         <activity android:name=".NetworkActivity"></activity>
         <activity android:name=".EventBusDemoActivity" />
         <activity android:name=".MainActivity">
