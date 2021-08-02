@@ -17,8 +17,6 @@
     <!-- 允许程序写入外部存储，如SD卡上读写文件 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <!--摄像头权限-->
-    <uses-permission android:name="android.permission.CAMERA" />
     <!--电话状态权限-->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <!--请求安装包-->

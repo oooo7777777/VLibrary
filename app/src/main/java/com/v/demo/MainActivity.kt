@@ -19,10 +19,8 @@ class MainActivity : VBActivity<MainActivityBinding, VBBlankViewModel>() {
     // 请求一组权限
     private var permissions =
         arrayOf(
-            Manifest.permission.ACCESS_WIFI_STATE,
             Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.CAMERA
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
         )
     private var permissionsCount = 0
 
