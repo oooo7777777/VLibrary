@@ -122,7 +122,7 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
             window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE//白色
         }
 
-        mRootDataBinding.ivStatusBar.vbViewLayoutParams(h = vbStatusBarHeight())
+        mRootDataBinding.ivStatusBar.vbSetViewLayoutParams(h = vbGetStatusBarHeight())
         mRootDataBinding.ivStatusBar.setBackgroundColor(color)
     }
 

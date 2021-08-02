@@ -36,14 +36,14 @@ import java.lang.reflect.ParameterizedType
 /**
  * 获取string 资源
  */
-fun Context.vbString(@StringRes id: Int): String = run {
+fun Context.vbGetString(@StringRes id: Int): String = run {
     return resources.getString(id)
 }
 
 /**
  * 获取color资源
  */
-fun Context.vbColor(@ColorRes id: Int): Int = run {
+fun Context.vbGetColor(@ColorRes id: Int): Int = run {
     return ContextCompat.getColor(this, id)
 }
 
@@ -51,7 +51,7 @@ fun Context.vbColor(@ColorRes id: Int): Int = run {
 /**
  * 获取LayoutView
  */
-fun Context.vbLayoutView(@LayoutRes id: Int, @Nullable root: ViewGroup? = null): View =
+fun Context.vbGetLayoutView(@LayoutRes id: Int, @Nullable root: ViewGroup? = null): View =
     run {
         return LayoutInflater.from(this).inflate(id, root)
     }
@@ -60,7 +60,7 @@ fun Context.vbLayoutView(@LayoutRes id: Int, @Nullable root: ViewGroup? = null):
 /**
  * 获取屏幕的高度（单位：px
  */
-fun Context.vbScreenHeight(): Int = run {
+fun Context.vbGetScreenHeight(): Int = run {
     resources.displayMetrics.heightPixels
 }
 
@@ -68,14 +68,14 @@ fun Context.vbScreenHeight(): Int = run {
 /**
  * 获取屏幕的宽度
  */
-fun Context.vbScreenWidth(): Int = run {
+fun Context.vbGetScreenWidth(): Int = run {
     resources.displayMetrics.widthPixels
 }
 
 /**
  * 获取状态栏高度
  */
-fun Context.vbStatusBarHeight(): Int = run {
+fun Context.vbGetStatusBarHeight(): Int = run {
     var result = -1
     val resourceId = this.resources.getIdentifier("status_bar_height", "dimen", "android")
     if (resourceId > 0) {
@@ -88,12 +88,12 @@ fun Context.vbStatusBarHeight(): Int = run {
 /**
  * 获取getDataBinding
  */
-fun <VB : ViewDataBinding> Context.vbDataBinding(
+fun <VB : ViewDataBinding> Context.vbGetDataBinding(
     @LayoutRes id: Int,
     @Nullable root: ViewGroup? = null
 ): VB =
     run {
-        return DataBindingUtil.bind(this.vbLayoutView(id))!!
+        return DataBindingUtil.bind(this.vbGetLayoutView(id))!!
     }
 
 
@@ -101,7 +101,7 @@ fun <VB : ViewDataBinding> Context.vbDataBinding(
  * 获取渠道名称
  * 默认获取UMENG_CHANNEL
  */
-fun Context.vbChannelName(channel: String = "UMENG_CHANNEL"): String = run {
+fun Context.vbGetChannelName(channel: String = "UMENG_CHANNEL"): String = run {
     var channelName = " "
     var appInfo: ApplicationInfo? = null
     try {
@@ -121,7 +121,7 @@ fun Context.vbChannelName(channel: String = "UMENG_CHANNEL"): String = run {
 /**
  * 获取App版本码
  */
-fun Context.vbAppVersionCode(packageName: String = this.packageName): Int {
+fun Context.vbGetAppVersionCode(packageName: String = this.packageName): Int {
     return try {
         val pm = this.packageManager
         val pi = pm.getPackageInfo(packageName, 0)
@@ -156,7 +156,7 @@ fun Context.vbCheckBrowser(packageName: String): Boolean =
  * 获取App版本号
  * @return App版本号
  */
-fun Context.vbAppVersionName(packageName: String = this.packageName): String = run {
+fun Context.vbGetAppVersionName(packageName: String = this.packageName): String = run {
     val pi = this.packageManager.getPackageInfo(packageName, 0)
     pi?.versionName.toString()
 }
@@ -165,7 +165,7 @@ fun Context.vbAppVersionName(packageName: String = this.packageName): String = r
 /**
  * 获取设备唯一码
  */
-fun Context.vbDeviceId(): String = run {
+fun Context.vbGetDeviceId(): String = run {
     DeviceIdUtil.getDeviceId(this)
 
 }
@@ -173,32 +173,31 @@ fun Context.vbDeviceId(): String = run {
 /**
  * activity跳转
  */
-fun Activity.goActivity(cls: Class<*>, bundle: Bundle? = null, requestCode: Int = 0) = run {
-    val intent = Intent(this, cls)
-    if (bundle != null) {
-        intent.putExtras(bundle)
-    }
-    if (requestCode == 0) {
-        startActivity(intent)
-    } else {
-        this.startActivityForResult(intent, requestCode)
+fun Any.goActivity(cls: Class<*>, bundle: Bundle? = null, requestCode: Int = 0) = run {
+
+    if (this is Activity) {
+        val intent = Intent(this, cls)
+        if (bundle != null) {
+            intent.putExtras(bundle)
+        }
+        if (requestCode == 0) {
+            startActivity(intent)
+        } else {
+            this.startActivityForResult(intent, requestCode)
+        }
+    } else if (this is Fragment) {
+        val intent = Intent(this.context, cls)
+        if (bundle != null) {
+            intent.putExtras(bundle)
+        }
+        if (requestCode == 0) {
+            startActivity(intent)
+        } else {
+            this.startActivityForResult(intent, requestCode)
+        }
     }
 }
 
-/**
- * activity跳转
- */
-fun Fragment.goActivity(cls: Class<*>, bundle: Bundle? = null, requestCode: Int = 0) = run {
-    val intent = Intent(this.context, cls)
-    if (bundle != null) {
-        intent.putExtras(bundle)
-    }
-    if (requestCode == 0) {
-        startActivity(intent)
-    } else {
-        this.startActivityForResult(intent, requestCode)
-    }
-}
 
 /**
  * activity跳转

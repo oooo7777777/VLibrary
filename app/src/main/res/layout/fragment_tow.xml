@@ -17,6 +17,7 @@
 
 
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:overScrollMode="never"
@@ -91,8 +92,8 @@
                 android:text="设置DrawableLeft"
                 android:textAllCaps="false"
                 app:vb_click="@{v}"
-                app:vb_drawable_height="@{50}"
                 app:vb_drawable_Left="@{R.mipmap.ic_launcher}"
+                app:vb_drawable_height="@{50}"
                 app:vb_drawable_width="@{50}" />
 
 
@@ -137,6 +138,34 @@
                 android:scaleType="centerCrop"
                 app:vb_img_url="@{R.mipmap.ic_movie}"
                 tools:src="@mipmap/ic_movie" />
+
+
+            <Button
+                android:id="@+id/bt8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="保存View到本地"
+                android:textAllCaps="false"
+                app:vb_click="@{v}" />
+
+            <Button
+                android:id="@+id/bt9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="保存网络图片到本地"
+                android:textAllCaps="false"
+                app:vb_click="@{v}" />
+
+            <Button
+                android:id="@+id/bt10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="保存Bitmap到本地"
+                android:textAllCaps="false"
+                app:vb_click="@{v}" />
 
 
         </LinearLayout>

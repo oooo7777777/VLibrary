@@ -3,7 +3,7 @@ package com.v.demo.model
 import androidx.lifecycle.MutableLiveData
 import com.v.base.VBApplication.Companion.apiBase
 import com.v.base.VBViewModel
-import com.v.base.utils.toJson
+import com.v.base.utils.vbToJson
 import com.v.demo.net.Network.Companion.apiService
 import kotlinx.coroutines.delay
 
@@ -23,7 +23,7 @@ class NetworkViewModel : VBViewModel() {
             apiService.getBanner()
         }, success = {
             //成功数据
-            string.value = it.toJson()
+            string.value = it.vbToJson()
         }, error = {
             //失败数据
             string.value = it.errorMsg
@@ -38,7 +38,7 @@ class NetworkViewModel : VBViewModel() {
         vbRequestDefault({
             apiService.getBanner()
         }, success = {
-            string.value = it.toJson()
+            string.value = it.vbToJson()
         }, dialog = true)
     }
 

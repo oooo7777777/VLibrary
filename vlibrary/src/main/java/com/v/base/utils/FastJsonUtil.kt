@@ -18,15 +18,15 @@ private val features = arrayOf(
 /**
  * 对象转JSON
  */
-fun Any.toJson(): String =
+fun Any.vbToJson(): String =
     run {
-        JSON.toJSONString(this@toJson, *features)
+        JSON.toJSONString(this@vbToJson, *features)
     }
 
 /**
  * json字符串转化为map
  */
-fun String.toMap(): Map<*, *> =
+fun String.vbToMap(): Map<*, *> =
     run {
         JSONObject.parseObject(this)
     }
@@ -34,7 +34,7 @@ fun String.toMap(): Map<*, *> =
 /**
  * 将map转化为string
  */
-fun Map<*, *>.toJson(): String =
+fun Map<*, *>.vbToJson(): String =
     run {
         JSONObject.toJSONString(this)
     }
@@ -42,7 +42,7 @@ fun Map<*, *>.toJson(): String =
 /**
  * JSON转对象
  */
-fun <T> String.toBean(cls: Class<T>): T =
+fun <T> String.vbToBean(cls: Class<T>): T =
     run {
         if (!this.startsWith("{") && !this.endsWith("}")) {
             JSON.parseObject("{$this}", cls)
@@ -54,7 +54,7 @@ fun <T> String.toBean(cls: Class<T>): T =
 /**
  * JSON转对象
  */
-fun <T> String.toBean(type: Type): T =
+fun <T> String.vbToBean(type: Type): T =
     run {
         if (!this.startsWith("{") && !this.endsWith("}")) {
             JSON.parseObject("{$this}", type)
@@ -66,7 +66,7 @@ fun <T> String.toBean(type: Type): T =
 /**
  * JSON转List
  */
-fun <T> String.toList(cls: Class<T>): List<T> =
+fun <T> String.vbToList(cls: Class<T>): List<T> =
     run {
         var list: List<T> = ArrayList()
         list = if (!this.startsWith("[") && !this.endsWith("]")) {

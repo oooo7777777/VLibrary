@@ -2,14 +2,16 @@ package com.v.base.utils.ext
 
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewGroup.MarginLayoutParams
 import com.v.base.R
 import com.v.base.utils.ViewClickAnimatorUtil
+import com.v.base.utils.vbDp2px
 
 
 /**
  * 重设 view 的宽高
  */
-fun View.vbViewLayoutParams(
+fun View.vbSetViewLayoutParams(
     w: Int = ViewGroup.LayoutParams.MATCH_PARENT,
     h: Int = ViewGroup.LayoutParams.WRAP_CONTENT
 ) = run {
@@ -20,6 +22,20 @@ fun View.vbViewLayoutParams(
 
 }
 
+
+/**
+ * 重设 view 的margins
+ */
+fun View.vbSetViewMargins(
+    left: Int = 0, top: Int = 0, right: Int = 0, bottom: Int = 0
+) = run {
+
+    if (this.layoutParams is MarginLayoutParams) {
+        val p = this.layoutParams as MarginLayoutParams
+        p.setMargins(left.vbDp2px(), top.vbDp2px(), right.vbDp2px(), bottom.vbDp2px())
+        this.requestLayout()
+    }
+}
 
 /**
  * 点击动画效果

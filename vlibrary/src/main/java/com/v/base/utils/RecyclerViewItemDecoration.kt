@@ -57,7 +57,7 @@ class RecyclerViewItemDecoration constructor(private val context: Context) :
      */
     var isEndVisible = false
 
-    var includeVisible
+    var isCludeVisible
         get() = isStartVisible && isEndVisible
         set(value) {
             isStartVisible = value

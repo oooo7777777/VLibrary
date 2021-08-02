@@ -1,7 +1,6 @@
 package com.v.demo
 
 import com.v.base.VBBlankViewModel
-import com.v.base.utils.ext.vbDataBinding
 import com.v.base.utils.toast
 import com.v.demo.databinding.ActivityTestBinding
 

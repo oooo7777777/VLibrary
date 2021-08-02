@@ -39,17 +39,19 @@ fun <T : ViewModel?> getApplicationViewModel(
 /**
  * dp2px
  */
-fun Int.dp2px(): Int = run {
+fun Number.vbDp2px(): Int = run {
+
     return TypedValue.applyDimension(
         TypedValue.COMPLEX_UNIT_DIP,
         this.toFloat(), VBApplication.getContext().resources.displayMetrics
     ).toInt()
+
 }
 
 /**
  * sp2px
  */
-fun Int.sp2px(): Int = run {
+fun Number.vbSp2px(): Int = run {
     return TypedValue.applyDimension(
         TypedValue.COMPLEX_UNIT_SP,
         this.toFloat(), VBApplication.getContext().resources.displayMetrics
@@ -59,7 +61,7 @@ fun Int.sp2px(): Int = run {
 /**
  * px2dp
  */
-fun Int.px2dp(): Int = run {
+fun Int.vbPx2dp(): Int = run {
     val scale: Float = VBApplication.getContext().resources.displayMetrics.density
     return (this / scale + 0.5f).toInt()
 }
@@ -67,7 +69,7 @@ fun Int.px2dp(): Int = run {
 /**
  * px2sp
  */
-fun Int.px2sp(): Int = run {
+fun Int.vbPx2sp(): Int = run {
     val fontScale: Float = VBApplication.getContext().resources.displayMetrics.scaledDensity
     return (this / fontScale + 0.5).toInt()
 }
@@ -75,7 +77,7 @@ fun Int.px2sp(): Int = run {
 /**
  * 随机颜色
  */
-val vbRandomColor: Int
+val vbGetRandomColor: Int
     get() {
         var c = 0xffffff
         val random = Random()
@@ -88,7 +90,7 @@ val vbRandomColor: Int
 /**
  * 生成随机数
  */
-fun Int.vbRandomNumber(): Int = run {
+fun Int.vbGetRandomNumber(): Int = run {
     val random = Random()
     return random.nextInt(this)
 }
@@ -98,23 +100,20 @@ fun Int.vbRandomNumber(): Int = run {
  * @param min 最小数字
  * @param max 最大数字
  */
-fun vbRandomNumber(min: Int, max: Int): Int {
+fun vbGetRandomNumber(min: Int, max: Int): Int {
     val random = Random()
     return random.nextInt(max) % (max - min + 1) + min
 }
 
-/**
- * 手机星号
- */
-fun String.vbPhoneNumberFormat(): String = run {
-    return this.replace(("(\\d{3})\\d{4}(\\d{4})").toRegex(), "$1****$2")
-}
 
 /**
  * toast
  */
-fun Any.toast() {
-    Toast.makeText(VBApplication.getContext(), this.toString(), Toast.LENGTH_SHORT).show()
+fun Any.toast(isLong: Boolean = false) {
+    if (isLong)
+        Toast.makeText(VBApplication.getContext(), this.toString(), Toast.LENGTH_LONG).show()
+    else
+        Toast.makeText(VBApplication.getContext(), this.toString(), Toast.LENGTH_SHORT).show()
 }
 
 /**

@@ -47,8 +47,10 @@ class VBListDialog : VBDialogFragment<VbDialogListBinding, VBBlankViewModel>() {
     override fun createObserver() {
     }
 
-    fun setList(list: ArrayList<String>): VBListDialog {
-        this.list = list
+    fun setItems(vararg items: String): VBListDialog {
+        items.forEach {
+            this.list.add(it)
+        }
         return this
     }
 

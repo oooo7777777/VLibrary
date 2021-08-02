@@ -28,30 +28,30 @@ object DeviceIdUtil {
         //获得硬件uuid（根据硬件相关属性，生成uuid）（无需权限）
         val uuid = deviceUUID.replace("-", "")
         //追加imei
-        if (imei != null && imei.length > 0) {
+        if (imei != null && imei.isNotEmpty()) {
             sbDeviceId.append(imei)
             sbDeviceId.append("|")
         }
         //追加androidid
-        if (androidid != null && androidid.length > 0) {
+        if (androidid != null && androidid.isNotEmpty()) {
             sbDeviceId.append(androidid)
             sbDeviceId.append("|")
         }
         //追加serial
-        if (serial != null && serial.length > 0) {
+        if (serial != null && serial.isNotEmpty()) {
             sbDeviceId.append(serial)
             sbDeviceId.append("|")
         }
         //追加硬件uuid
-        if (uuid != null && uuid.length > 0) {
+        if (uuid != null && uuid.isNotEmpty()) {
             sbDeviceId.append(uuid)
         }
         //生成SHA1，统一DeviceId长度
-        if (sbDeviceId.length > 0) {
+        if (sbDeviceId.isNotEmpty()) {
             try {
                 val hash = getHashByString(sbDeviceId.toString())
                 val sha1 = bytesToHex(hash)
-                if (sha1 != null && sha1.length > 0) {
+                if (sha1 != null && sha1.isNotEmpty()) {
                     //返回最终的DeviceId
                     return sha1
                 }

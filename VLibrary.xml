@@ -83,25 +83,13 @@
       <option name="XML" value="true" />
     </context>
   </template>
-  <template name="vb_text_invisible" value="app:vb_text_invisible=&quot;$value$&quot;" description="如果文字等于NullOrEmpty 就INVISIBLE TextView" toReformat="true" toShortenFQNames="true">
+  <template name="vb_view_visible" value="app:vb_view_visible=&quot;$value$&quot;" description="View是TextView则设置文字 文字等于NullOrEmpty 就INVISIBLE VIEW" toReformat="true" toShortenFQNames="true">
     <variable name="value" expression="" defaultValue="" alwaysStopAt="true" />
     <context>
       <option name="XML" value="true" />
     </context>
   </template>
-  <template name="vb_text_gone" value="app:vb_text_gone=&quot;$value$&quot;" description="如果文字等于NullOrEmpty 就GONE TextView" toReformat="true" toShortenFQNames="true">
-    <variable name="value" expression="" defaultValue="" alwaysStopAt="true" />
-    <context>
-      <option name="XML" value="true" />
-    </context>
-  </template>
-  <template name="vb_view_visible" value="app:vb_view_visible=&quot;$value$&quot;" description="如果文字等于NullOrEmpty 就INVISIBLE VIEW" toReformat="true" toShortenFQNames="true">
-    <variable name="value" expression="" defaultValue="" alwaysStopAt="true" />
-    <context>
-      <option name="XML" value="true" />
-    </context>
-  </template>
-  <template name="vb_view_gone" value="app:vb_view_gone=&quot;$value$&quot;" description="如果文字等于NullOrEmpty 就GONE VIEW" toReformat="true" toShortenFQNames="true">
+  <template name="vb_view_gone" value="app:vb_view_gone=&quot;$value$&quot;" description="View是TextView则设置文字 文字等于NullOrEmpty 就GONE VIEW" toReformat="true" toShortenFQNames="true">
     <variable name="value" expression="" defaultValue="" alwaysStopAt="true" />
     <context>
       <option name="XML" value="true" />

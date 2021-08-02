@@ -3,7 +3,7 @@ package com.v.demo
 import androidx.databinding.ViewDataBinding
 import com.v.base.VBActivity
 import com.v.base.VBViewModel
-import com.v.base.utils.ext.vbDataBinding
+import com.v.base.utils.ext.vbGetDataBinding
 import com.v.demo.databinding.ActivityCameraBinding
 
 
@@ -19,7 +19,7 @@ abstract class CameraActivity<CB : ViewDataBinding, CVM : VBViewModel> : VBActiv
     }
 
     private val nb by lazy {
-        vbDataBinding(R.layout.activity_camera) as ActivityCameraBinding
+        vbGetDataBinding(R.layout.activity_camera) as ActivityCameraBinding
     }
 
     override fun initData() {

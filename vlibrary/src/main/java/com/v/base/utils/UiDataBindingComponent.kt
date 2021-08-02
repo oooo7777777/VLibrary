@@ -31,9 +31,9 @@ fun ImageView.vbImgUrl(
 
     any?.let {
         if (circle) {
-            this.vbLoadCircle(it,errorResId)
+            this.vbLoadCircle(it, errorResId)
         } else {
-            this.vbLoad(it, roundingRadius,errorResId)
+            this.vbLoad(it, roundingRadius, errorResId)
         }
     }
 
@@ -51,14 +51,14 @@ fun ImageView.vbImgUrl(
 fun TextView.vbDrawable(anyLeft: Any?, anyRight: Any?, w: Int, h: Int) {
 
     if (anyLeft != null) {
-        this.context.vbLoadListener(anyLeft, w.dp2px(), h.dp2px(),
+        this.context.vbLoadListener(anyLeft, w.vbDp2px(), h.vbDp2px(),
             success = {
                 it.setBounds(0, 0, it.intrinsicWidth, it.intrinsicHeight)
                 this@vbDrawable.setCompoundDrawables(it, null, null, null)
             })
     }
     if (anyRight != null) {
-        this.context.vbLoadListener(anyRight, w.dp2px(), h.dp2px(),
+        this.context.vbLoadListener(anyRight, w.vbDp2px(), h.vbDp2px(),
             success = {
                 it.setBounds(0, 0, it.intrinsicWidth, it.intrinsicHeight)
                 this@vbDrawable.setCompoundDrawables(null, null, it, null)
@@ -155,56 +155,52 @@ fun View.vbFinishActivity(isFinish: Boolean) {
 
 
 /**
- * 设置文字
- * 如果文字等于NullOrEmpty 就INVISIBLE TextView
- */
-@BindingAdapter(value = ["vb_text_invisible"], requireAll = false)
-fun TextView.vbTextInVisible(text: String?) {
-    if (text.isNullOrEmpty()) {
-        this.visibility = View.INVISIBLE
-    } else {
-        this.text = text
-        this.visibility = View.VISIBLE
-
-    }
-}
-
-/**
- * 设置文字
- * 如果文字等于NullOrEmpty 就GONE TextView
- */
-@BindingAdapter(value = ["vb_text_gone"], requireAll = false)
-fun TextView.vbTextGone(text: String?) {
-    if (text.isNullOrEmpty()) {
-        this.visibility = View.GONE
-    } else {
-        this.text = text
-        this.visibility = View.VISIBLE
-    }
-}
-
-
-/**
- * 如果文字等于NullOrEmpty 就INVISIBLE VIEW
+ * 如果view是TextView 设置文字同时做判断
+ * 如果是其他的View
+ * 文字等于NullOrEmpty 就INVISIBLE VIEW
  */
 @BindingAdapter(value = ["vb_view_visible"], requireAll = false)
 fun View.vbViewVisible(text: String?) {
-    if (text.isNullOrEmpty()) {
-        this.visibility = View.INVISIBLE
+
+    if (this is TextView) {
+        if (text.isNullOrEmpty()) {
+            this.visibility = View.INVISIBLE
+        } else {
+            this.text = text
+            this.visibility = View.VISIBLE
+        }
+
     } else {
-        this.visibility = View.VISIBLE
+        if (text.isNullOrEmpty()) {
+            this.visibility = View.INVISIBLE
+        } else {
+            this.visibility = View.VISIBLE
+        }
     }
+
 }
 
 /**
+ * 如果view是TextView 设置文字同时做判断
+ * 如果是其他的View
  * 如果文字等于NullOrEmpty 就GONE VIEW
  */
 @BindingAdapter(value = ["vb_view_gone"], requireAll = false)
 fun View.vbViewGone(text: String?) {
-    if (text.toString() == "null" || text.toString().isEmpty()) {
-        this.visibility = View.GONE
+    if (this is TextView) {
+        if (text.isNullOrEmpty()) {
+            this.visibility = View.GONE
+        } else {
+            this.text = text
+            this.visibility = View.VISIBLE
+        }
+
     } else {
-        this.visibility = View.VISIBLE
+        if (text.isNullOrEmpty()) {
+            this.visibility = View.GONE
+        } else {
+            this.visibility = View.VISIBLE
+        }
     }
 }
 

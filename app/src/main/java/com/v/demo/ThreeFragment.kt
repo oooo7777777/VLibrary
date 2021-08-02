@@ -56,12 +56,9 @@ class ThreeFragment : VBFragment<FragmentThreeBinding, DataViewModel>(), View.On
                     }.show(mContext)
             }
             mDataBinding.bt4.id -> {
-                var list = ArrayList<String>()
-                for (i in 1..3) {
-                    list.add("Content$i")
-                }
+
                 VBListDialog()
-                    .setList(list)
+                    .setItems("content0","content1","content3")
                     .setClickListener { dialog, result, position ->
                         dialog.dismiss()
                         mViewModel.content.value = result

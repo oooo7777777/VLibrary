@@ -8,7 +8,7 @@ import com.v.base.net.VBAppException
 import com.v.base.net.VBExceptionHandle
 import com.v.base.bean.VBResponse
 import com.v.base.utils.EventLiveData
-import com.v.base.utils.toBean
+import com.v.base.utils.vbToBean
 import kotlinx.coroutines.*
 import java.lang.reflect.Type
 
@@ -110,7 +110,7 @@ abstract class VBViewModel : ViewModel() {
             }.onSuccess {
                 runCatching {
                     val type: Type = object : TypeReference<T>() {}.type
-                    resultState.postValue(it.toString().toBean(type) as T)
+                    resultState.postValue(it.toString().vbToBean(type) as T)
                     loadingChange.dismissDialog.postValue(false)
                 }.onFailure { e ->
                     error(VBExceptionHandle.handleException(e))

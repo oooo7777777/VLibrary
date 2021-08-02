@@ -1,5 +1,7 @@
 package com.v.demo
 
+import android.content.res.Resources
+import android.graphics.BitmapFactory
 import android.view.View
 import com.v.base.VBFragment
 import com.v.base.utils.*
@@ -49,10 +51,20 @@ class TwoFragment : VBFragment<FragmentTowBinding, DemoViewModel>(), View.OnClic
                 mDataBinding.bt5.vbDrawable(null, R.mipmap.ic_movie, h = 80, w = 80)
             }
             mDataBinding.bt6.id -> {
-                mDataBinding.ivIcon.vbLoad(R.mipmap.ic_movie, 90.vbRandomNumber().toFloat())
+                mDataBinding.ivIcon.vbLoad(R.mipmap.ic_movie, 90.vbGetRandomNumber().toFloat())
             }
             mDataBinding.bt7.id -> {
                 mDataBinding.ivIcon.vbLoadCircle(R.mipmap.ic_movie)
+            }
+            mDataBinding.bt8.id -> {
+                mDataBinding.scrollView.vbSaveLocality(mContext)
+            }
+            mDataBinding.bt9.id -> {
+                "http://gank.io/images/9fb66f5c4a214b26be6e0218b93bdf46".vbSaveLocality(mContext)
+            }
+            mDataBinding.bt10.id -> {
+                val bitmap = BitmapFactory.decodeResource(mContext.resources, R.mipmap.ic_movie)
+                bitmap.vbSaveLocality(mContext)
             }
 
         }

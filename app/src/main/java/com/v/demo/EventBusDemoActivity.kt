@@ -6,7 +6,7 @@ import com.v.base.VBActivity
 import com.v.base.VBBlankViewModel
 import com.v.base.utils.LiveDataBus
 import com.v.base.utils.getApplicationViewModel
-import com.v.base.utils.vbRandomNumber
+import com.v.base.utils.vbGetRandomNumber
 import com.v.demo.databinding.ActivityEventBusDemoBinding
 import com.v.demo.model.AppViewModel
 
@@ -50,12 +50,12 @@ class EventBusDemoActivity : VBActivity<ActivityEventBusDemoBinding, VBBlankView
                 getApplicationViewModel(
                     mContext.application,
                     AppViewModel::class.java
-                ).string.postValue("我是全局数据" + 99.vbRandomNumber())
+                ).string.postValue("我是全局数据" + 99.vbGetRandomNumber())
 
             }
             mDataBinding.bt1.id -> {
                 LiveDataBus.with<String>(ConstData.CONTENT)
-                    .postData("模拟eventBus" + 99.vbRandomNumber())
+                    .postData("模拟eventBus" + 99.vbGetRandomNumber())
             }
         }
     }

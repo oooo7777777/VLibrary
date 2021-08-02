@@ -38,15 +38,15 @@ class OneFragment : VBFragment<FragmentOneBinding, DemoViewModel>() {
     }
 
     private val mAdapterHeaderView by lazy {
-        mContext.vbDataBinding<FragmentOneHeaderBinding>(R.layout.fragment_one_header)
+        mContext.vbGetDataBinding<FragmentOneHeaderBinding>(R.layout.fragment_one_header)
     }
 
     private val mViewPager by lazy {
         (mAdapterHeaderView.bannerViewPager as BannerViewPager<BannerBean>).apply {
             adapter = BannerAdapter()
             setLifecycleRegistry(lifecycle)
-            setPageMargin(15.dp2px())
-            setRevealWidth(15.dp2px())
+            setPageMargin(15.vbDp2px())
+            setRevealWidth(15.vbDp2px())
             setPageStyle(PageStyle.MULTI_PAGE_OVERLAP)
             setIndicatorSlideMode(IndicatorSlideMode.WORM)
         }

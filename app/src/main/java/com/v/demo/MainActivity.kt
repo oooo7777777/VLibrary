@@ -5,8 +5,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import com.v.base.VBActivity
 import com.v.base.VBBlankViewModel
-import com.v.base.utils.ext.getFragment
 import com.v.base.utils.ext.otherwise
+import com.v.base.utils.ext.vbGetFragment
 import com.v.base.utils.ext.yes
 import com.v.demo.databinding.MainActivityBinding
 import com.v.demo.view.IndicatorZoom
@@ -18,7 +18,12 @@ class MainActivity : VBActivity<MainActivityBinding, VBBlankViewModel>() {
 
     // 请求一组权限
     private var permissions =
-        arrayOf(Manifest.permission.ACCESS_WIFI_STATE, Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.CAMERA)
+        arrayOf(
+            Manifest.permission.ACCESS_WIFI_STATE,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.CAMERA
+        )
     private var permissionsCount = 0
 
     private val requestMultiplePermissions =
@@ -27,11 +32,11 @@ class MainActivity : VBActivity<MainActivityBinding, VBBlankViewModel>() {
                 if (it.value) {
                     permissionsCount++
                 }
-                 (permissionsCount == permissions.size).yes {
+                (permissionsCount == permissions.size).yes {
                     //权限全部申请成功
                 }.otherwise {
-                     //部分权限申请失败
-                 }
+                    //部分权限申请失败
+                }
             }
         }
 
@@ -53,10 +58,10 @@ class MainActivity : VBActivity<MainActivityBinding, VBBlankViewModel>() {
         )
 
         val fragments = ArrayList<Fragment>()
-        fragments.add(getFragment("home", OneFragment::class.java))
-        fragments.add(getFragment("home1", TwoFragment::class.java))
-        fragments.add(getFragment("home2", ThreeFragment::class.java))
-        fragments.add(getFragment("home3", FourFragment::class.java))
+        fragments.add(vbGetFragment("home", OneFragment::class.java))
+        fragments.add(vbGetFragment("home1", TwoFragment::class.java))
+        fragments.add(vbGetFragment("home2", ThreeFragment::class.java))
+        fragments.add(vbGetFragment("home3", FourFragment::class.java))
 
         IndicatorZoom(
             this,

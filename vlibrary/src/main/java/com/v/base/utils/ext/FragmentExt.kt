@@ -23,7 +23,7 @@ private fun FragmentManager.inTransaction(func: FragmentTransaction.() -> Fragme
  * @param frameId 需要显示Fragment的layout
  * @param bundle 传值
  */
-fun Context.addFragment(fragment: Fragment, frameId: Int, bundle: Bundle? = null) = run {
+fun Context.vbAddFragment(fragment: Fragment, frameId: Int, bundle: Bundle? = null) = run {
     if (bundle != null) {
         fragment.arguments = bundle
     }
@@ -40,7 +40,7 @@ fun Context.addFragment(fragment: Fragment, frameId: Int, bundle: Bundle? = null
  * @param frameId 需要显示Fragment的layout
  * @param bundle 传值
  */
-fun Context.replaceFragment(fragment: Fragment, frameId: Int, bundle: Bundle? = null) =
+fun Context.vbReplaceFragment(fragment: Fragment, frameId: Int, bundle: Bundle? = null) =
     run {
         if (bundle != null) {
             fragment.arguments = bundle
@@ -57,7 +57,7 @@ fun Context.replaceFragment(fragment: Fragment, frameId: Int, bundle: Bundle? = 
  * 移除Fragment
  * @param fragment Fragment对象
  */
-fun Context.removeFragment(fragment: Fragment) = run {
+fun Context.vbRemoveFragment(fragment: Fragment) = run {
     if (this is AppCompatActivity) {
         supportFragmentManager.inTransaction { remove(fragment) }
     } else if (this is Fragment) {
@@ -70,7 +70,7 @@ fun Context.removeFragment(fragment: Fragment) = run {
  * 隐藏Fragment
  * @param fragment Fragment对象
  */
-fun Context.hideFragment(fragment: Fragment) = run {
+fun Context.vbHideFragment(fragment: Fragment) = run {
 
     if (this is AppCompatActivity) {
         supportFragmentManager.inTransaction { hide(fragment) }
@@ -84,7 +84,7 @@ fun Context.hideFragment(fragment: Fragment) = run {
  * 显示Fragment
  * @param fragment Fragment对象
  */
-fun Context.showFragment(fragment: Fragment) = run {
+fun Context.vbShowFragment(fragment: Fragment) = run {
 
     if (this is AppCompatActivity) {
         supportFragmentManager.inTransaction { show(fragment) }
@@ -101,7 +101,7 @@ fun Context.showFragment(fragment: Fragment) = run {
  * @param clazz Fragment对象
  * @param bundle 传值
  */
-fun <T : Fragment> AppCompatActivity.getFragment(
+fun <T : Fragment> AppCompatActivity.vbGetFragment(
     tag: String,
     clazz: Class<T>,
     bundle: Bundle? = null
@@ -124,7 +124,7 @@ fun <T : Fragment> AppCompatActivity.getFragment(
  * @param clazz Fragment对象
  * @param bundle 传值
  */
-fun <T : Fragment> Fragment.getFragment(
+fun <T : Fragment> Fragment.vbGetFragment(
     tag: String,
     clazz: Class<T>,
     bundle: Bundle? = null
@@ -144,7 +144,7 @@ fun <T : Fragment> Fragment.getFragment(
 /**
  *清空所有Fragment
  */
-fun Any.removeAllFragment() = run {
+fun Any.vbRemoveAllFragment() = run {
     if (this is AppCompatActivity) {
         for (fragment in supportFragmentManager.fragments) {
             supportFragmentManager.inTransaction { remove(fragment) }

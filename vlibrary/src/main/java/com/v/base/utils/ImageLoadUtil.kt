@@ -2,7 +2,15 @@ package com.v.base.utils
 
 
 import android.content.Context
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.graphics.drawable.Drawable
+import android.net.Uri
+import android.os.Build
+import android.os.Environment
+import android.provider.MediaStore
+import android.view.View
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
 import com.bumptech.glide.Glide
@@ -13,8 +21,18 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
 import com.v.base.R
+import com.v.base.utils.ext.log
+import com.v.base.utils.ext.logE
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import java.io.File
+import java.io.FileNotFoundException
+import java.io.FileOutputStream
+import java.io.IOException
 
 
 /**
@@ -100,7 +118,7 @@ private fun loadDispose(
             when {
                 roundingRadius > 0 -> {
                     this.scaleType = ImageView.ScaleType.CENTER_CROP
-                    var radius = roundingRadius.toInt().dp2px()
+                    var radius = roundingRadius.toInt().vbDp2px()
                     options.transform(CenterCrop(), RoundedCorners(radius)) //圆角
 
                     Glide.with(this.context)
@@ -167,6 +185,104 @@ private fun loadCircleTransform(
             RequestOptions()
                 .transform(CenterCrop(), CircleCrop())
         )
+}
+
+
+/**
+ * 保存图片到本地 view,bitmap,url
+ */
+fun Any.vbSaveLocality(context: Context) = run {
+
+    when (this) {
+        is View -> {
+            saveImageToGallery(context, this.vbToBitmap())
+        }
+        is Bitmap -> {
+            saveImageToGallery(context, this)
+        }
+        is String -> {
+            saveImageToGallery(
+                context,
+                Glide.with(context)
+                    .asBitmap()
+                    .load(this)
+                    .submit(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).get()
+            )
+        }
+        else -> {
+            throw IllegalStateException("保存得内容仅限制于View,Bitmap,String")
+        }
+    }
+
+}
+
+
+/**
+ * view转换成bitmap
+ */
+fun View.vbToBitmap(): Bitmap {
+    val bitmap = Bitmap.createBitmap(this.width, this.height, Bitmap.Config.ARGB_8888)
+    val canvas = Canvas(bitmap)
+    if (Build.VERSION.SDK_INT >= 11) {
+        this.measure(
+            View.MeasureSpec.makeMeasureSpec(this.width, View.MeasureSpec.EXACTLY),
+            View.MeasureSpec.makeMeasureSpec(this.height, View.MeasureSpec.EXACTLY)
+        )
+        this.layout(
+            this.x.toInt(),
+            this.y.toInt(),
+            this.x.toInt() + this.measuredWidth,
+            this.y.toInt() + this.measuredHeight
+        )
+    } else {
+        this.measure(
+            View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+            View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+        )
+        this.layout(0, 0, this.measuredWidth, this.measuredHeight)
+    }
+    this.draw(canvas)
+    return bitmap
+}
+
+/**
+ * 保存图片到系统相册
+ *
+ * @param context
+ * @param bmp
+ */
+private fun saveImageToGallery(context: Context, bmp: Bitmap) {
+
+    try {
+        var child = context.opPackageName.split(".")
+        val sdCardDir = File(Environment.getExternalStorageDirectory(), child[child.size - 1])
+        if (!sdCardDir.exists()) {              //如果不存在，那就建立这个文件夹
+            sdCardDir.mkdirs()
+        }
+
+        val fileName = System.currentTimeMillis().toString() + ".jpg"
+        val file = File(sdCardDir, fileName)
+
+        val fos = FileOutputStream(file)
+        bmp.compress(Bitmap.CompressFormat.JPEG, 100, fos)
+        fos.flush()
+        fos.close()
+
+        // 通知图库更新
+        context.sendBroadcast(
+            Intent(
+                Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
+                Uri.parse("file://" + file.path)
+            )
+        )
+        "图片已保存到本地相册".toast(true)
+    } catch (e: java.lang.Exception) {
+        "图片已保存失败".toast(true)
+        e.logE()
+        e.printStackTrace()
+    }
+
+
 }
 
 
