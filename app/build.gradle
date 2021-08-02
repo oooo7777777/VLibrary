@@ -25,12 +25,23 @@ android {
         dataBinding = true
     }
 
+    signingConfigs {
+        config {
+            storeFile file("../android.keystore")
+            storePassword "ttmb123"
+            keyAlias "ttmb"
+            keyPassword "ttmb123"
+        }
+    }
+
+
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8

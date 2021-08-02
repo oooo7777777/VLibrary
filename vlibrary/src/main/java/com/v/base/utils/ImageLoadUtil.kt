@@ -2,6 +2,7 @@ package com.v.base.utils
 
 
 import android.content.Context
+import android.content.ContextWrapper
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -9,6 +10,7 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
+import android.os.Looper
 import android.provider.MediaStore
 import android.view.View
 import android.widget.ImageView
@@ -26,9 +28,7 @@ import com.bumptech.glide.request.transition.Transition
 import com.v.base.R
 import com.v.base.utils.ext.log
 import com.v.base.utils.ext.logE
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
@@ -192,28 +192,30 @@ private fun loadCircleTransform(
  * 保存图片到本地 view,bitmap,url
  */
 fun Any.vbSaveLocality(context: Context) = run {
-
-    when (this) {
-        is View -> {
-            saveImageToGallery(context, this.vbToBitmap())
+    Thread {
+        Looper.prepare()
+        when (this) {
+            is View -> {
+                saveImageToGallery(context, this.vbToBitmap())
+            }
+            is Bitmap -> {
+                saveImageToGallery(context, this)
+            }
+            is String -> {
+                saveImageToGallery(
+                    context,
+                    Glide.with(context)
+                        .asBitmap()
+                        .load(this)
+                        .submit(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).get()
+                )
+            }
+            else -> {
+                throw IllegalStateException("保存得内容仅限制于View,Bitmap,String")
+            }
         }
-        is Bitmap -> {
-            saveImageToGallery(context, this)
-        }
-        is String -> {
-            saveImageToGallery(
-                context,
-                Glide.with(context)
-                    .asBitmap()
-                    .load(this)
-                    .submit(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).get()
-            )
-        }
-        else -> {
-            throw IllegalStateException("保存得内容仅限制于View,Bitmap,String")
-        }
-    }
-
+        Looper.loop()
+    }.start()
 }
 
 
@@ -275,11 +277,11 @@ private fun saveImageToGallery(context: Context, bmp: Bitmap) {
                 Uri.parse("file://" + file.path)
             )
         )
-        "图片已保存到本地相册".toast(true)
+        "图片已保存到本地相册".toast()
     } catch (e: java.lang.Exception) {
-        "图片已保存失败".toast(true)
         e.logE()
         e.printStackTrace()
+        "图片保存失败".toast()
     }
 
 

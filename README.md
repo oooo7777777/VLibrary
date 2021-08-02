@@ -73,3 +73,74 @@ open class *** : VBApplication() {
 - **[wiki](https://github.com/oooo7777777/VLibrary/wiki)**
 
 - **[wiki](https://github.com/oooo7777777/VLibrary/wiki)**
+
+
+#### proguard-rules.pro
+>此资源库自带混淆规则，并且会自动导入，正常情况下无需手动导入，仅限于3.3.3版本及以上版本。
+>3.3.3之前请自行添加以下混淆代码 
+
+```
+#ViewDataBinding
+-keep public class * extends androidx.databinding.ViewDataBinding { *; }
+
+#Lifecycle
+-keep public class * extends androidx.lifecycle.ViewModel { *; }
+
+#枚举
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+
+#glide
+-keep public class * implements com.bumptech.glide.module.GlideModule
+-keep class * extends com.bumptech.glide.module.AppGlideModule {
+ <init>(...);
+}
+-keep public enum com.bumptech.glide.load.ImageHeaderParser$** {
+  **[] $VALUES;
+  public *;
+}
+-keep class com.bumptech.glide.load.data.ParcelFileDescriptorRewinder$InternalRewinder {
+  *** rewind();
+}
+
+#Retrofit
+-keepattributes Signature, InnerClasses, EnclosingMethod
+-keepattributes RuntimeVisibleAnnotations, RuntimeVisibleParameterAnnotations
+-keepattributes AnnotationDefault
+-keepclassmembers,allowshrinking,allowobfuscation interface * {
+    @retrofit2.http.* <methods>;
+}
+-dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
+-dontwarn javax.annotation.**
+-dontwarn kotlin.Unit
+-dontwarn retrofit2.KotlinExtensions
+-dontwarn retrofit2.KotlinExtensions$*
+-if interface * { @retrofit2.http.* <methods>; }
+-keep,allowobfuscation interface <1>
+-keep,allowobfuscation,allowshrinking interface retrofit2.Call
+-keep,allowobfuscation,allowshrinking class kotlin.coroutines.Continuation
+
+#fastjson.
+-dontwarn com.alibaba.fastjson.**
+-keep class com.alibaba.fastjson.**{*;}
+#kotlin data class
+-keepattributes *Annotation*
+-keep class kotlin.** { *; }
+-keep class org.jetbrains.** { *; }
+
+#实体类
+-dontwarn **.*bean*.**
+-keep class **.*bean*.** { *;}
+-keep public class * extends com.v.base.bean.VBApiResponse { *; }
+-keep public class * extends com.v.base.bean.VBResponse { *; }
+
+#BaseRecyclerViewAdapterHelper
+-keep public class * extends com.chad.library.adapter.base.viewholder.BaseViewHolder{
+ <init>(...);
+}
+-keepclassmembers  class **$** extends com.chad.library.adapter.base.viewholder.BaseViewHolder {
+     <init>(...);
+}
+```

@@ -3,11 +3,13 @@ package com.v.demo
 import android.content.res.Resources
 import android.graphics.BitmapFactory
 import android.view.View
+import androidx.lifecycle.lifecycleScope
 import com.v.base.VBFragment
 import com.v.base.utils.*
 import com.v.base.utils.ext.*
 import com.v.demo.databinding.FragmentTowBinding
 import com.v.demo.model.DemoViewModel
+import kotlinx.coroutines.launch
 
 
 /**
