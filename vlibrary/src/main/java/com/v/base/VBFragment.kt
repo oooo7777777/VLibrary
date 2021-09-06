@@ -37,7 +37,11 @@ abstract class VBFragment<VB : ViewDataBinding, VM : VBViewModel> : Fragment() {
     protected val mViewModel: VM by lazy {
         val type = javaClass.genericSuperclass as ParameterizedType
         val aClass = type.actualTypeArguments[1] as Class<VM>
-        ViewModelProvider(requireActivity()).get(aClass)
+        if (viewModelSyn()) {
+            ViewModelProvider(requireActivity()).get(aClass)
+        } else {
+            ViewModelProvider(this).get(aClass)
+        }
     }
 
     override fun onAttach(context: Context) {
@@ -45,7 +49,6 @@ abstract class VBFragment<VB : ViewDataBinding, VM : VBViewModel> : Fragment() {
         if (context is Activity) {
             this.mContext = context
         }
-
     }
 
 
@@ -171,6 +174,11 @@ abstract class VBFragment<VB : ViewDataBinding, VM : VBViewModel> : Fragment() {
     private fun isSupportVisible(): Boolean {
         return currentVisibleState
     }
+
+    /**
+     *viewModel是否使用当前fragment所依赖的activity创建 可以viewModel数据共享
+     */
+    protected open fun viewModelSyn(): Boolean = false
 
     /**
      * 当前 Fragment 是 child 时候 作为缓存 Fragment 的子 fragment 的唯一或者嵌套 VP 的第一 fragment 时 getUserVisibleHint = true
