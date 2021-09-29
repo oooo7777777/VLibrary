@@ -5,9 +5,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import com.v.base.VBActivity
 import com.v.base.VBBlankViewModel
-import com.v.base.utils.ext.otherwise
 import com.v.base.utils.ext.vbGetFragment
-import com.v.base.utils.ext.yes
 import com.v.demo.databinding.MainActivityBinding
 import com.v.demo.view.IndicatorZoom
 import net.lucode.hackware.magicindicator.ViewPagerHelper
@@ -30,9 +28,9 @@ class MainActivity : VBActivity<MainActivityBinding, VBBlankViewModel>() {
                 if (it.value) {
                     permissionsCount++
                 }
-                (permissionsCount == permissions.size).yes {
+                if(permissionsCount == permissions.size) {
                     //权限全部申请成功
-                }.otherwise {
+                }else {
                     //部分权限申请失败
                 }
             }

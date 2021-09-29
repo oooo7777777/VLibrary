@@ -1,8 +1,6 @@
 package com.v.base.net
 
 import com.v.base.annotaion.VBError
-import com.v.base.utils.ext.otherwise
-import com.v.base.utils.ext.yes
 
 
 /**
@@ -17,15 +15,16 @@ class VBAppException : Exception {
     var errorLog: String? //错误日志
 
     constructor(errCode: Int, error: String?, errorLog: String? = "") : super(error) {
-        this.errorMsg = error.isNullOrEmpty().yes {
+
+        this.errorMsg = if (error.isNullOrEmpty()) {
             "请求失败，请稍后再试"
-        }.otherwise {
+        } else {
             error.toString()
         }
 
-        this.errorLog = errorLog.isNullOrEmpty().yes {
+        this.errorLog = if (errorLog.isNullOrEmpty()) {
             this.errorMsg
-        }.otherwise {
+        } else {
             errorLog.toString()
         }
 

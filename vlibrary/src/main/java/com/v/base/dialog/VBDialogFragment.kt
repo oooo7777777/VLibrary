@@ -10,12 +10,10 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.v.base.VBViewModel
 import com.v.base.R
+import com.v.base.VBViewModel
 import com.v.base.annotaion.VBDialogOrientation
 import com.v.base.utils.ext.logI
-import com.v.base.utils.ext.otherwise
-import com.v.base.utils.ext.yes
 import java.lang.reflect.ParameterizedType
 
 /**
@@ -42,7 +40,7 @@ abstract class VBDialogFragment<VB : ViewDataBinding, VM : VBViewModel> : Dialog
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-         (context is Activity).yes {
+        if (context is Activity) {
             this.mContext = context
         }
         javaClass.name.logI()
@@ -118,9 +116,9 @@ abstract class VBDialogFragment<VB : ViewDataBinding, VM : VBViewModel> : Dialog
         wlp.width = WindowManager.LayoutParams.MATCH_PARENT
         wlp.height = WindowManager.LayoutParams.WRAP_CONTENT
 
-         (useDim()).yes {
+        if (useDim()) {
             wlp.dimAmount = 0.5f
-        } .otherwise {
+        } else {
             wlp.dimAmount = 0f
             window.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
         }

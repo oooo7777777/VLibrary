@@ -5,8 +5,6 @@ import android.view.Gravity
 import android.view.View
 import com.v.base.VBBlankViewModel
 import com.v.base.databinding.VbDialogHintBinding
-import com.v.base.utils.ext.otherwise
-import com.v.base.utils.ext.yes
 
 
 /**
@@ -83,7 +81,7 @@ class VBHintDialog : VBDialogFragment<VbDialogHintBinding, VBBlankViewModel>(),
      * @param btTexts size 2, left right
      */
     fun setButtonText(vararg btTexts: String): VBHintDialog {
-        (btTexts.isEmpty() || btTexts.size > 2).yes {
+        if (btTexts.isEmpty() || btTexts.size > 2) {
             throw IllegalStateException(" range of param btnTexts length is [1,2]!")
         }
         btTexts.forEach {
@@ -98,7 +96,7 @@ class VBHintDialog : VBDialogFragment<VbDialogHintBinding, VBBlankViewModel>(),
      * @param btTextColors size 2, left right
      */
     fun setButtonTextColor(vararg btTextColors: String): VBHintDialog {
-        (btTextColors.isEmpty() || btTextColors.size > 2).yes {
+        if (btTextColors.isEmpty() || btTextColors.size > 2) {
             throw IllegalStateException(" range of param btnTexts length is [1,2]!")
         }
         btTextColors.forEach {
@@ -112,16 +110,16 @@ class VBHintDialog : VBDialogFragment<VbDialogHintBinding, VBBlankViewModel>(),
     override fun onClick(v: View) {
         when (v.id) {
             mDataBinding.tvLeft.id -> {
-                (listener == null).yes {
+                if (listener == null) {
                     dismiss()
-                }.otherwise {
+                } else {
                     listener!!.invoke(this@VBHintDialog, 0)
                 }
             }
             mDataBinding.tvRight.id -> {
-                (listener == null).yes {
+                if (listener == null) {
                     dismiss()
-                }.otherwise {
+                } else {
                     listener!!.invoke(this@VBHintDialog, 1)
                 }
             }
