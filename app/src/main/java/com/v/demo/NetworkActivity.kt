@@ -14,8 +14,18 @@ import com.v.demo.model.NetworkViewModel
 class NetworkActivity : VBActivity<ActivityNetworkBinding, NetworkViewModel>(),
     View.OnClickListener {
 
-    override fun toolBarTitle(title: String, titleColor: Int) {
-        super.toolBarTitle(this.getString(R.string.string_activity_network_title), titleColor)
+    override fun toolBarTitle(
+        title: String,
+        titleColor: Int,
+        isShowBottomLine: Boolean,
+        listener: View.OnClickListener?
+    ) {
+        super.toolBarTitle(
+            this.getString(R.string.string_activity_network_title),
+            titleColor,
+            isShowBottomLine,
+            listener
+        )
     }
 
     override fun initData() {

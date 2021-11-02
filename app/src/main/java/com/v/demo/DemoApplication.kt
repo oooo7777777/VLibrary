@@ -23,7 +23,7 @@ class DemoApplication : VBApplication() {
      * 重写此方法 设置全局状态栏颜色  状态栏颜色趋近于白色时 会智能将状态栏字体颜色变换为黑色
      */
     override fun statusBarColor(): Int {
-        return Color.parseColor("#000000")
+        return Color.parseColor("#ffffff")
     }
 
     /**

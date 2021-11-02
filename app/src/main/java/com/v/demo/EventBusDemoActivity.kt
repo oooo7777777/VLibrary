@@ -19,8 +19,18 @@ class EventBusDemoActivity : VBActivity<ActivityEventBusDemoBinding, VBBlankView
     View.OnClickListener {
 
 
-    override fun toolBarTitle(title: String, titleColor: Int) {
-        super.toolBarTitle(getString(R.string.dm_string_activity_event_bus_demo_title), titleColor)
+    override fun toolBarTitle(
+        title: String,
+        titleColor: Int,
+        isShowBottomLine: Boolean,
+        listener: View.OnClickListener?
+    ) {
+        super.toolBarTitle(
+            getString(R.string.dm_string_activity_event_bus_demo_title),
+            titleColor,
+            isShowBottomLine,
+            listener
+        )
     }
 
     override fun initData() {

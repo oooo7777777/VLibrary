@@ -231,3 +231,20 @@ fun vbEmptyView(
 
     return view
 }
+
+
+/**
+ * RecyclerView动画滑动到顶部
+ */
+fun RecyclerView.vbScrollToUp(position: Int = 10) {
+    //先滑动到指定item 然后在动画滑动
+    this.scrollToPosition(position)
+    val smoothScroller =
+        object : androidx.recyclerview.widget.LinearSmoothScroller(this.context) {
+            override fun getVerticalSnapPreference(): Int {
+                return SNAP_TO_START
+            }
+        }
+    smoothScroller.targetPosition = 0//position是item的位置
+    this.layoutManager!!.startSmoothScroll(smoothScroller)//通过RecyclerView的layoutManager来实现移动动画效果
+}

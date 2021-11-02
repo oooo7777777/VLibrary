@@ -9,72 +9,10 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/ivStatusBar"
+        <com.v.base.VBTitleBar
+            android:id="@+id/vbTitleBar"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
-            tools:src="@android:color/black" />
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:background="@android:color/white"
-            app:contentInsetStart="0dp">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <ImageView
-                    android:id="@+id/ivLeft"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:src="@mipmap/vb_ic_back_black" />
-
-                <TextView
-                    android:id="@+id/tvTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="60dp"
-                    android:layout_marginRight="60dp"
-                    android:gravity="center"
-                    android:singleLine="true"
-                    android:textColor="@android:color/black"
-                    android:textSize="@dimen/sp_14"
-                    app:vb_text_bold="@{true}"
-                    tools:text="title" />
-
-                <TextView
-                    android:id="@+id/tvRight"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
-                    android:gravity="center"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:textColor="@android:color/black"
-                    tools:src="@mipmap/vb_ic_back_white"
-                    tools:text="忽略全部" />
-
-
-                <ImageView
-                    android:id="@+id/ivRight"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
-                    android:gravity="center"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp"
-                    android:visibility="gone"
-                    tools:src="@mipmap/vb_ic_back_white"
-                    tools:visibility="visible" />
-
-            </RelativeLayout>
-        </androidx.appcompat.widget.Toolbar>
+            android:layout_height="wrap_content"/>
 
         <FrameLayout
             android:id="@+id/layoutContent"

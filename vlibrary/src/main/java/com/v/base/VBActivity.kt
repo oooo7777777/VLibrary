@@ -18,15 +18,25 @@ import com.v.base.databinding.VbRootLayoutBinding
 import com.v.base.dialog.VBLoadingDialog
 import com.v.base.utils.ext.*
 import com.v.base.utils.isWhiteColor
+import kotlinx.android.synthetic.main.vb_title_bar.view.*
 import java.lang.reflect.Field
 import java.lang.reflect.ParameterizedType
 
 
 abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatActivity() {
 
-    lateinit var mRootDataBinding: VbRootLayoutBinding
 
     lateinit var mContext: AppCompatActivity
+
+
+    val mTitleBar by lazy {
+        mRootDataBinding.vbTitleBar
+    }
+
+    val mRootDataBinding by lazy {
+        mContext.vbGetDataBinding<VbRootLayoutBinding>(R.layout.vb_root_layout)
+    }
+
 
     /**
      * 通过反射拿到ViewModel并且注册
@@ -60,11 +70,7 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
         super.onCreate(savedInstanceState)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         mContext = this
-        //获取base DataBinding
-        mRootDataBinding = DataBindingUtil.setContentView(
-            this,
-            R.layout.vb_root_layout
-        )
+
         val rootView: View = mRootDataBinding.root
         //把mDataBinding添加到baseDataBinding里面去
         if (useAddViewVBRoot()) {
@@ -77,22 +83,24 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
 
         //注册加载框
         registerUiChange()
+        initToolBar()
 
-        //设置Toolbar
-        showTitleBar(useTitleBar())
-
-        toolBarTitle(
-            "", Color.BLACK
-        )
-        statusBarColor()
-        toolBarLift()
-        toolBarRight("", 0, null)
-        toolBarRight(0, null)
-        //设置是否隐藏状态栏
-        mRootDataBinding.ivStatusBar.visibility = if (useStatusBar()) View.GONE else View.VISIBLE
         initData()
         createObserver()
         javaClass.name.log()
+    }
+
+
+    private fun initToolBar() {
+
+        statusBarColor()
+        mTitleBar.useStatusBar(useStatusBar())
+
+        showTitleBar(useTitleBar())
+
+        toolBarTitle()
+        toolBarLift()
+        toolBarRight()
     }
 
 
@@ -121,93 +129,92 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
             window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE//白色
         }
 
-        mRootDataBinding.ivStatusBar.vbSetViewLayoutParams(h = vbGetStatusBarHeight())
-        mRootDataBinding.ivStatusBar.setBackgroundColor(color)
-    }
-
-
-    /**
-     * 设置Toolbar左边图片
-     * @param resId 图片
-     * @param listener 点击事件(默认是点击返回)
-     */
-    protected open fun toolBarLift(
-        resId: Int = R.mipmap.vb_ic_back_black,
-        listener: View.OnClickListener = View.OnClickListener { mContext.onBackPressed() }
-    ) {
-        mRootDataBinding.ivLeft?.run {
-            setImageResource(resId)
-            this.vbOnClickAnimator() {
-                listener.onClick(it)
-            }
-
-        }
-
-    }
-
-    /**
-     * 设置Toolbar右边文字
-     * @param text 文字
-     * @param textColor 文字颜色
-     * @param listener 点击事件
-     */
-    protected open fun toolBarRight(text: String, textColor: Int, listener: View.OnClickListener?) {
-        mRootDataBinding.tvRight?.run {
-            setText(text)
-            setTextColor(textColor)
-            setOnClickListener(listener)
-        }
-    }
-
-    /**
-     * 设置Toolbar右边图片
-     * @param resId 图片资源
-     * @param listener 点击事件
-     */
-    protected open fun toolBarRight(resId: Int, listener: View.OnClickListener?) {
-        mRootDataBinding.ivRight?.run {
-            setImageResource(resId)
-            setOnClickListener(listener)
-        }
-
-    }
-
-    /**
-     * 显示Toolbar [title]不为空才会显示TitleBar
-     * @param title TitleBar文字
-     * @param titleColor TitleBar文字颜色
-     */
-    protected open fun toolBarTitle(
-        title: String = "",
-        titleColor: Int = Color.BLACK
-    ) {
-        if (title.isNotEmpty()) {
-            mRootDataBinding.toolbar.visibility = View.VISIBLE
-        } else {
-            mRootDataBinding.toolbar.visibility = View.GONE
-        }
-        mRootDataBinding.tvTitle?.run {
-            text = title
-            setTextColor(titleColor)
-        }
+        mTitleBar.ivStatusBar.vbSetViewLayoutParams(h = vbGetStatusBarHeight())
+        mTitleBar.setStatusBarColor(color)
     }
 
     /**
      * 显示Toolbar
+     * @param title 文字 [title]不为空才会显示TitleBar
+     * @param titleColor 文字颜色
+     * @param isShowBottomLine 是否显示Toolbar下面的分割线
+     * @param listener 点击事件
      */
-    protected open fun showTitleBar(visible: Int) {
-        mRootDataBinding.toolbar.visibility = visible
+    protected open fun toolBarTitle(
+        title: String = "",
+        titleColor: Int = Color.BLACK,
+        isShowBottomLine: Boolean = true,
+        listener: View.OnClickListener? = null
+    ) {
+        if (title.isNullOrEmpty()) {
+            mTitleBar.useToolbar(false)
+        } else {
+            mTitleBar.setTitle(title, titleColor, isShowBottomLine, listener)
+            mTitleBar.useToolbar(true)
+        }
+    }
+
+
+    /**
+     * 设置Toolbar左边 (图片,文字只能显示一个,图片优先)
+     * @param resId 图片资源
+     * @param text 文字
+     * @param textColor 文字颜色
+     * @param listener 点击事件
+     */
+    protected open fun toolBarLift(
+        resId: Int = R.mipmap.vb_ic_back_black,
+        text: String = "",
+        textColor: Int = Color.BLACK,
+        listener: View.OnClickListener = View.OnClickListener { mContext.onBackPressed() }
+    ) {
+
+        if (resId == 0) {
+            mTitleBar.setLeft(text, textColor, listener)
+        } else {
+            mTitleBar.setLeft(resId, listener)
+        }
+
+    }
+
+
+    /**
+     * 设置Toolbar右边 (图片,文字只能显示一个,图片优先)
+     * @param resId 图片资源
+     * @param text 文字
+     * @param textColor 文字颜色
+     * @param listener 点击事件
+     */
+    protected open fun toolBarRight(
+        resId: Int = 0,
+        text: String = "",
+        textColor: Int = Color.BLACK,
+        listener: View.OnClickListener? = null
+    ) {
+        if (resId == 0) {
+            mTitleBar.setRight(text, textColor, listener)
+        } else {
+            mTitleBar.setRight(resId, listener)
+        }
+    }
+
+
+    /**
+     * 显示Toolbar
+     */
+    protected open fun showTitleBar(show: Boolean = useTitleBar()) {
+        mTitleBar.useToolbar(show)
     }
 
     /**
      * 设置是否显示Toolbar
      */
-    protected open fun useTitleBar(): Int = View.VISIBLE
+    protected open fun useTitleBar(): Boolean = true
 
     /**
-     * 设置隐藏状态栏(布局需要顶入状态栏的时候使用)
+     * 是否显示状态栏
      */
-    protected open fun useStatusBar(): Boolean = false
+    protected open fun useStatusBar(): Boolean = true
 
     /**
      * 是否addView vb的布局
