@@ -10,9 +10,12 @@
 
     <ImageView
         android:id="@+id/ivEmpty"
+        android:src="@mipmap/vb_iv_data_empty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="10dp"
+        android:visibility="gone"
+        tools:visibility="visible"
         android:adjustViewBounds="true" />
 
     <TextView
@@ -21,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:text="暂无数据"
-        android:textColor="@android:color/black" />
+        android:textColor="#bfbfbf" />
 
 </LinearLayout>
 

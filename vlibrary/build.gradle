@@ -55,9 +55,8 @@ dependencies {
     api "com.alibaba:fastjson:1.2.73"
     api "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2"
     api "com.orhanobut:logger:2.2.0"
-    api "com.scwang.smart:refresh-layout-kernel:2.0.1"
-    api "com.scwang.smart:refresh-header-material:2.0.3"
-    api "com.scwang.smart:refresh-footer-classics:2.0.0-alpha-1"
+    api "com.scwang.smart:refresh-layout-kernel:2.0.3"
+    api "com.scwang.smart:refresh-header-classics:2.0.3"
     api "com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4"
     api "com.github.JavaNoober.BackgroundLibrary:libraryx:1.7.2"//BackgroundLibrary  （通过标签直接生成shape，无需再写shape.xml）
 

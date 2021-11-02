@@ -2,20 +2,16 @@ package com.v.demo
 
 import android.view.View
 import androidx.lifecycle.Observer
-import com.hitomi.tilibrary.style.index.NumberIndexIndicator
-import com.hitomi.tilibrary.transfer.TransferConfig
-import com.hitomi.tilibrary.transfer.Transferee
-import com.v.base.VBApplication
 import com.v.base.VBFragment
-import com.v.base.utils.*
 import com.v.base.utils.ext.*
+import com.v.base.utils.toast
+import com.v.base.utils.vbDp2px
 import com.v.demo.adapter.BannerAdapter
 import com.v.demo.adapter.OneFragmentAdapter
 import com.v.demo.bean.BannerBean
 import com.v.demo.databinding.FragmentOneBinding
 import com.v.demo.databinding.FragmentOneHeaderBinding
 import com.v.demo.model.DemoViewModel
-import com.vansz.glideimageloader.GlideImageLoader
 import com.zhpan.bannerview.BannerViewPager
 import com.zhpan.bannerview.constants.PageStyle
 import com.zhpan.indicator.enums.IndicatorSlideMode
@@ -31,15 +27,26 @@ class OneFragment : VBFragment<FragmentOneBinding, DemoViewModel>() {
 
     private val mAdapter by lazy {
         mDataBinding.recyclerView.vbDivider {
-            setDrawable(R.drawable.shape_divider_horizontal)
+            setDivider(10)
             isStartVisible = true
             isEndVisible = true
-        }.vbGrid(OneFragmentAdapter(), 2) as OneFragmentAdapter
+        }.vbLinear(OneFragmentAdapter()).apply {
+            vbConfig(mDataBinding.refreshLayout,
+                onRefresh = {
+                    page = 1
+                    mViewModel.getList(page)
+                },
+                onLoadMore = {
+                    mViewModel.getList(page)
+                }
+            )
+        } as OneFragmentAdapter
     }
 
     private val mAdapterHeaderView by lazy {
         mContext.vbGetDataBinding<FragmentOneHeaderBinding>(R.layout.fragment_one_header)
     }
+
 
     private val mViewPager by lazy {
         (mAdapterHeaderView.bannerViewPager as BannerViewPager<BannerBean>).apply {
@@ -53,45 +60,26 @@ class OneFragment : VBFragment<FragmentOneBinding, DemoViewModel>() {
     }
 
 
-    private val mTransferee by lazy { Transferee.getDefault(mContext) }
-
-    private fun getTransferConfig(index: Int): TransferConfig {
-        return TransferConfig.build()
-            .setSourceUrlList(mAdapter.getImgList())
-            .setNowThumbnailIndex(index)
-            .setIndexIndicator(NumberIndexIndicator())
-            .setImageLoader(GlideImageLoader.with(VBApplication.getContext()))
-            .enableScrollingWithPageChange(true) // 是否启动列表随着页面的切换而滚动你的列表，默认关闭
-            .bindRecyclerView(
-                mDataBinding.recyclerView,
-                R.id.ivIcon
-            )
-    }
-
-
     override fun initData() {
         mAdapter.setHeaderView(mAdapterHeaderView.root)
         mDataBinding.refreshLayout.autoRefresh()
-        mViewModel.getList(page)
+
     }
 
 
     override fun createObserver() {
-        mViewModel.girlBean.observe(this, Observer {
-            mAdapter.vbLoadData(mDataBinding.refreshLayout,
-                it,
-                page,
-                onRefresh = {
-                    page = 1
-                    mViewModel.getList(page)
-                },
-                onLoadMore = {
-                    page = it
-                    mViewModel.getList(page)
-                },
-                onItemClick = { view: View, i: Int ->
-                    mTransferee.apply(getTransferConfig(i)).show();
-                })
+        mViewModel.homeBean.observe(this, Observer {
+
+            it?.data?.let {
+                mAdapter.vbLoad(it.datas, page, mDataBinding.refreshLayout,
+                    emptyView = vbEmptyView(mContext, listener = View.OnClickListener {
+                        "点击了空布局".toast()
+                    }),
+                    onSuccess = { p ->
+                        page = p
+                    })
+            }
+
         })
 
 

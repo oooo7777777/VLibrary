@@ -1,6 +1,7 @@
 package com.v.demo
 
 import android.Manifest
+import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import com.v.base.VBActivity
@@ -36,6 +37,9 @@ class MainActivity : VBActivity<MainActivityBinding, VBBlankViewModel>() {
             }
         }
 
+    override fun toolBarTitle(title: String, titleColor: Int) {
+        super.toolBarTitle("title", titleColor)
+    }
 
     private val commonNavigator by lazy {
 

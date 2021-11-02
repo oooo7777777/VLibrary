@@ -17,7 +17,7 @@ class BannerAdapter :
         position: Int,
         pageSize: Int
     ) {
-        holder.findViewById<ImageView>(R.id.ivIcon).vbLoad(data.image, 10F)
+        holder.findViewById<ImageView>(R.id.ivIcon).vbLoad(data.imagePath, 10F)
     }
 
     override fun getLayoutId(viewType: Int) = R.layout.fragment_one_header_item

@@ -7,6 +7,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.ScaleAnimation
+import com.v.base.utils.ext.log
 import com.v.base.utils.ext.logE
 import com.v.base.utils.ext.vbInvalidClick
 import kotlin.math.roundToInt
@@ -84,24 +85,14 @@ class ViewClickAnimatorUtil(
 
                     animation.setAnimationListener(object : Animation.AnimationListener {
                         override fun onAnimationStart(paramAnimation: Animation) {
-//                            ("onAnimationStart" ).log()
-//                            if (!isInvalidClick(view, clickTime) && b) {
-//                                onClick(view)
-//                            }
-
+                            dispose()
                         }
 
                         override fun onAnimationRepeat(paramAnimation: Animation) {
-//                            ("onAnimationRepeat" ).log()
                         }
 
                         override fun onAnimationEnd(paramAnimation: Animation) {
-
-//                            ("onAnimationEnd" ).log()
-
-                            if (!view.vbInvalidClick(clickTime) && b) {
-                                onClick(view)
-                            }
+                            dispose()
 
                         }
                     })
@@ -115,5 +106,12 @@ class ViewClickAnimatorUtil(
         }
     }
 
+
+    private fun dispose() {
+        if (!view.vbInvalidClick(clickTime)) {
+            onClick(view)
+        }
+
+    }
 
 }

@@ -27,7 +27,7 @@ class VBHintDialog : VBDialogFragment<VbDialogHintBinding, VBBlankViewModel>(),
     override fun initData() {
 
         mDataBinding.v = this
-        title.isNotEmpty().run {
+        if (!title.isNullOrEmpty()) {
             mDataBinding.tvTitle.text = title
             mDataBinding.tvTitle.visibility = View.VISIBLE
         }

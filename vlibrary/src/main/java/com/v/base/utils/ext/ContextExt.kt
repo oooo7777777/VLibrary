@@ -230,7 +230,7 @@ fun vbCountDownCoroutines(
     total: Long,
     timeMillis: Long = 1000,
     onTick: (Long) -> Unit,
-    onFinish: () -> Unit,
+    onFinish:( () -> Unit)?=null,
     scope: CoroutineScope = GlobalScope
 ): Job {
     return flow {
@@ -241,7 +241,7 @@ fun vbCountDownCoroutines(
         }
 
     }.flowOn(Dispatchers.Default)
-        .onCompletion { onFinish.invoke() }
+        .onCompletion { onFinish?.invoke() }
         .onEach { onTick.invoke(it) }
         .flowOn(Dispatchers.Main)
         .launchIn(scope)

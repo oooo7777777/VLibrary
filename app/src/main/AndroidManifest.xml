@@ -7,12 +7,11 @@
         android:name=".DemoApplication"
         android:allowBackup="true"
         android:label="@string/dm_app_name"
+        android:requestLegacyExternalStorage="true"
         android:networkSecurityConfig="@xml/network_security_config"
         android:supportsRtl="true"
         android:theme="@style/vb_app_theme"
         tools:replace="android:label">
-        <activity android:name=".TestActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"></activity>
         <activity android:name=".NetworkActivity"></activity>
         <activity android:name=".EventBusDemoActivity" />
         <activity android:name=".MainActivity">

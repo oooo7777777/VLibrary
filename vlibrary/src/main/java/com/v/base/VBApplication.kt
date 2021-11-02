@@ -7,7 +7,7 @@ import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterF
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import com.scwang.smart.refresh.footer.ClassicsFooter
-import com.scwang.smart.refresh.header.MaterialHeader
+import com.scwang.smart.refresh.header.ClassicsHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.v.base.net.VBLogInterceptor
 import com.v.base.net.VBNetApi
@@ -28,7 +28,8 @@ abstract class VBApplication : Application() {
 
         private var statusBarColor: Int = 0
 
-        fun getContext(): Context {
+
+        fun getApplication(): Context {
             return context
         }
 
@@ -40,8 +41,7 @@ abstract class VBApplication : Application() {
             return baseUrl
         }
 
-        fun getStatusBarColor():Int
-        {
+        fun getStatusBarColor(): Int {
             return statusBarColor
         }
 
@@ -121,7 +121,7 @@ abstract class VBApplication : Application() {
     private fun initSmartRefreshLayout() {
         //设置全局的Header构建器
         SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, layout ->
-            MaterialHeader(context)
+            ClassicsHeader(context)
         }
 
         //设置全局的Footer构建器

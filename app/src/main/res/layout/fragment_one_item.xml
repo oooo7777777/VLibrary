@@ -6,20 +6,22 @@
 
         <variable
             name="bean"
-            type="com.v.demo.bean.GirlBean" />
+            type="com.v.demo.bean.HomeBean.DatasDTO" />
     </data>
 
     <LinearLayout
+        android:background="@android:color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/ivIcon"
+        <TextView
+            android:singleLine="true"
+            android:padding="20dp"
+            android:textColor="@android:color/black"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
-            android:scaleType="centerCrop"
-            app:vb_img_url="@{bean.url}" />
+            android:layout_height="wrap_content"
+            android:text="@{bean.title}" />
 
     </LinearLayout>
 </layout>

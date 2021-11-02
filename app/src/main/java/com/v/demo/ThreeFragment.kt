@@ -65,9 +65,6 @@ class ThreeFragment : VBFragment<FragmentThreeBinding, DataViewModel>(), View.On
                     }.show(mContext)
             }
 
-            mDataBinding.bt5.id -> {
-                goActivity(TestActivity::class.java)
-            }
 
         }
     }

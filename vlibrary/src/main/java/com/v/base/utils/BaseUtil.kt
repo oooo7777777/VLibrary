@@ -43,7 +43,7 @@ fun Number.vbDp2px(): Int = run {
 
     return TypedValue.applyDimension(
         TypedValue.COMPLEX_UNIT_DIP,
-        this.toFloat(), VBApplication.getContext().resources.displayMetrics
+        this.toFloat(), VBApplication.getApplication().resources.displayMetrics
     ).toInt()
 
 }
@@ -54,7 +54,7 @@ fun Number.vbDp2px(): Int = run {
 fun Number.vbSp2px(): Int = run {
     return TypedValue.applyDimension(
         TypedValue.COMPLEX_UNIT_SP,
-        this.toFloat(), VBApplication.getContext().resources.displayMetrics
+        this.toFloat(), VBApplication.getApplication().resources.displayMetrics
     ).toInt()
 }
 
@@ -62,7 +62,7 @@ fun Number.vbSp2px(): Int = run {
  * px2dp
  */
 fun Int.vbPx2dp(): Int = run {
-    val scale: Float = VBApplication.getContext().resources.displayMetrics.density
+    val scale: Float = VBApplication.getApplication().resources.displayMetrics.density
     return (this / scale + 0.5f).toInt()
 }
 
@@ -70,7 +70,7 @@ fun Int.vbPx2dp(): Int = run {
  * px2sp
  */
 fun Int.vbPx2sp(): Int = run {
-    val fontScale: Float = VBApplication.getContext().resources.displayMetrics.scaledDensity
+    val fontScale: Float = VBApplication.getApplication().resources.displayMetrics.scaledDensity
     return (this / fontScale + 0.5).toInt()
 }
 
@@ -111,9 +111,9 @@ fun vbGetRandomNumber(min: Int, max: Int): Int {
  */
 fun Any.toast(isLong: Boolean = false) {
     if (isLong)
-        Toast.makeText(VBApplication.getContext(), this.toString(), Toast.LENGTH_LONG).show()
+        Toast.makeText(VBApplication.getApplication(), this.toString(), Toast.LENGTH_LONG).show()
     else
-        Toast.makeText(VBApplication.getContext(), this.toString(), Toast.LENGTH_SHORT).show()
+        Toast.makeText(VBApplication.getApplication(), this.toString(), Toast.LENGTH_SHORT).show()
 }
 
 /**

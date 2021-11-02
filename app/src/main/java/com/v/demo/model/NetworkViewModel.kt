@@ -47,7 +47,7 @@ class NetworkViewModel : VBViewModel() {
         //此处返回得数据是泛型,即你传入得是什么类型,得到得就是什么类型
         vbRequest({
             delay(3000)
-            apiBase.get("banners")
+            apiBase.get("https://www.wanandroid.com/article/list/1/json")
         },
             resultState = string,
             dialog = true,

@@ -1,7 +1,7 @@
 package com.v.demo.net
 
 import com.v.demo.bean.BannerBean
-import com.v.demo.bean.GirlBean
+import com.v.demo.bean.HomeBean
 import retrofit2.http.GET
 import retrofit2.http.Path
 
@@ -13,14 +13,14 @@ import retrofit2.http.Path
 interface NetworkApi {
 
     companion object {
-        const val SERVER_URL = "https://gank.io/api/v2/"
+        const val SERVER_URL = "https://www.wanandroid.com/"
     }
 
-    @GET("banners")
+    @GET("banner/json")
     suspend fun getBanner(): ApiResponse<ArrayList<BannerBean>>
 
 
-    @GET("data/category/Girl/type/Girl/page/{page}/count/20")
-    suspend fun getGirlBean(@Path("page") page: Int): ApiResponse<ArrayList<GirlBean>>
+    @GET("article/list/{page}/json")
+    suspend fun getGirlBean(@Path("page") page: Int): ApiResponse<HomeBean>
 
 }

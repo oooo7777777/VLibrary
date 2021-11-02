@@ -12,6 +12,7 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.v.base.R
 import com.v.base.utils.ext.vbCopyToClipboard
+import com.v.base.utils.ext.vbInvalidClick
 import com.v.base.utils.ext.vbOnClickAnimator
 
 
@@ -111,6 +112,10 @@ fun View.vbClick(onClickListener: View.OnClickListener?, clickTime: Long) {
         vbOnClickAnimator(if (clickTime <= 0) 500L else clickTime) {
             onClickListener.onClick(it)
         }
+
+//        if (!this.vbInvalidClick()) {
+//            onClickListener.onClick(this)
+//        }
     }
 
 }

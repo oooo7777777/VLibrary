@@ -58,7 +58,6 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
         //注册BackgroundLibrary 可以直接在xml里面写shape
         BackgroundLibrary.inject2(this)
         super.onCreate(savedInstanceState)
-        //设置屏幕竖向
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         mContext = this
         //获取base DataBinding

@@ -31,7 +31,7 @@ class DemoApplication : VBApplication() {
      * 传入baseUrl
      */
     override fun baseUrl(): String {
-        return "https://gank.io/api/v2/"
+        return "https://www.wanandroid.com/"
     }
 
     /**
