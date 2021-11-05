@@ -7,20 +7,20 @@ import java.util.*
 /**
  * 获取当前毫秒时间戳
  */
-fun vbNowTimeMills(): Long {
+fun vbTimeMillsNow(): Long {
     return System.currentTimeMillis()
 }
 
 /**
  * 获取当前时间戳转为时间字符串
  */
-fun vbNowTimeString(): String {
-    return System.currentTimeMillis().vbFormatTime()
+fun vbTimeStringNow(): String {
+    return System.currentTimeMillis().vbTime()
 }
 
 /**
  * 将时间戳转为时间字符串*/
-fun Long.vbFormatTime(pattern: String = "yyyy-MM-dd HH:mm:ss"): String =
+fun Long.vbTime(pattern: String = "yyyy-MM-dd HH:mm:ss"): String =
     run {
         SimpleDateFormat(pattern, Locale.getDefault())
             .format(Date(this))
@@ -30,7 +30,7 @@ fun Long.vbFormatTime(pattern: String = "yyyy-MM-dd HH:mm:ss"): String =
 /**
  * 将毫秒数换算成x天x时x分x秒x毫秒
  */
-fun Long.vbFormatTimeYMD(): String =
+fun Long.vbTimeYmd(): String =
     run {
         val ss = 1000
         val mi = ss * 60
@@ -58,7 +58,7 @@ fun Long.vbFormatTimeYMD(): String =
 /**
  * 友好时间
  */
-fun Long.vbFormatTimeFriendly(): String =
+fun Long.vbTimeFriendly(): String =
     run {
         //获取time距离当前的秒数
         val ct = ((System.currentTimeMillis() - this) / 1000).toInt()
@@ -85,13 +85,16 @@ fun Long.vbFormatTimeFriendly(): String =
 
 
 /**
- * 秒转换成时间
+ * 秒转换成时分
  */
-fun Long.vbFormatHHMM(time: Long): String {
-    if (time <= 0) return "00:00"
-    val minute = time / 60
-    val second = time % 60
-    val min = if (minute < 10) "0$minute" else minute.toString() + ""
-    val sec = if (second < 10) "0$second" else second.toString() + ""
-    return "$min:$sec"
+fun Long.vbbTimeHHmm(): String {
+    run {
+        if (this <= 0) return "00:00"
+        val minute = this / 60
+        val second = this % 60
+        val min = if (minute < 10) "0$minute" else minute.toString() + ""
+        val sec = if (second < 10) "0$second" else second.toString() + ""
+        return "$min:$sec"
+    }
+
 }

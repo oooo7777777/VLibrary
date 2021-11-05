@@ -71,8 +71,6 @@ fun RecyclerView.vbDivider(
  * @param onItemLongClick item的长按
  * @param onItemChildClick itemChild的点击
  * @param onItemChildLongClick itemChild的长按
- * @param itemClickAnimator item的长按是否需要加入动画
- * @param itemChildClickAnimator itemChild的点击是否需要加入动画
  */
 fun <T> BaseQuickAdapter<T, *>.vbConfig(
     refreshLayout: SmartRefreshLayout,
@@ -81,9 +79,7 @@ fun <T> BaseQuickAdapter<T, *>.vbConfig(
     onItemClick: ((view: View, position: Int) -> Unit)? = null,
     onItemLongClick: ((view: View, position: Int) -> Unit)? = null,
     onItemChildClick: ((view: View, position: Int) -> Unit)? = null,
-    onItemChildLongClick: ((view: View, position: Int) -> Unit)? = null,
-    itemClickAnimator: Boolean = true,
-    itemChildClickAnimator: Boolean = true
+    onItemChildLongClick: ((view: View, position: Int) -> Unit)? = null
 
 ) {
 
@@ -109,16 +105,7 @@ fun <T> BaseQuickAdapter<T, *>.vbConfig(
 
     if (onItemClick != null) {
         setOnItemClickListener { _, view, position ->
-            if (itemClickAnimator) {
-                view.vbOnClickAnimator {
-                    onItemClick.invoke(view, position)
-                }
-            } else {
-                if (!view.vbInvalidClick()) {
-                    onItemClick.invoke(view, position)
-                }
-            }
-
+            onItemClick.invoke(view, position)
         }
     }
 
@@ -133,16 +120,7 @@ fun <T> BaseQuickAdapter<T, *>.vbConfig(
 
     if (onItemChildClick != null) {
         setOnItemChildClickListener { _, view, position ->
-            if (itemChildClickAnimator) {
-                view.vbOnClickAnimator {
-                    onItemChildClick.invoke(view, position)
-                }
-            } else {
-                if (!view.vbInvalidClick()) {
-                    onItemChildClick.invoke(view, position)
-                }
-            }
-
+            onItemChildClick.invoke(view, position)
         }
     }
 
