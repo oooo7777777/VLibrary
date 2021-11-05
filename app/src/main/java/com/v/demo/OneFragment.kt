@@ -9,6 +9,7 @@ import com.v.base.utils.vbDp2px
 import com.v.demo.adapter.BannerAdapter
 import com.v.demo.adapter.OneFragmentAdapter
 import com.v.demo.bean.BannerBean
+import com.v.demo.bean.HomeBean
 import com.v.demo.databinding.FragmentOneBinding
 import com.v.demo.databinding.FragmentOneHeaderBinding
 import com.v.demo.model.DemoViewModel
@@ -38,6 +39,11 @@ class OneFragment : VBFragment<FragmentOneBinding, DemoViewModel>() {
                 },
                 onLoadMore = {
                     mViewModel.getList(page)
+                },
+                onItemClick = { view, position ->
+
+                    var item = data[position] as HomeBean.DatasDTO
+                    item.title.toast()
                 }
             )
         } as OneFragmentAdapter

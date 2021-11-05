@@ -219,3 +219,11 @@ fun TextView.vbTextLine(boolean: Boolean) = run {
 }
 
 
+/**
+ * 设置文字 不管类型全部转换成string
+ */
+@BindingAdapter(value = ["vb_text_format"], requireAll = false)
+fun TextView.vbTextFormat(any: Any) = run {
+    this.text = any.toString()
+}
+

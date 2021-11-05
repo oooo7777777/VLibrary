@@ -74,6 +74,11 @@ class VBHintDialog : VBDialogFragment<VbDialogHintBinding, VBBlankViewModel>(),
         return this
     }
 
+    fun update(): VBHintDialog {
+        initData()
+        return this
+    }
+
 
     /**
      * 设置按钮文字内容

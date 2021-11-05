@@ -83,3 +83,15 @@ fun Long.vbFormatTimeFriendly(): String =
         } else (ct / 31104000).toString() + "年前"
     }
 
+
+/**
+ * 秒转换成时间
+ */
+fun Long.vbFormatHHMM(time: Long): String {
+    if (time <= 0) return "00:00"
+    val minute = time / 60
+    val second = time % 60
+    val min = if (minute < 10) "0$minute" else minute.toString() + ""
+    val sec = if (second < 10) "0$second" else second.toString() + ""
+    return "$min:$sec"
+}
