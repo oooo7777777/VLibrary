@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.v.base.R
@@ -24,6 +25,7 @@ import java.lang.reflect.ParameterizedType
 abstract class VBDialogFragment<VB : ViewDataBinding, VM : VBViewModel> : DialogFragment() {
     lateinit var mContext: Context
 
+    private var isShow: Boolean = false
     protected lateinit var mDataBinding: VB
 
     private val loadDialog by lazy {
@@ -155,10 +157,24 @@ abstract class VBDialogFragment<VB : ViewDataBinding, VM : VBViewModel> : Dialog
 
     fun show(context: Context) {
         if (context is AppCompatActivity) {
-            super.show(context.supportFragmentManager, context.componentName.toString())
+            show(context.supportFragmentManager, context.componentName.toString())
         } else if (context is Fragment) {
-            super.show(context.childFragmentManager, javaClass.name)
+            show(context.childFragmentManager, javaClass.name)
         }
+    }
+
+    fun isShow(): Boolean {
+        return isShow
+    }
+
+    override fun show(manager: FragmentManager, tag: String?) {
+        super.show(manager, tag)
+        isShow = true
+    }
+
+    override fun dismiss() {
+        super.dismiss()
+        isShow = false
     }
 
     fun noCancellation(): VBDialogFragment<*, *> {
