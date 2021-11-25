@@ -28,16 +28,8 @@
             android:minHeight="200dp"
             android:textColor="@android:color/white"
             android:gravity="center"
-            android:text="ViewModel 数据共享"
             android:layout_height="wrap_content"/>
 
-        <Button
-            android:id="@+id/bt0"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="数据共享"
-            android:textAllCaps="false"
-            app:vb_click="@{v}" />
 
         <Button
             android:id="@+id/bt1"

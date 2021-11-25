@@ -59,6 +59,5 @@ dependencies {
     implementation "com.github.Hitomis.transferee:Transferee:1.6.1"
     implementation "com.github.Hitomis.transferee:GlideImageLoader:1.6.1"
     implementation "com.github.zhpanvip:BannerViewPager:3.5.0"
-    implementation "androidx.activity:activity:1.2.0-beta01"
-    implementation "androidx.fragment:fragment:1.3.0-beta01"
+
 }

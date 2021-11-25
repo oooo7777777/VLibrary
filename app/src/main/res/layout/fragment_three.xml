@@ -28,32 +28,6 @@
         android:orientation="vertical">
 
 
-        <TextView
-            android:id="@+id/tvContent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/black"
-            android:gravity="center"
-            android:minHeight="200dp"
-            android:text="@{content}"
-            android:textColor="@android:color/white" />
-
-        <Button
-            android:id="@+id/bt0"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="数据共享"
-            android:textAllCaps="false"
-            app:vb_click="@{v}" />
-
-        <Button
-            android:id="@+id/bt1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Event Bus"
-            android:textAllCaps="false"
-            app:vb_click="@{v}" />
-
         <Button
             android:id="@+id/bt2"
             android:layout_width="match_parent"

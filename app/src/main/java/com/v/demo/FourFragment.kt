@@ -2,10 +2,10 @@ package com.v.demo
 
 import android.view.View
 import androidx.lifecycle.lifecycleScope
+import com.v.base.VBBlankViewModel
 import com.v.base.VBFragment
 import com.v.base.utils.ext.vbCountDownCoroutines
 import com.v.demo.databinding.FragmentFourBinding
-import com.v.demo.model.DataViewModel
 import kotlinx.coroutines.Job
 
 /**
@@ -13,7 +13,7 @@ import kotlinx.coroutines.Job
  * desc    :
  * time    : 2021/1/11 15:44
  */
-class FourFragment : VBFragment<FragmentFourBinding, DataViewModel>(), View.OnClickListener {
+class FourFragment : VBFragment<FragmentFourBinding, VBBlankViewModel>(), View.OnClickListener {
 
     private var job: Job? = null
     private var countDown = 5L
@@ -25,17 +25,12 @@ class FourFragment : VBFragment<FragmentFourBinding, DataViewModel>(), View.OnCl
 
     override fun createObserver() {
 
-        mViewModel.content.observe(this, androidx.lifecycle.Observer {
-            mDataBinding.tvContent.text = it
-        })
 
     }
 
     override fun onClick(v: View) {
         when (v.id) {
-            mDataBinding.bt0.id -> {
-                mViewModel.setContent("我是FourFragment的数据~~~~~~~~~")
-            }
+
             mDataBinding.bt1.id -> {
                 countDown = 5
                 countDownStart()

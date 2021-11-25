@@ -29,7 +29,7 @@ abstract class VBApplication : Application() {
         private var statusBarColor: Int = 0
 
 
-        fun getApplication(): Context {
+        fun getApplication(): Application {
             return context
         }
 
