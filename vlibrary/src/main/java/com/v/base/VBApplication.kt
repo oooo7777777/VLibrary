@@ -23,6 +23,8 @@ abstract class VBApplication : Application() {
     companion object {
         private lateinit var context: VBApplication
 
+        private var isNetToast = true
+
         private var baseUrl: String? = null
         private var builder: Retrofit.Builder? = null
 
@@ -43,6 +45,10 @@ abstract class VBApplication : Application() {
 
         fun getStatusBarColor(): Int {
             return statusBarColor
+        }
+
+        fun isNetToast(): Boolean {
+            return isNetToast
         }
 
         //直接使用base库里面的网络请求
@@ -91,11 +97,17 @@ abstract class VBApplication : Application() {
      */
     protected open fun isDebug(): Boolean = true
 
+    /**
+     * 是否开启网络请求错误 弹出toast
+     */
+    protected open fun isNetToast(): Boolean = true
 
     override fun onCreate() {
         super.onCreate()
         context = this
         statusBarColor = statusBarColor()
+
+        isNetToast = isNetToast()
 
         if (isDebug()) {
             Logger.addLogAdapter(AndroidLogAdapter())

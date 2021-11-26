@@ -29,13 +29,15 @@ abstract class VBViewModel : ViewModel() {
      * @param error 失败回调
      * @param code 返回的code
      * @param dialog 是否显示请求框
+     * @param isToast 网络请求失败 是否显示toast
      */
     fun <T> vbRequest(
         block: suspend () -> VBResponse<T>,
         success: (T) -> Unit,
         error: (VBAppException) -> Unit = {},
         code: (Int) -> Unit = {},
-        dialog: Boolean = false
+        dialog: Boolean = false,
+        isToast: Boolean = true
     ): Job {
         return viewModelScope.launch {
             runCatching {
@@ -49,11 +51,11 @@ abstract class VBViewModel : ViewModel() {
                 runCatching {
                     executeResponse(it) { t -> success(t) }
                 }.onFailure { e ->
-                    error(VBExceptionHandle.handleException(e))
+                    error(VBExceptionHandle.handleException(e, isToast))
                 }
             }.onFailure { e ->
                 loadingChange.dismissDialog.postValue(false)
-                error(VBExceptionHandle.handleException(e))
+                error(VBExceptionHandle.handleException(e, isToast))
             }
         }
     }
@@ -64,12 +66,14 @@ abstract class VBViewModel : ViewModel() {
      * @param success 成功回调
      * @param error 失败回调
      * @param dialog 是否显示请求框
+     * @param isToast 网络请求失败 是否显示toast
      */
     fun <T> vbRequestDefault(
         block: suspend () -> T,
         success: (T) -> Unit,
         error: (VBAppException) -> Unit = {},
-        dialog: Boolean = false
+        dialog: Boolean = false,
+        isToast: Boolean = true
     ): Job {
         return viewModelScope.launch {
             runCatching {
@@ -82,7 +86,7 @@ abstract class VBViewModel : ViewModel() {
                 success(it)
             }.onFailure { e ->
                 loadingChange.dismissDialog.postValue(false)
-                error(VBExceptionHandle.handleException(e))
+                error(VBExceptionHandle.handleException(e,isToast))
             }
         }
     }
@@ -94,12 +98,14 @@ abstract class VBViewModel : ViewModel() {
      * @param resultState MutableLiveData<T>
      * @param error 失败回调
      * @param dialog 是否显示请求框
+     * @param isToast 网络请求失败 是否显示toast
      */
     inline fun <reified T> vbRequest(
         crossinline block: suspend CoroutineScope.() -> Any,
         resultState: MutableLiveData<T>,
         crossinline error: (VBAppException) -> Unit = {},
-        dialog: Boolean = false
+        dialog: Boolean = false,
+        isToast: Boolean = true
     ): Job {
         return viewModelScope.launch {
             runCatching {
@@ -108,16 +114,16 @@ abstract class VBViewModel : ViewModel() {
                 }
                 block()
             }.onSuccess {
+                loadingChange.dismissDialog.postValue(false)
                 runCatching {
                     val type: Type = object : TypeReference<T>() {}.type
                     resultState.postValue(it.toString().vbToBean(type) as T)
-                    loadingChange.dismissDialog.postValue(false)
                 }.onFailure { e ->
-                    error(VBExceptionHandle.handleException(e))
+                    error(VBExceptionHandle.handleException(e,isToast))
                 }
             }.onFailure { e ->
                 loadingChange.dismissDialog.postValue(false)
-                error(VBExceptionHandle.handleException(e))
+                error(VBExceptionHandle.handleException(e,isToast))
             }
         }
     }
@@ -126,7 +132,7 @@ abstract class VBViewModel : ViewModel() {
     /**
      * 原始的数据处理
      */
-    private suspend fun <T> executeResponse(
+    suspend fun <T> executeResponse(
         response: VBResponse<T>,
         success: suspend CoroutineScope.(T) -> Unit
     ) {

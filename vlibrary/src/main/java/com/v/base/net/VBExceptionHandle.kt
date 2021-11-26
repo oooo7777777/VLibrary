@@ -1,7 +1,9 @@
 package com.v.base.net
 
+import com.v.base.VBApplication
 import com.v.base.annotaion.VBError
 import com.v.base.utils.ext.logE
+import com.v.base.utils.toast
 import org.apache.http.conn.ConnectTimeoutException
 import org.json.JSONException
 import retrofit2.HttpException
@@ -15,7 +17,7 @@ import java.net.ConnectException
  */
 object VBExceptionHandle {
 
-    fun handleException(e: Throwable): VBAppException {
+    fun handleException(e: Throwable,isToast :Boolean): VBAppException {
         val ex: VBAppException
         e.let {
             when (it) {
@@ -49,6 +51,9 @@ object VBExceptionHandle {
             }
         }
         (ex.toString()).logE()
+        if (VBApplication.isNetToast() || isToast) {
+            (ex.errorMsg).toast()
+        }
         return ex
     }
 }
