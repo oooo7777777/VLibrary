@@ -54,7 +54,6 @@ android {
 dependencies {
     implementation project(':vlibrary')
 
-    implementation "com.azhon:appupdateX:3.0.3"
     implementation "com.github.hackware1993:MagicIndicator:1.7.0"
     implementation "com.github.Hitomis.transferee:Transferee:1.6.1"
     implementation "com.github.Hitomis.transferee:GlideImageLoader:1.6.1"

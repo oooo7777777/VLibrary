@@ -1,13 +1,13 @@
 package com.v.base.utils
 
 
+import android.annotation.SuppressLint
 import android.graphics.Rect
 import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.ScaleAnimation
-import com.v.base.utils.ext.log
 import com.v.base.utils.ext.logE
 import com.v.base.utils.ext.vbInvalidClick
 import kotlin.math.roundToInt
@@ -39,9 +39,10 @@ class ViewClickAnimatorUtil(
         ).roundToInt().toFloat() / view.width.toFloat()
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun addTouchListener() {
 
-        view.setOnTouchListener { v, event ->
+        view.setOnTouchListener { _, event ->
 
             var animation: ScaleAnimation? = null
             val viewRect = Rect()
@@ -74,11 +75,11 @@ class ViewClickAnimatorUtil(
     private fun clearAnimation(scaleAnimation: ScaleAnimation?, b: Boolean, up: Boolean) {
         try {
 
-            var animation = scaleAnimation
             this.view.isPressed = false
             if (this.down) {
                 this.down = false
-                animation =
+
+                val  animation =
                     ScaleAnimation(this.getF(), 1.0f, this.getF(), 1.0f, 1, 0.5f, 1, 0.5f)
                 animation.duration = timeAnim
                 if (up) {
@@ -97,9 +98,10 @@ class ViewClickAnimatorUtil(
                         }
                     })
                 }
+                this.view.startAnimation(animation)
             }
 
-            this.view.startAnimation(animation)
+
         } catch (e: Exception) {
             e.printStackTrace()
             e.toString().logE()

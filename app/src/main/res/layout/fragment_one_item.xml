@@ -6,7 +6,7 @@
 
         <variable
             name="bean"
-            type="com.v.demo.bean.HomeBean.DatasDTO" />
+            type="com.v.demo.bean.HomeBean.Data" />
     </data>
 
     <LinearLayout

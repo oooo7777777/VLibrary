@@ -42,7 +42,7 @@ class OneFragment : VBFragment<FragmentOneBinding, DemoViewModel>() {
                 },
                 onItemClick = { view, position ->
 
-                    var item = data[position] as HomeBean.DatasDTO
+                    var item = data[position] as HomeBean.Data
                     item.title.toast()
                 }
             )
