@@ -10,13 +10,9 @@ interface VBNetApi {
     @GET
     suspend fun get(@Url url: String, @QueryMap map: Map<String, @JvmSuppressWildcards Any>): String
 
-
     @POST
     suspend fun post(@Url url: String): String
 
-    @FormUrlEncoded
     @POST
-    suspend fun post(@Url url: String,  @QueryMap map: Map<String, @JvmSuppressWildcards Any>): String
-
-
+    suspend fun post(@Url Path: String, @Body map: Map<String, @JvmSuppressWildcards Any>): String
 }
