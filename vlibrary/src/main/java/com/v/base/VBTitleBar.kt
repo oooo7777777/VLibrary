@@ -65,6 +65,11 @@ class VBTitleBar @JvmOverloads constructor(
 
     fun useToolbar(show: Boolean) {
         toolbar.visibility = if (show) View.VISIBLE else View.GONE
+        ivLine.visibility = if (show) View.VISIBLE else View.GONE
+    }
+
+    fun useLine(show: Boolean) {
+        ivLine.visibility = if (show) View.VISIBLE else View.GONE
     }
 
     fun useStatusBar(show: Boolean) {
@@ -192,9 +197,8 @@ class VBTitleBar @JvmOverloads constructor(
         return tvRight
     }
 
-    fun getRightImageView(): ImageView {
-        return ivRight
+    fun getLine(): ImageView {
+        return ivLine
     }
-
 
 }

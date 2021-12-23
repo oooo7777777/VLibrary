@@ -94,6 +94,8 @@
     </androidx.appcompat.widget.Toolbar>
 
     <ImageView
+        tools:visibility="visible"
+        android:visibility="gone"
         android:id="@+id/ivLine"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"

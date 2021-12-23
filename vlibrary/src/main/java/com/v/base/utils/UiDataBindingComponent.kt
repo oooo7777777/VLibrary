@@ -112,10 +112,6 @@ fun View.vbClick(onClickListener: View.OnClickListener?, clickTime: Long) {
         vbOnClickAnimator(if (clickTime <= 0) 500L else clickTime) {
             onClickListener.onClick(it)
         }
-
-//        if (!this.vbInvalidClick()) {
-//            onClickListener.onClick(this)
-//        }
     }
 
 }
@@ -213,9 +209,18 @@ fun View.vbViewGone(text: String?) {
  * 设置文字中间横线
  */
 @BindingAdapter(value = ["vb_text_line"], requireAll = false)
-fun TextView.vbTextLine(boolean: Boolean) = run {
+fun TextView.vbTextCenterLine(boolean: Boolean) = run {
     this.paint.flags = Paint.STRIKE_THRU_TEXT_FLAG //中间横线
     this.paint.isAntiAlias = true
+}
+
+/**
+ * 设置文字下划线
+ */
+@BindingAdapter(value = ["vb_text_line_bottom"], requireAll = false)
+fun TextView.vbTextLineBottom(boolean: Boolean) = run {
+    this.paint.flags = Paint.UNDERLINE_TEXT_FLAG //下划线
+    this.paint.isAntiAlias = true//抗锯齿
 }
 
 
