@@ -208,7 +208,7 @@ fun View.vbViewGone(text: String?) {
 /**
  * 设置文字中间横线
  */
-@BindingAdapter(value = ["vb_text_line"], requireAll = false)
+@BindingAdapter(value = ["vb_text_line_center"], requireAll = false)
 fun TextView.vbTextCenterLine(boolean: Boolean) = run {
     this.paint.flags = Paint.STRIKE_THRU_TEXT_FLAG //中间横线
     this.paint.isAntiAlias = true
@@ -228,7 +228,9 @@ fun TextView.vbTextLineBottom(boolean: Boolean) = run {
  * 设置文字 不管类型全部转换成string
  */
 @BindingAdapter(value = ["vb_text_format"], requireAll = false)
-fun TextView.vbTextFormat(any: Any) = run {
-    this.text = any.toString()
+fun TextView.vbTextFormat(any: Any?) = run {
+    any?.run {
+        text = this.toString()
+    }
 }
 

@@ -1,5 +1,7 @@
 package com.v.base.net
 
+import com.v.base.R
+import com.v.base.VBApplication
 import com.v.base.annotaion.VBError
 
 
@@ -17,7 +19,7 @@ class VBAppException : Exception {
     constructor(errCode: Int, error: String?, errorLog: String? = "") : super(error) {
 
         this.errorMsg = if (error.isNullOrEmpty()) {
-            "请求失败，请稍后再试"
+            VBApplication.getApplication().getString(R.string.vb_string_error_941000)
         } else {
             error.toString()
         }

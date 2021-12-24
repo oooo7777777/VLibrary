@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="暂无数据"
+        android:text="@string/vb_string_temporarily_no_data"
         android:textColor="#bfbfbf" />
 
 </LinearLayout>

@@ -38,7 +38,7 @@
                     android:paddingTop="15dp"
                     android:paddingRight="15dp"
                     android:singleLine="true"
-                    android:text="提示"
+                    android:text="@string/vb_string_hint"
                     android:textColor="#616161"
                     android:textSize="14.5sp"
                     android:visibility="gone"
@@ -54,7 +54,7 @@
                     android:minHeight="120dp"
                     android:padding="15dp"
                     android:scrollbars="vertical"
-                    android:text="温馨提示"
+                    tools:text="温馨提示"
                     android:textColor="#000000"
                     android:textSize="14.5sp" />
 
@@ -76,7 +76,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:padding="15dp"
-                        android:text="取消"
+                        android:text="@string/vb_string_cancel"
                         android:textColor="#999999"
                         android:textSize="12.5sp"
                         android:visibility="gone"
@@ -96,7 +96,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:padding="15dp"
-                        android:text="确定"
+                        android:text="@string/vb_string_confirm"
                         android:textColor="#FF5369"
                         android:textSize="12.5sp"
                         app:vb_click="@{v}" />

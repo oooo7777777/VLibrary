@@ -211,7 +211,7 @@ fun Any.vbSaveLocality(context: Context) = run {
                 )
             }
             else -> {
-                throw IllegalStateException("保存得内容仅限制于View,Bitmap,String")
+                throw IllegalStateException(context.getString(R.string.vb_string_save_locality))
             }
         }
         Looper.loop()
@@ -277,11 +277,12 @@ private fun saveImageToGallery(context: Context, bmp: Bitmap) {
                 Uri.parse("file://" + file.path)
             )
         )
-        "图片已保存到本地相册".toast()
+        (context.getString(R.string.vb_string_save_locality_success)).toast()
     } catch (e: java.lang.Exception) {
         e.logE()
         e.printStackTrace()
-        "图片保存失败".toast()
+        (context.getString(R.string.vb_string_save_locality_error)).toast()
+
     }
 
 
