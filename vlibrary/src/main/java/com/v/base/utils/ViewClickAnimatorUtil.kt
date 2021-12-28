@@ -31,8 +31,7 @@ class ViewClickAnimatorUtil(
 ) : LifecycleObserver {
     private var down = false
     private val timeAnim = 150L
-    private val animation =
-        ScaleAnimation(this.getF(), 1.0f, this.getF(), 1.0f, 1, 0.5f, 1, 0.5f)
+    private var mAnimation: ScaleAnimation? = null
 
     init {
         addTouchListener()
@@ -87,7 +86,9 @@ class ViewClickAnimatorUtil(
             if (this.down) {
                 this.down = false
 
-
+                val animation =
+                    ScaleAnimation(this.getF(), 1.0f, this.getF(), 1.0f, 1, 0.5f, 1, 0.5f)
+                this.mAnimation = animation
                 animation.duration = timeAnim
                 if (up) {
 
@@ -117,7 +118,6 @@ class ViewClickAnimatorUtil(
 
     private fun dispose() {
         if (!view.vbInvalidClick(clickTime)) {
-            "dispose".log()
             onClick(view)
         }
 
@@ -126,7 +126,7 @@ class ViewClickAnimatorUtil(
 
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
     fun onPause() {
-        animation.cancel()
+        mAnimation?.cancel()
     }
 
 
