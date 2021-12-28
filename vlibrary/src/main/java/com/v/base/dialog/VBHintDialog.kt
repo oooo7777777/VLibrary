@@ -3,6 +3,7 @@ package com.v.base.dialog
 import android.graphics.Color
 import android.view.Gravity
 import android.view.View
+import androidx.databinding.ViewDataBinding
 import com.v.base.VBBlankViewModel
 import com.v.base.databinding.VbDialogHintBinding
 
@@ -16,6 +17,9 @@ class VBHintDialog : VBDialogFragment<VbDialogHintBinding, VBBlankViewModel>(),
     View.OnClickListener {
 
     private var title: String = ""
+    private var titleSize: Float = 14.5f
+    private var titleColor: Int = Color.parseColor("#616161")
+
     private var content: String = ""
     private var contentGravity: Int = Gravity.CENTER
     private var btTexts = ArrayList<String>()
@@ -23,35 +27,41 @@ class VBHintDialog : VBDialogFragment<VbDialogHintBinding, VBBlankViewModel>(),
 
     private var listener: ((hintDialog: VBHintDialog, position: Int) -> Unit)? = null
 
+    private var listenerDataBinding: ((hintDialog: VBHintDialog, dataBinding: VbDialogHintBinding) -> Unit)? =
+        null
+
 
     override fun initData() {
 
-        mDataBinding.v = this
-        if (!title.isNullOrEmpty()) {
-            mDataBinding.tvTitle.text = title
-            mDataBinding.tvTitle.visibility = View.VISIBLE
+        if (listenerDataBinding == null) {
+            mDataBinding.v = this
+            if (!title.isNullOrEmpty()) {
+                mDataBinding.tvTitle.text = title
+                mDataBinding.tvTitle.visibility = View.VISIBLE
+            }
+
+            mDataBinding.tvContent.text = content
+            mDataBinding.tvContent.gravity = contentGravity
+
+            if (btTexts.size == 1) {
+                mDataBinding.tvRight.text = btTexts[0]
+            } else if (btTexts.size == 2) {
+                mDataBinding.baseViewWire.visibility = View.VISIBLE
+                mDataBinding.tvLeft.visibility = View.VISIBLE
+
+                mDataBinding.tvLeft.text = btTexts[0]
+                mDataBinding.tvRight.text = btTexts[1]
+            }
+
+            if (btTextColors.size == 1) {
+                mDataBinding.tvLeft.setTextColor(Color.parseColor(btTextColors[0]))
+            } else if (btTextColors.size == 2) {
+                mDataBinding.tvLeft.setTextColor(Color.parseColor(btTextColors[0]))
+                mDataBinding.tvRight.setTextColor(Color.parseColor(btTextColors[1]))
+            }
+        } else {
+            listenerDataBinding?.invoke(this, mDataBinding)
         }
-
-        mDataBinding.tvContent.text = content
-        mDataBinding.tvContent.gravity = contentGravity
-
-        if (btTexts.size == 1) {
-            mDataBinding.tvRight.text = btTexts[0]
-        } else if (btTexts.size == 2) {
-            mDataBinding.baseViewWire.visibility = View.VISIBLE
-            mDataBinding.tvLeft.visibility = View.VISIBLE
-
-            mDataBinding.tvLeft.text = btTexts[0]
-            mDataBinding.tvRight.text = btTexts[1]
-        }
-
-        if (btTextColors.size == 1) {
-            mDataBinding.tvLeft.setTextColor(Color.parseColor(btTextColors[0]))
-        } else if (btTextColors.size == 2) {
-            mDataBinding.tvLeft.setTextColor(Color.parseColor(btTextColors[0]))
-            mDataBinding.tvRight.setTextColor(Color.parseColor(btTextColors[1]))
-        }
-
     }
 
     override fun createObserver() {
@@ -71,6 +81,11 @@ class VBHintDialog : VBDialogFragment<VbDialogHintBinding, VBBlankViewModel>(),
 
     fun setClickListener(listener: ((hintDialog: VBHintDialog, position: Int) -> Unit)): VBHintDialog {
         this.listener = listener
+        return this
+    }
+
+    fun setDataBindingListener(listenerDataBinding: ((hintDialog: VBHintDialog,dataBinding: VbDialogHintBinding) -> Unit)): VBHintDialog {
+        this.listenerDataBinding = listenerDataBinding
         return this
     }
 

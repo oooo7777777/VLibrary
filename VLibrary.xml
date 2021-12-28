@@ -95,7 +95,13 @@
       <option name="XML" value="true" />
     </context>
   </template>
-  <template name="vb_text_line" value="app:vb_text_line=&quot;$value$&quot;" description="设置文字中间横线" toReformat="true" toShortenFQNames="true">
+  <template name="vb_text_line_center" value="app:vb_text_line_center=&quot;$value$&quot;" description="设置文字中间横线" toReformat="true" toShortenFQNames="true">
+    <variable name="value" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="XML" value="true" />
+    </context>
+  </template>
+  <template name="vb_text_line_bottom" value="app:vb_text_line_bottom=&quot;$value$&quot;" description="设置文字下边横线" toReformat="true" toShortenFQNames="true">
     <variable name="value" expression="" defaultValue="" alwaysStopAt="true" />
     <context>
       <option name="XML" value="true" />

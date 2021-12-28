@@ -1,10 +1,7 @@
 package com.v.base.utils.ext
 
 import android.app.Activity
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
-import android.content.Intent
+import android.content.*
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -20,6 +17,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleOwner
 import com.v.base.VBViewModel
 import com.v.base.utils.DeviceIdUtil
 import com.v.base.utils.toast
@@ -259,3 +257,19 @@ inline fun <reified T : Any> T.vbDescription() = this.javaClass.declaredFields
     }
     .joinToString(separator = ";")
 
+
+/**
+ * 获取Lifecycle
+ */
+fun Context.lifecycleOwner(): LifecycleOwner? {
+    var curContext = this
+    var maxDepth = 20
+    while (maxDepth-- > 0 && curContext !is LifecycleOwner) {
+        curContext = (curContext as ContextWrapper).baseContext
+    }
+    return if (curContext is LifecycleOwner) {
+        curContext
+    } else {
+        null
+    }
+}

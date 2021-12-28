@@ -8,6 +8,11 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.ScaleAnimation
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.OnLifecycleEvent
+import com.v.base.utils.ext.lifecycleOwner
+import com.v.base.utils.ext.log
 import com.v.base.utils.ext.logE
 import com.v.base.utils.ext.vbInvalidClick
 import kotlin.math.roundToInt
@@ -23,12 +28,15 @@ class ViewClickAnimatorUtil(
     var clickTime: Long = 500L,
     var onClick: ((v: View) -> Unit)
 
-) {
+) : LifecycleObserver {
     private var down = false
     private val timeAnim = 150L
+    private val animation =
+        ScaleAnimation(this.getF(), 1.0f, this.getF(), 1.0f, 1, 0.5f, 1, 0.5f)
 
     init {
         addTouchListener()
+        view.context.lifecycleOwner()?.lifecycle?.addObserver(this)
     }
 
     private fun getF(): Float {
@@ -79,8 +87,7 @@ class ViewClickAnimatorUtil(
             if (this.down) {
                 this.down = false
 
-                val  animation =
-                    ScaleAnimation(this.getF(), 1.0f, this.getF(), 1.0f, 1, 0.5f, 1, 0.5f)
+
                 animation.duration = timeAnim
                 if (up) {
 
@@ -94,7 +101,6 @@ class ViewClickAnimatorUtil(
 
                         override fun onAnimationEnd(paramAnimation: Animation) {
                             dispose()
-
                         }
                     })
                 }
@@ -111,9 +117,17 @@ class ViewClickAnimatorUtil(
 
     private fun dispose() {
         if (!view.vbInvalidClick(clickTime)) {
+            "dispose".log()
             onClick(view)
         }
 
     }
+
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
+    fun onPause() {
+        animation.cancel()
+    }
+
 
 }
