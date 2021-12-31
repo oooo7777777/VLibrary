@@ -14,6 +14,9 @@ import com.v.demo.model.NetworkViewModel
 class NetworkActivity : VBActivity<ActivityNetworkBinding, NetworkViewModel>(),
     View.OnClickListener {
 
+    override fun useViewModelApplication(): Boolean {
+        return true
+    }
     override fun toolBarTitle(
         title: String,
         titleColor: Int,
@@ -55,6 +58,11 @@ class NetworkActivity : VBActivity<ActivityNetworkBinding, NetworkViewModel>(),
 
 
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mViewModel.getCustom()
     }
 
 }

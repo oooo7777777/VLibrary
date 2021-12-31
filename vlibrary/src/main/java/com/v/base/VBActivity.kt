@@ -17,6 +17,7 @@ import com.noober.background.BackgroundLibrary
 import com.v.base.databinding.VbRootLayoutBinding
 import com.v.base.dialog.VBLoadingDialog
 import com.v.base.utils.ext.*
+import com.v.base.utils.getApplicationViewModel
 import com.v.base.utils.isWhiteColor
 import kotlinx.android.synthetic.main.vb_title_bar.view.*
 import java.lang.reflect.Field
@@ -44,7 +45,13 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
     protected val mViewModel: VM by lazy {
         val type = javaClass.genericSuperclass as ParameterizedType
         val aClass = type.actualTypeArguments[1] as Class<VM>
-        ViewModelProvider(this).get(aClass)
+        if (useViewModelApplication()) {
+            getApplicationViewModel(application, aClass)
+
+        } else {
+            ViewModelProvider(this).get(aClass)
+        }
+
     }
 
     /**
@@ -220,6 +227,11 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
      * 是否addView vb的布局
      */
     protected open fun useAddViewVBRoot(): Boolean = true
+
+    /**
+     * ViewModel是否绑定Application生命周期
+     */
+    protected open fun useViewModelApplication(): Boolean = false
 
     /**
      * 初始化数据

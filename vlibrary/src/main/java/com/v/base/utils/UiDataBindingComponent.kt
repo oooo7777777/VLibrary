@@ -105,12 +105,21 @@ fun View.vbCopyToClipboard(result: Any) {
 /**
  * view点击动画以及添加间隔做处理
  */
-@BindingAdapter(value = ["vb_click", "vb_click_time"], requireAll = false)
-fun View.vbClick(onClickListener: View.OnClickListener?, clickTime: Long) {
-
+@BindingAdapter(value = ["vb_click", "vb_click_time", "vb_animator"], requireAll = false)
+fun View.vbClick(
+    onClickListener: View.OnClickListener?,
+    clickTime: Long,
+    isAnimator: Boolean = true
+) {
     if (onClickListener != null) {
-        vbOnClickAnimator(if (clickTime <= 0) 500L else clickTime) {
-            onClickListener.onClick(it)
+        if (isAnimator) {
+            vbOnClickAnimator(if (clickTime <= 0) 500L else clickTime) {
+                onClickListener.onClick(it)
+            }
+        } else {
+            if (!this.vbInvalidClick(clickTime)) {
+                this.setOnClickListener(onClickListener)
+            }
         }
     }
 

@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.v.base.R
@@ -48,6 +49,33 @@ fun RecyclerView.vbGrid(
     return adapter
 }
 
+/**
+ * 瀑布流列表
+ * @param count 每一列的数据
+ */
+fun RecyclerView.vbGridStaggered(
+    adapter: BaseQuickAdapter<*, *>,
+    count: Int,
+    orientation: Int = StaggeredGridLayoutManager.HORIZONTAL
+): BaseQuickAdapter<*, *> {
+    layoutManager = StaggeredGridLayoutManager(count, orientation)
+    this.adapter = adapter
+    return adapter
+}
+
+/**
+ * 瀑布流列表
+ * LayoutManager
+ */
+fun RecyclerView.vbLayoutManager(
+    adapter: BaseQuickAdapter<*, *>,
+    layoutManager: RecyclerView.LayoutManager
+): BaseQuickAdapter<*, *> {
+    this.layoutManager = layoutManager
+    this.adapter = adapter
+    return adapter
+}
+
 
 /**
  * 函数配置分割线
@@ -73,7 +101,7 @@ fun RecyclerView.vbDivider(
  * @param onItemChildLongClick itemChild的长按
  */
 fun <T> BaseQuickAdapter<T, *>.vbConfig(
-    refreshLayout: SmartRefreshLayout,
+    refreshLayout: SmartRefreshLayout? = null,
     onRefresh: (() -> Unit)? = null,
     onLoadMore: (() -> Unit)? = null,
     onItemClick: ((view: View, position: Int) -> Unit)? = null,
@@ -84,22 +112,25 @@ fun <T> BaseQuickAdapter<T, *>.vbConfig(
 ) {
 
 
-    if (onRefresh == null) {
-        refreshLayout.setEnableRefresh(false)
-    } else {
-        refreshLayout.setEnableRefresh(true)
-        refreshLayout.setOnRefreshListener {
-            onRefresh.invoke()
+    if (refreshLayout != null) {
+
+        if (onRefresh == null) {
+            refreshLayout.setEnableRefresh(false)
+        } else {
+            refreshLayout.setEnableRefresh(true)
+            refreshLayout.setOnRefreshListener {
+                onRefresh.invoke()
+            }
         }
-    }
 
 
-    if (onLoadMore == null && data.size <= 0) {
-        refreshLayout.setEnableLoadMore(false)
-    } else {
-        refreshLayout.setEnableLoadMore(true)
-        refreshLayout.setOnLoadMoreListener {
-            onLoadMore!!.invoke()
+        if (onLoadMore == null && data.size <= 0) {
+            refreshLayout.setEnableLoadMore(false)
+        } else {
+            refreshLayout.setEnableLoadMore(true)
+            refreshLayout.setOnLoadMoreListener {
+                onLoadMore!!.invoke()
+            }
         }
     }
 
