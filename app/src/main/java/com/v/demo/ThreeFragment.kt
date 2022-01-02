@@ -22,7 +22,6 @@ class ThreeFragment : VBFragment<FragmentThreeBinding, VBBlankViewModel>(), View
 
     override fun createObserver() {
 
-
     }
 
     override fun onClick(v: View) {
