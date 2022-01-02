@@ -203,9 +203,5 @@ abstract class VBDialogFragment<VB : ViewDataBinding, VM : VBViewModel> : Dialog
         })
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        this.viewModelStore.clear()
 
-    }
 }

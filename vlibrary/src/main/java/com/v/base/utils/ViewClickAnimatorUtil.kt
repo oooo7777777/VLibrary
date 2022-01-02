@@ -32,6 +32,7 @@ class ViewClickAnimatorUtil(
     private var down = false
     private val timeAnim = 150L
     private var mAnimation: ScaleAnimation? = null
+    private var isOnPause = false
 
     init {
         addTouchListener()
@@ -117,7 +118,7 @@ class ViewClickAnimatorUtil(
 
 
     private fun dispose() {
-        if (!view.vbInvalidClick(clickTime)) {
+        if (!view.vbInvalidClick(clickTime) && !isOnPause) {
             onClick(view)
         }
 
@@ -126,7 +127,13 @@ class ViewClickAnimatorUtil(
 
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
     fun onPause() {
+        isOnPause = true
         mAnimation?.cancel()
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+    fun onResume() {
+        isOnPause = false
     }
 
 

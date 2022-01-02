@@ -80,6 +80,10 @@ class VBTitleBar @JvmOverloads constructor(
         ivStatusBar.setBackgroundColor(color)
     }
 
+    fun setToolbarColor(color: Int) {
+        toolbar.setBackgroundColor(color)
+    }
+
     fun setTitle(
         title: String = "",
         titleColor: Int = Color.BLACK,

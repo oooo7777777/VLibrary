@@ -3,6 +3,7 @@ package com.v.demo
 import android.view.View
 import androidx.lifecycle.Observer
 import com.v.base.VBFragment
+import com.v.base.dialog.VBHintDialog
 import com.v.base.utils.ext.*
 import com.v.base.utils.toast
 import com.v.base.utils.vbDp2px
@@ -44,6 +45,17 @@ class OneFragment : VBFragment<FragmentOneBinding, DemoViewModel>() {
 
                     var item = data[position] as HomeBean.Data
                     item.title.toast()
+                },
+                onItemLongClick = { view, position ->
+
+                    "onItemLongClickonItemLongClickonItemLongClick".log()
+                    VBHintDialog()
+                        .setContent("test")
+                        .setButtonText("0", "1")
+                        .setClickListener { hintDialog, position ->
+                            hintDialog.dismiss()
+                            "来了老弟来了".log()
+                        }.show(mContext)
                 }
             )
         } as OneFragmentAdapter

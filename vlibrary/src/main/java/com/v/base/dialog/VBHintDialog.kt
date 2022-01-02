@@ -17,8 +17,6 @@ class VBHintDialog : VBDialogFragment<VbDialogHintBinding, VBBlankViewModel>(),
     View.OnClickListener {
 
     private var title: String = ""
-    private var titleSize: Float = 14.5f
-    private var titleColor: Int = Color.parseColor("#616161")
 
     private var content: String = ""
     private var contentGravity: Int = Gravity.CENTER

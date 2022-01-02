@@ -54,9 +54,9 @@
                     android:minHeight="120dp"
                     android:padding="15dp"
                     android:scrollbars="vertical"
-                    tools:text="温馨提示"
-                    android:textColor="#000000"
-                    android:textSize="14.5sp" />
+                    android:textColor="#1C1A1A"
+                    android:textSize="14.5sp"
+                    tools:text="温馨提示" />
 
                 <View
                     android:id="@+id/tvLine"
@@ -78,7 +78,7 @@
                         android:padding="15dp"
                         android:text="@string/vb_string_cancel"
                         android:textColor="#999999"
-                        android:textSize="12.5sp"
+                        android:textSize="14sp"
                         android:visibility="gone"
                         app:vb_click="@{v}"
                         tools:visibility="visible" />
@@ -98,7 +98,7 @@
                         android:padding="15dp"
                         android:text="@string/vb_string_confirm"
                         android:textColor="#FF5369"
-                        android:textSize="12.5sp"
+                        android:textSize="14sp"
                         app:vb_click="@{v}" />
                 </LinearLayout>
             </RelativeLayout>
