@@ -1,10 +1,12 @@
 package com.v.demo
 
 import android.graphics.Color
+import android.view.View
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.v.base.VBApplication
-import com.v.base.net.VBLogInterceptor
 import com.v.base.net.VBFastJsonConverterFactory
+import com.v.base.net.VBLogInterceptor
+import com.v.base.utils.ext.vbGetLayoutView
 import com.v.demo.net.NetworkHeadInterceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -59,6 +61,7 @@ class DemoApplication : VBApplication() {
             .addInterceptor(VBLogInterceptor())// 日志拦截器（这里请使用BaseLogInterceptor，不然网络请求日志不会打印出来）
             .build()
     }
+
 
     override fun initData() {
 

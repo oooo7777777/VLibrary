@@ -15,5 +15,6 @@
     <string name="vb_string_save_locality">The saved content is only limited to View, Bitmap, String</string>
     <string name="vb_string_save_locality_success">The picture has been saved to the local album</string>
     <string name="vb_string_save_locality_error">Picture save failed</string>
+    <string name="vb_string_loading_failed">Loading failed, click retry</string>
 
 </resources>

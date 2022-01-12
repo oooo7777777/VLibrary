@@ -82,13 +82,8 @@ class VBHintDialog : VBDialogFragment<VbDialogHintBinding, VBBlankViewModel>(),
         return this
     }
 
-    fun setDataBindingListener(listenerDataBinding: ((hintDialog: VBHintDialog,dataBinding: VbDialogHintBinding) -> Unit)): VBHintDialog {
+    fun setDataBindingListener(listenerDataBinding: ((hintDialog: VBHintDialog, dataBinding: VbDialogHintBinding) -> Unit)): VBHintDialog {
         this.listenerDataBinding = listenerDataBinding
-        return this
-    }
-
-    fun update(): VBHintDialog {
-        initData()
         return this
     }
 
@@ -102,6 +97,7 @@ class VBHintDialog : VBDialogFragment<VbDialogHintBinding, VBBlankViewModel>(),
         if (btTexts.isEmpty() || btTexts.size > 2) {
             throw IllegalStateException(" range of param btnTexts length is [1,2]!")
         }
+        this.btTexts.clear()
         btTexts.forEach {
             this.btTexts.add(it)
         }
@@ -117,6 +113,7 @@ class VBHintDialog : VBDialogFragment<VbDialogHintBinding, VBBlankViewModel>(),
         if (btTextColors.isEmpty() || btTextColors.size > 2) {
             throw IllegalStateException(" range of param btnTexts length is [1,2]!")
         }
+        this.btTextColors.clear()
         btTextColors.forEach {
             this.btTextColors.add(it)
         }

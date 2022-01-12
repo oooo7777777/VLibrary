@@ -11,10 +11,10 @@ import android.view.animation.ScaleAnimation
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
-import com.v.base.utils.ext.lifecycleOwner
 import com.v.base.utils.ext.log
 import com.v.base.utils.ext.logE
 import com.v.base.utils.ext.vbInvalidClick
+import com.v.base.utils.ext.vbLifecycleOwner
 import kotlin.math.roundToInt
 
 /**
@@ -36,7 +36,7 @@ class ViewClickAnimatorUtil(
 
     init {
         addTouchListener()
-        view.context.lifecycleOwner()?.lifecycle?.addObserver(this)
+        view.context.vbLifecycleOwner()?.lifecycle?.addObserver(this)
     }
 
     private fun getF(): Float {

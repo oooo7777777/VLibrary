@@ -1,9 +1,12 @@
 package com.v.base.utils.ext
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.*
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +21,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
+import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.v.base.VBViewModel
 import com.v.base.utils.DeviceIdUtil
 import com.v.base.utils.toast
@@ -228,7 +232,7 @@ fun vbCountDownCoroutines(
     total: Long,
     timeMillis: Long = 1000,
     onTick: (Long) -> Unit,
-    onFinish:( () -> Unit)?=null,
+    onFinish: (() -> Unit)? = null,
     scope: CoroutineScope = GlobalScope
 ): Job {
     return flow {
@@ -261,7 +265,7 @@ inline fun <reified T : Any> T.vbDescription() = this.javaClass.declaredFields
 /**
  * 获取Lifecycle
  */
-fun Context.lifecycleOwner(): LifecycleOwner? {
+fun Context.vbLifecycleOwner(): LifecycleOwner? {
     var curContext = this
     var maxDepth = 20
     while (maxDepth-- > 0 && curContext !is LifecycleOwner) {
@@ -273,3 +277,45 @@ fun Context.lifecycleOwner(): LifecycleOwner? {
         null
     }
 }
+
+
+/**
+ * 判断当前是否有网络连接,但是如果该连接的网络无法上网，也会返回true
+ * @return true 能上网 false不能上网
+ */
+@SuppressLint("MissingPermission")
+fun Context.vbIsNetConnection(): Boolean {
+
+    try {
+        val connectivityManager: ConnectivityManager =
+            this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkInfo: NetworkInfo = connectivityManager.activeNetworkInfo
+        val connected: Boolean = networkInfo.isConnected
+        if (networkInfo != null && connected) {
+            return networkInfo.state === NetworkInfo.State.CONNECTED
+        }
+    } catch (e: java.lang.Exception) {
+        e.printStackTrace()
+    }
+
+
+    return false
+}
+
+
+/**
+ * 获取view所有子view
+ */
+fun View.vbGetAllChildViews(): List<View> {
+    var list = ArrayList<View>();
+    if (this is ViewGroup) {
+        for (i in 0 until this.childCount) {
+            var viewchild = this.getChildAt(i);
+            list.add(viewchild);
+            list.addAll(viewchild.vbGetAllChildViews());
+        }
+    }
+    return list
+}
+
+

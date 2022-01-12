@@ -1,6 +1,7 @@
 package com.v.base.utils.ext
 
 import android.content.Context
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.v.base.R
+import com.v.base.VBApplication
 import com.v.base.utils.RecyclerViewItemDecoration
 
 
@@ -180,23 +182,30 @@ fun <T> BaseQuickAdapter<T, *>.vbLoad(
     mCurrentPageNum: Int = 1,
     refreshLayout: SmartRefreshLayout? = null,
     emptyView: View? = null,
+    emptyViewListener: View.OnClickListener? = null,
     onSuccess: ((Int) -> Unit)? = null
 ) {
 
-    if (refreshLayout != null) {
-        if (mCurrentPageNum == 1) {
-            refreshLayout.finishRefresh()
-        } else {
-            refreshLayout.finishLoadMore()
-        }
-    }
+    refreshLayout?.finishRefresh()
+    refreshLayout?.finishLoadMore()
+
 
     if (mCurrentPageNum == 1) {
         setNewInstance(list.toMutableList())
         if (list.isNullOrEmpty()) {
             if (headerLayout == null && footerLayout == null) {
                 if (emptyView == null) {
-                    setEmptyView(R.layout.vb_layout_empty)
+
+                    var view = VBApplication.getRecyclerViewEmptyView()
+                    if (view == null) {
+                        view = vbEmptyView(this.recyclerView.context,
+                            listener = emptyViewListener)
+                    } else {
+                        view.setOnClickListener(emptyViewListener)
+                    }
+
+                    setEmptyView(view)
+
                 } else {
                     setEmptyView(emptyView)
                 }
@@ -228,7 +237,7 @@ fun <T> BaseQuickAdapter<T, *>.vbLoad(
 fun vbEmptyView(
     context: Context,
     res: Int = R.mipmap.vb_iv_data_empty,
-    msg: String = "暂无数据",
+    msg: String = context.vbGetString(R.string.vb_string_temporarily_no_data),
     listener: View.OnClickListener? = null
 ): View {
 

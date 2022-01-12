@@ -2,6 +2,7 @@ package com.v.demo
 
 import android.view.View
 import androidx.lifecycle.Observer
+import com.v.base.VBActivity
 import com.v.base.VBFragment
 import com.v.base.dialog.VBHintDialog
 import com.v.base.utils.ext.*
@@ -23,7 +24,7 @@ import com.zhpan.indicator.enums.IndicatorSlideMode
  * desc    :
  * time    : 2021/1/11 15:44
  */
-class OneFragment : VBFragment<FragmentOneBinding, DemoViewModel>() {
+class OneActivity : VBActivity<FragmentOneBinding, DemoViewModel>() {
 
     private var page = 1
 
@@ -82,10 +83,6 @@ class OneFragment : VBFragment<FragmentOneBinding, DemoViewModel>() {
         mAdapter.setHeaderView(mAdapterHeaderView.root)
         mDataBinding.refreshLayout.autoRefresh()
 
-        mViewPager.setOnPageClickListener { clickedView, position ->
-            goActivity(OneActivity::class.java)
-        }
-
     }
 
 
@@ -108,7 +105,6 @@ class OneFragment : VBFragment<FragmentOneBinding, DemoViewModel>() {
         mViewModel.bannerBean.observe(this, Observer {
             it?.apply {
                 mViewPager.create(this.data)
-
             }
         })
     }

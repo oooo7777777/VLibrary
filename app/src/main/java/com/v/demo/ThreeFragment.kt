@@ -6,6 +6,7 @@ import com.v.base.VBFragment
 import com.v.base.dialog.VBHintDialog
 import com.v.base.dialog.VBListDialog
 import com.v.base.utils.ext.goActivity
+import com.v.base.utils.toast
 import com.v.demo.databinding.FragmentThreeBinding
 
 
@@ -15,6 +16,7 @@ import com.v.demo.databinding.FragmentThreeBinding
  * time    : 2021/1/11 15:44
  */
 class ThreeFragment : VBFragment<FragmentThreeBinding, VBBlankViewModel>(), View.OnClickListener {
+
 
     override fun initData() {
         mDataBinding.v = this
@@ -42,8 +44,9 @@ class ThreeFragment : VBFragment<FragmentThreeBinding, VBBlankViewModel>(), View
             mDataBinding.bt4.id -> {
 
                 VBListDialog()
-                    .setItems("content0","content1","content3")
+                    .setItems("content0", "content1", "content3")
                     .setClickListener { dialog, result, position ->
+                        result.toast()
                         dialog.dismiss()
                     }.show(mContext)
             }

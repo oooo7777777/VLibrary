@@ -67,17 +67,13 @@ abstract class VBDialogFragment<VB : ViewDataBinding, VM : VBViewModel> : Dialog
         mDataBinding.lifecycleOwner = this
         setStyle()
         registerUiChange()
-
+        initData()
         return mDataBinding.root
     }
 
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
-    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        initData()
         createObserver()
     }
 

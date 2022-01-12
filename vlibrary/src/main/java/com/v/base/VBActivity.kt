@@ -8,13 +8,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.noober.background.BackgroundLibrary
-import com.v.base.databinding.VbRootLayoutBinding
+import com.scwang.smart.refresh.layout.SmartRefreshLayout
+import com.v.base.databinding.VbRootActivityBinding
 import com.v.base.dialog.VBLoadingDialog
 import com.v.base.utils.ext.*
 import com.v.base.utils.getApplicationViewModel
@@ -29,13 +29,15 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
 
     lateinit var mContext: AppCompatActivity
 
+    private var currentRefreshLayout: SmartRefreshLayout? = null
+
 
     val mTitleBar by lazy {
         mRootDataBinding.vbTitleBar
     }
 
     val mRootDataBinding by lazy {
-        mContext.vbGetDataBinding<VbRootLayoutBinding>(R.layout.vb_root_layout)
+        mContext.vbGetDataBinding<VbRootActivityBinding>(R.layout.vb_root_activity)
     }
 
 
@@ -75,13 +77,32 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
         //注册BackgroundLibrary 可以直接在xml里面写shape
         BackgroundLibrary.inject2(this)
         super.onCreate(savedInstanceState)
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        requestedOrientation = useOrientation()
         mContext = this
 
         val rootView: View = mRootDataBinding.root
         //把mDataBinding添加到baseDataBinding里面去
         if (useAddViewVBRoot()) {
+
+            mDataBinding.root.vbGetAllChildViews().forEach {
+                if (it is SmartRefreshLayout) {
+                    currentRefreshLayout = it
+                    return@forEach
+                }
+            }
+
             mRootDataBinding.layoutContent.addView(mDataBinding.root)
+
+
+            if (useRecyclerViewErrorShow()) {
+                //加载错误布局
+                VBApplication.getRecyclerViewErrorView()?.run {
+                    mRootDataBinding.layoutError.removeAllViews()
+                    mRootDataBinding.layoutError.addView(mContext.vbGetLayoutView(this))
+                }
+
+            }
+
         }
         super.setContentView(rootView)
 
@@ -213,6 +234,13 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
         mTitleBar.useToolbar(show)
     }
 
+
+    /**
+     * 设置是屏幕方向
+     */
+    protected open fun useOrientation(): Int = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+
+
     /**
      * 设置是否显示Toolbar
      */
@@ -222,6 +250,11 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
      * 是否显示状态栏
      */
     protected open fun useStatusBar(): Boolean = true
+
+    /**
+     * RecyclerView加载失败时是否显示失败界面(需要配合SmartRefreshLayout下面包含RecyclerView才会起作用)
+     */
+    protected open fun useRecyclerViewErrorShow(): Boolean = true
 
     /**
      * 是否addView vb的布局
@@ -278,6 +311,8 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
             if (!loadDialog.isShowing) {
                 loadDialog.show()
             }
+            mRootDataBinding.layoutError.visibility = View.GONE
+
 
         })
         //关闭弹窗
@@ -285,6 +320,28 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
 
             if (loadDialog.isShowing) {
                 loadDialog.dismiss()
+            }
+            mRootDataBinding.layoutError.visibility = View.GONE
+
+        })
+
+        //接口请求错误
+        mViewModel.loadingChange.netError.observe(this, Observer {
+            if (useRecyclerViewErrorShow()) {
+                currentRefreshLayout?.run {
+                    if (VBApplication.getRecyclerViewErrorView() != null) {
+                        //如果是下拉加载 就肯定是第第一页
+                        if (isRefreshing) {
+                            mRootDataBinding.layoutError.visibility = View.VISIBLE
+                            mRootDataBinding.layoutError.setOnClickListener {
+                                currentRefreshLayout?.autoRefresh()
+
+                            }
+                        }
+                    }
+                    finishRefresh()
+                    finishLoadMore()
+                }
             }
         })
     }

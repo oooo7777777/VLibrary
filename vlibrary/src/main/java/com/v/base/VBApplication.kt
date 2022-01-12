@@ -3,6 +3,8 @@ package com.v.base
 import android.app.Application
 import android.content.Context
 import android.graphics.Color
+import android.view.View
+import androidx.annotation.LayoutRes
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
@@ -12,6 +14,7 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.v.base.net.VBLogInterceptor
 import com.v.base.net.VBNetApi
 import com.v.base.net.VBFastJsonConverterFactory
+import com.v.base.utils.ext.vbEmptyView
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import java.util.concurrent.TimeUnit
@@ -30,6 +33,10 @@ abstract class VBApplication : Application() {
 
         private var statusBarColor: Int = 0
 
+        private var recyclerViewEmptyView: View? = null
+
+        private var recyclerViewErrorView: Int? = null
+
 
         fun getApplication(): Application {
             return context
@@ -45,6 +52,14 @@ abstract class VBApplication : Application() {
 
         fun getStatusBarColor(): Int {
             return statusBarColor
+        }
+
+        fun getRecyclerViewEmptyView(): View? {
+            return recyclerViewEmptyView
+        }
+
+        fun getRecyclerViewErrorView(): Int? {
+            return recyclerViewErrorView
         }
 
         fun isNetToast(): Boolean {
@@ -92,6 +107,19 @@ abstract class VBApplication : Application() {
      */
     protected open fun statusBarColor(): Int = Color.parseColor("#000000")
 
+
+    /**
+     * 设置默认RecyclerView 数据为空界面
+     */
+    protected open fun recyclerViewEmptyView(): View? = null
+
+    /**
+     * 设置默认RecyclerView错误界面 只会在page为1并且没有数据的时候显示
+     */
+    @LayoutRes
+    protected open fun recyclerViewErrorView(): Int? = R.layout.vb_layout_error
+
+
     /**
      * 是否开启debug模式 关联输出日志
      */
@@ -106,6 +134,8 @@ abstract class VBApplication : Application() {
         super.onCreate()
         context = this
         statusBarColor = statusBarColor()
+        recyclerViewEmptyView = recyclerViewEmptyView()
+        recyclerViewErrorView = recyclerViewErrorView()
 
         isNetToast = isNetToast()
 

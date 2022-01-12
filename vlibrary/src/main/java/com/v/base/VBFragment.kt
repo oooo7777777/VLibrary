@@ -12,8 +12,10 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.scwang.smart.refresh.layout.SmartRefreshLayout
+import com.v.base.databinding.VbRootFragmentBinding
 import com.v.base.dialog.VBLoadingDialog
-import com.v.base.utils.ext.log
+import com.v.base.utils.ext.*
 import java.lang.reflect.ParameterizedType
 
 
@@ -29,6 +31,13 @@ abstract class VBFragment<VB : ViewDataBinding, VM : VBViewModel> : Fragment() {
     private var isViewCreated = false
 
     private var currentVisibleState = false
+
+    private var currentRefreshLayout: SmartRefreshLayout? = null
+
+    val mRootDataBinding by lazy {
+        mContext.vbGetDataBinding<VbRootFragmentBinding>(R.layout.vb_root_fragment)
+    }
+
 
     private val loadDialog by lazy {
         VBLoadingDialog(mContext).setDialogCancelable(false)
@@ -68,7 +77,26 @@ abstract class VBFragment<VB : ViewDataBinding, VM : VBViewModel> : Fragment() {
         )
         mDataBinding = method.invoke(null, layoutInflater, container, false) as VB
         mDataBinding.lifecycleOwner = this
-        return mDataBinding.root
+        mDataBinding.root.vbGetAllChildViews().forEach {
+            if (it is SmartRefreshLayout) {
+                currentRefreshLayout = it
+                return@forEach
+            }
+        }
+
+        mRootDataBinding.layoutContent.addView(mDataBinding.root)
+
+        if (useRecyclerViewErrorShow()) {
+            //加载错误布局
+            VBApplication.getRecyclerViewErrorView()?.run {
+                mRootDataBinding.layoutError.removeAllViews()
+                mRootDataBinding.layoutError.addView(mContext.vbGetLayoutView(this))
+            }
+        }
+
+        mRootDataBinding.lifecycleOwner = this
+
+        return mRootDataBinding.root
     }
 
 
@@ -248,15 +276,43 @@ abstract class VBFragment<VB : ViewDataBinding, VM : VBViewModel> : Fragment() {
             if (!loadDialog.isShowing) {
                 loadDialog.show()
             }
+            mRootDataBinding.layoutError.visibility = View.GONE
 
         })
         //关闭弹窗
         mViewModel.loadingChange.dismissDialog.observe(this, Observer {
-
             if (loadDialog.isShowing) {
                 loadDialog.dismiss()
             }
+            mRootDataBinding.layoutError.visibility = View.GONE
         })
+
+        //接口请求错误
+        mViewModel.loadingChange.netError.observe(this, Observer {
+            if (useRecyclerViewErrorShow()) {
+                currentRefreshLayout?.run {
+                    if (VBApplication.getRecyclerViewErrorView() != null) {
+                        //如果是下拉加载 就肯定是第第一页
+                        if (isRefreshing) {
+                            mRootDataBinding.layoutError.visibility = View.VISIBLE
+                            mRootDataBinding.layoutError.setOnClickListener {
+                                currentRefreshLayout?.autoRefresh()
+
+                            }
+                        }
+                    }
+                    finishRefresh()
+                    finishLoadMore()
+                }
+            }
+        })
+
     }
+
+    /**
+     * RecyclerView加载失败时是否显示失败界面(需要配合SmartRefreshLayout下面包含RecyclerView才会起作用)
+     */
+    protected open fun useRecyclerViewErrorShow(): Boolean = true
+
 
 }

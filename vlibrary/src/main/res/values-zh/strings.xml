@@ -12,6 +12,7 @@
     <string name="vb_string_save_locality">保存得内容仅限制于View,Bitmap,String</string>
     <string name="vb_string_save_locality_success">图片已保存到本地相册</string>
     <string name="vb_string_save_locality_error">图片保存失败</string>
+    <string name="vb_string_loading_failed">加载失败，点击重试</string>
 
 
 </resources>

@@ -3,6 +3,7 @@ package com.v.base.utils
 import android.app.Activity
 import android.content.ContextWrapper
 import android.content.Intent
+import android.graphics.Color
 import android.graphics.Paint
 import android.net.Uri
 import android.os.Build
@@ -105,7 +106,8 @@ fun View.vbCopyToClipboard(result: Any) {
 /**
  * view点击动画以及添加间隔做处理
  */
-@BindingAdapter(value = ["vb_click", "vb_click_time", "vb_click_animation_cancel"], requireAll = false)
+@BindingAdapter(value = ["vb_click", "vb_click_time", "vb_click_animation_cancel"],
+    requireAll = false)
 fun View.vbClick(
     onClickListener: View.OnClickListener?,
     clickTime: Long,
@@ -242,4 +244,20 @@ fun TextView.vbTextFormat(any: Any?) = run {
         text = this.toString()
     }
 }
+
+
+/**
+ * 设置图片颜色
+ */
+@BindingAdapter(value = ["vb_img_color"], requireAll = false)
+fun ImageView.vbSetColor(color: String?) = run {
+    color?.run {
+        setColorFilter(Color.parseColor(color))
+    }
+
+}
+
+
+
+
 
