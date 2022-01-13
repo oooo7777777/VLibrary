@@ -14,6 +14,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.noober.background.BackgroundLibrary
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
+import com.scwang.smart.refresh.layout.api.RefreshFooter
+import com.scwang.smart.refresh.layout.api.RefreshHeader
+import com.scwang.smart.refresh.layout.api.RefreshLayout
+import com.scwang.smart.refresh.layout.constant.RefreshState
+import com.scwang.smart.refresh.layout.listener.OnMultiListener
 import com.v.base.databinding.VbRootActivityBinding
 import com.v.base.dialog.VBLoadingDialog
 import com.v.base.utils.ext.*
@@ -81,15 +86,17 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
         mContext = this
 
         val rootView: View = mRootDataBinding.root
+
+        mDataBinding.root.vbGetAllChildViews().forEach {
+            if (it is SmartRefreshLayout) {
+                currentRefreshLayout = it
+                return@forEach
+            }
+        }
+
         //把mDataBinding添加到baseDataBinding里面去
         if (useAddViewVBRoot()) {
 
-            mDataBinding.root.vbGetAllChildViews().forEach {
-                if (it is SmartRefreshLayout) {
-                    currentRefreshLayout = it
-                    return@forEach
-                }
-            }
 
             mRootDataBinding.layoutContent.addView(mDataBinding.root)
 
@@ -312,38 +319,33 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
                 loadDialog.show()
             }
             mRootDataBinding.layoutError.visibility = View.GONE
-
-
         })
         //关闭弹窗
         mViewModel.loadingChange.dismissDialog.observe(this, Observer {
-
             if (loadDialog.isShowing) {
                 loadDialog.dismiss()
             }
-            mRootDataBinding.layoutError.visibility = View.GONE
-
-        })
-
-        //接口请求错误
-        mViewModel.loadingChange.netError.observe(this, Observer {
-            if (useRecyclerViewErrorShow()) {
+            if (it) {
                 currentRefreshLayout?.run {
-                    if (VBApplication.getRecyclerViewErrorView() != null) {
+                    if (VBApplication.getRecyclerViewErrorView() != null && useRecyclerViewErrorShow()) {
                         //如果是下拉加载 就肯定是第第一页
                         if (isRefreshing) {
                             mRootDataBinding.layoutError.visibility = View.VISIBLE
                             mRootDataBinding.layoutError.setOnClickListener {
-                                currentRefreshLayout?.autoRefresh()
+                                this.autoRefresh()
 
                             }
                         }
                     }
-                    finishRefresh()
-                    finishLoadMore()
+                    this.finishRefresh()
+                    this.finishLoadMore()
                 }
+
+            } else {
+                mRootDataBinding.layoutError.visibility = View.GONE
             }
         })
+
     }
 
 

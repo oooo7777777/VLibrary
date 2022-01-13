@@ -20,7 +20,6 @@ abstract class VBViewModel : ViewModel() {
     inner class UiLoadingChange {
         val showDialog by lazy { EventLiveData<String>() }
         val dismissDialog by lazy { EventLiveData<Boolean>() }
-        val netError by lazy { EventLiveData<Boolean>() }
     }
 
     /**
@@ -53,13 +52,11 @@ abstract class VBViewModel : ViewModel() {
                     executeResponse(it) { t -> success(t) }
                 }.onFailure { e ->
                     error(VBExceptionHandle.handleException(e, isToast))
-                    loadingChange.netError.postValue(false)
-
+                    loadingChange.dismissDialog.postValue(true)
                 }
             }.onFailure { e ->
-                loadingChange.dismissDialog.postValue(false)
-                loadingChange.netError.postValue(false)
                 error(VBExceptionHandle.handleException(e, isToast))
+                loadingChange.dismissDialog.postValue(true)
             }
         }
     }
@@ -89,9 +86,8 @@ abstract class VBViewModel : ViewModel() {
                 loadingChange.dismissDialog.postValue(false)
                 success(it)
             }.onFailure { e ->
-                loadingChange.dismissDialog.postValue(false)
-                loadingChange.netError.postValue(false)
                 error(VBExceptionHandle.handleException(e,isToast))
+                loadingChange.dismissDialog.postValue(true)
             }
         }
     }
@@ -125,13 +121,12 @@ abstract class VBViewModel : ViewModel() {
                     resultState.postValue(it.toString().vbToBean(type) as T)
                 }.onFailure { e ->
                     error(VBExceptionHandle.handleException(e,isToast))
-                    loadingChange.netError.postValue(false)
+                    loadingChange.dismissDialog.postValue(true)
 
                 }
             }.onFailure { e ->
-                loadingChange.dismissDialog.postValue(false)
-                loadingChange.netError.postValue(false)
                 error(VBExceptionHandle.handleException(e,isToast))
+                loadingChange.dismissDialog.postValue(true)
             }
         }
     }
@@ -181,9 +176,8 @@ abstract class VBViewModel : ViewModel() {
                 loadingChange.dismissDialog.postValue(false)
                 success(it)
             }.onFailure {
-                loadingChange.dismissDialog.postValue(false)
-                loadingChange.netError.postValue(false)
                 error(it)
+                loadingChange.dismissDialog.postValue(true)
             }
         }
     }

@@ -25,8 +25,6 @@ import com.zhpan.indicator.enums.IndicatorSlideMode
 class OneFragment : VBFragment<FragmentOneBinding, DemoViewModel>() {
 
 
-    val firstDialog = FirstDialogFragment()
-
     private var page = 1
 
     private val mAdapter by lazy {
@@ -44,10 +42,8 @@ class OneFragment : VBFragment<FragmentOneBinding, DemoViewModel>() {
                     mViewModel.getList(page)
                 },
                 onItemClick = { view, position ->
-                    firstDialog.showNow(this@OneFragment.childFragmentManager, "FirstDialogFragment")
-
-//                    var item = data[position] as HomeBean.Data
-//                    item.title.toast()
+                    var item = data[position] as HomeBean.Data
+                    item.title.toast()
                 },
                 onItemLongClick = { view, position ->
 
@@ -78,7 +74,6 @@ class OneFragment : VBFragment<FragmentOneBinding, DemoViewModel>() {
         mDataBinding.refreshLayout.autoRefresh()
 
         mViewPager.setOnPageClickListener { clickedView, position ->
-            goActivity(OneActivity::class.java)
         }
 
     }

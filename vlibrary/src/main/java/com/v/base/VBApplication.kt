@@ -33,7 +33,7 @@ abstract class VBApplication : Application() {
 
         private var statusBarColor: Int = 0
 
-        private var recyclerViewEmptyView: View? = null
+        private var recyclerViewEmptyView: Int? = null
 
         private var recyclerViewErrorView: Int? = null
 
@@ -54,7 +54,7 @@ abstract class VBApplication : Application() {
             return statusBarColor
         }
 
-        fun getRecyclerViewEmptyView(): View? {
+        fun getRecyclerViewEmptyView(): Int? {
             return recyclerViewEmptyView
         }
 
@@ -111,7 +111,7 @@ abstract class VBApplication : Application() {
     /**
      * 设置默认RecyclerView 数据为空界面
      */
-    protected open fun recyclerViewEmptyView(): View? = null
+    protected open fun recyclerViewEmptyView(): Int? = R.layout.vb_layout_empty
 
     /**
      * 设置默认RecyclerView错误界面 只会在page为1并且没有数据的时候显示

@@ -196,15 +196,10 @@ fun <T> BaseQuickAdapter<T, *>.vbLoad(
             if (headerLayout == null && footerLayout == null) {
                 if (emptyView == null) {
 
-                    var view = VBApplication.getRecyclerViewEmptyView()
-                    if (view == null) {
-                        view = vbEmptyView(this.recyclerView.context,
-                            listener = emptyViewListener)
-                    } else {
-                        view.setOnClickListener(emptyViewListener)
+                    VBApplication.getRecyclerViewEmptyView()?.run {
+                        setEmptyView(this)
+                        emptyLayout?.setOnClickListener(emptyViewListener)
                     }
-
-                    setEmptyView(view)
 
                 } else {
                     setEmptyView(emptyView)
