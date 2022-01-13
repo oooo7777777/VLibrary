@@ -1,10 +1,12 @@
 package com.v.base.dialog
 
+import android.content.Context
 import android.graphics.Color
 import android.view.Gravity
 import android.view.View
 import androidx.databinding.ViewDataBinding
 import com.v.base.VBBlankViewModel
+import com.v.base.annotaion.VBDialogOrientation
 import com.v.base.databinding.VbDialogHintBinding
 
 
@@ -13,67 +15,25 @@ import com.v.base.databinding.VbDialogHintBinding
  * desc    : 提示框
  * time    : 2021-03-16 09:52:45
  */
-class VBHintDialog : VBDialogFragment<VbDialogHintBinding, VBBlankViewModel>(),
+class VBHintDialog(mContext: Context) : VBDialog<VbDialogHintBinding>(mContext),
     View.OnClickListener {
-
-    private var title: String = ""
-
-    private var content: String = ""
-    private var contentGravity: Int = Gravity.CENTER
-    private var btTexts = ArrayList<String>()
-    private var btTextColors = ArrayList<String>()
 
     private var listener: ((hintDialog: VBHintDialog, position: Int) -> Unit)? = null
 
-    private var listenerDataBinding: ((hintDialog: VBHintDialog, dataBinding: VbDialogHintBinding) -> Unit)? =
-        null
-
-
     override fun initData() {
-
-        if (listenerDataBinding == null) {
-            mDataBinding.v = this
-            if (!title.isNullOrEmpty()) {
-                mDataBinding.tvTitle.text = title
-                mDataBinding.tvTitle.visibility = View.VISIBLE
-            }
-
-            mDataBinding.tvContent.text = content
-            mDataBinding.tvContent.gravity = contentGravity
-
-            if (btTexts.size == 1) {
-                mDataBinding.tvRight.text = btTexts[0]
-            } else if (btTexts.size == 2) {
-                mDataBinding.baseViewWire.visibility = View.VISIBLE
-                mDataBinding.tvLeft.visibility = View.VISIBLE
-
-                mDataBinding.tvLeft.text = btTexts[0]
-                mDataBinding.tvRight.text = btTexts[1]
-            }
-
-            if (btTextColors.size == 1) {
-                mDataBinding.tvLeft.setTextColor(Color.parseColor(btTextColors[0]))
-            } else if (btTextColors.size == 2) {
-                mDataBinding.tvLeft.setTextColor(Color.parseColor(btTextColors[0]))
-                mDataBinding.tvRight.setTextColor(Color.parseColor(btTextColors[1]))
-            }
-        } else {
-            listenerDataBinding?.invoke(this, mDataBinding)
-        }
-    }
-
-    override fun createObserver() {
+        mDataBinding.v = this
     }
 
 
     fun setTitle(text: String): VBHintDialog {
-        this.title = text
+        mDataBinding.tvTitle.text = text
+        mDataBinding.tvTitle.visibility = View.VISIBLE
         return this
     }
 
     fun setContent(content: String, contentGravity: Int = Gravity.CENTER): VBHintDialog {
-        this.content = content
-        this.contentGravity = contentGravity
+        mDataBinding.tvContent.text = content
+        mDataBinding.tvContent.gravity = contentGravity
         return this
     }
 
@@ -81,12 +41,6 @@ class VBHintDialog : VBDialogFragment<VbDialogHintBinding, VBBlankViewModel>(),
         this.listener = listener
         return this
     }
-
-    fun setDataBindingListener(listenerDataBinding: ((hintDialog: VBHintDialog, dataBinding: VbDialogHintBinding) -> Unit)): VBHintDialog {
-        this.listenerDataBinding = listenerDataBinding
-        return this
-    }
-
 
     /**
      * 设置按钮文字内容
@@ -97,10 +51,16 @@ class VBHintDialog : VBDialogFragment<VbDialogHintBinding, VBBlankViewModel>(),
         if (btTexts.isEmpty() || btTexts.size > 2) {
             throw IllegalStateException(" range of param btnTexts length is [1,2]!")
         }
-        this.btTexts.clear()
-        btTexts.forEach {
-            this.btTexts.add(it)
+        if (btTexts.size == 1) {
+            mDataBinding.tvRight.text = btTexts[0]
+        } else if (btTexts.size == 2) {
+            mDataBinding.baseViewWire.visibility = View.VISIBLE
+            mDataBinding.tvLeft.visibility = View.VISIBLE
+
+            mDataBinding.tvLeft.text = btTexts[0]
+            mDataBinding.tvRight.text = btTexts[1]
         }
+
         return this
     }
 
@@ -113,11 +73,13 @@ class VBHintDialog : VBDialogFragment<VbDialogHintBinding, VBBlankViewModel>(),
         if (btTextColors.isEmpty() || btTextColors.size > 2) {
             throw IllegalStateException(" range of param btnTexts length is [1,2]!")
         }
-        this.btTextColors.clear()
-        btTextColors.forEach {
-            this.btTextColors.add(it)
-        }
 
+        if (btTextColors.size == 1) {
+            mDataBinding.tvLeft.setTextColor(Color.parseColor(btTextColors[0]))
+        } else if (btTextColors.size == 2) {
+            mDataBinding.tvLeft.setTextColor(Color.parseColor(btTextColors[0]))
+            mDataBinding.tvRight.setTextColor(Color.parseColor(btTextColors[1]))
+        }
         return this
     }
 

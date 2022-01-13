@@ -1,5 +1,6 @@
 package com.v.base.dialog
 
+import android.content.Context
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.v.base.VBBlankViewModel
@@ -15,7 +16,7 @@ import com.v.base.utils.ext.vbLinear
  * desc    : 列表提示框
  * time    : 2021-03-16 09:52:45
  */
-class VBListDialog : VBDialogFragment<VbDialogListBinding, VBBlankViewModel>() {
+class VBListDialog(mContext: Context) : VBDialog<VbDialogListBinding>(mContext) {
 
     private var list = ArrayList<String>()
 
@@ -44,8 +45,6 @@ class VBListDialog : VBDialogFragment<VbDialogListBinding, VBBlankViewModel>() {
         }
     }
 
-    override fun createObserver() {
-    }
 
     fun setItems(vararg items: String): VBListDialog {
         items.forEach {

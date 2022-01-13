@@ -49,14 +49,6 @@ class OneActivity : VBActivity<FragmentOneBinding, DemoViewModel>() {
                 },
                 onItemLongClick = { view, position ->
 
-                    "onItemLongClickonItemLongClickonItemLongClick".log()
-                    VBHintDialog()
-                        .setContent("test")
-                        .setButtonText("0", "1")
-                        .setClickListener { hintDialog, position ->
-                            hintDialog.dismiss()
-                            "来了老弟来了".log()
-                        }.show(mContext)
                 }
             )
         } as OneFragmentAdapter
