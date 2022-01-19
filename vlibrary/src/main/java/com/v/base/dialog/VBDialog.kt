@@ -3,10 +3,7 @@ package com.v.base.dialog
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.Window
-import android.view.WindowManager
+import android.view.*
 import androidx.databinding.ViewDataBinding
 import com.v.base.R
 import com.v.base.annotaion.VBDialogOrientation
@@ -71,14 +68,14 @@ abstract class VBDialog<VB : ViewDataBinding>(mContext: Context) : Dialog(mConte
      * 设置宽
      */
     open fun useWidth(): Int {
-        return WindowManager.LayoutParams.MATCH_PARENT
+        return ViewGroup.LayoutParams.MATCH_PARENT
     }
 
     /**
      * 设置高
      */
     open fun useHeight(): Int {
-        return WindowManager.LayoutParams.WRAP_CONTENT
+        return ViewGroup.LayoutParams.WRAP_CONTENT
     }
 
     private fun setStyle() {

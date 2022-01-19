@@ -12,7 +12,6 @@
     </data>
 
     <RelativeLayout
-        android:background="@android:color/holo_blue_bright"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 

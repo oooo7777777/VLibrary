@@ -139,7 +139,6 @@ private fun loadDispose(
                         Glide.with(this.context)
                             .asGif()
                             .load(any)
-                            .apply(options)
                             .into(this)
 
                     } else {
@@ -159,7 +158,6 @@ private fun loadDispose(
                         Glide.with(this.context)
                             .asGif()
                             .load(any)
-                            .apply(options)
                             .into(this)
 
                     } else {
@@ -178,7 +176,6 @@ private fun loadDispose(
                         Glide.with(this.context)
                             .asGif()
                             .load(any)
-                            .apply(options)
                             .into(this)
 
                     } else {
