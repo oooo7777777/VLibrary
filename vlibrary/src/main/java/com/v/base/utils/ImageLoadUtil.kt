@@ -66,35 +66,41 @@ fun ImageView.vbLoadCircle(any: Any, errorResId: Int = R.mipmap.vb_iv_empty) =
  * @param error 图片加载失败
  */
 fun Context.vbLoadListener(
-    any: Any,
-    w: Int,
-    h: Int,
+    any: Any?,
+    w: Int = 0,
+    h: Int = 0,
     success: ((Drawable) -> Unit),
     error: (() -> Unit)? = null
 ) = run {
 
-    Glide.with(this)
-        .asDrawable()
-        .override(w, h)
-        .load(any)
-        .into(object : CustomTarget<Drawable>() {
-
-            override fun onResourceReady(
-                resource: Drawable,
-                transition: Transition<in Drawable?>?
-            ) {
-                success(resource)
-            }
-
-            override fun onLoadFailed(errorDrawable: Drawable?) {
-                error?.run {
-                    this@run
+    if (any == null) {
+        error?.invoke()
+    } else {
+        Glide.with(this)
+            .asDrawable().apply {
+                if (w > 0 || h > 0) {
+                    override(w, h)
                 }
             }
+            .load(any)
+            .into(object : CustomTarget<Drawable>() {
 
-            override fun onLoadCleared(placeholder: Drawable?) {
-            }
-        })
+                override fun onResourceReady(
+                    resource: Drawable,
+                    transition: Transition<in Drawable?>?
+                ) {
+                    success.invoke(resource)
+                }
+
+                override fun onLoadFailed(errorDrawable: Drawable?) {
+                    error?.invoke()
+                }
+
+                override fun onLoadCleared(placeholder: Drawable?) {
+                }
+            })
+    }
+
 
 }
 
@@ -108,6 +114,14 @@ private fun loadDispose(
     errorResId: Int
 ) {
     image.run {
+
+        var isGif = false
+        try {
+            isGif = any.toString().endsWith(".gif")
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
+
         try {
             var options = RequestOptions()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -121,29 +135,58 @@ private fun loadDispose(
                     var radius = roundingRadius.toInt().vbDp2px()
                     options.transform(CenterCrop(), RoundedCorners(radius)) //圆角
 
-                    Glide.with(this.context)
-                        .load(any)
-                        .apply(options)
-                        .thumbnail(loadRoundedTransform(this.context, errorResId, radius))
-                        .thumbnail(loadRoundedTransform(this.context, errorResId, radius))
-                        .into(this)
+                    if (isGif) {
+                        Glide.with(this.context)
+                            .asGif()
+                            .load(any)
+                            .apply(options)
+                            .into(this)
+
+                    } else {
+                        Glide.with(this.context)
+                            .load(any)
+                            .apply(options)
+                            .thumbnail(loadRoundedTransform(this.context, errorResId, radius))
+                            .thumbnail(loadRoundedTransform(this.context, errorResId, radius))
+                            .into(this)
+                    }
                 }
                 roundingRadius == -1f -> {
                     this.scaleType = ImageView.ScaleType.CENTER_CROP
                     options.transform(CenterCrop(), CircleCrop()) //圆形
 
-                    Glide.with(this.context)
-                        .load(any)
-                        .apply(options)
-                        .thumbnail(loadCircleTransform(this.context, errorResId))
-                        .thumbnail(loadCircleTransform(this.context, errorResId))
-                        .into(this)
+                    if (isGif) {
+                        Glide.with(this.context)
+                            .asGif()
+                            .load(any)
+                            .apply(options)
+                            .into(this)
+
+                    } else {
+                        Glide.with(this.context)
+                            .load(any)
+                            .apply(options)
+                            .thumbnail(loadCircleTransform(this.context, errorResId))
+                            .thumbnail(loadCircleTransform(this.context, errorResId))
+                            .into(this)
+                    }
+
+
                 }
                 else -> {
-                    Glide.with(this.context)
-                        .load(any)
-                        .apply(options)
-                        .into(this)
+                    if (isGif) {
+                        Glide.with(this.context)
+                            .asGif()
+                            .load(any)
+                            .apply(options)
+                            .into(this)
+
+                    } else {
+                        Glide.with(this.context)
+                            .load(any)
+                            .apply(options)
+                            .into(this)
+                    }
                 }
             }
 
@@ -253,36 +296,40 @@ fun View.vbToBitmap(): Bitmap {
  * @param context
  * @param bmp
  */
-private fun saveImageToGallery(context: Context, bmp: Bitmap) {
+private fun saveImageToGallery(context: Context, bmp: Bitmap?) {
 
-    try {
-        var child = context.opPackageName.split(".")
-        val sdCardDir = File(Environment.getExternalStorageDirectory(), child[child.size - 1])
-        if (!sdCardDir.exists()) {              //如果不存在，那就建立这个文件夹
-            sdCardDir.mkdirs()
-        }
+    if (bmp == null) {
+        throw IllegalStateException("Image resource error")
+    } else {
+        try {
+            var child = context.opPackageName.split(".")
+            val sdCardDir = File(Environment.getExternalStorageDirectory(), child[child.size - 1])
+            if (!sdCardDir.exists()) {              //如果不存在，那就建立这个文件夹
+                sdCardDir.mkdirs()
+            }
 
-        val fileName = System.currentTimeMillis().toString() + ".jpg"
-        val file = File(sdCardDir, fileName)
+            val fileName = System.currentTimeMillis().toString() + ".jpg"
+            val file = File(sdCardDir, fileName)
 
-        val fos = FileOutputStream(file)
-        bmp.compress(Bitmap.CompressFormat.JPEG, 100, fos)
-        fos.flush()
-        fos.close()
+            val fos = FileOutputStream(file)
+            bmp.compress(Bitmap.CompressFormat.JPEG, 100, fos)
+            fos.flush()
+            fos.close()
 
-        // 通知图库更新
-        context.sendBroadcast(
-            Intent(
-                Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
-                Uri.parse("file://" + file.path)
+            // 通知图库更新
+            context.sendBroadcast(
+                Intent(
+                    Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
+                    Uri.parse("file://" + file.path)
+                )
             )
-        )
-        (context.getString(R.string.vb_string_save_locality_success)).toast()
-    } catch (e: java.lang.Exception) {
-        e.logE()
-        e.printStackTrace()
-        (context.getString(R.string.vb_string_save_locality_error)).toast()
+            (context.getString(R.string.vb_string_save_locality_success)).toast()
+        } catch (e: java.lang.Exception) {
+            e.logE()
+            e.printStackTrace()
+            (context.getString(R.string.vb_string_save_locality_error)).toast()
 
+        }
     }
 
 

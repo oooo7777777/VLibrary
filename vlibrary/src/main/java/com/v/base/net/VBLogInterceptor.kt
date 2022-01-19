@@ -1,21 +1,19 @@
 package com.v.base.net
 
 import android.text.TextUtils
+import com.alibaba.fastjson.JSONObject
 import com.v.base.utils.ext.logD
-import com.v.base.utils.ext.logE
 import okhttp3.Headers
 import okhttp3.Interceptor
 import okhttp3.Response
 import okhttp3.internal.http.HttpHeaders
 import okio.Buffer
-import org.json.JSONArray
-import org.json.JSONException
-import org.json.JSONObject
 import java.io.EOFException
 import java.io.IOException
 import java.nio.charset.Charset
 import java.nio.charset.UnsupportedCharsetException
 import java.util.concurrent.TimeUnit
+
 
 /**
  * author  : ww
@@ -180,7 +178,7 @@ open class VBLogInterceptor : Interceptor {
                                 .readString(charset)
                             sb.append(json)
                                 .append("\n\n")
-                            val str = jsonFormat(json)
+                            val str = prettyJson(json)
                             sb.append(str)
                                 .append("\n")
                         }
@@ -200,36 +198,22 @@ open class VBLogInterceptor : Interceptor {
 
 
     /**
-     * 将json字符串格式化后返回
-     *
-     * @param json json字符串
-     * @return 格式化后的字符串
+     * json 美化
+     * @param json
+     * @return
      */
-    private fun jsonFormat(json: String): String {
-        var json = json
+    private fun prettyJson(json: String): String {
+        val json = json
         if (TextUtils.isEmpty(json)) {
             return "Empty/Null json content"
         }
+        var jsonObject: JSONObject? = null
         try {
-            json = json.trim { it <= ' ' }
-            val message: String
-            if (json.startsWith("{")) {
-                val jsonObject = JSONObject(json)
-                message = jsonObject.toString(2)
-                return message
-            } else if (json.startsWith("[")) {
-                val jsonArray = JSONArray(json)
-                message = jsonArray.toString(2)
-                return message
-            } else {
-                message = "Invalid Json"
-            }
-            return message
-        } catch (e: JSONException) {
-            e.message.toString().logE()
-            return "Invalid Json"
+            jsonObject = JSONObject.parseObject(json)
+        } catch (e: Exception) {
+            return json
         }
-
+        return JSONObject.toJSONString(jsonObject, true)
     }
 
 
@@ -238,25 +222,9 @@ open class VBLogInterceptor : Interceptor {
         return contentEncoding != null && !contentEncoding.equals("identity", ignoreCase = true)
     }
 
-    /**
-     * 是否打印返回数据
-     *
-     * 打印返回数据会造成多次请求，部分接口不能多次请求
-     *
-     * @param url 请求url
-     * @return 是否返回
-     */
-    private fun showResponse(url: String): Boolean {
-        var showResponse = true
-        if (false) {
-            showResponse = false
-        }
-        return showResponse
-    }
 
     companion object {
-        val UTF8 = Charset.forName("UTF-8")
-
+        private val UTF8 = Charset.forName("UTF-8")
 
         /**
          * 判断是否为明文

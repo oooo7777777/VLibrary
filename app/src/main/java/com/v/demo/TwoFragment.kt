@@ -47,10 +47,11 @@ class TwoFragment : VBFragment<FragmentTowBinding, DemoViewModel>(), View.OnClic
                 "打印日志".log()
             }
             mDataBinding.bt4.id -> {
-                mDataBinding.bt4.vbDrawable(R.mipmap.ic_movie, null, h = 50, w = 50)
+                mDataBinding.bt4.vbDrawable(left = R.mipmap.ic_movie, leftH = 30, leftW = 30,
+                    right = R.mipmap.ic_movie, rightH = 50, rightW = 50,top = null,w = 150,h = 150)
             }
             mDataBinding.bt5.id -> {
-                mDataBinding.bt5.vbDrawable(null, R.mipmap.ic_movie, h = 80, w = 80)
+                mDataBinding.bt5.vbDrawable(right = R.mipmap.ic_movie, h = 80, w = 80)
             }
             mDataBinding.bt6.id -> {
                 mDataBinding.ivIcon.vbLoad(R.mipmap.ic_movie, 90.vbGetRandomNumber().toFloat())

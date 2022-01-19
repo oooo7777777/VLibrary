@@ -24,6 +24,9 @@ class VBHintDialog(mContext: Context) : VBDialog<VbDialogHintBinding>(mContext),
         mDataBinding.v = this
     }
 
+    fun getDataBinding(): VbDialogHintBinding {
+        return mDataBinding
+    }
 
     fun setTitle(text: String): VBHintDialog {
         mDataBinding.tvTitle.text = text
@@ -49,7 +52,7 @@ class VBHintDialog(mContext: Context) : VBDialog<VbDialogHintBinding>(mContext),
      */
     fun setButtonText(vararg btTexts: String): VBHintDialog {
         if (btTexts.isEmpty() || btTexts.size > 2) {
-            throw IllegalStateException(" range of param btnTexts length is [1,2]!")
+            throw IllegalStateException("range of param btnTexts length is [1,2]!")
         }
         if (btTexts.size == 1) {
             mDataBinding.tvRight.text = btTexts[0]
@@ -71,7 +74,7 @@ class VBHintDialog(mContext: Context) : VBDialog<VbDialogHintBinding>(mContext),
      */
     fun setButtonTextColor(vararg btTextColors: String): VBHintDialog {
         if (btTextColors.isEmpty() || btTextColors.size > 2) {
-            throw IllegalStateException(" range of param btnTexts length is [1,2]!")
+            throw IllegalStateException("range of param btnTexts length is [1,2]!")
         }
 
         if (btTextColors.size == 1) {

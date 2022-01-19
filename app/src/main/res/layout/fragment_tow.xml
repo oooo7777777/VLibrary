@@ -92,9 +92,14 @@
                 android:text="设置DrawableLeft"
                 android:textAllCaps="false"
                 app:vb_click="@{v}"
-                app:vb_drawable_Left="@{R.mipmap.ic_launcher}"
-                app:vb_drawable_height="@{50}"
-                app:vb_drawable_width="@{50}" />
+                app:vb_drawable_bottom="@{R.mipmap.ic_launcher}"
+                app:vb_drawable_left="@{R.mipmap.ic_launcher}"
+                app:vb_drawable_left_height="@{70}"
+                app:vb_drawable_left_width="@{70}"
+                app:vb_drawable_right="@{R.mipmap.ic_launcher}"
+                app:vb_drawable_top="@{R.mipmap.ic_launcher}"
+                app:vb_drawable_top_height="@{170}"
+                app:vb_drawable_top_width="@{170}" />
 
 
             <Button
@@ -105,9 +110,10 @@
                 android:text="设置DrawableRight"
                 android:textAllCaps="false"
                 app:vb_click="@{v}"
-                app:vb_drawable_height="@{30}"
+                app:vb_drawable_left="@{R.mipmap.ic_launcher}"
+                app:vb_drawable_height="@{20}"
                 app:vb_drawable_right="@{R.mipmap.ic_launcher}"
-                app:vb_drawable_width="@{30}" />
+                app:vb_drawable_width="@{20}" />
 
 
             <Button

@@ -5,13 +5,16 @@ import android.content.ContextWrapper
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.v.base.R
+import com.v.base.utils.ext.log
 import com.v.base.utils.ext.vbCopyToClipboard
 import com.v.base.utils.ext.vbInvalidClick
 import com.v.base.utils.ext.vbOnClickAnimator
@@ -47,25 +50,130 @@ fun ImageView.vbImgUrl(
  * 设置TextView DrawableLeft
  */
 @BindingAdapter(
-    value = ["vb_drawable_Left", "vb_drawable_right", "vb_drawable_width", "vb_drawable_height"],
+    value = ["vb_drawable_left", "vb_drawable_right",
+        "vb_drawable_top", "vb_drawable_bottom",
+        "vb_drawable_width", "vb_drawable_height",
+        "vb_drawable_left_width", "vb_drawable_left_height",
+        "vb_drawable_right_width", "vb_drawable_right_height",
+        "vb_drawable_top_width", "vb_drawable_top_height",
+        "vb_drawable_bottom_width", "vb_drawable_bottom_height"],
     requireAll = false
 )
-fun TextView.vbDrawable(anyLeft: Any?, anyRight: Any?, w: Int, h: Int) {
+fun TextView.vbDrawable(
+    left: Any? = compoundDrawables[0],
+    right: Any? = compoundDrawables[2],
+    top: Any? = compoundDrawables[1],
+    bottom: Any? = compoundDrawables[3],
+    w: Int = 0,
+    h: Int = 0,
+    leftW: Int? = null,
+    leftH: Int? = null,
+    rightW: Int? = null,
+    rightH: Int? = null,
+    topW: Int? = null,
+    topH: Int? = null,
+    bottomW: Int? = null,
+    bottomH: Int? = null
 
-    if (anyLeft != null) {
-        this.context.vbLoadListener(anyLeft, w.vbDp2px(), h.vbDp2px(),
-            success = {
-                it.setBounds(0, 0, it.intrinsicWidth, it.intrinsicHeight)
-                this@vbDrawable.setCompoundDrawables(it, null, null, null)
-            })
-    }
-    if (anyRight != null) {
-        this.context.vbLoadListener(anyRight, w.vbDp2px(), h.vbDp2px(),
-            success = {
-                it.setBounds(0, 0, it.intrinsicWidth, it.intrinsicHeight)
-                this@vbDrawable.setCompoundDrawables(null, null, it, null)
-            })
-    }
+) {
+
+
+    this.context.vbLoadListener(left, (leftW ?: w).vbDp2px(), (leftH ?: h).vbDp2px(),
+        success = {
+            it.setBounds(0, 0, it.intrinsicWidth, it.intrinsicHeight)
+
+            val drawableLeft: Drawable? = compoundDrawables[0]
+            val drawableTop: Drawable? = compoundDrawables[1]
+            val drawableRight: Drawable? = compoundDrawables[2]
+            val drawableBottom: Drawable? = compoundDrawables[3]
+
+            this@vbDrawable.setCompoundDrawables(it, drawableTop, drawableRight, drawableBottom)
+        }, error = {
+            val drawableLeft: Drawable? = compoundDrawables[0]
+            val drawableTop: Drawable? = compoundDrawables[1]
+            val drawableRight: Drawable? = compoundDrawables[2]
+            val drawableBottom: Drawable? = compoundDrawables[3]
+
+            this@vbDrawable.setCompoundDrawables(null, drawableTop, drawableRight, drawableBottom)
+        })
+
+
+
+
+    this.context.vbLoadListener(right, (rightW ?: w).vbDp2px(), (rightH ?: h).vbDp2px(),
+        success = {
+            it.setBounds(0, 0, it.intrinsicWidth, it.intrinsicHeight)
+
+            val drawableLeft: Drawable? = compoundDrawables[0]
+            val drawableTop: Drawable? = compoundDrawables[1]
+            val drawableRight: Drawable? = compoundDrawables[2]
+            val drawableBottom: Drawable? = compoundDrawables[3]
+
+
+            this@vbDrawable.setCompoundDrawables(drawableLeft, drawableTop, it, drawableBottom)
+        }, error = {
+            val drawableLeft: Drawable? = compoundDrawables[0]
+            val drawableTop: Drawable? = compoundDrawables[1]
+            val drawableRight: Drawable? = compoundDrawables[2]
+            val drawableBottom: Drawable? = compoundDrawables[3]
+
+
+            this@vbDrawable.setCompoundDrawables(drawableLeft, drawableTop, null, drawableBottom)
+        })
+
+
+
+
+    this.context.vbLoadListener(top, (topW ?: w).vbDp2px(), (topH ?: h).vbDp2px(),
+        success = {
+            it.setBounds(0, 0, it.intrinsicWidth, it.intrinsicHeight)
+
+            val drawableLeft: Drawable? = compoundDrawables[0]
+            val drawableTop: Drawable? = compoundDrawables[1]
+            val drawableRight: Drawable? = compoundDrawables[2]
+            val drawableBottom: Drawable? = compoundDrawables[3]
+
+
+            this@vbDrawable.setCompoundDrawables(drawableLeft,
+                it,
+                drawableRight,
+                drawableBottom)
+        }, error = {
+            val drawableLeft: Drawable? = compoundDrawables[0]
+            val drawableTop: Drawable? = compoundDrawables[1]
+            val drawableRight: Drawable? = compoundDrawables[2]
+            val drawableBottom: Drawable? = compoundDrawables[3]
+
+
+            this@vbDrawable.setCompoundDrawables(drawableLeft,
+                null,
+                drawableRight,
+                drawableBottom)
+        })
+
+
+    this.context.vbLoadListener(bottom, (bottomW ?: w).vbDp2px(), (bottomH ?: h).vbDp2px(),
+        success = {
+            it.setBounds(0, 0, it.intrinsicWidth, it.intrinsicHeight)
+
+            val drawableLeft: Drawable? = compoundDrawables[0]
+            val drawableTop: Drawable? = compoundDrawables[1]
+            val drawableRight: Drawable? = compoundDrawables[2]
+            val drawableBottom: Drawable? = compoundDrawables[3]
+
+            this@vbDrawable.setCompoundDrawables(drawableLeft, drawableTop, drawableRight, it)
+        }, error =
+        {
+
+            val drawableLeft: Drawable? = compoundDrawables[0]
+            val drawableTop: Drawable? = compoundDrawables[1]
+            val drawableRight: Drawable? = compoundDrawables[2]
+            val drawableBottom: Drawable? = compoundDrawables[3]
+
+            this@vbDrawable.setCompoundDrawables(drawableLeft, drawableTop, drawableRight, null)
+        })
+
+
 }
 
 
@@ -167,53 +275,75 @@ fun View.vbFinishActivity(isFinish: Boolean) {
 
 
 /**
- * 如果view是TextView 设置文字同时做判断
- * 如果是其他的View
- * 文字等于NullOrEmpty 就INVISIBLE VIEW
+ * 入参类型为:String 空为隐藏 非空为显示
+ * 入参类型为:Boolean true为显示 false为隐藏
+ * 入参类型为:Int 1为显示 其他为隐藏
  */
 @BindingAdapter(value = ["vb_view_visible"], requireAll = false)
-fun View.vbViewVisible(text: String?) {
+fun View.vbViewVisible(any: Any?) {
 
-    if (this is TextView) {
-        if (text.isNullOrEmpty()) {
-            this.visibility = View.INVISIBLE
-        } else {
-            this.text = text
-            this.visibility = View.VISIBLE
+    var visibility = View.VISIBLE
+    when (any) {
+        is String -> {
+            visibility = if (any.isNullOrEmpty()) {
+                View.INVISIBLE
+            } else {
+                View.VISIBLE
+            }
         }
-
-    } else {
-        if (text.isNullOrEmpty()) {
-            this.visibility = View.INVISIBLE
-        } else {
-            this.visibility = View.VISIBLE
+        is Boolean -> {
+            visibility = if (any) {
+                View.VISIBLE
+            } else {
+                View.INVISIBLE
+            }
+        }
+        is Int -> {
+            visibility = if (any == 1) {
+                View.VISIBLE
+            } else {
+                View.INVISIBLE
+            }
         }
     }
 
+    this.visibility = visibility
 }
 
 /**
- * 如果view是TextView 设置文字同时做判断
- * 如果是其他的View
- * 如果文字等于NullOrEmpty 就GONE VIEW
+ * 入参类型为:String 空为隐藏 非空为显示
+ * 入参类型为:Boolean true为显示 false为隐藏
+ * 入参类型为:Int 1为显示 其他为隐藏
  */
 @BindingAdapter(value = ["vb_view_gone"], requireAll = false)
-fun View.vbViewGone(text: String?) {
-    if (this is TextView) {
-        if (text.isNullOrEmpty()) {
-            this.visibility = View.GONE
-        } else {
-            this.text = text
-            this.visibility = View.VISIBLE
-        }
+fun View.vbViewGone(any: Any?) {
 
-    } else {
-        if (text.isNullOrEmpty()) {
-            this.visibility = View.GONE
-        } else {
-            this.visibility = View.VISIBLE
+    var visibility = View.GONE
+    when (any) {
+        is String -> {
+            visibility = if (any.isNullOrEmpty()) {
+                View.GONE
+            } else {
+                View.VISIBLE
+            }
+        }
+        is Boolean -> {
+            visibility = if (any) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
+        }
+        is Int -> {
+            visibility = if (any == 1) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
         }
     }
+
+    this.visibility = visibility
 }
 
 /**
@@ -256,6 +386,8 @@ fun ImageView.vbSetColor(color: String?) = run {
     }
 
 }
+
+
 
 
 

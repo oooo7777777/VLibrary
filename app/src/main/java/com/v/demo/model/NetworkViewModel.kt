@@ -36,7 +36,7 @@ class NetworkViewModel : VBViewModel() {
     //自定义api 网络请求 获取原始数据
     fun getCustomDefault() {
         vbRequestDefault({
-            apiService.getBanner()
+            apiService.getGirlBean()
         }, success = {
             string.value = it.vbToJson()
         }, dialog = true)

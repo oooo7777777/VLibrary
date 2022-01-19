@@ -43,7 +43,7 @@ abstract class VBDialog<VB : ViewDataBinding>(mContext: Context) : Dialog(mConte
     /**
      * 设置是否返回按钮取消
      */
-     fun setDialogCancelable(isCancelable: Boolean) {
+    fun setDialogCancelable(isCancelable: Boolean) {
         setCanceledOnTouchOutside(isCancelable)
         setCancelable(isCancelable)
     }
@@ -67,6 +67,20 @@ abstract class VBDialog<VB : ViewDataBinding>(mContext: Context) : Dialog(mConte
         return true
     }
 
+    /**
+     * 设置宽
+     */
+    open fun useWidth(): Int {
+        return WindowManager.LayoutParams.MATCH_PARENT
+    }
+
+    /**
+     * 设置高
+     */
+    open fun useHeight(): Int {
+        return WindowManager.LayoutParams.WRAP_CONTENT
+    }
+
     private fun setStyle() {
 
         val window: Window = window!!
@@ -75,11 +89,11 @@ abstract class VBDialog<VB : ViewDataBinding>(mContext: Context) : Dialog(mConte
         window.setBackgroundDrawableResource(android.R.color.transparent)
         window.decorView.setPadding(0, 0, 0, 0)
         val wlp = window.attributes
-        wlp.width = WindowManager.LayoutParams.MATCH_PARENT
-        wlp.height = WindowManager.LayoutParams.WRAP_CONTENT
+        wlp.width = useWidth()
+        wlp.height = useHeight()
 
         if (useDim()) {
-            wlp.dimAmount = 0.3f
+            wlp.dimAmount = 0.4f
         } else {
             wlp.dimAmount = 0f
             window.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
