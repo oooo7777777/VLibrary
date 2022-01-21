@@ -17,7 +17,7 @@ class BannerAdapter :
         position: Int,
         pageSize: Int
     ) {
-        holder.findViewById<ImageView>(R.id.ivIcon).vbLoad("https://static.merach.com/coach/20220106/P6uCyNbtAyz8RFCh_600x600.gif", 10F)
+        holder.findViewById<ImageView>(R.id.ivIcon).vbLoad(data.imagePath)
     }
 
     override fun getLayoutId(viewType: Int) = R.layout.fragment_one_header_item

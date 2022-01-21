@@ -4,7 +4,7 @@
     <!-- 默认主题，没有标题栏 -->
     <style name="vb_app_theme" parent="Theme.AppCompat.NoActionBar">
         <!--用于默认操作栏的背景-->
-        <item name="colorPrimary">@android:color/black</item>
+        <item name="colorPrimary">@android:color/transparent</item>
         <!--用于色彩控制器的默认值，用来给小部件着色-->
         <item name="colorAccent">@android:color/black</item>
         <!-- 窗口的背景颜色 -->
@@ -15,6 +15,10 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
         <!-- 主要用于状态栏-->
         <item name="colorPrimaryDark">@android:color/transparent</item>
+
+        <item name="android:windowTranslucentNavigation">true</item>
+
+
 
     </style>
 

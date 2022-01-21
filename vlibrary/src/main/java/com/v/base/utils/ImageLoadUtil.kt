@@ -2,7 +2,6 @@ package com.v.base.utils
 
 
 import android.content.Context
-import android.content.ContextWrapper
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -11,28 +10,27 @@ import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.os.Looper
-import android.provider.MediaStore
 import android.view.View
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
+import androidx.annotation.Nullable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.load.resource.gif.GifDrawable
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.target.ImageViewTarget
 import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
 import com.v.base.R
-import com.v.base.utils.ext.log
 import com.v.base.utils.ext.logE
 import kotlinx.coroutines.*
 import java.io.File
-import java.io.FileNotFoundException
 import java.io.FileOutputStream
-import java.io.IOException
 
 
 /**
@@ -122,72 +120,65 @@ private fun loadDispose(
             e.printStackTrace()
         }
 
+
         try {
-            var options = RequestOptions()
+            val options = RequestOptions()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .error(errorResId)
-                .placeholder(errorResId)
-                .dontAnimate()
 
-            when {
-                roundingRadius > 0 -> {
-                    this.scaleType = ImageView.ScaleType.CENTER_CROP
-                    var radius = roundingRadius.toInt().vbDp2px()
-                    options.transform(CenterCrop(), RoundedCorners(radius)) //圆角
-
-                    if (isGif) {
-                        Glide.with(this.context)
-                            .asGif()
-                            .load(any)
-                            .into(this)
-
-                    } else {
-                        Glide.with(this.context)
-                            .load(any)
-                            .apply(options)
-                            .thumbnail(loadRoundedTransform(this.context, errorResId, radius))
-                            .thumbnail(loadRoundedTransform(this.context, errorResId, radius))
-                            .into(this)
-                    }
-                }
-                roundingRadius == -1f -> {
-                    this.scaleType = ImageView.ScaleType.CENTER_CROP
-                    options.transform(CenterCrop(), CircleCrop()) //圆形
-
-                    if (isGif) {
-                        Glide.with(this.context)
-                            .asGif()
-                            .load(any)
-                            .into(this)
-
-                    } else {
-                        Glide.with(this.context)
-                            .load(any)
-                            .apply(options)
-                            .thumbnail(loadCircleTransform(this.context, errorResId))
-                            .thumbnail(loadCircleTransform(this.context, errorResId))
-                            .into(this)
-                    }
-
-
-                }
-                else -> {
-                    if (isGif) {
-                        Glide.with(this.context)
-                            .asGif()
-                            .load(any)
-                            .into(this)
-
-                    } else {
-                        Glide.with(this.context)
-                            .load(any)
-                            .apply(options)
-                            .into(this)
-                    }
-                }
+            //圆角
+            if (roundingRadius > 0) {
+                val roundingRadius = roundingRadius.toInt().vbDp2px()
+                options.transform(CenterCrop(),
+                    RoundedCorners(roundingRadius))
+            } else if (roundingRadius < 0) {
+                options.transform(CenterCrop(), CircleCrop()) //圆形
             }
 
+            if (isGif) {
+                Glide.with(this.context)
+                    .asGif()
+                    .load(any)
+                    .apply(options)
+                    .into(object : ImageViewTarget<GifDrawable?>(this) {
+                        override fun setResource(@Nullable resource: GifDrawable?) {
+                            this@run.setImageDrawable(resource)
+                        }
 
+                        override fun onLoadFailed(errorDrawable: Drawable?) {
+                            super.onLoadFailed(errorDrawable)
+                            this@run.post {
+                                Glide.with(this@run.context)
+                                    .load(errorResId)
+                                    .apply(options)
+                                    .into(this@run)
+
+                            }
+                        }
+                    })
+
+            } else {
+
+                options.error(errorResId)
+                    .placeholder(errorResId)
+                    .dontAnimate()
+
+                Glide.with(this)
+                    .load(any)
+                    .apply(options)
+                    .apply {
+                        //圆角
+                        if (roundingRadius > 0) {
+                            val roundingRadius = roundingRadius.toInt().vbDp2px()
+                            thumbnail(loadRoundedTransform(this@run.context,
+                                errorResId,
+                                roundingRadius))
+
+                        } else if (roundingRadius < 0) {
+                            thumbnail(loadCircleTransform(this@run.context, errorResId))
+                        }
+                    }
+                    .into(this)
+            }
         } catch (e: Exception) {
             e.printStackTrace()
         }

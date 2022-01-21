@@ -5,9 +5,9 @@ import android.content.pm.ActivityInfo
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
+import android.view.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -96,11 +96,7 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
 
         //把mDataBinding添加到baseDataBinding里面去
         if (useAddViewVBRoot()) {
-
-
             mRootDataBinding.layoutContent.addView(mDataBinding.root)
-
-
             if (useRecyclerViewErrorShow()) {
                 //加载错误布局
                 VBApplication.getRecyclerViewErrorView()?.run {
@@ -149,10 +145,25 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             try {
-                val decorViewClazz = Class.forName("com.android.internal.policy.DecorView")
-                val field: Field = decorViewClazz.getDeclaredField("mSemiTransparentStatusBarColor")
-                field.isAccessible = true
-                field.setInt(window.decorView, Color.TRANSPARENT) //改为透明
+                if (Build.VERSION.SDK_INT >= 21) {
+                    val window: Window = window
+                    //添加Flag把状态栏设为可绘制模式
+                    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+                    window.decorView.systemUiVisibility =
+                        (View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE)
+                    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                    window.statusBarColor = Color.TRANSPARENT
+                    //view不根据系统窗口来调整自己的布局
+                    val mContentView = window.findViewById(Window.ID_ANDROID_CONTENT) as ViewGroup
+                    val mChildView = mContentView.getChildAt(0)
+                    if (mChildView != null) {
+                        ViewCompat.setFitsSystemWindows(mChildView, false)
+                        ViewCompat.requestApplyInsets(mChildView)
+                    }
+                } else {
+                    window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+                }
             } catch (e: Exception) {
             }
         }
