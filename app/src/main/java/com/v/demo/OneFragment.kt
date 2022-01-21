@@ -16,6 +16,7 @@ import com.v.demo.model.DemoViewModel
 import com.zhpan.bannerview.BannerViewPager
 import com.zhpan.bannerview.constants.PageStyle
 import com.zhpan.indicator.enums.IndicatorSlideMode
+import kotlin.time.days
 
 /**
  * @Author : ww
@@ -47,10 +48,19 @@ class OneFragment : VBFragment<FragmentOneBinding, DemoViewModel>() {
                 },
                 onItemLongClick = { view, position ->
 
-                }
+                },
+                emptyViewClickListener = View.OnClickListener {
+                    "点击了全局设置的空布局".toast()
+                },
+                emptyView = vbEmptyView(mContext,
+                    res = R.mipmap.ic_movie,
+                    listener = View.OnClickListener {
+                        "点击了自定义空布局".toast()
+                    })
             )
         } as OneFragmentAdapter
     }
+
 
     private val mAdapterHeaderView by lazy {
         mContext.vbGetDataBinding<FragmentOneHeaderBinding>(R.layout.fragment_one_header)
@@ -84,9 +94,6 @@ class OneFragment : VBFragment<FragmentOneBinding, DemoViewModel>() {
 
             it?.data?.let {
                 mAdapter.vbLoad(it.datas, page, mDataBinding.refreshLayout,
-                    emptyView = vbEmptyView(mContext, listener = View.OnClickListener {
-                        "点击了空布局".toast()
-                    }),
                     onSuccess = { p ->
                         page = p
                     })
