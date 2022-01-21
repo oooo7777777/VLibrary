@@ -175,6 +175,7 @@ fun <T> BaseQuickAdapter<T, *>.vbConfig(
  * @param mCurrentPageNum 当前分页
  * @param refreshLayout SmartRefreshLayout
  * @param emptyView 数据空布局(当列表有headerLayout或者footerLayout时,不会加载空布局)
+ * @param isEmptyViewShow 是否展示空布局
  * @param onSuccess 数据设置成功
  */
 fun <T> BaseQuickAdapter<T, *>.vbLoad(
@@ -183,6 +184,7 @@ fun <T> BaseQuickAdapter<T, *>.vbLoad(
     refreshLayout: SmartRefreshLayout? = null,
     emptyView: View? = null,
     emptyViewListener: View.OnClickListener? = null,
+    isEmptyViewShow: Boolean = true,
     onSuccess: ((Int) -> Unit)? = null
 ) {
 
@@ -191,16 +193,15 @@ fun <T> BaseQuickAdapter<T, *>.vbLoad(
 
 
     if (mCurrentPageNum == 1) {
-        setNewInstance(list.toMutableList())
+        setList(list)
+        recyclerView.scrollToPosition(0)
         if (list.isNullOrEmpty()) {
-            if (headerLayout == null && footerLayout == null) {
+            if (headerLayout == null && footerLayout == null && isEmptyViewShow) {
                 if (emptyView == null) {
-
                     VBApplication.getRecyclerViewEmptyView()?.run {
                         setEmptyView(this)
                         emptyLayout?.setOnClickListener(emptyViewListener)
                     }
-
                 } else {
                     setEmptyView(emptyView)
                 }
