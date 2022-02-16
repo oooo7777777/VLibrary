@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.Window
 import com.v.base.R
+import com.v.base.VBApplication
 
 class VBLoadingDialog(context: Context) : Dialog(context) {
 

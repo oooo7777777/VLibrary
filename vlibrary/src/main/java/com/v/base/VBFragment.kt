@@ -95,7 +95,7 @@ abstract class VBFragment<VB : ViewDataBinding, VM : VBViewModel> : Fragment() {
         if (useRecyclerViewErrorShow()) {
 
             //加载错误布局
-            VBApplication.getRecyclerViewErrorView()?.run {
+            VBConfig.options.recyclerViewErrorLayout.run {
                 mRootDataBinding.layoutError.removeAllViews()
                 mRootDataBinding.layoutError.addView(mContext.vbGetLayoutView(this))
             }
@@ -296,7 +296,7 @@ abstract class VBFragment<VB : ViewDataBinding, VM : VBViewModel> : Fragment() {
             }
             if (it) {
                 currentRefreshLayout?.run {
-                    if (VBApplication.getRecyclerViewErrorView() != null && useRecyclerViewErrorShow()) {
+                    if (useRecyclerViewErrorShow()) {
                         //如果是下拉加载 就肯定是第第一页
                         if (isRefreshing) {
                             mRootDataBinding.layoutError.visibility = View.VISIBLE

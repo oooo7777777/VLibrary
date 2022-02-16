@@ -7,6 +7,7 @@ import android.view.*
 import androidx.databinding.ViewDataBinding
 import com.v.base.R
 import com.v.base.annotaion.VBDialogOrientation
+import com.v.base.utils.ext.log
 import com.v.base.utils.ext.logI
 import java.lang.reflect.ParameterizedType
 
@@ -31,7 +32,6 @@ abstract class VBDialog<VB : ViewDataBinding>(mContext: Context) : Dialog(mConte
         setStyle()
         setContentView(mDataBinding.root)
         initData()
-        setDialogCancelable(useCancellation())
 
     }
 
@@ -43,6 +43,7 @@ abstract class VBDialog<VB : ViewDataBinding>(mContext: Context) : Dialog(mConte
     fun setDialogCancelable(isCancelable: Boolean) {
         setCanceledOnTouchOutside(isCancelable)
         setCancelable(isCancelable)
+        "isCancelable:"+isCancelable.log()
     }
 
     /**
@@ -57,12 +58,6 @@ abstract class VBDialog<VB : ViewDataBinding>(mContext: Context) : Dialog(mConte
         return true
     }
 
-    /**
-     * 设置返回键不退出dialog
-     */
-    open fun useCancellation(): Boolean {
-        return true
-    }
 
     /**
      * 设置宽
@@ -90,7 +85,7 @@ abstract class VBDialog<VB : ViewDataBinding>(mContext: Context) : Dialog(mConte
         wlp.height = useHeight()
 
         if (useDim()) {
-            wlp.dimAmount = 0.4f
+            wlp.dimAmount = 0.7f
         } else {
             wlp.dimAmount = 0f
             window.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)

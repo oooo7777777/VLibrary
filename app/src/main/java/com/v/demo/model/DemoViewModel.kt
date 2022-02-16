@@ -1,12 +1,11 @@
 package com.v.demo.model
 
 import androidx.lifecycle.MutableLiveData
-import com.v.base.VBApplication.Companion.apiBase
 import com.v.base.VBViewModel
+import com.v.base.apiBase
 import com.v.demo.bean.BannerBean
 import com.v.demo.bean.HomeBean
 import com.v.demo.net.ApiResponse
-import kotlinx.coroutines.delay
 
 
 /**

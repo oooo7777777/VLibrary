@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit
  * desc    : 网络请求日志打印
  * time    : 2021-03-16 09:52:45
  */
-open class VBLogInterceptor : Interceptor {
+open class VBLogInterceptor(var logTag: String = "PRETTY_LOGGER") : Interceptor {
 
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
@@ -191,7 +191,7 @@ open class VBLogInterceptor : Interceptor {
                     .append("\n")
             }
         }
-        sb.toString().logD()
+        sb.toString().logD(logTag)
         return response
 
     }

@@ -21,7 +21,7 @@
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
             android:orientation="vertical"
-            app:bl_corners_radius="6dp"
+            app:bl_corners_radius="12dp"
             app:bl_solid_color="@android:color/white">
 
 
@@ -51,7 +51,7 @@
                     android:layout_below="@+id/tvTitle"
                     android:gravity="center"
                     android:lineSpacingExtra="3dp"
-                    android:minHeight="120dp"
+                    android:minHeight="100dp"
                     android:padding="15dp"
                     android:scrollbars="vertical"
                     android:textColor="#1C1A1A"

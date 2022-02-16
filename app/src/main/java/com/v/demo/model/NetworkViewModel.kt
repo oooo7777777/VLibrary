@@ -1,8 +1,8 @@
 package com.v.demo.model
 
 import androidx.lifecycle.MutableLiveData
-import com.v.base.VBApplication.Companion.apiBase
 import com.v.base.VBViewModel
+import com.v.base.apiBase
 import com.v.base.utils.vbToJson
 import com.v.demo.net.Network.Companion.apiService
 import kotlinx.coroutines.delay

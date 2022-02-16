@@ -8,6 +8,7 @@ import androidx.databinding.ViewDataBinding
 import com.v.base.VBBlankViewModel
 import com.v.base.annotaion.VBDialogOrientation
 import com.v.base.databinding.VbDialogHintBinding
+import com.v.base.utils.ext.log
 
 
 /**
@@ -86,6 +87,12 @@ class VBHintDialog(mContext: Context) : VBDialog<VbDialogHintBinding>(mContext),
         return this
     }
 
+
+     fun setCanceled(isCancelable: Boolean): VBHintDialog {
+        super.setDialogCancelable(isCancelable)
+
+        return this
+    }
 
     override fun onClick(v: View) {
         when (v.id) {

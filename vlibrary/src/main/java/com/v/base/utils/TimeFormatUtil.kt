@@ -87,7 +87,7 @@ fun Long.vbTimeFriendly(): String =
 /**
  * 秒转换成时分
  */
-fun Long.vbbTimeHHmm(): String {
+fun Long.vbTimeMMss(): String {
     run {
         if (this <= 0) return "00:00"
         val minute = this / 60

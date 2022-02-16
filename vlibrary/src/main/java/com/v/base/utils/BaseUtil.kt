@@ -2,6 +2,7 @@ package com.v.base.utils
 
 import android.app.Application
 import android.util.TypedValue
+import android.view.Gravity
 import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -109,11 +110,13 @@ fun vbGetRandomNumber(min: Int, max: Int): Int {
 /**
  * toast
  */
-fun Any.toast(isLong: Boolean = false) {
-    if (isLong)
-        Toast.makeText(VBApplication.getApplication(), this.toString(), Toast.LENGTH_LONG).show()
-    else
-        Toast.makeText(VBApplication.getApplication(), this.toString(), Toast.LENGTH_SHORT).show()
+fun Any.toast(isLong: Boolean = false, gravity: Int = Gravity.CENTER) {
+
+    var toast = Toast.makeText(VBApplication.getApplication(),
+        this.toString(),
+        if (isLong) Toast.LENGTH_LONG else Toast.LENGTH_SHORT)
+    toast.setGravity(gravity, 0, 0);
+    toast.show()
 }
 
 /**

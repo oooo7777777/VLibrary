@@ -1,6 +1,7 @@
 package com.v.base.net
 
 import com.v.base.VBApplication
+import com.v.base.VBConfig
 import com.v.base.annotaion.VBError
 import com.v.base.utils.ext.logE
 import com.v.base.utils.toast
@@ -51,7 +52,7 @@ object VBExceptionHandle {
             }
         }
         (ex.toString()).logE()
-        if (VBApplication.isNetToast() || isToast) {
+        if (VBConfig.options.netOptions.isNetToast || isToast) {
             (ex.errorMsg).toast()
         }
         return ex

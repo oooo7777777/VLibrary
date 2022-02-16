@@ -99,7 +99,7 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
             mRootDataBinding.layoutContent.addView(mDataBinding.root)
             if (useRecyclerViewErrorShow()) {
                 //加载错误布局
-                VBApplication.getRecyclerViewErrorView()?.run {
+                VBConfig.options.recyclerViewErrorLayout.run {
                     mRootDataBinding.layoutError.removeAllViews()
                     mRootDataBinding.layoutError.addView(mContext.vbGetLayoutView(this))
                 }
@@ -140,7 +140,7 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
      * @param color 颜色
      */
     protected open fun statusBarColor(
-        color: Int = VBApplication.getStatusBarColor()
+        color: Int = VBConfig.options.statusBarColor
     ) {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -338,8 +338,8 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
             }
             if (it) {
                 currentRefreshLayout?.run {
-                    if (VBApplication.getRecyclerViewErrorView() != null && useRecyclerViewErrorShow()) {
-                        //如果是下拉加载 就肯定是第第一页
+                    if (useRecyclerViewErrorShow()) {
+                        //如果是下拉加载 就肯定是第一页
                         if (isRefreshing) {
                             mRootDataBinding.layoutError.visibility = View.VISIBLE
                             mRootDataBinding.layoutError.setOnClickListener {

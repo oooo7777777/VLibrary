@@ -33,13 +33,14 @@ class ThreeFragment : VBFragment<FragmentThreeBinding, VBBlankViewModel>(), View
             }
 
             mDataBinding.bt3.id -> {
-                VBHintDialog(mContext)
-                    .setTitle("提示")
+                VBHintDialog(mContext).setTitle("提示")
                     .setContent("确定保存吗?")
                     .setButtonText("取消", "确定")
                     .setClickListener { hintDialog, position ->
                         hintDialog.dismiss()
-                    }.show()
+                    }
+                    .setCanceled(false)
+                    .show()
             }
             mDataBinding.bt4.id -> {
 

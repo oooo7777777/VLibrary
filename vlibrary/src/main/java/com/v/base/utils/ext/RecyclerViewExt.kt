@@ -13,6 +13,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.v.base.R
 import com.v.base.VBApplication
+import com.v.base.VBConfig
 import com.v.base.utils.RecyclerViewItemDecoration
 
 
@@ -167,7 +168,7 @@ fun <T> BaseQuickAdapter<T, *>.vbConfig(
     }
 
     if (emptyView == null) {
-        VBApplication.getRecyclerViewEmptyView()?.run {
+        VBConfig.options.recyclerViewEmptyLayout.run {
             setEmptyView(this)
             emptyLayout?.setOnClickListener(emptyViewClickListener)
         }

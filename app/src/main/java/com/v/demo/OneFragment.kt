@@ -16,7 +16,6 @@ import com.v.demo.model.DemoViewModel
 import com.zhpan.bannerview.BannerViewPager
 import com.zhpan.bannerview.constants.PageStyle
 import com.zhpan.indicator.enums.IndicatorSlideMode
-import kotlin.time.days
 
 /**
  * @Author : ww
