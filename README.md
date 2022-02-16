@@ -54,6 +54,7 @@ android {
 open class *** : VBApplication() {
 
     override fun initData() {
+    //设置全局通用配置
         val netOptions = VBNetOptions.Builder()
             .setBaseUrl("https://www.wanandroid.com/")
             .build()
