@@ -53,6 +53,19 @@ android {
 ```
 open class *** : VBApplication() {
 
+    override fun initData() {
+        val netOptions = VBNetOptions.Builder()
+            .setBaseUrl("https://www.wanandroid.com/")
+            .build()
+
+        val options = VBConfigOptions.Builder()
+            .setNetOptions(netOptions)
+            .setStatusBarColor(Color.parseColor("#ffffff"))
+            .build()
+
+        VBConfig.init(options)
+    }
+    
 }
 ```
 
