@@ -12,6 +12,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.githang.statusbar.StatusBarCompat
 import com.noober.background.BackgroundLibrary
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.api.RefreshFooter
@@ -125,7 +126,6 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
     private fun initToolBar() {
 
         statusBarColor()
-        mTitleBar.useStatusBar(useStatusBar())
 
         showTitleBar(useTitleBar())
 
@@ -142,15 +142,14 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
     protected open fun statusBarColor(
         color: Int = VBConfig.options.statusBarColor
     ) {
-        //状态栏颜色趋近于白色时，会智能将状态栏字体颜色变换为黑色
-        if (isWhiteColor(color)) {
-            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR//黑色
-        } else {
-            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE//白色
-        }
 
-        mTitleBar.ivStatusBar.vbSetViewLayoutParams(h = vbGetStatusBarHeight())
-        mTitleBar.setStatusBarColor(color)
+        //状态栏颜色趋近于白色时，会智能将状态栏字体颜色变换为黑色
+        StatusBarCompat.setLightStatusBar(window, isWhiteColor(color))
+        if (useTranslucent()) {
+            StatusBarCompat.setTranslucent(window, true)
+        } else {
+            StatusBarCompat.setStatusBarColor(this, color)
+        }
     }
 
     /**
@@ -239,9 +238,9 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
     protected open fun useTitleBar(): Boolean = true
 
     /**
-     * 是否显示状态栏
+     * 是否沉浸式状态栏
      */
-    protected open fun useStatusBar(): Boolean = true
+    protected open fun useTranslucent(): Boolean = false
 
     /**
      * RecyclerView加载失败时是否显示失败界面(需要配合SmartRefreshLayout下面包含RecyclerView才会起作用)

@@ -25,7 +25,6 @@ class VBTitleBar @JvmOverloads constructor(
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
 
-    private var ivStatusBar: ImageView
     private var toolbar: Toolbar
 
     private var tvTitle: TextView
@@ -44,7 +43,6 @@ class VBTitleBar @JvmOverloads constructor(
     init {
         View.inflate(context, R.layout.vb_title_bar, this)
 
-        ivStatusBar = findViewById(R.id.ivStatusBar)
         toolbar = findViewById(R.id.toolbar)
         ivLine = findViewById(R.id.ivLine)
 
@@ -59,7 +57,6 @@ class VBTitleBar @JvmOverloads constructor(
         tvRight = findViewById(R.id.tvRight)
         ivRight = findViewById(R.id.ivRight)
 
-        ivStatusBar.vbSetViewLayoutParams(h = context.vbGetStatusBarHeight())
         ivLeft.setImageResource(VBConfig.options.toolbarBackRes)
         setToolbarColor(VBConfig.options.toolbarColor)
     }
@@ -72,14 +69,6 @@ class VBTitleBar @JvmOverloads constructor(
 
     fun useLine(show: Boolean) {
         ivLine.visibility = if (show) View.VISIBLE else View.GONE
-    }
-
-    fun useStatusBar(show: Boolean) {
-        ivStatusBar.visibility = if (show) View.VISIBLE else View.GONE
-    }
-
-    fun setStatusBarColor(color: Int) {
-        ivStatusBar.setBackgroundColor(color)
     }
 
     fun setToolbarColor(color: Int) {

@@ -23,12 +23,14 @@
 
 
     <LinearLayout
+        android:background="@mipmap/ic_movie"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
 
         <Button
+            android:layout_marginTop="100dp"
             android:id="@+id/bt2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -13,8 +13,8 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 360
-        versionName "3.6.0"
+        versionCode 361
+        versionName "3.6.1"
     }
 
     compileOptions {
@@ -59,6 +59,6 @@ dependencies {
     api "com.scwang.smart:refresh-header-classics:2.0.3"
     api "com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4"
     api "com.github.JavaNoober.BackgroundLibrary:libraryx:1.7.2"//BackgroundLibrary  （通过标签直接生成shape，无需再写shape.xml）
-
+    api "com.githang:status-bar-compat:0.7"//状态栏
 }
 
