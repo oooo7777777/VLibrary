@@ -16,10 +16,6 @@
         <!-- 主要用于状态栏-->
         <item name="colorPrimaryDark">@android:color/transparent</item>
 
-        <item name="android:windowTranslucentNavigation">true</item>
-
-
-
     </style>
 
     <style name="vb_splash_theme" parent="Theme.AppCompat.NoActionBar">

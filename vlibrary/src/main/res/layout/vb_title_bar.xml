@@ -47,7 +47,6 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:textColor="@android:color/black"
-                    tools:src="@mipmap/vb_ic_back_white"
                     tools:text="忽略全部" />
 
                 <ImageView
@@ -55,6 +54,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left|center"
+                    android:adjustViewBounds="true"
                     android:src="@mipmap/vb_ic_back_black" />
 
             </FrameLayout>

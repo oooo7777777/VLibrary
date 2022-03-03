@@ -60,6 +60,8 @@ class VBTitleBar @JvmOverloads constructor(
         ivRight = findViewById(R.id.ivRight)
 
         ivStatusBar.vbSetViewLayoutParams(h = context.vbGetStatusBarHeight())
+        ivLeft.setImageResource(VBConfig.options.toolbarBackRes)
+        setToolbarColor(VBConfig.options.toolbarColor)
     }
 
 
@@ -86,7 +88,7 @@ class VBTitleBar @JvmOverloads constructor(
 
     fun setTitle(
         title: String = "",
-        titleColor: Int = Color.BLACK,
+        titleColor: Int = VBConfig.options.toolbarTitleColor,
         isShowBottomLine: Boolean = true,
         listener: OnClickListener? = null
     ) {
@@ -122,7 +124,7 @@ class VBTitleBar @JvmOverloads constructor(
     }
 
     fun setLeft(
-        res: Int = R.mipmap.vb_ic_back_black,
+        res: Int = VBConfig.options.toolbarBackRes,
         listener: OnClickListener? = null
     ) {
 

@@ -142,32 +142,6 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
     protected open fun statusBarColor(
         color: Int = VBConfig.options.statusBarColor
     ) {
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            try {
-                if (Build.VERSION.SDK_INT >= 21) {
-                    val window: Window = window
-                    //添加Flag把状态栏设为可绘制模式
-                    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-                    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-                    window.decorView.systemUiVisibility =
-                        (View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE)
-                    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-                    window.statusBarColor = Color.TRANSPARENT
-                    //view不根据系统窗口来调整自己的布局
-                    val mContentView = window.findViewById(Window.ID_ANDROID_CONTENT) as ViewGroup
-                    val mChildView = mContentView.getChildAt(0)
-                    if (mChildView != null) {
-                        ViewCompat.setFitsSystemWindows(mChildView, false)
-                        ViewCompat.requestApplyInsets(mChildView)
-                    }
-                } else {
-                    window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-                }
-            } catch (e: Exception) {
-            }
-        }
-
         //状态栏颜色趋近于白色时，会智能将状态栏字体颜色变换为黑色
         if (isWhiteColor(color)) {
             window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR//黑色
@@ -188,7 +162,7 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
      */
     protected open fun toolBarTitle(
         title: String = "",
-        titleColor: Int = Color.BLACK,
+        titleColor: Int = VBConfig.options.toolbarTitleColor,
         isShowBottomLine: Boolean = true,
         listener: View.OnClickListener? = null
     ) {
@@ -209,7 +183,7 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
      * @param listener 点击事件
      */
     protected open fun toolBarLift(
-        resId: Int = R.mipmap.vb_ic_back_black,
+        resId: Int = VBConfig.options.toolbarBackRes,
         text: String = "",
         textColor: Int = Color.BLACK,
         listener: View.OnClickListener = View.OnClickListener { mContext.onBackPressed() }
@@ -256,7 +230,7 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
     /**
      * 设置是屏幕方向
      */
-    protected open fun useOrientation(): Int = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+    protected open fun useOrientation(): Int = VBConfig.options.appOrientation
 
 
     /**
