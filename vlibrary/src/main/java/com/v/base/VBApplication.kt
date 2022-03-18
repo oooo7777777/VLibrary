@@ -9,9 +9,14 @@ abstract class VBApplication : Application() {
 
     companion object {
         private lateinit var context: VBApplication
+        private var isLog = true
 
         fun getApplication(): Application {
             return context
+        }
+
+        fun isLog(): Boolean {
+            return isLog
         }
     }
 
@@ -24,7 +29,8 @@ abstract class VBApplication : Application() {
         super.onCreate()
         context = this
 
-        if (isDebug()) {
+        isLog = isDebug()
+        if (isLog) {
             Logger.addLogAdapter(AndroidLogAdapter())
         }
         initData()

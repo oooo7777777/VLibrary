@@ -43,7 +43,7 @@ abstract class VBDialog<VB : ViewDataBinding>(mContext: Context) : Dialog(mConte
     fun setDialogCancelable(isCancelable: Boolean) {
         setCanceledOnTouchOutside(isCancelable)
         setCancelable(isCancelable)
-        "isCancelable:"+isCancelable.log()
+        "isCancelable:" + isCancelable.log()
     }
 
     /**
@@ -58,6 +58,12 @@ abstract class VBDialog<VB : ViewDataBinding>(mContext: Context) : Dialog(mConte
         return true
     }
 
+    /**
+     * 是否开启弹出动画
+     */
+    open fun useAnimations(): Boolean {
+        return true
+    }
 
     /**
      * 设置宽
@@ -95,11 +101,13 @@ abstract class VBDialog<VB : ViewDataBinding>(mContext: Context) : Dialog(mConte
         when (useDirection()) {
             VBDialogOrientation.TOP -> {
                 wlp.gravity = Gravity.TOP
-                window.setWindowAnimations(R.style.vb_top_dialog_anim)
+                if (useAnimations())
+                    window.setWindowAnimations(R.style.vb_top_dialog_anim)
             }
             VBDialogOrientation.BOTTOM -> {
                 wlp.gravity = Gravity.BOTTOM
-                window.setWindowAnimations(R.style.vb_bottom_dialog_anim)
+                if (useAnimations())
+                    window.setWindowAnimations(R.style.vb_bottom_dialog_anim)
             }
             VBDialogOrientation.LEFT -> {
                 wlp.gravity = Gravity.CENTER
@@ -108,12 +116,14 @@ abstract class VBDialog<VB : ViewDataBinding>(mContext: Context) : Dialog(mConte
 
             VBDialogOrientation.RIGHT -> {
                 wlp.gravity = Gravity.CENTER
-                window.setWindowAnimations(R.style.vb_right_dialog_anim)
+                if (useAnimations())
+                    window.setWindowAnimations(R.style.vb_right_dialog_anim)
             }
 
             VBDialogOrientation.CENTRE -> {
                 wlp.gravity = Gravity.CENTER
-                window.setWindowAnimations(R.style.vb_dialog_anim)
+                if (useAnimations())
+                    window.setWindowAnimations(R.style.vb_dialog_anim)
             }
         }
 

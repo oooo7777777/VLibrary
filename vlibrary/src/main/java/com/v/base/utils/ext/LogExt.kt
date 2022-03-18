@@ -2,6 +2,7 @@ package com.v.base.utils.ext
 
 import android.util.Log
 import com.orhanobut.logger.Logger
+import com.v.base.VBApplication
 
 const val TAG = "PRETTY_LOGGER"
 
@@ -44,7 +45,11 @@ fun Any.logE(tag: String = TAG) =
         this.toString()
     )
 
-fun Any.log(tag: String = TAG) = run { Log.e(tag, this.toString()) }
+fun Any.log(tag: String = TAG) = run {
+    if (VBApplication.isLog()) {
+        Log.e(tag, this.toString())
+    }
+}
 
 
 private fun log(level: LEVEL, tag: String, message: String) {

@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    xmlns:tools="http://schemas.android.com/tools">
 
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="@android:color/white"
-        app:contentInsetStart="0dp">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/ivStatusBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
         <FrameLayout
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="45dp"
+            android:background="@android:color/white">
 
             <TextView
                 android:id="@+id/tvTitle"
@@ -86,14 +88,15 @@
 
 
         </FrameLayout>
-    </androidx.appcompat.widget.Toolbar>
 
-    <ImageView
-        android:id="@+id/ivLine"
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="#F3F3F5"
-        android:visibility="gone"
-        tools:visibility="visible" />
+        <ImageView
+            android:id="@+id/ivLine"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#F3F3F5"
+            android:visibility="gone"
+            tools:visibility="visible" />
 
-</LinearLayout>
+    </LinearLayout>
+
+</layout>

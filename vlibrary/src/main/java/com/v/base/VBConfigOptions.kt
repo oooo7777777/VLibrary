@@ -70,7 +70,7 @@ class VBConfigOptions(builder: Builder) {
 
         internal var statusBarColor = Color.parseColor("#000000")
         internal var toolbarColor = Color.parseColor("#FFFFFF")
-        internal var toolbarTitleColor = Color.parseColor("#FFFFFF")
+        internal var toolbarTitleColor = Color.parseColor("#000000")
         internal var toolbarBackRes = R.mipmap.vb_ic_back_black
         internal var appOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         internal var recyclerViewEmptyLayout = R.layout.vb_layout_empty
@@ -96,6 +96,7 @@ class VBConfigOptions(builder: Builder) {
             this.toolbarColor = toolbarColor
             return this
         }
+
         fun setToolbarTitleColor(toolbarTitleColor: Int): Builder {
             this.toolbarTitleColor = toolbarTitleColor
             return this

@@ -4,15 +4,19 @@ package com.v.base
 import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
+import androidx.databinding.DataBindingUtil
+import com.v.base.databinding.VbTitleBarBinding
 import com.v.base.utils.ext.vbGetStatusBarHeight
 import com.v.base.utils.ext.vbOnClickAnimator
 import com.v.base.utils.ext.vbSetViewLayoutParams
 import com.v.base.utils.isWhiteColor
+import com.v.base.utils.vbDp2px
 import com.v.base.utils.vbTextBold
 
 /**
@@ -25,54 +29,37 @@ class VBTitleBar @JvmOverloads constructor(
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
 
-    private var toolbar: Toolbar
-
-    private var tvTitle: TextView
-
-    private var flLeft: FrameLayout
-    private var tvLeft: TextView
-    private var ivLeft: ImageView
-
-
-    private var flRight: FrameLayout
-    private var tvRight: TextView
-    private var ivRight: ImageView
-
-    private var ivLine: ImageView
+    var mDataBinding: VbTitleBarBinding =
+        DataBindingUtil.inflate(LayoutInflater.from(context),
+            R.layout.vb_title_bar,
+            this,
+            true)
 
     init {
-        View.inflate(context, R.layout.vb_title_bar, this)
-
-        toolbar = findViewById(R.id.toolbar)
-        ivLine = findViewById(R.id.ivLine)
-
-        tvTitle = findViewById(R.id.tvTitle)
-
-        flLeft = findViewById(R.id.flLeft)
-        tvLeft = findViewById(R.id.tvLeft)
-        ivLeft = findViewById(R.id.ivLeft)
-
-
-        flRight = findViewById(R.id.flRight)
-        tvRight = findViewById(R.id.tvRight)
-        ivRight = findViewById(R.id.ivRight)
-
-        ivLeft.setImageResource(VBConfig.options.toolbarBackRes)
+        mDataBinding.ivLeft.setImageResource(VBConfig.options.toolbarBackRes)
         setToolbarColor(VBConfig.options.toolbarColor)
     }
 
 
     fun useToolbar(show: Boolean) {
-        toolbar.visibility = if (show) View.VISIBLE else View.GONE
-        ivLine.visibility = if (show) View.VISIBLE else View.GONE
+        mDataBinding.toolbar.visibility = if (show) View.VISIBLE else View.GONE
+        mDataBinding.ivLine.visibility = if (show) View.VISIBLE else View.GONE
     }
 
     fun useLine(show: Boolean) {
-        ivLine.visibility = if (show) View.VISIBLE else View.GONE
+        mDataBinding.ivLine.visibility = if (show) View.VISIBLE else View.GONE
     }
 
     fun setToolbarColor(color: Int) {
-        toolbar.setBackgroundColor(color)
+        mDataBinding.toolbar.setBackgroundColor(color)
+        mDataBinding.ivStatusBar.setBackgroundColor(color)
+    }
+
+    fun setToolbarTransparent() {
+        mDataBinding.toolbar.setBackgroundColor(Color.TRANSPARENT)
+        mDataBinding.ivStatusBar.setBackgroundColor(Color.TRANSPARENT)
+        mDataBinding.ivStatusBar.vbSetViewLayoutParams(h = context.vbGetStatusBarHeight())
+
     }
 
     fun setTitle(
@@ -81,16 +68,16 @@ class VBTitleBar @JvmOverloads constructor(
         isShowBottomLine: Boolean = true,
         listener: OnClickListener? = null
     ) {
-        tvTitle.text = title
-        tvTitle.setTextColor(titleColor)
-        tvTitle.vbTextBold(true)
+        mDataBinding.tvTitle.text = title
+        mDataBinding.tvTitle.setTextColor(titleColor)
+        mDataBinding.tvTitle.vbTextBold(true)
         if (listener != null) {
-            tvTitle.vbOnClickAnimator {
+            mDataBinding.tvTitle.vbOnClickAnimator {
                 listener.onClick(it)
             }
         }
 
-        ivLine.visibility = if (isShowBottomLine) View.VISIBLE else View.GONE
+        mDataBinding.ivLine.visibility = if (isShowBottomLine) View.VISIBLE else View.GONE
     }
 
 
@@ -99,14 +86,14 @@ class VBTitleBar @JvmOverloads constructor(
         titleColor: Int = Color.BLACK,
         listener: OnClickListener? = null
     ) {
-        ivLeft.visibility = View.GONE
-        tvLeft.visibility = View.VISIBLE
+        mDataBinding.ivLeft.visibility = View.GONE
+        mDataBinding.tvLeft.visibility = View.VISIBLE
 
-        tvLeft.text = title
-        tvLeft.setTextColor(titleColor)
+        mDataBinding.tvLeft.text = title
+        mDataBinding.tvLeft.setTextColor(titleColor)
 
         if (listener != null) {
-            flLeft.vbOnClickAnimator {
+            mDataBinding.flLeft.vbOnClickAnimator {
                 listener.onClick(it)
             }
         }
@@ -117,13 +104,13 @@ class VBTitleBar @JvmOverloads constructor(
         listener: OnClickListener? = null
     ) {
 
-        ivLeft.visibility = View.VISIBLE
-        tvLeft.visibility = View.GONE
+        mDataBinding.ivLeft.visibility = View.VISIBLE
+        mDataBinding.tvLeft.visibility = View.GONE
 
-        ivLeft.setImageResource(res)
+        mDataBinding.ivLeft.setImageResource(res)
 
         if (listener != null) {
-            flLeft.vbOnClickAnimator {
+            mDataBinding.flLeft.vbOnClickAnimator {
                 listener.onClick(it)
             }
         }
@@ -135,14 +122,14 @@ class VBTitleBar @JvmOverloads constructor(
         titleColor: Int = Color.BLACK,
         listener: OnClickListener? = null
     ) {
-        ivRight.visibility = View.GONE
-        tvRight.visibility = View.VISIBLE
+        mDataBinding.ivRight.visibility = View.GONE
+        mDataBinding.tvRight.visibility = View.VISIBLE
 
-        tvRight.text = title
-        tvRight.setTextColor(titleColor)
+        mDataBinding.tvRight.text = title
+        mDataBinding.tvRight.setTextColor(titleColor)
 
         if (listener != null) {
-            flRight.vbOnClickAnimator {
+            mDataBinding.flRight.vbOnClickAnimator {
                 listener.onClick(it)
             }
         }
@@ -154,46 +141,17 @@ class VBTitleBar @JvmOverloads constructor(
         listener: OnClickListener? = null
     ) {
 
-        ivRight.visibility = View.VISIBLE
-        tvRight.visibility = View.GONE
+        mDataBinding.ivRight.visibility = View.VISIBLE
+        mDataBinding.tvRight.visibility = View.GONE
 
-        ivRight.setImageResource(res)
+        mDataBinding.ivRight.setImageResource(res)
 
         if (listener != null) {
-            flRight.vbOnClickAnimator {
+            mDataBinding.flRight.vbOnClickAnimator {
                 listener.onClick(it)
             }
         }
     }
 
-
-    fun getTitleView(): TextView {
-        return tvTitle
-    }
-
-    fun getLeftLayout(): FrameLayout {
-        return flLeft
-    }
-
-    fun getLeftTextView(): TextView {
-        return tvLeft
-    }
-
-    fun getLeftImageView(): ImageView {
-        return ivLeft
-    }
-
-
-    fun getRightLayout(): FrameLayout {
-        return flRight
-    }
-
-    fun getRightTextView(): TextView {
-        return tvRight
-    }
-
-    fun getLine(): ImageView {
-        return ivLine
-    }
 
 }
