@@ -53,6 +53,7 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
     protected val mViewModel: VM by lazy {
         val type = javaClass.genericSuperclass as ParameterizedType
         val aClass = type.actualTypeArguments[1] as Class<VM>
+        aClass.getDeclaredConstructor().isAccessible = true
         if (useViewModelApplication()) {
             getApplicationViewModel(application, aClass)
 
@@ -69,6 +70,7 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
         val type = javaClass.genericSuperclass as ParameterizedType
         val aClass = type.actualTypeArguments[0] as Class<*>
         val method = aClass.getDeclaredMethod("inflate", LayoutInflater::class.java)
+        method.isAccessible = true
         method.invoke(null, layoutInflater) as VB
     }
 
@@ -140,7 +142,7 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
      * @param color 颜色
      */
     protected open fun statusBarColor(
-        color: Int = VBConfig.options.statusBarColor
+        color: Int = VBConfig.options.statusBarColor,
     ) {
 
         //状态栏颜色趋近于白色时，会智能将状态栏字体颜色变换为黑色
@@ -163,7 +165,7 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
         title: String = "",
         titleColor: Int = VBConfig.options.toolbarTitleColor,
         isShowBottomLine: Boolean = true,
-        listener: View.OnClickListener? = null
+        listener: View.OnClickListener? = null,
     ) {
         if (title.isNullOrEmpty()) {
             mTitleBar.useToolbar(false)
@@ -185,7 +187,7 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
         resId: Int = VBConfig.options.toolbarBackRes,
         text: String = "",
         textColor: Int = Color.BLACK,
-        listener: View.OnClickListener = View.OnClickListener { mContext.onBackPressed() }
+        listener: View.OnClickListener = View.OnClickListener { mContext.onBackPressed() },
     ) {
 
         if (resId == 0) {
@@ -208,7 +210,7 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
         resId: Int = 0,
         text: String = "",
         textColor: Int = Color.BLACK,
-        listener: View.OnClickListener? = null
+        listener: View.OnClickListener? = null,
     ) {
         if (resId == 0) {
             mTitleBar.setRight(text, textColor, listener)

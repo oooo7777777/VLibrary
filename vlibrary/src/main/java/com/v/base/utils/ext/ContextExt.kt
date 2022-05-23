@@ -227,24 +227,50 @@ fun Context.vbCopyToClipboard(text: String) = run {
 
 /**
  * 倒计时
+ * @param total 倒计数
+ * @param timeMillis 倒计时间隔
+ * @param onStart 倒计时开始
+ * @param onTick 倒计时数回调
+ * @param onFinish 倒计时完成
+ * @param onCancel 倒计时取消
+ * @param scope  lifecycleScope
+ * @param isTimeStart 倒计数是在间隔时间前减去1 还是在倒计时建构后减去1
  */
 fun vbCountDownCoroutines(
-    total: Long,
+    total: Long = Long.MAX_VALUE,
     timeMillis: Long = 1000,
-    onTick: (Long) -> Unit,
+    onStart: (() -> Unit)? = null,
+    onTick: ((Long) -> Unit)? = null,
     onFinish: (() -> Unit)? = null,
-    scope: CoroutineScope = GlobalScope
+    onCancel: (() -> Unit)? = null,
+    scope: CoroutineScope = GlobalScope,
+    isTimeStart: Boolean = true,
 ): Job {
+    var num = -1L
     return flow {
-
         for (i in total downTo 0) {
-            emit(i)
-            delay(timeMillis)
+            if (isTimeStart) {
+                emit(i)
+                delay(timeMillis)
+            } else {
+                delay(timeMillis)
+                emit(i)
+            }
         }
-
     }.flowOn(Dispatchers.Default)
-        .onCompletion { onFinish?.invoke() }
-        .onEach { onTick.invoke(it) }
+        .onStart { onStart?.invoke() }
+        .onCompletion {
+            //如果结束的时候 倒计时为传入的时间 则表示完成
+            if (num == total) {
+                onFinish?.invoke()
+            } else {
+                onCancel?.invoke()
+            }
+        }
+        .onEach {
+            num++
+            onTick?.invoke(it)
+        }
         .flowOn(Dispatchers.Main)
         .launchIn(scope)
 }

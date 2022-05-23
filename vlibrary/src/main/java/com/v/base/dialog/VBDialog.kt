@@ -23,6 +23,7 @@ abstract class VBDialog<VB : ViewDataBinding>(mContext: Context) : Dialog(mConte
         val type = javaClass.genericSuperclass as ParameterizedType
         val aClass = type.actualTypeArguments[0] as Class<*>
         val method = aClass.getDeclaredMethod("inflate", LayoutInflater::class.java)
+        method.isAccessible = true
         method.invoke(null, layoutInflater) as VB
     }
 

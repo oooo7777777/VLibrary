@@ -48,6 +48,7 @@ abstract class VBFragment<VB : ViewDataBinding, VM : VBViewModel> : Fragment() {
     protected val mViewModel: VM by lazy {
         val type = javaClass.genericSuperclass as ParameterizedType
         val aClass = type.actualTypeArguments[1] as Class<VM>
+        aClass.getDeclaredConstructor().isAccessible = true
         if (viewModelSyn()) {
             ViewModelProvider(requireActivity()).get(aClass)
         } else {
@@ -77,6 +78,7 @@ abstract class VBFragment<VB : ViewDataBinding, VM : VBViewModel> : Fragment() {
             ViewGroup::class.java,
             Boolean::class.java
         )
+        method.isAccessible = true
         mDataBinding = method.invoke(null, layoutInflater, container, false) as VB
         mDataBinding.lifecycleOwner = this
 
