@@ -21,8 +21,6 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
 
     lateinit var mContext: AppCompatActivity
 
-    private var currentRefreshLayout: SmartRefreshLayout? = null
-
 
     val mTitleBar by lazy {
         mRootDataBinding.vbTitleBar
@@ -104,7 +102,7 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
      * @param color 颜色
      */
     protected open fun statusBarColor(
-        color: Int = VBConfig.options.statusBarColor,
+        color: Int = VBConfig.options.statusBarColor
     ) {
         //状态栏颜色趋近于白色时，会智能将状态栏字体颜色变换为黑色
         StatusBarCompat.setLightStatusBar(window, isWhiteColor(color))

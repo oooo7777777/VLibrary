@@ -39,7 +39,11 @@ fun ImageView.vbLoad(
 /**
  * 加载不同圆角图片
  * @param any 图片资源Glide所支持的
- * @param errorResId 加载错误占位图
+ * @param topLeft 顶部左边圆角
+ * @param topRight 顶部右边圆角
+ * @param bottomLeft 底部左边圆角
+ * @param bottomRight 底部右边圆角
+* @param errorResId 加载错误占位图
  */
 fun ImageView.vbLoadRounded(
     any: Any,

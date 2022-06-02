@@ -66,7 +66,7 @@ fun RecyclerView.vbGridStaggered(
 }
 
 /**
- *  自定义LayoutManager
+ * 自定义LayoutManager
  * LayoutManager
  */
 fun RecyclerView.vbLayoutManager(
