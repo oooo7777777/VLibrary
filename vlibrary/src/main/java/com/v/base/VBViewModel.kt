@@ -4,12 +4,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alibaba.fastjson.TypeReference
+import com.v.base.bean.VBResponse
 import com.v.base.net.VBAppException
 import com.v.base.net.VBExceptionHandle
-import com.v.base.bean.VBResponse
 import com.v.base.utils.EventLiveData
 import com.v.base.utils.vbToBean
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import java.lang.reflect.Type
 
 
@@ -20,6 +23,7 @@ abstract class VBViewModel : ViewModel() {
     inner class UiLoadingChange {
         val showDialog by lazy { EventLiveData<String>() }
         val dismissDialog by lazy { EventLiveData<Boolean>() }
+        val showToast by lazy { EventLiveData<String>() }
     }
 
     /**
@@ -34,29 +38,24 @@ abstract class VBViewModel : ViewModel() {
     fun <T> vbRequest(
         block: suspend () -> VBResponse<T>,
         success: (T) -> Unit,
-        error: (VBAppException) -> Unit = {},
+        error: ((VBAppException) -> Unit)? = null,
         code: (Int) -> Unit = {},
         dialog: Boolean = false,
-        isToast: Boolean = true
+        dialogMsg: String = "",
+        isToast: Boolean = true,
     ): Job {
         return viewModelScope.launch {
             runCatching {
-                if (dialog) {
-                    loadingChange.showDialog.postValue("")
-                }
+                if (dialog)
+                    loadingChange.showDialog.postValue(dialogMsg)
                 block()
             }.onSuccess {
-                loadingChange.dismissDialog.postValue(false)
-                code(it.getResponseCode())
-                runCatching {
-                    executeResponse(it) { t -> success(t) }
-                }.onFailure { e ->
-                    error(VBExceptionHandle.handleException(e, isToast))
-                    loadingChange.dismissDialog.postValue(true)
-                }
-            }.onFailure { e ->
-                error(VBExceptionHandle.handleException(e, isToast))
-                loadingChange.dismissDialog.postValue(true)
+                if (dialog)
+                    loadingChange.dismissDialog.postValue(false)
+                code.invoke(it.getResponseCode())
+                executeResponse(it) { t -> success.invoke(t) }
+            }.onFailure {
+                handleException(it, isToast, error)
             }
         }
     }
@@ -72,22 +71,22 @@ abstract class VBViewModel : ViewModel() {
     fun <T> vbRequestDefault(
         block: suspend () -> T,
         success: (T) -> Unit,
-        error: (VBAppException) -> Unit = {},
+        error: ((VBAppException) -> Unit)? = null,
         dialog: Boolean = false,
-        isToast: Boolean = true
+        dialogMsg: String = "",
+        isToast: Boolean = true,
     ): Job {
         return viewModelScope.launch {
             runCatching {
-                if (dialog) {
-                    loadingChange.showDialog.postValue("")
-                }
+                if (dialog)
+                    loadingChange.showDialog.postValue(dialogMsg)
                 block()
             }.onSuccess {
-                loadingChange.dismissDialog.postValue(false)
-                success(it)
-            }.onFailure { e ->
-                error(VBExceptionHandle.handleException(e,isToast))
-                loadingChange.dismissDialog.postValue(true)
+                if (dialog)
+                    loadingChange.dismissDialog.postValue(false)
+                success.invoke(it)
+            }.onFailure {
+                handleException(it, isToast, error)
             }
         }
     }
@@ -106,27 +105,27 @@ abstract class VBViewModel : ViewModel() {
         resultState: MutableLiveData<T>,
         crossinline error: (VBAppException) -> Unit = {},
         dialog: Boolean = false,
-        isToast: Boolean = true
+        dialogMsg: String = "",
+        isToast: Boolean = true,
     ): Job {
         return viewModelScope.launch {
             runCatching {
-                if (dialog) {
-                    loadingChange.showDialog.postValue("")
-                }
+                if (dialog)
+                    loadingChange.showDialog.postValue(dialogMsg)
                 block()
             }.onSuccess {
-                loadingChange.dismissDialog.postValue(false)
-                runCatching {
-                    val type: Type = object : TypeReference<T>() {}.type
-                    resultState.postValue(it.toString().vbToBean(type) as T)
-                }.onFailure { e ->
-                    error(VBExceptionHandle.handleException(e,isToast))
-                    loadingChange.dismissDialog.postValue(true)
-
+                if (dialog)
+                    loadingChange.dismissDialog.postValue(false)
+                val type: Type = object : TypeReference<T>() {}.type
+                resultState.postValue(it.toString().vbToBean(type) as T)
+            }.onFailure {
+                val e = VBExceptionHandle.handleException(it)
+                error.invoke(e)
+                if (isToast && !e.errorMsg.isNullOrEmpty()) {
+                    loadingChange.showToast.postValue(e.errorMsg)
                 }
-            }.onFailure { e ->
-                error(VBExceptionHandle.handleException(e,isToast))
-                loadingChange.dismissDialog.postValue(true)
+                if (dialog)
+                    loadingChange.dismissDialog.postValue(false)
             }
         }
     }
@@ -137,7 +136,7 @@ abstract class VBViewModel : ViewModel() {
      */
     suspend fun <T> executeResponse(
         response: VBResponse<T>,
-        success: suspend CoroutineScope.(T) -> Unit
+        success: suspend CoroutineScope.(T) -> Unit,
     ) {
         coroutineScope {
             if (!response.isSuccess()) {
@@ -151,37 +150,18 @@ abstract class VBViewModel : ViewModel() {
         }
     }
 
-
-    /**
-     *  调用协程
-     * @param block 操作耗时操作任务
-     * @param success 成功回调
-     * @param error 失败回调 可不给
-     */
-    fun <T> vbScopeAsync(
-        block: suspend () -> T,
-        success: (T) -> Unit,
-        error: (Throwable) -> Unit = {},
-        dialog: Boolean = false
+    fun handleException(
+        throwable: Throwable,
+        isToast: Boolean = false,
+        error: ((VBAppException) -> Unit)?,
     ) {
-        viewModelScope.launch {
-            runCatching {
-                if (dialog) {
-                    loadingChange.showDialog.postValue("")
-                }
-                withContext(Dispatchers.IO) {
-                    block()
-                }
-            }.onSuccess {
-                loadingChange.dismissDialog.postValue(false)
-                success(it)
-            }.onFailure {
-                error(it)
-                loadingChange.dismissDialog.postValue(true)
-            }
+        val e = VBExceptionHandle.handleException(throwable)
+        error?.invoke(e)
+        if (isToast && !e.errorMsg.isNullOrEmpty()) {
+            loadingChange.showToast.postValue(e.errorMsg)
         }
+        loadingChange.dismissDialog.postValue(false)
     }
-
 
 }
 

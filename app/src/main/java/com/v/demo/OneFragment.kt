@@ -1,11 +1,8 @@
 package com.v.demo
 
-import android.view.View
 import androidx.lifecycle.Observer
 import com.v.base.VBFragment
-import com.v.base.utils.ext.*
-import com.v.base.utils.toast
-import com.v.base.utils.vbDp2px
+import com.v.base.utils.*
 import com.v.demo.adapter.BannerAdapter
 import com.v.demo.adapter.OneFragmentAdapter
 import com.v.demo.bean.BannerBean
@@ -41,19 +38,19 @@ class OneFragment : VBFragment<FragmentOneBinding, DemoViewModel>() {
                 onLoadMore = {
                     mViewModel.getList(page)
                 },
-                onItemClick = { view, position ->
-                    var item = data[position] as HomeBean.Data
+                onItemClick = { _, _, position ->
+                    val item = data[position] as HomeBean.Data
                     item.title.toast()
                 },
-                onItemLongClick = { view, position ->
+                onItemLongClick = { _, view, position ->
 
                 },
-                emptyViewClickListener = View.OnClickListener {
+                emptyViewClickListener =  {
                     "点击了全局设置的空布局".toast()
                 },
                 emptyView = vbEmptyView(mContext,
                     res = R.mipmap.ic_movie,
-                    listener = View.OnClickListener {
+                    listener =  {
                         "点击了自定义空布局".toast()
                     })
             )
@@ -81,7 +78,6 @@ class OneFragment : VBFragment<FragmentOneBinding, DemoViewModel>() {
     override fun initData() {
         mAdapter.setHeaderView(mAdapterHeaderView.root)
         mDataBinding.refreshLayout.autoRefresh()
-
         mViewPager.setOnPageClickListener { clickedView, position ->
         }
 
@@ -90,24 +86,17 @@ class OneFragment : VBFragment<FragmentOneBinding, DemoViewModel>() {
 
     override fun createObserver() {
         mViewModel.homeBean.observe(this, Observer {
-
             it?.data?.let {
-                mAdapter.vbLoad(it.datas, page, mDataBinding.refreshLayout,
-                    onSuccess = { p ->
-                        page = p
-                    })
+                page = mAdapter.vbLoad(it.datas, page, mDataBinding.refreshLayout)
             }
-
         })
 
 
         mViewModel.bannerBean.observe(this, Observer {
             it?.apply {
                 mViewPager.create(this.data)
-
             }
         })
     }
-
 
 }

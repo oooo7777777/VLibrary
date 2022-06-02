@@ -5,7 +5,6 @@
         <item> One </item>
         <item> Two </item>
         <item> Three </item>
-        <item> Four </item>
     </string-array>
     <string name="dm_string_activity_event_bus_demo_title">模拟eventBus</string>
     <string name="string_activity_network_title">网络请求演示</string>

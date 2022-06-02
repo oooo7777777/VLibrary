@@ -1,17 +1,12 @@
 package com.v.base
 
-import android.content.pm.ActivityInfo
 import android.graphics.Color
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.scwang.smart.refresh.footer.ClassicsFooter
 import com.scwang.smart.refresh.header.ClassicsHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.listener.DefaultRefreshFooterCreator
 import com.scwang.smart.refresh.layout.listener.DefaultRefreshHeaderCreator
 import com.v.base.net.VBNetOptions
-import okhttp3.OkHttpClient
-import retrofit2.Retrofit
-import java.util.concurrent.TimeUnit
 
 
 /**
@@ -21,9 +16,6 @@ import java.util.concurrent.TimeUnit
  */
 class VBConfigOptions(builder: Builder) {
 
-
-    //app方向
-    var appOrientation: Int
 
     //顶部栏背景颜色
     var toolbarColor: Int
@@ -57,7 +49,6 @@ class VBConfigOptions(builder: Builder) {
         this.toolbarColor = builder.toolbarColor
         this.toolbarBackRes = builder.toolbarBackRes
         this.toolbarTitleColor = builder.toolbarTitleColor
-        this.appOrientation = builder.appOrientation
         this.recyclerViewEmptyLayout = builder.recyclerViewEmptyLayout
         this.recyclerViewErrorLayout = builder.recyclerViewErrorLayout
         this.smartRefreshHeader = builder.smartRefreshHeader
@@ -72,7 +63,6 @@ class VBConfigOptions(builder: Builder) {
         internal var toolbarColor = Color.parseColor("#FFFFFF")
         internal var toolbarTitleColor = Color.parseColor("#000000")
         internal var toolbarBackRes = R.mipmap.vb_ic_back_black
-        internal var appOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         internal var recyclerViewEmptyLayout = R.layout.vb_layout_empty
         internal var recyclerViewErrorLayout = R.layout.vb_layout_error
 
@@ -107,11 +97,6 @@ class VBConfigOptions(builder: Builder) {
             return this
         }
 
-        fun setAppOrientation(appOrientation: Int): Builder {
-            this.appOrientation = appOrientation
-            return this
-        }
-
         fun setRecyclerViewEmptyLayout(recyclerViewEmptyLayout: Int): Builder {
             this.recyclerViewEmptyLayout = recyclerViewEmptyLayout
             return this
@@ -139,12 +124,10 @@ class VBConfigOptions(builder: Builder) {
 
 
         fun build(): VBConfigOptions {
-
             //设置全局的Header构建器
             SmartRefreshLayout.setDefaultRefreshHeaderCreator(this.smartRefreshHeader)
             //设置全局的Footer构建器
             SmartRefreshLayout.setDefaultRefreshFooterCreator(this.smartRefreshFooter)
-
             return VBConfigOptions(this)
         }
     }

@@ -1,29 +1,25 @@
-package com.v.base.utils.ext
+package com.v.base.utils
 
 import android.content.Context
-import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import androidx.annotation.NonNull
+import androidx.recyclerview.widget.*
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.v.base.R
-import com.v.base.VBApplication
 import com.v.base.VBConfig
-import com.v.base.utils.RecyclerViewItemDecoration
 
 
 /**
  * 线性列表
  */
 fun RecyclerView.vbLinear(
-    adapter: BaseQuickAdapter<*, *>
+    adapter: BaseQuickAdapter<*, *>,
 ): BaseQuickAdapter<*, *> {
     layoutManager = LinearLayoutManager(context)
+    (this.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
     this.adapter = adapter
     return adapter
 }
@@ -32,9 +28,10 @@ fun RecyclerView.vbLinear(
  * 横向列表
  */
 fun RecyclerView.vbLinearHorizontal(
-    adapter: BaseQuickAdapter<*, *>
+    adapter: BaseQuickAdapter<*, *>,
 ): BaseQuickAdapter<*, *> {
     layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+    (this.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
     this.adapter = adapter
     return adapter
 }
@@ -45,9 +42,10 @@ fun RecyclerView.vbLinearHorizontal(
  */
 fun RecyclerView.vbGrid(
     adapter: BaseQuickAdapter<*, *>,
-    count: Int
+    count: Int,
 ): BaseQuickAdapter<*, *> {
     layoutManager = GridLayoutManager(context, count)
+    (this.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
     this.adapter = adapter
     return adapter
 }
@@ -59,20 +57,21 @@ fun RecyclerView.vbGrid(
 fun RecyclerView.vbGridStaggered(
     adapter: BaseQuickAdapter<*, *>,
     count: Int,
-    orientation: Int = StaggeredGridLayoutManager.HORIZONTAL
+    orientation: Int = StaggeredGridLayoutManager.HORIZONTAL,
 ): BaseQuickAdapter<*, *> {
     layoutManager = StaggeredGridLayoutManager(count, orientation)
+    (this.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
     this.adapter = adapter
     return adapter
 }
 
 /**
- * 瀑布流列表
+ *  自定义LayoutManager
  * LayoutManager
  */
 fun RecyclerView.vbLayoutManager(
     adapter: BaseQuickAdapter<*, *>,
-    layoutManager: RecyclerView.LayoutManager
+    layoutManager: RecyclerView.LayoutManager,
 ): BaseQuickAdapter<*, *> {
     this.layoutManager = layoutManager
     this.adapter = adapter
@@ -85,7 +84,7 @@ fun RecyclerView.vbLayoutManager(
  * 具体配置参数查看[RecyclerViewItemDecoration]
  */
 fun RecyclerView.vbDivider(
-    block: RecyclerViewItemDecoration.() -> Unit
+    block: RecyclerViewItemDecoration.() -> Unit,
 ): RecyclerView {
     val itemDecoration = RecyclerViewItemDecoration(context).apply(block)
     addItemDecoration(itemDecoration)
@@ -107,12 +106,12 @@ fun <T> BaseQuickAdapter<T, *>.vbConfig(
     refreshLayout: SmartRefreshLayout? = null,
     onRefresh: (() -> Unit)? = null,
     onLoadMore: (() -> Unit)? = null,
-    onItemClick: ((view: View, position: Int) -> Unit)? = null,
-    onItemLongClick: ((view: View, position: Int) -> Unit)? = null,
-    onItemChildClick: ((view: View, position: Int) -> Unit)? = null,
-    onItemChildLongClick: ((view: View, position: Int) -> Unit)? = null,
+    onItemClick: ((adapter: BaseQuickAdapter<*, *>, view: View, position: Int) -> Unit)? = null,
+    onItemLongClick: ((adapter: BaseQuickAdapter<*, *>, view: View, position: Int) -> Unit)? = null,
+    onItemChildClick: ((adapter: BaseQuickAdapter<*, *>, view: View, position: Int) -> Unit)? = null,
+    onItemChildLongClick: ((adapter: BaseQuickAdapter<*, *>, view: View, position: Int) -> Unit)? = null,
     emptyView: View? = null,
-    emptyViewClickListener: View.OnClickListener? = null
+    emptyViewClickListener: View.OnClickListener? = null,
 ) {
 
 
@@ -139,29 +138,29 @@ fun <T> BaseQuickAdapter<T, *>.vbConfig(
     }
 
     if (onItemClick != null) {
-        setOnItemClickListener { _, view, position ->
-            onItemClick.invoke(view, position)
+        setOnItemClickListener { adapter, view, position ->
+            onItemClick.invoke(adapter, view, position)
         }
     }
 
 
     if (onItemLongClick != null) {
-        setOnItemLongClickListener { _, view, position ->
-            onItemLongClick.invoke(view, position)
+        setOnItemLongClickListener { adapter, view, position ->
+            onItemLongClick.invoke(adapter, view, position)
             true
         }
     }
 
 
     if (onItemChildClick != null) {
-        setOnItemChildClickListener { _, view, position ->
-            onItemChildClick.invoke(view, position)
+        setOnItemChildClickListener { adapter, view, position ->
+            onItemChildClick.invoke(adapter, view, position)
         }
     }
 
     if (onItemChildLongClick != null) {
-        setOnItemChildLongClickListener { _, view, position ->
-            onItemChildLongClick.invoke(view, position)
+        setOnItemChildLongClickListener { adapter, view, position ->
+            onItemChildLongClick.invoke(adapter, view, position)
             true
         }
 
@@ -170,7 +169,9 @@ fun <T> BaseQuickAdapter<T, *>.vbConfig(
     if (emptyView == null) {
         VBConfig.options.recyclerViewEmptyLayout.run {
             setEmptyView(this)
-            emptyLayout?.setOnClickListener(emptyViewClickListener)
+            emptyLayout?.vbOnClickListener {
+                emptyViewClickListener?.onClick(it)
+            }
         }
     } else {
         setEmptyView(emptyView)
@@ -186,15 +187,14 @@ fun <T> BaseQuickAdapter<T, *>.vbConfig(
  * @param mCurrentPageNum 当前分页
  * @param refreshLayout SmartRefreshLayout
  * @param isEmptyViewShow 是否展示空布局
- * @param onSuccess 数据设置成功
+ * @return 返回下一页的page
  */
 fun <T> BaseQuickAdapter<T, *>.vbLoad(
     list: List<T>,
     mCurrentPageNum: Int = 1,
     refreshLayout: SmartRefreshLayout? = null,
-    onSuccess: ((Int) -> Unit)? = null,
-    isEmptyViewShow: Boolean = true
-) {
+    isEmptyViewShow: Boolean = true,
+): Int {
 
     refreshLayout?.finishRefresh()
     refreshLayout?.finishLoadMore()
@@ -213,21 +213,16 @@ fun <T> BaseQuickAdapter<T, *>.vbLoad(
             }
         }
 
-
     } else {
         addData(list)
     }
 
 
-    onSuccess?.let {
-        if (list.isNullOrEmpty()) {
-            it.invoke(mCurrentPageNum)
-        } else {
-            it.invoke(mCurrentPageNum + 1)
-        }
+    return if (list.isNullOrEmpty()) {
+        mCurrentPageNum
+    } else {
+        mCurrentPageNum + 1
     }
-
-
 }
 
 /**
@@ -241,7 +236,7 @@ fun vbEmptyView(
     context: Context,
     res: Int = R.mipmap.vb_iv_data_empty,
     msg: String = context.vbGetString(R.string.vb_string_temporarily_no_data),
-    listener: View.OnClickListener? = null
+    listener: View.OnClickListener? = null,
 ): View {
 
     val view: View = context.vbGetLayoutView(R.layout.vb_layout_empty)
@@ -258,7 +253,7 @@ fun vbEmptyView(
             setImageResource(res)
         }
     }
-    if (msg.isNullOrEmpty()) {
+    if (msg.isEmpty()) {
         tvEmptyHint.visibility = View.GONE
     } else {
         tvEmptyHint.text = msg
@@ -266,7 +261,9 @@ fun vbEmptyView(
     }
 
     listener?.run {
-        view.setOnClickListener(this)
+        view.vbOnClickListener {
+            this.onClick(it)
+        }
     }
 
     return view
@@ -276,15 +273,17 @@ fun vbEmptyView(
 /**
  * RecyclerView动画滑动到顶部
  */
-fun RecyclerView.vbScrollToUp(position: Int = 10) {
+fun RecyclerView.vbScrollToUp(position: Int = 10, selectPosition: Int = 0) {
     //先滑动到指定item 然后在动画滑动
-    this.scrollToPosition(position)
+    if (position != -1) {
+        this.scrollToPosition(position)
+    }
     val smoothScroller =
         object : androidx.recyclerview.widget.LinearSmoothScroller(this.context) {
             override fun getVerticalSnapPreference(): Int {
                 return SNAP_TO_START
             }
         }
-    smoothScroller.targetPosition = 0//position是item的位置
+    smoothScroller.targetPosition = selectPosition//position是item的位置
     this.layoutManager!!.startSmoothScroll(smoothScroller)//通过RecyclerView的layoutManager来实现移动动画效果
 }

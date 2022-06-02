@@ -1,4 +1,4 @@
-package com.v.base.utils.ext
+package com.v.base.utils
 
 import android.util.Log
 import com.orhanobut.logger.Logger
@@ -47,7 +47,7 @@ fun Any.logE(tag: String = TAG) =
 
 fun Any.log(tag: String = TAG) = run {
     if (VBApplication.isLog()) {
-        Log.e(tag, this.toString())
+        Log.i(tag, this.toString())
     }
 }
 

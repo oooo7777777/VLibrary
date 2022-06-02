@@ -1,6 +1,5 @@
 package com.v.demo
 
-import android.content.pm.ActivityInfo
 import android.graphics.Color
 import com.v.base.VBApplication
 import com.v.base.VBConfig

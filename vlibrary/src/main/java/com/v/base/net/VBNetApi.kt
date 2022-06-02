@@ -1,7 +1,6 @@
 package com.v.base.net
 
 import retrofit2.http.*
-import java.util.HashMap
 
 interface VBNetApi {
 

@@ -4,11 +4,7 @@ import android.content.Context
 import android.graphics.Color
 import android.view.Gravity
 import android.view.View
-import androidx.databinding.ViewDataBinding
-import com.v.base.VBBlankViewModel
-import com.v.base.annotaion.VBDialogOrientation
 import com.v.base.databinding.VbDialogHintBinding
-import com.v.base.utils.ext.log
 
 
 /**

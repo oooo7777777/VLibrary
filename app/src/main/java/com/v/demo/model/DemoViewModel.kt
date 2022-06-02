@@ -21,9 +21,8 @@ class DemoViewModel : VBViewModel() {
 
     //使用VLibrary库 网络请求
     fun getList(page: Int) {
-        if (page == 1) {
+        if (page == 1)
             getBanner()
-        }
         vbRequest(
             {
                 apiBase.get("article/list/$page/json")

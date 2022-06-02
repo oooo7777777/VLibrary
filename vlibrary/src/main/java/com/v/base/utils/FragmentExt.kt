@@ -1,4 +1,4 @@
-package com.v.base.utils.ext
+package com.v.base.utils
 
 import android.content.Context
 import android.os.Bundle
@@ -14,7 +14,7 @@ import androidx.fragment.app.FragmentTransaction
  */
 
 private fun FragmentManager.inTransaction(func: FragmentTransaction.() -> FragmentTransaction) {
-    beginTransaction().func().commit()
+    beginTransaction().func().commitAllowingStateLoss()
 }
 
 /**
@@ -104,7 +104,7 @@ fun Context.vbShowFragment(fragment: Fragment) = run {
 fun <T : Fragment> AppCompatActivity.vbGetFragment(
     tag: String,
     clazz: Class<T>,
-    bundle: Bundle? = null
+    bundle: Bundle? = null,
 ): Fragment = run {
     var fragment = supportFragmentManager.findFragmentByTag(tag) as T?
     if (fragment == null) {
@@ -127,7 +127,7 @@ fun <T : Fragment> AppCompatActivity.vbGetFragment(
 fun <T : Fragment> Fragment.vbGetFragment(
     tag: String,
     clazz: Class<T>,
-    bundle: Bundle? = null
+    bundle: Bundle? = null,
 ): Fragment =
     run {
         var fragment = childFragmentManager.findFragmentByTag(tag) as T

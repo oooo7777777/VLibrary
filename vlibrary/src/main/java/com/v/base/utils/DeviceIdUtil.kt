@@ -28,22 +28,22 @@ object DeviceIdUtil {
         //获得硬件uuid（根据硬件相关属性，生成uuid）（无需权限）
         val uuid = deviceUUID.replace("-", "")
         //追加imei
-        if (imei != null && imei.isNotEmpty()) {
+        if (!imei.isNullOrEmpty()) {
             sbDeviceId.append(imei)
             sbDeviceId.append("|")
         }
         //追加androidid
-        if (androidid != null && androidid.isNotEmpty()) {
+        if (!androidid.isNullOrEmpty()) {
             sbDeviceId.append(androidid)
             sbDeviceId.append("|")
         }
         //追加serial
-        if (serial != null && serial.isNotEmpty()) {
+        if (!serial.isNullOrEmpty()) {
             sbDeviceId.append(serial)
             sbDeviceId.append("|")
         }
         //追加硬件uuid
-        if (uuid != null && uuid.isNotEmpty()) {
+        if (!uuid.isNullOrEmpty()) {
             sbDeviceId.append(uuid)
         }
         //生成SHA1，统一DeviceId长度
@@ -51,7 +51,7 @@ object DeviceIdUtil {
             try {
                 val hash = getHashByString(sbDeviceId.toString())
                 val sha1 = bytesToHex(hash)
-                if (sha1 != null && sha1.isNotEmpty()) {
+                if (!sha1.isNullOrEmpty()) {
                     //返回最终的DeviceId
                     return sha1
                 }
@@ -101,7 +101,7 @@ object DeviceIdUtil {
      * @return 设备序列号
      */
     private val sERIAL: String
-        private get() {
+        get() {
             try {
                 return Build.SERIAL
             } catch (ex: Exception) {
@@ -117,7 +117,7 @@ object DeviceIdUtil {
      * @return 设备硬件uuid
      */
     private val deviceUUID: String
-        private get() = try {
+        get() = try {
             val dev =
                 "3883756" + Build.BOARD.length % 10 + Build.BRAND.length % 10 + Build.DEVICE.length % 10 + Build.HARDWARE.length % 10 + Build.ID.length % 10 + Build.MODEL.length % 10 + Build.PRODUCT.length % 10 + Build.SERIAL.length % 10
             UUID(

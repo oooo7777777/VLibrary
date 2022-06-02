@@ -36,7 +36,7 @@ class NetworkViewModel : VBViewModel() {
     //自定义api 网络请求 获取原始数据
     fun getCustomDefault() {
         vbRequestDefault({
-            apiService.getGirlBean()
+            apiService.getBanner()
         }, success = {
             string.value = it.vbToJson()
         }, dialog = true)
@@ -47,10 +47,11 @@ class NetworkViewModel : VBViewModel() {
         //此处返回得数据是泛型,即你传入得是什么类型,得到得就是什么类型
         vbRequest({
             delay(3000)
-            apiBase.get("https://www.wanandroid.com/article/list/1/json")
+            apiBase.get("article/list/1/json")
         },
             resultState = string,
             dialog = true,
+            dialogMsg = "正在加载...",
             error = {
                 string.value = it.toString()
             })

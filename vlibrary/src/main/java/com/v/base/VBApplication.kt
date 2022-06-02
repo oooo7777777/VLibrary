@@ -11,9 +11,7 @@ abstract class VBApplication : Application() {
         private lateinit var context: VBApplication
         private var isLog = true
 
-        fun getApplication(): Application {
-            return context
-        }
+        fun getApplication(): Application = context
 
         fun isLog(): Boolean {
             return isLog

@@ -7,16 +7,11 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import com.v.base.databinding.VbTitleBarBinding
-import com.v.base.utils.ext.vbGetStatusBarHeight
-import com.v.base.utils.ext.vbOnClickAnimator
-import com.v.base.utils.ext.vbSetViewLayoutParams
-import com.v.base.utils.isWhiteColor
-import com.v.base.utils.vbDp2px
+import com.v.base.utils.vbGetStatusBarHeight
+import com.v.base.utils.vbOnClickAnimator
+import com.v.base.utils.vbSetViewLayoutParams
 import com.v.base.utils.vbTextBold
 
 /**
@@ -25,7 +20,7 @@ import com.v.base.utils.vbTextBold
  * time    : 2021/11/2
  */
 class VBTitleBar @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0,
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
 
@@ -66,7 +61,7 @@ class VBTitleBar @JvmOverloads constructor(
         title: String = "",
         titleColor: Int = VBConfig.options.toolbarTitleColor,
         isShowBottomLine: Boolean = true,
-        listener: OnClickListener? = null
+        listener: OnClickListener? = null,
     ) {
         mDataBinding.tvTitle.text = title
         mDataBinding.tvTitle.setTextColor(titleColor)
@@ -84,7 +79,7 @@ class VBTitleBar @JvmOverloads constructor(
     fun setLeft(
         title: String = "",
         titleColor: Int = Color.BLACK,
-        listener: OnClickListener? = null
+        listener: OnClickListener? = null,
     ) {
         mDataBinding.ivLeft.visibility = View.GONE
         mDataBinding.tvLeft.visibility = View.VISIBLE
@@ -101,7 +96,7 @@ class VBTitleBar @JvmOverloads constructor(
 
     fun setLeft(
         res: Int = VBConfig.options.toolbarBackRes,
-        listener: OnClickListener? = null
+        listener: OnClickListener? = null,
     ) {
 
         mDataBinding.ivLeft.visibility = View.VISIBLE
@@ -120,7 +115,7 @@ class VBTitleBar @JvmOverloads constructor(
     fun setRight(
         title: String = "",
         titleColor: Int = Color.BLACK,
-        listener: OnClickListener? = null
+        listener: OnClickListener? = null,
     ) {
         mDataBinding.ivRight.visibility = View.GONE
         mDataBinding.tvRight.visibility = View.VISIBLE
@@ -138,7 +133,7 @@ class VBTitleBar @JvmOverloads constructor(
 
     fun setRight(
         res: Int = R.mipmap.vb_ic_back_black,
-        listener: OnClickListener? = null
+        listener: OnClickListener? = null,
     ) {
 
         mDataBinding.ivRight.visibility = View.VISIBLE

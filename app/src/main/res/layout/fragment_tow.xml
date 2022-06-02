@@ -52,40 +52,13 @@
                 android:id="@+id/bt2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="toast"
+                android:text="日志"
                 android:textAllCaps="false"
                 app:vb_click="@{v}" />
 
 
             <Button
                 android:id="@+id/bt3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="日志"
-                android:textAllCaps="false"
-                app:vb_click="@{v}"
-                app:vb_click_time="@{2000}" />
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="打电话"
-                android:textAllCaps="false"
-                app:vb_call_phone="@{123123}" />
-
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="复制文本到粘贴板"
-                android:textAllCaps="false"
-                app:vb_copy_to_clipboard="@{3231}" />
-
-
-            <Button
-                android:id="@+id/bt4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -98,42 +71,62 @@
                 app:vb_drawable_left_width="@{70}"
                 app:vb_drawable_right="@{R.mipmap.ic_launcher}"
                 app:vb_drawable_top="@{R.mipmap.ic_launcher}"
-                app:vb_drawable_top_height="@{170}"
-                app:vb_drawable_top_width="@{170}" />
+                app:vb_drawable_top_height="@{100}"
+                app:vb_drawable_top_width="@{100}" />
 
 
             <Button
-                android:id="@+id/bt5"
+                android:id="@+id/bt4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="设置DrawableRight"
                 android:textAllCaps="false"
                 app:vb_click="@{v}"
-                app:vb_drawable_left="@{R.mipmap.ic_launcher}"
                 app:vb_drawable_height="@{20}"
+                app:vb_drawable_left="@{R.mipmap.ic_launcher}"
                 app:vb_drawable_right="@{R.mipmap.ic_launcher}"
                 app:vb_drawable_width="@{20}" />
 
 
-            <Button
-                android:id="@+id/bt6"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="设置图片圆角"
-                android:textAllCaps="false"
-                app:vb_click="@{v}" />
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/bt5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="图片圆角"
+                    android:textAllCaps="false"
+                    app:vb_click="@{v}" />
+
+                <Button
+                    android:id="@+id/bt6"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="图片圆形"
+                    android:textAllCaps="false"
+                    app:vb_click="@{v}" />
 
 
-            <Button
-                android:id="@+id/bt7"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="设置图片圆形"
-                android:textAllCaps="false"
-                app:vb_click="@{v}" />
+                <Button
+                    android:id="@+id/bt7"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="图片不同圆角"
+                    android:textAllCaps="false"
+                    app:vb_click="@{v}" />
+
+
+            </LinearLayout>
 
             <ImageView
                 android:id="@+id/ivIcon"
@@ -144,35 +137,6 @@
                 android:scaleType="centerCrop"
                 app:vb_img_url="@{R.mipmap.ic_movie}"
                 tools:src="@mipmap/ic_movie" />
-
-
-            <Button
-                android:id="@+id/bt8"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="保存View到本地"
-                android:textAllCaps="false"
-                app:vb_click="@{v}" />
-
-            <Button
-                android:id="@+id/bt9"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="保存网络图片到本地"
-                android:textAllCaps="false"
-                app:vb_click="@{v}" />
-
-            <Button
-                android:id="@+id/bt10"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="保存Bitmap到本地"
-                android:textAllCaps="false"
-                app:vb_click="@{v}" />
-
 
         </LinearLayout>
     </ScrollView>

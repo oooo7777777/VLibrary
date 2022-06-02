@@ -2,35 +2,25 @@ package com.v.base.utils
 
 
 import android.content.Context
-import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.Canvas
 import android.graphics.drawable.Drawable
-import android.net.Uri
-import android.os.Build
-import android.os.Environment
-import android.os.Looper
-import android.view.View
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
-import androidx.annotation.Nullable
+import androidx.annotation.NonNull
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestBuilder
+import com.bumptech.glide.load.DecodeFormat
+import com.bumptech.glide.load.MultiTransformation
+import com.bumptech.glide.load.Transformation
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.load.resource.bitmap.CircleCrop
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.load.resource.gif.GifDrawable
+import com.bumptech.glide.request.BaseRequestOptions
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.target.ImageViewTarget
-import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
 import com.v.base.R
-import com.v.base.utils.ext.logE
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 import kotlinx.coroutines.*
-import java.io.File
-import java.io.FileOutputStream
 
 
 /**
@@ -41,9 +31,55 @@ import java.io.FileOutputStream
  */
 fun ImageView.vbLoad(
     any: Any,
-    roundingRadius: Float = 0f,
-    errorResId: Int = R.mipmap.vb_iv_empty
-) = loadDispose(this, any, roundingRadius, errorResId)
+    roundingRadius: Int = 0,
+    errorResId: Int = R.mipmap.vb_iv_empty,
+) = loadDispose(this, any, roundingRadius, errorResId, null)
+
+
+/**
+ * 加载不同圆角图片
+ * @param any 图片资源Glide所支持的
+ * @param errorResId 加载错误占位图
+ */
+fun ImageView.vbLoadRounded(
+    any: Any,
+    topLeft: Int = 0,
+    topRight: Int = 0,
+    bottomLeft: Int = 0,
+    bottomRight: Int = 0,
+    errorResId: Int = R.mipmap.vb_iv_empty,
+) {
+
+    //顶部左边圆角
+    val tfTopLeft =
+        RoundedCornersTransformation(topLeft.vbDp2px(),
+            0,
+            RoundedCornersTransformation.CornerType.TOP_LEFT)
+
+    //顶部右边圆角
+    val tfTopRight =
+        RoundedCornersTransformation(topRight.vbDp2px(),
+            0,
+            RoundedCornersTransformation.CornerType.TOP_RIGHT)
+
+    //底部左边圆角
+    val tfBottomLeft =
+        RoundedCornersTransformation(bottomLeft.vbDp2px(),
+            0,
+            RoundedCornersTransformation.CornerType.BOTTOM_LEFT)
+
+    //底部右边圆角
+    val tfBottomRight =
+        RoundedCornersTransformation(bottomRight.vbDp2px(),
+            0,
+            RoundedCornersTransformation.CornerType.BOTTOM_RIGHT)
+
+    val tf =
+        MultiTransformation(
+            CenterCrop(), tfTopLeft, tfTopRight, tfBottomLeft, tfBottomRight)
+
+    loadDispose(this, any, 0, errorResId, tf)
+}
 
 
 /**
@@ -52,7 +88,7 @@ fun ImageView.vbLoad(
  * @param errorResId 加载错误占位图
  */
 fun ImageView.vbLoadCircle(any: Any, errorResId: Int = R.mipmap.vb_iv_empty) =
-    loadDispose(this, any, -1f, errorResId)
+    loadDispose(this, any, -1, errorResId, null)
 
 
 /**
@@ -68,7 +104,7 @@ fun Context.vbLoadListener(
     w: Int = 0,
     h: Int = 0,
     success: ((Drawable) -> Unit),
-    error: (() -> Unit)? = null
+    error: (() -> Unit)? = null,
 ) = run {
 
     if (any == null) {
@@ -85,7 +121,7 @@ fun Context.vbLoadListener(
 
                 override fun onResourceReady(
                     resource: Drawable,
-                    transition: Transition<in Drawable?>?
+                    transition: Transition<in Drawable?>?,
                 ) {
                     success.invoke(resource)
                 }
@@ -108,77 +144,48 @@ fun Context.vbLoadListener(
 private fun loadDispose(
     image: ImageView,
     any: Any,
-    roundingRadius: Float,
-    errorResId: Int
+    roundingRadius: Int,
+    errorResId: Int,
+    transformation: Transformation<Bitmap>? = null,
 ) {
     image.run {
-
-        var isGif = false
-        try {
-            isGif = any.toString().endsWith(".gif")
-        } catch (e: java.lang.Exception) {
-            e.printStackTrace()
-        }
 
 
         try {
             val options = RequestOptions()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .format(DecodeFormat.PREFER_RGB_565)
+                .error(errorResId)
+                .dontAnimate()
 
-            //圆角
-            if (roundingRadius > 0) {
-                val roundingRadius = roundingRadius.toInt().vbDp2px()
-                options.transform(CenterCrop(),
-                    RoundedCorners(roundingRadius))
-            } else if (roundingRadius < 0) {
-                options.transform(CenterCrop(), CircleCrop()) //圆形
-            }
-
-            if (isGif) {
-                Glide.with(this.context)
-                    .asGif()
-                    .load(any)
-                    .apply(options)
-                    .into(object : ImageViewTarget<GifDrawable?>(this) {
-                        override fun setResource(@Nullable resource: GifDrawable?) {
-                            this@run.setImageDrawable(resource)
-                        }
-
-                        override fun onLoadFailed(errorDrawable: Drawable?) {
-                            super.onLoadFailed(errorDrawable)
-                            this@run.post {
-                                Glide.with(this@run.context)
-                                    .load(errorResId)
-                                    .apply(options)
-                                    .into(this@run)
-
-                            }
-                        }
-                    })
-
+            //不同圆角
+            if (transformation != null) {
+                options.transform(transformation)
             } else {
-
-                options.error(errorResId)
-                    .placeholder(errorResId)
-                    .dontAnimate()
-
-                Glide.with(this)
-                    .load(any)
-                    .apply(options)
-                    .apply {
-                        //圆角
-                        if (roundingRadius > 0) {
-                            val roundingRadius = roundingRadius.toInt().vbDp2px()
-                            thumbnail(loadRoundedTransform(this@run.context,
-                                errorResId,
-                                roundingRadius))
-
-                        } else if (roundingRadius < 0) {
-                            thumbnail(loadCircleTransform(this@run.context, errorResId))
-                        }
-                    }
-                    .into(this)
+                //圆角
+                if (roundingRadius > 0) {
+                    val radius = roundingRadius.vbDp2px()
+                    options.transform(CenterCrop(),
+                        RoundedCornersTransformation(
+                            radius, 0,
+                            RoundedCornersTransformation.CornerType.ALL,
+                        ))
+                } else if (roundingRadius < 0) {
+                    //圆形
+                    options.transform(CenterCrop(), RoundedCornersTransformation(1280, 0)) //圆形
+                }
             }
+
+            Glide.with(this)
+                .load(any)
+                .apply(options)
+                .apply {
+                    thumbnail(loadError(this@run.context,
+                        errorResId,
+                        options))
+                }
+                .into(this)
+
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -187,140 +194,24 @@ private fun loadDispose(
 
 
 /**
- * 对占位图的圆角处理
+ * 对占位图的处理
  */
-private fun loadRoundedTransform(
+private fun loadError(
     context: Context,
     @DrawableRes placeholderId: Int,
-    radius: Int
+    options: BaseRequestOptions<*>,
 ): RequestBuilder<Drawable?>? {
     return Glide.with(context)
         .load(placeholderId)
-        .apply(
-            RequestOptions()
-                .transform(CenterCrop(), RoundedCorners(radius))
-        )
+        .apply(options)
 }
 
 
-/**
- * 对占位图的圆形处理
- */
-private fun loadCircleTransform(
-    context: Context,
-    @DrawableRes placeholderId: Int
-): RequestBuilder<Drawable?>? {
-    return Glide.with(context)
-        .load(placeholderId)
-        .apply(
-            RequestOptions()
-                .transform(CenterCrop(), CircleCrop())
-        )
-}
 
 
-/**
- * 保存图片到本地 view,bitmap,url
- */
-fun Any.vbSaveLocality(context: Context) = run {
-    Thread {
-        Looper.prepare()
-        when (this) {
-            is View -> {
-                saveImageToGallery(context, this.vbToBitmap())
-            }
-            is Bitmap -> {
-                saveImageToGallery(context, this)
-            }
-            is String -> {
-                saveImageToGallery(
-                    context,
-                    Glide.with(context)
-                        .asBitmap()
-                        .load(this)
-                        .submit(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).get()
-                )
-            }
-            else -> {
-                throw IllegalStateException(context.getString(R.string.vb_string_save_locality))
-            }
-        }
-        Looper.loop()
-    }.start()
-}
 
 
-/**
- * view转换成bitmap
- */
-fun View.vbToBitmap(): Bitmap {
-    val bitmap = Bitmap.createBitmap(this.width, this.height, Bitmap.Config.ARGB_8888)
-    val canvas = Canvas(bitmap)
-    if (Build.VERSION.SDK_INT >= 11) {
-        this.measure(
-            View.MeasureSpec.makeMeasureSpec(this.width, View.MeasureSpec.EXACTLY),
-            View.MeasureSpec.makeMeasureSpec(this.height, View.MeasureSpec.EXACTLY)
-        )
-        this.layout(
-            this.x.toInt(),
-            this.y.toInt(),
-            this.x.toInt() + this.measuredWidth,
-            this.y.toInt() + this.measuredHeight
-        )
-    } else {
-        this.measure(
-            View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
-            View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
-        )
-        this.layout(0, 0, this.measuredWidth, this.measuredHeight)
-    }
-    this.draw(canvas)
-    return bitmap
-}
-
-/**
- * 保存图片到系统相册
- *
- * @param context
- * @param bmp
- */
-private fun saveImageToGallery(context: Context, bmp: Bitmap?) {
-
-    if (bmp == null) {
-        throw IllegalStateException("Image resource error")
-    } else {
-        try {
-            var child = context.opPackageName.split(".")
-            val sdCardDir = File(Environment.getExternalStorageDirectory(), child[child.size - 1])
-            if (!sdCardDir.exists()) {              //如果不存在，那就建立这个文件夹
-                sdCardDir.mkdirs()
-            }
-
-            val fileName = System.currentTimeMillis().toString() + ".jpg"
-            val file = File(sdCardDir, fileName)
-
-            val fos = FileOutputStream(file)
-            bmp.compress(Bitmap.CompressFormat.JPEG, 100, fos)
-            fos.flush()
-            fos.close()
-
-            // 通知图库更新
-            context.sendBroadcast(
-                Intent(
-                    Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
-                    Uri.parse("file://" + file.path)
-                )
-            )
-            (context.getString(R.string.vb_string_save_locality_success)).toast()
-        } catch (e: java.lang.Exception) {
-            e.logE()
-            e.printStackTrace()
-            (context.getString(R.string.vb_string_save_locality_error)).toast()
-
-        }
-    }
 
 
-}
 
 

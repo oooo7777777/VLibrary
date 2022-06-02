@@ -21,12 +21,4 @@ class OneFragmentAdapter :
         }
     }
 
-    fun getImgList(): ArrayList<String> {
-        var list = ArrayList<String>()
-        data.forEach {
-            list.add(it.link)
-        }
-
-        return list
-    }
 }

@@ -53,7 +53,7 @@ open class EventLiveData<T> : MutableLiveData<T>() {
     protected var isAllowToClear = true
     override fun observe(
         owner: LifecycleOwner,
-        observer: Observer<in T>
+        observer: Observer<in T>,
     ) {
         super.observe(owner, Observer {
             if (isCleaning) {

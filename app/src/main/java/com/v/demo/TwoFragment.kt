@@ -1,15 +1,23 @@
 package com.v.demo
 
-import android.content.res.Resources
-import android.graphics.BitmapFactory
 import android.view.View
-import androidx.lifecycle.lifecycleScope
 import com.v.base.VBFragment
 import com.v.base.utils.*
-import com.v.base.utils.ext.*
 import com.v.demo.databinding.FragmentTowBinding
 import com.v.demo.model.DemoViewModel
-import kotlinx.coroutines.launch
+import com.bumptech.glide.request.RequestOptions
+
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
+
+import com.bumptech.glide.Glide
+
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+
+import com.bumptech.glide.load.MultiTransformation
+import com.bumptech.glide.request.target.Target
+
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 
 
 /**
@@ -31,14 +39,13 @@ class TwoFragment : VBFragment<FragmentTowBinding, DemoViewModel>(), View.OnClic
 
             mDataBinding.bt0.id -> {
                 "点击间隔默认500".toast()
+                "点击间隔默认500".log()
             }
             mDataBinding.bt1.id -> {
                 "点击间隔1000".toast()
+                "点击间隔1000".log()
             }
             mDataBinding.bt2.id -> {
-                "显示toast".toast()
-            }
-            mDataBinding.bt3.id -> {
                 "打印日志".logE()
                 "打印日志".logV()
                 "打印日志".logD()
@@ -46,29 +53,30 @@ class TwoFragment : VBFragment<FragmentTowBinding, DemoViewModel>(), View.OnClic
                 "打印日志".logW()
                 "打印日志".log()
             }
+            mDataBinding.bt3.id -> {
+                mDataBinding.bt3.vbDrawable(left = R.mipmap.ic_movie,
+                    leftH = 30,
+                    leftW = 30,
+                    right = R.mipmap.ic_movie,
+                    rightH = 50,
+                    rightW = 50,
+                    top = null,
+                    w = 150,
+                    h = 150)
+            }
             mDataBinding.bt4.id -> {
-                mDataBinding.bt4.vbDrawable(left = R.mipmap.ic_movie, leftH = 30, leftW = 30,
-                    right = R.mipmap.ic_movie, rightH = 50, rightW = 50,top = null,w = 150,h = 150)
+                mDataBinding.bt4.vbDrawable(right = R.mipmap.ic_movie, h = 80, w = 80)
             }
             mDataBinding.bt5.id -> {
-                mDataBinding.bt5.vbDrawable(right = R.mipmap.ic_movie, h = 80, w = 80)
+                mDataBinding.ivIcon.vbLoad(R.mipmap.ic_movie, 90.vbGetRandomNumber())
             }
             mDataBinding.bt6.id -> {
-                mDataBinding.ivIcon.vbLoad(R.mipmap.ic_movie, 90.vbGetRandomNumber().toFloat())
-            }
-            mDataBinding.bt7.id -> {
                 mDataBinding.ivIcon.vbLoadCircle(R.mipmap.ic_movie)
             }
-            mDataBinding.bt8.id -> {
-                mDataBinding.scrollView.vbSaveLocality(mContext)
+            mDataBinding.bt7.id -> {
+                mDataBinding.ivIcon.vbLoadRounded(R.mipmap.ic_movie, 0, 0, 30, 40)
             }
-            mDataBinding.bt9.id -> {
-                "http://gank.io/images/9fb66f5c4a214b26be6e0218b93bdf46".vbSaveLocality(mContext)
-            }
-            mDataBinding.bt10.id -> {
-                val bitmap = BitmapFactory.decodeResource(mContext.resources, R.mipmap.ic_movie)
-                bitmap.vbSaveLocality(mContext)
-            }
+
 
         }
     }

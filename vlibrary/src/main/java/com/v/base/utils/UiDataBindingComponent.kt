@@ -2,45 +2,61 @@ package com.v.base.utils
 
 import android.app.Activity
 import android.content.ContextWrapper
-import android.content.Intent
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.drawable.Drawable
-import android.net.Uri
 import android.os.Build
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
+import com.bumptech.glide.load.MultiTransformation
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.v.base.R
-import com.v.base.utils.ext.log
-import com.v.base.utils.ext.vbCopyToClipboard
-import com.v.base.utils.ext.vbInvalidClick
-import com.v.base.utils.ext.vbOnClickAnimator
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation.CornerType
 
 
 /**
  * 设置ImageView图片
  */
 @BindingAdapter(
-    value = ["vb_img_url", "vb_img_radius", "vb_img_circle", "vb_img_error_res_id"],
+    value = ["vb_img_url", "vb_img_radius", "vb_img_circle", "vb_img_error_res_id", "vb_img_top_left", "vb_img_top_right", "vb_img_bottom_left", "vb_img_bottom_right"],
     requireAll = false
 )
 fun ImageView.vbImgUrl(
     any: Any?,
-    roundingRadius: Float = 0f,
+    roundingRadius: Int = 0,
     circle: Boolean = false,
-    errorResId: Int = R.mipmap.vb_iv_empty
+    errorResId: Int = R.mipmap.vb_iv_empty,
+    topLeft: Int = 0,
+    topRight: Int = 0,
+    bottomLeft: Int = 0,
+    bottomRight: Int = 0,
 ) {
 
     any?.let {
+
+
         if (circle) {
+            //圆形
             this.vbLoadCircle(it, errorResId)
         } else {
-            this.vbLoad(it, roundingRadius, errorResId)
+            if (topLeft == 0 && topRight == 0 && bottomLeft == 0 && bottomRight == 0) {
+                //全部圆角
+                this.vbLoad(it, roundingRadius, errorResId)
+            } else {
+                //不同圆角
+                this.vbLoadRounded(it, topLeft, topRight, bottomLeft, bottomRight, errorResId)
+            }
         }
     }
+
+//    RoundedCornersTransformation.CornerType
+//    val TOP_LEFT: CornerType? =
+//        null, var TOP_RIGHT:CornerType? = null, var BOTTOM_LEFT:CornerType? = null, var BOTTOM_RIGHT:CornerType? = null,
+//    val TOP: CornerType? =
+//        null, var BOTTOM:CornerType? = null, var LEFT:CornerType? = null, var RIGHT:CornerType? = null
 
 
 }
@@ -73,9 +89,9 @@ fun TextView.vbDrawable(
     topW: Int? = null,
     topH: Int? = null,
     bottomW: Int? = null,
-    bottomH: Int? = null
+    bottomH: Int? = null,
 
-) {
+    ) {
 
 
     this.context.vbLoadListener(left, (leftW ?: w).vbDp2px(), (leftH ?: h).vbDp2px(),
@@ -94,7 +110,10 @@ fun TextView.vbDrawable(
             val drawableRight: Drawable? = compoundDrawables[2]
             val drawableBottom: Drawable? = compoundDrawables[3]
 
-            this@vbDrawable.setCompoundDrawables(null, drawableTop, drawableRight, drawableBottom)
+            this@vbDrawable.setCompoundDrawables(null,
+                drawableTop,
+                drawableRight,
+                drawableBottom)
         })
 
 
@@ -118,7 +137,10 @@ fun TextView.vbDrawable(
             val drawableBottom: Drawable? = compoundDrawables[3]
 
 
-            this@vbDrawable.setCompoundDrawables(drawableLeft, drawableTop, null, drawableBottom)
+            this@vbDrawable.setCompoundDrawables(drawableLeft,
+                drawableTop,
+                null,
+                drawableBottom)
         })
 
 
@@ -178,54 +200,20 @@ fun TextView.vbDrawable(
 
 
 /**
- * 打电话
- */
-@BindingAdapter(value = ["vb_call_phone"], requireAll = false)
-fun View.vbCallPhone(phone: Any) {
-    if (!phone.toString().isNullOrEmpty()) {
-        vbOnClickAnimator {
-            try {
-                val intent = Intent(Intent.ACTION_DIAL)
-                val data = Uri.parse("tel:$phone")
-                intent.data = data
-                this.context.startActivity(intent)
-            } catch (e: Exception) {
-                "没有获取打电话权限".toast()
-            }
-        }
-
-    }
-}
-
-/**
- * 复制文本到粘贴板
- */
-@BindingAdapter(value = ["vb_copy_to_clipboard"], requireAll = false)
-fun View.vbCopyToClipboard(result: Any) {
-
-    if (!result.toString().isNullOrEmpty()) {
-        vbOnClickAnimator {
-            this.context.vbCopyToClipboard(result.toString())
-        }
-    }
-}
-
-
-/**
  * view点击动画以及添加间隔做处理
  */
 @BindingAdapter(value = ["vb_click", "vb_click_time", "vb_click_animation_cancel"],
     requireAll = false)
 fun View.vbClick(
     onClickListener: View.OnClickListener?,
-    clickTime: Long,
-    animationCancel: Boolean = false
+    clickTime: Long = 0,
+    animationCancel: Boolean = false,
 ) {
     if (onClickListener != null) {
         if (animationCancel) {
-            if (!this.vbInvalidClick(clickTime)) {
-                this.setOnClickListener(onClickListener)
-            }
+            this.setOnClickListener(ThrottleOnClickListener(clickTime) {
+                onClickListener.onClick(this)
+            })
         } else {
             vbOnClickAnimator(if (clickTime <= 0) 500L else clickTime) {
                 onClickListener.onClick(it)

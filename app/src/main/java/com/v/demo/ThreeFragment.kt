@@ -1,13 +1,16 @@
 package com.v.demo
 
 import android.view.View
+import androidx.lifecycle.lifecycleScope
 import com.v.base.VBBlankViewModel
 import com.v.base.VBFragment
 import com.v.base.dialog.VBHintDialog
 import com.v.base.dialog.VBListDialog
-import com.v.base.utils.ext.goActivity
+import com.v.base.utils.goActivity
 import com.v.base.utils.toast
+import com.v.base.utils.vbCountDownCoroutines
 import com.v.demo.databinding.FragmentThreeBinding
+import kotlinx.coroutines.Job
 
 
 /**
@@ -17,6 +20,9 @@ import com.v.demo.databinding.FragmentThreeBinding
  */
 class ThreeFragment : VBFragment<FragmentThreeBinding, VBBlankViewModel>(), View.OnClickListener {
 
+
+    private var job: Job? = null
+    private var countDown = 5L
 
     override fun initData() {
         mDataBinding.v = this
@@ -28,11 +34,20 @@ class ThreeFragment : VBFragment<FragmentThreeBinding, VBBlankViewModel>(), View
 
     override fun onClick(v: View) {
         when (v.id) {
+            mDataBinding.bt1.id -> {
+                countDown = 5
+                countDownStart()
+            }
             mDataBinding.bt2.id -> {
-                goActivity(NetworkActivity::class.java)
+                countDown = Long.MAX_VALUE
+                countDownStart()
             }
 
             mDataBinding.bt3.id -> {
+                goActivity(NetworkActivity::class.java)
+            }
+
+            mDataBinding.bt4.id -> {
                 VBHintDialog(mContext).setTitle("提示")
                     .setContent("确定保存吗?")
                     .setButtonText("取消", "确定")
@@ -42,7 +57,7 @@ class ThreeFragment : VBFragment<FragmentThreeBinding, VBBlankViewModel>(), View
                     .setCanceled(false)
                     .show()
             }
-            mDataBinding.bt4.id -> {
+            mDataBinding.bt5.id -> {
 
                 VBListDialog(mContext)
                     .setItems("content0", "content1", "content3")
@@ -53,6 +68,26 @@ class ThreeFragment : VBFragment<FragmentThreeBinding, VBBlankViewModel>(), View
             }
 
 
+        }
+    }
+
+    private fun countDownStart() {
+        countDownStop()
+        if (job == null) {
+            job = vbCountDownCoroutines(countDown, onTick = {
+                mDataBinding.tvContent.text = it.toString()
+
+            }, onFinish = {
+                mDataBinding.tvContent.text = "倒计时结束"
+
+            }, scope = lifecycleScope)
+        }
+    }
+
+    private fun countDownStop() {
+        if (job != null) {
+            job?.cancel()
+            job = null
         }
     }
 

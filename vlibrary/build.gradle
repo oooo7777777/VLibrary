@@ -13,8 +13,8 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 363
-        versionName "3.6.3"
+        versionCode 364
+        versionName "3.6.4"
     }
 
     compileOptions {
@@ -40,11 +40,10 @@ dependencies {
     api "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     api "androidx.core:core-ktx:1.0.0"
 
+    api 'jp.wasabeef:glide-transformations:4.3.0'//glide转换器
     api 'com.github.bumptech.glide:glide:4.11.0'//glide
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'//glide
     api 'com.github.bumptech.glide:okhttp3-integration:4.11.0'
-    api "androidx.activity:activity:1.2.0-beta01"
-    api "androidx.fragment:fragment:1.3.0-beta01"
     api "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0"
     api "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
     api "com.google.android.material:material:1.2.1"

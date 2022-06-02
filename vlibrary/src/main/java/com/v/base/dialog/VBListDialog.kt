@@ -3,12 +3,11 @@ package com.v.base.dialog
 import android.content.Context
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
-import com.v.base.VBBlankViewModel
 import com.v.base.R
 import com.v.base.annotaion.VBDialogOrientation
 import com.v.base.databinding.VbDialogListBinding
-import com.v.base.utils.ext.vbDivider
-import com.v.base.utils.ext.vbLinear
+import com.v.base.utils.vbDivider
+import com.v.base.utils.vbLinear
 
 
 /**

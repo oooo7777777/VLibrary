@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.v.base.VBFragmentAdapter
+import com.v.base.utils.vbOnClickListener
 import com.v.demo.R
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter
@@ -101,8 +102,8 @@ class IndicatorZoom(
                     }
                 }
 
-                commonPagerTitleView.setOnClickListener {
-                    viewPager.currentItem = index;
+                commonPagerTitleView.vbOnClickListener {
+                    viewPager.currentItem = index
                 }
                 return commonPagerTitleView
             }

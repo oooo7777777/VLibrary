@@ -196,7 +196,7 @@ class RecyclerViewItemDecoration constructor(private val context: Context) :
         outRect: Rect,
         view: View,
         parent: RecyclerView,
-        state: RecyclerView.State
+        state: RecyclerView.State,
     ) {
 
         val layoutManager = parent.layoutManager ?: return
@@ -648,7 +648,7 @@ class RecyclerViewItemDecoration constructor(private val context: Context) :
         var left: Boolean = false,
         var top: Boolean = false,
         var right: Boolean = false,
-        var bottom: Boolean = false
+        var bottom: Boolean = false,
     ) {
 
         companion object {

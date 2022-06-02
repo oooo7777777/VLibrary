@@ -4,9 +4,10 @@ import android.app.Dialog
 import android.content.Context
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.View
 import android.view.Window
+import android.widget.TextView
 import com.v.base.R
-import com.v.base.VBApplication
 
 class VBLoadingDialog(context: Context) : Dialog(context) {
 
@@ -17,6 +18,13 @@ class VBLoadingDialog(context: Context) : Dialog(context) {
         setContentView(R.layout.vb_layout_loading)
     }
 
+    fun setMsg(msg: String) {
+        if (msg.isEmpty()) {
+            val textView = findViewById<TextView>(R.id.tvMsg)
+            textView.text = msg
+            textView.visibility = View.VISIBLE
+        }
+    }
     /**
      * 设置是否返回按钮取消
      */

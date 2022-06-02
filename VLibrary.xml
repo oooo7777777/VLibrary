@@ -23,6 +23,35 @@
       <option name="XML" value="true" />
     </context>
   </template>
+
+  <template name="vb_img_top_left" value="app:vb_img_top_left=&quot;$value$&quot;" description="图片左上方圆角" toReformat="false" toShortenFQNames="true">
+    <variable name="value" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="XML" value="true" />
+    </context>
+  </template>
+
+  <template name="vb_img_top_right" value="app:vb_img_top_right=&quot;$value$&quot;" description="图片右上方圆角" toReformat="false" toShortenFQNames="true">
+    <variable name="value" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="XML" value="true" />
+    </context>
+  </template>
+
+  <template name="vb_img_bottom_left" value="app:vb_img_bottom_left=&quot;$value$&quot;" description="图片左下方圆角" toReformat="false" toShortenFQNames="true">
+    <variable name="value" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="XML" value="true" />
+    </context>
+  </template>
+
+  <template name="vb_img_bottom_right" value="app:vb_img_bottom_right=&quot;$value$&quot;" description="图片右下方圆角" toReformat="false" toShortenFQNames="true">
+    <variable name="value" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="XML" value="true" />
+    </context>
+  </template>
+
   <template name="vb_drawable_left" value="app:vb_drawable_left=&quot;$value$&quot;" description="左边drawable图片" toReformat="false" toShortenFQNames="true">
     <variable name="value" expression="" defaultValue="" alwaysStopAt="true" />
     <context>
@@ -102,18 +131,6 @@
     </context>
   </template>
   <template name="vb_drawable_height" value="app:vb_drawable_height=&quot;$value$&quot;" description="drawable图片的高度" toReformat="false" toShortenFQNames="true">
-    <variable name="value" expression="" defaultValue="" alwaysStopAt="true" />
-    <context>
-      <option name="XML" value="true" />
-    </context>
-  </template>
-  <template name="vb_call_phone" value="app:vb_call_phone=&quot;$value$&quot;" description="打电话" toReformat="true" toShortenFQNames="true">
-    <variable name="value" expression="" defaultValue="" alwaysStopAt="true" />
-    <context>
-      <option name="XML" value="true" />
-    </context>
-  </template>
-  <template name="vb_copy_to_clipboard" value="app:vb_copy_to_clipboard=&quot;$value$&quot;" description="复制文本到粘贴板" toReformat="true" toShortenFQNames="true">
     <variable name="value" expression="" defaultValue="" alwaysStopAt="true" />
     <context>
       <option name="XML" value="true" />

@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
 
     <LinearLayout
-        android:fitsSystemWindows="false"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fitsSystemWindows="false"
         android:orientation="vertical">
 
         <com.v.base.VBTitleBar
@@ -15,25 +13,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
+
         <FrameLayout
+            android:id="@+id/layoutContent"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <FrameLayout
-                android:id="@+id/layoutContent"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-            <FrameLayout
-                android:id="@+id/layoutError"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:visibility="gone"
-                tools:visibility="visible" />
-
-        </FrameLayout>
-
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 </layout>

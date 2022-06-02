@@ -7,8 +7,7 @@ import android.view.*
 import androidx.databinding.ViewDataBinding
 import com.v.base.R
 import com.v.base.annotaion.VBDialogOrientation
-import com.v.base.utils.ext.log
-import com.v.base.utils.ext.logI
+import com.v.base.utils.logI
 import java.lang.reflect.ParameterizedType
 
 /**
@@ -44,7 +43,6 @@ abstract class VBDialog<VB : ViewDataBinding>(mContext: Context) : Dialog(mConte
     fun setDialogCancelable(isCancelable: Boolean) {
         setCanceledOnTouchOutside(isCancelable)
         setCancelable(isCancelable)
-        "isCancelable:" + isCancelable.log()
     }
 
     /**
@@ -64,6 +62,13 @@ abstract class VBDialog<VB : ViewDataBinding>(mContext: Context) : Dialog(mConte
      */
     open fun useAnimations(): Boolean {
         return true
+    }
+
+    /**
+     * 自定义弹出动画
+     */
+    open fun useAnimationsRes(): Int {
+        return 0
     }
 
     /**
@@ -99,33 +104,38 @@ abstract class VBDialog<VB : ViewDataBinding>(mContext: Context) : Dialog(mConte
         }
 
 
+
         when (useDirection()) {
             VBDialogOrientation.TOP -> {
                 wlp.gravity = Gravity.TOP
-                if (useAnimations())
+                if (useAnimations() && useAnimationsRes() == 0)
                     window.setWindowAnimations(R.style.vb_top_dialog_anim)
             }
             VBDialogOrientation.BOTTOM -> {
                 wlp.gravity = Gravity.BOTTOM
-                if (useAnimations())
+                if (useAnimations() && useAnimationsRes() == 0)
                     window.setWindowAnimations(R.style.vb_bottom_dialog_anim)
             }
             VBDialogOrientation.LEFT -> {
                 wlp.gravity = Gravity.CENTER
-                window.setWindowAnimations(R.style.vb_left_dialog_anim)
+                if (useAnimations() && useAnimationsRes() == 0)
+                    window.setWindowAnimations(R.style.vb_left_dialog_anim)
             }
 
             VBDialogOrientation.RIGHT -> {
                 wlp.gravity = Gravity.CENTER
-                if (useAnimations())
+                if (useAnimations() && useAnimationsRes() == 0)
                     window.setWindowAnimations(R.style.vb_right_dialog_anim)
             }
 
             VBDialogOrientation.CENTRE -> {
                 wlp.gravity = Gravity.CENTER
-                if (useAnimations())
+                if (useAnimations() && useAnimationsRes() == 0)
                     window.setWindowAnimations(R.style.vb_dialog_anim)
             }
+        }
+        if (useAnimations() && useAnimationsRes() != 0) {
+            window.setWindowAnimations(useAnimationsRes())
         }
 
         window.attributes = wlp

@@ -19,18 +19,21 @@ class NetworkActivity : VBActivity<ActivityNetworkBinding, NetworkViewModel>(),
         title: String,
         titleColor: Int,
         isShowBottomLine: Boolean,
-        listener: View.OnClickListener?
-    ) {
+        listener: View.OnClickListener?,
+    ): Boolean {
         super.toolBarTitle(
             this.getString(R.string.string_activity_network_title),
             titleColor,
             isShowBottomLine,
             listener
         )
+        return true
     }
+
 
     override fun initData() {
         mDataBinding.v = this
+        mRootDataBinding.vbTitleBar
     }
 
     override fun createObserver() {

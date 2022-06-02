@@ -11,10 +11,6 @@ import android.view.animation.ScaleAnimation
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
-import com.v.base.utils.ext.log
-import com.v.base.utils.ext.logE
-import com.v.base.utils.ext.vbInvalidClick
-import com.v.base.utils.ext.vbLifecycleOwner
 import kotlin.math.roundToInt
 
 /**
@@ -26,13 +22,15 @@ import kotlin.math.roundToInt
 class ViewClickAnimatorUtil(
     var view: View,
     var clickTime: Long = 500L,
-    var onClick: ((v: View) -> Unit)
+    var onClick: ((v: View) -> Unit),
 
-) : LifecycleObserver {
+    ) : LifecycleObserver {
     private var down = false
-    private val timeAnim = 150L
+    private val animDuration = 150L
     private var mAnimation: ScaleAnimation? = null
-    private var isOnPause = false
+
+    // 上次点击时间
+    private var mLastTime = 0L
 
     init {
         addTouchListener()
@@ -51,7 +49,6 @@ class ViewClickAnimatorUtil(
     private fun addTouchListener() {
 
         view.setOnTouchListener { _, event ->
-
             var animation: ScaleAnimation? = null
             val viewRect = Rect()
             this.view.getLocalVisibleRect(viewRect)
@@ -61,52 +58,41 @@ class ViewClickAnimatorUtil(
                 MotionEvent.ACTION_DOWN -> if (!this.down) {
                     animation =
                         ScaleAnimation(1.0f, this.getF(), 1.0f, this.getF(), 1, 0.5f, 1, 0.5f)
-                    animation.duration = timeAnim
+                    animation.duration = animDuration
                     animation.fillAfter = true
                     this.view.startAnimation(animation)
-
                     this.down = true
                     this.view.isPressed = true
                 }
-                MotionEvent.ACTION_UP -> this.clearAnimation(animation, b, true)
+                MotionEvent.ACTION_UP -> this.clearAnimation(true)
                 MotionEvent.ACTION_MOVE -> if (!b) {
-                    this.clearAnimation(animation, b, false)
+                    this.clearAnimation(false)
                 }
-                MotionEvent.ACTION_CANCEL -> this.clearAnimation(animation, b, false)
-                else -> this.clearAnimation(animation, b, false)
+                MotionEvent.ACTION_CANCEL -> this.clearAnimation(false)
+                else -> this.clearAnimation(false)
+
             }
             true
+
         }
 
     }
 
-    private fun clearAnimation(scaleAnimation: ScaleAnimation?, b: Boolean, up: Boolean) {
+    private fun clearAnimation(up: Boolean) {
         try {
 
             this.view.isPressed = false
             if (this.down) {
                 this.down = false
-
                 val animation =
                     ScaleAnimation(this.getF(), 1.0f, this.getF(), 1.0f, 1, 0.5f, 1, 0.5f)
                 this.mAnimation = animation
-                animation.duration = timeAnim
+                animation.duration = animDuration
                 if (up) {
-
-                    animation.setAnimationListener(object : Animation.AnimationListener {
-                        override fun onAnimationStart(paramAnimation: Animation) {
-                            dispose()
-                        }
-
-                        override fun onAnimationRepeat(paramAnimation: Animation) {
-                        }
-
-                        override fun onAnimationEnd(paramAnimation: Animation) {
-                            dispose()
-                        }
-                    })
+                    dispose()
                 }
                 this.view.startAnimation(animation)
+
             }
 
 
@@ -118,22 +104,11 @@ class ViewClickAnimatorUtil(
 
 
     private fun dispose() {
-        if (!view.vbInvalidClick(clickTime) && !isOnPause) {
+        val currentTime = System.currentTimeMillis()
+        if (currentTime - mLastTime >= clickTime) {
+            mLastTime = currentTime
             onClick(view)
         }
-
-    }
-
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
-    fun onPause() {
-        isOnPause = true
-        mAnimation?.cancel()
-    }
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-    fun onResume() {
-        isOnPause = false
     }
 
 

@@ -1,10 +1,7 @@
 package com.v.base.net
 
-import com.v.base.VBApplication
-import com.v.base.VBConfig
 import com.v.base.annotaion.VBError
-import com.v.base.utils.ext.logE
-import com.v.base.utils.toast
+import com.v.base.utils.logE
 import org.apache.http.conn.ConnectTimeoutException
 import org.json.JSONException
 import retrofit2.HttpException
@@ -18,7 +15,7 @@ import java.net.ConnectException
  */
 object VBExceptionHandle {
 
-    fun handleException(e: Throwable,isToast :Boolean): VBAppException {
+    fun handleException(e: Throwable): VBAppException {
         val ex: VBAppException
         e.let {
             when (it) {
@@ -40,9 +37,6 @@ object VBExceptionHandle {
                 is java.net.SocketTimeoutException -> {
                     ex = VBAppException(VBError.TIMEOUT_ERROR, e)
                 }
-                is java.net.UnknownHostException -> {
-                    ex = VBAppException(VBError.TIMEOUT_ERROR, e)
-                }
                 is JSONException -> {
                     ex = VBAppException(VBError.PARSE_ERROR, e)
                 }
@@ -52,9 +46,6 @@ object VBExceptionHandle {
             }
         }
         (ex.toString()).logE()
-        if (VBConfig.options.netOptions.isNetToast || isToast) {
-            (ex.errorMsg).toast()
-        }
         return ex
     }
 }
