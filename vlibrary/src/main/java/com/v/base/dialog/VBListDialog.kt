@@ -1,6 +1,7 @@
 package com.v.base.dialog
 
 import android.content.Context
+import android.view.View
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.v.base.R
@@ -26,7 +27,7 @@ class VBListDialog(mContext: Context) : VBDialog<VbDialogListBinding>(mContext) 
     }
 
     private val mAdapter by lazy {
-        mDataBinding.recyclerView.vbDivider  {
+        mDataBinding.recyclerView.vbDivider {
         }.vbLinear(MyAdapter()) as MyAdapter
     }
 
@@ -52,6 +53,13 @@ class VBListDialog(mContext: Context) : VBDialog<VbDialogListBinding>(mContext) 
         return this
     }
 
+    fun setTitle(title: String) {
+        if (!title.isNullOrEmpty()) {
+            mDataBinding.layoutTitle.visibility = View.VISIBLE
+            mDataBinding.tvTitle.text = title
+        }
+    }
+
     fun setClickListener(listener: ((dialog: VBListDialog, result: String, position: Int) -> Unit)): VBListDialog {
         this.listener = listener
         return this
@@ -62,7 +70,6 @@ class VBListDialog(mContext: Context) : VBDialog<VbDialogListBinding>(mContext) 
         init {
             addChildClickViewIds(R.id.tvContent)
         }
-
         override fun convert(helper: BaseViewHolder, item: String) {
             helper.setText(R.id.tvContent, item)
         }
