@@ -61,17 +61,10 @@ class VBTitleBar @JvmOverloads constructor(
         title: String = "",
         titleColor: Int = VBConfig.options.toolbarTitleColor,
         isShowBottomLine: Boolean = true,
-        listener: OnClickListener? = null,
     ) {
         mDataBinding.tvTitle.text = title
         mDataBinding.tvTitle.setTextColor(titleColor)
         mDataBinding.tvTitle.vbTextBold(true)
-        if (listener != null) {
-            mDataBinding.tvTitle.vbOnClickAnimator {
-                listener.onClick(it)
-            }
-        }
-
         mDataBinding.ivLine.visibility = if (isShowBottomLine) View.VISIBLE else View.GONE
     }
 

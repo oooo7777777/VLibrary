@@ -3,6 +3,7 @@ package com.v.demo
 import android.view.View
 import androidx.lifecycle.Observer
 import com.v.base.VBActivity
+import com.v.base.utils.log
 import com.v.demo.databinding.ActivityNetworkBinding
 import com.v.demo.model.NetworkViewModel
 
@@ -19,21 +20,18 @@ class NetworkActivity : VBActivity<ActivityNetworkBinding, NetworkViewModel>(),
         title: String,
         titleColor: Int,
         isShowBottomLine: Boolean,
-        listener: View.OnClickListener?,
+        res: Int,
+        listenerLeft: View.OnClickListener?
     ): Boolean {
-        super.toolBarTitle(
-            this.getString(R.string.string_activity_network_title),
+        return super.toolBarTitle(this.getString(R.string.string_activity_network_title),
             titleColor,
             isShowBottomLine,
-            listener
-        )
-        return true
+            res,
+            listenerLeft)
     }
-
 
     override fun initData() {
         mDataBinding.v = this
-        mRootDataBinding.vbTitleBar
     }
 
     override fun createObserver() {

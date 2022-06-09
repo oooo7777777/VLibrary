@@ -11,6 +11,7 @@
 - 封装Base类，添加常用工具类
 
 #### 搭配代码模板插件[VLibraryPlugin](https://github.com/oooo7777777/VLibraryPlugin)使用开发效率翻倍 :exclamation:  :exclamation: 
+#### 如遇不会可参考该项目[TTProject](https://github.com/oooo7777777/TTProject):exclamation:  :exclamation:
 
 
 #### 使用集成

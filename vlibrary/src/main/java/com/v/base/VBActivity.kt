@@ -102,7 +102,7 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
      * @param color 颜色
      */
     protected open fun statusBarColor(
-        color: Int = VBConfig.options.statusBarColor
+        color: Int = VBConfig.options.statusBarColor,
     ) {
         //状态栏颜色趋近于白色时，会智能将状态栏字体颜色变换为黑色
         StatusBarCompat.setLightStatusBar(window, isWhiteColor(color))
@@ -118,19 +118,28 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
      * @param title 文字 [title]不为空才会显示TitleBar
      * @param titleColor 文字颜色
      * @param isShowBottomLine 是否显示Toolbar下面的分割线
-     * @param listener 点击事件x
+     * @param res 返回键图片
+     * @param listenerLeft 返回键点击事件
      */
     protected open fun toolBarTitle(
         title: String = "",
         titleColor: Int = VBConfig.options.toolbarTitleColor,
         isShowBottomLine: Boolean = true,
-        listener: View.OnClickListener? = null,
+        res: Int = VBConfig.options.toolbarBackRes,
+        listenerLeft: View.OnClickListener? = null,
     ): Boolean {
         return if (title.isNullOrEmpty()) {
             false
         } else {
-            mTitleBar.setTitle(title, titleColor, isShowBottomLine, listener)
+            mTitleBar.setTitle(title, titleColor, isShowBottomLine)
             mTitleBar.useToolbar(true)
+            if (listenerLeft == null) {
+                mTitleBar.setLeft {
+                    finish()
+                }
+            } else {
+                mTitleBar.setLeft(res, listenerLeft)
+            }
             true
         }
     }

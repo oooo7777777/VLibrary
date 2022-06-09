@@ -51,6 +51,12 @@ fun Any.log(tag: String = TAG) = run {
     }
 }
 
+fun logCurrentThreadName(tag: String = TAG) = run {
+    if (VBApplication.isLog()) {
+        Log.i(tag, Thread.currentThread().name)
+    }
+}
+
 
 private fun log(level: LEVEL, tag: String, message: String) {
 

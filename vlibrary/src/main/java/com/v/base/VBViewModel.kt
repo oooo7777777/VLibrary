@@ -9,10 +9,7 @@ import com.v.base.net.VBAppException
 import com.v.base.net.VBExceptionHandle
 import com.v.base.utils.EventLiveData
 import com.v.base.utils.vbToBean
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import java.lang.reflect.Type
 
 
@@ -145,7 +142,9 @@ abstract class VBViewModel : ViewModel() {
                     response.getResponseMsg()
                 )
             } else {
-                success(response.getResponseData())
+                withContext(Dispatchers.Main) {
+                    success(response.getResponseData())
+                }
             }
         }
     }
