@@ -60,6 +60,7 @@ class ThreeFragment : VBFragment<FragmentThreeBinding, VBBlankViewModel>(), View
             mDataBinding.bt5.id -> {
 
                 VBListDialog(mContext)
+                    .setTitle("shenme")
                     .setItems("content0", "content1", "content3")
                     .setClickListener { dialog, result, position ->
                         result.toast()

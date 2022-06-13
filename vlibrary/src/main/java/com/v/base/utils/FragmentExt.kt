@@ -111,7 +111,7 @@ fun <T : Fragment> AppCompatActivity.vbGetFragment(
         fragment = clazz.newInstance()
     }
     if (bundle != null) {
-        fragment.arguments = bundle
+        fragment!!.arguments = bundle
     }
     return fragment!!
 }
@@ -135,7 +135,7 @@ fun <T : Fragment> Fragment.vbGetFragment(
             fragment = clazz.newInstance()
         }
         if (bundle != null) {
-            fragment.arguments = bundle
+            fragment!!.arguments = bundle
         }
         return fragment!!
     }

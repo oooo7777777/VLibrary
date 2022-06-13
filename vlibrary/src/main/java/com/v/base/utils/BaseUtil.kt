@@ -420,7 +420,7 @@ fun Context.vbIsNetConnection(): Boolean {
     try {
         val connectivityManager: ConnectivityManager =
             this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val networkInfo: NetworkInfo = connectivityManager.activeNetworkInfo
+        val networkInfo: NetworkInfo = connectivityManager.activeNetworkInfo!!
         val connected: Boolean = networkInfo.isConnected
         if (networkInfo != null && connected) {
             return networkInfo.state === NetworkInfo.State.CONNECTED

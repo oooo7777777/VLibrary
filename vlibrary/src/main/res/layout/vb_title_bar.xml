@@ -10,10 +10,10 @@
         android:orientation="vertical">
 
         <ImageView
-            tools:layout_height="40dp"
             android:id="@+id/ivStatusBar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            tools:layout_height="40dp" />
 
         <FrameLayout
             android:id="@+id/toolbar"

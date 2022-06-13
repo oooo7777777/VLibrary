@@ -53,11 +53,12 @@ class VBListDialog(mContext: Context) : VBDialog<VbDialogListBinding>(mContext) 
         return this
     }
 
-    fun setTitle(title: String) {
+    fun setTitle(title: String): VBListDialog {
         if (!title.isNullOrEmpty()) {
             mDataBinding.layoutTitle.visibility = View.VISIBLE
             mDataBinding.tvTitle.text = title
         }
+        return this
     }
 
     fun setClickListener(listener: ((dialog: VBListDialog, result: String, position: Int) -> Unit)): VBListDialog {
@@ -70,6 +71,7 @@ class VBListDialog(mContext: Context) : VBDialog<VbDialogListBinding>(mContext) 
         init {
             addChildClickViewIds(R.id.tvContent)
         }
+
         override fun convert(helper: BaseViewHolder, item: String) {
             helper.setText(R.id.tvContent, item)
         }

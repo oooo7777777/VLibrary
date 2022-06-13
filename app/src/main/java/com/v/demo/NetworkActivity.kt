@@ -20,13 +20,13 @@ class NetworkActivity : VBActivity<ActivityNetworkBinding, NetworkViewModel>(),
         title: String,
         titleColor: Int,
         isShowBottomLine: Boolean,
-        res: Int,
+        resLeft: Int,
         listenerLeft: View.OnClickListener?
     ): Boolean {
         return super.toolBarTitle(this.getString(R.string.string_activity_network_title),
             titleColor,
             isShowBottomLine,
-            res,
+            resLeft,
             listenerLeft)
     }
 

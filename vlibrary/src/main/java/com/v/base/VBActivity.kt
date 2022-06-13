@@ -125,20 +125,20 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
         title: String = "",
         titleColor: Int = VBConfig.options.toolbarTitleColor,
         isShowBottomLine: Boolean = true,
-        res: Int = VBConfig.options.toolbarBackRes,
+        resLeft: Int = VBConfig.options.toolbarBackRes,
         listenerLeft: View.OnClickListener? = null,
     ): Boolean {
         return if (title.isNullOrEmpty()) {
             false
         } else {
-            mTitleBar.setTitle(title, titleColor, isShowBottomLine)
             mTitleBar.useToolbar(true)
+            mTitleBar.setTitle(title, titleColor, isShowBottomLine)
             if (listenerLeft == null) {
                 mTitleBar.setLeft {
                     finish()
                 }
             } else {
-                mTitleBar.setLeft(res, listenerLeft)
+                mTitleBar.setLeft(resLeft, listenerLeft)
             }
             true
         }
