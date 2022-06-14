@@ -68,7 +68,7 @@ class VBConfigOptions(builder: Builder) {
         internal var toolbarBackRes = R.mipmap.vb_ic_back_black
         internal var recyclerViewEmptyLayout = R.layout.vb_layout_empty
         internal var clickAnimator = true
-        internal var clickTime = 500L
+        internal var clickTime = 300L
 
         internal var netOptions = VBNetOptions.Builder().build()
 

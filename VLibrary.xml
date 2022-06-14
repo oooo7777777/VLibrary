@@ -168,14 +168,6 @@
             <option name="XML" value="true" />
         </context>
     </template>
-    <template name="vb_click_animation_cancel"
-        description="true为取消onClick点击动画" toReformat="true"
-        toShortenFQNames="true" value="app:vb_click_animation_cancel=&quot;$value$&quot;">
-        <variable name="value" alwaysStopAt="true" defaultValue="" expression="" />
-        <context>
-            <option name="XML" value="true" />
-        </context>
-    </template>
     <template name="vb_text_bold" description="字体加粗" toReformat="true"
         toShortenFQNames="true" value="app:vb_text_bold=&quot;$value$&quot;">
         <variable name="value" alwaysStopAt="true" defaultValue="" expression="" />

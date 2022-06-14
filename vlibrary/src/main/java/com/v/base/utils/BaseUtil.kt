@@ -13,6 +13,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.ColorRes
 import androidx.annotation.LayoutRes
@@ -211,6 +212,13 @@ fun Context.vbGetStatusBarHeight(): Int = run {
         result = this.resources.getDimensionPixelSize(resourceId)
     }
     return result
+}
+
+/**
+ * 设置文字大小
+ */
+fun TextView.vbSetTextSize(textSize: Float) {
+    this.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize)
 }
 
 

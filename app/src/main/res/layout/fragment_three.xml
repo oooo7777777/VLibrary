@@ -39,7 +39,6 @@
 
 
         <Button
-            vb_click_animation_cancel="@{true}"
             android:id="@+id/bt1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

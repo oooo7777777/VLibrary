@@ -201,16 +201,15 @@ fun TextView.vbDrawable(
 
 
 /**
- * view点击动画以及添加间隔做处理
+ * view点击
  */
-@BindingAdapter(value = ["vb_click", "vb_click_animation_cancel"],
+@BindingAdapter(value = ["vb_click"],
     requireAll = false)
 fun View.vbClick(
     onClickListener: View.OnClickListener?,
-    animationCancel: Boolean = false,
 ) {
     if (onClickListener != null) {
-        this.vbOnClickListener(!animationCancel) {
+        this.vbOnClickListener {
             onClickListener.onClick(it)
         }
     }
