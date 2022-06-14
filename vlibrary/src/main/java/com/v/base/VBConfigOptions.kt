@@ -29,17 +29,18 @@ class VBConfigOptions(builder: Builder) {
     //设置状态栏颜色 状态栏颜色趋近于白色时 会智能将状态栏字体颜色变换为黑色
     var statusBarColor: Int
 
-    //设置默认RecyclerView 数据为空界面
+    //设置默认RecyclerView 数据为空界面 只会在page为1并且没有数据的时候显示
     var recyclerViewEmptyLayout: Int
-
-    //设置默认RecyclerView错误界面 只会在page为1并且没有数据的时候显示
-    var recyclerViewErrorLayout: Int
 
     //全局设置SmartRefreshLayout Header
     var smartRefreshHeader: DefaultRefreshHeaderCreator
 
     //全局设置SmartRefreshLayout Footer
     var smartRefreshFooter: DefaultRefreshFooterCreator
+
+
+    //点击是否加入点击动画
+    var clickAnimator = true
 
     //网络请求配置
     var netOptions: VBNetOptions
@@ -50,11 +51,10 @@ class VBConfigOptions(builder: Builder) {
         this.toolbarBackRes = builder.toolbarBackRes
         this.toolbarTitleColor = builder.toolbarTitleColor
         this.recyclerViewEmptyLayout = builder.recyclerViewEmptyLayout
-        this.recyclerViewErrorLayout = builder.recyclerViewErrorLayout
         this.smartRefreshHeader = builder.smartRefreshHeader
         this.smartRefreshFooter = builder.smartRefreshFooter
         this.netOptions = builder.netOptions
-
+        this.clickAnimator = builder.clickAnimator
     }
 
     class Builder {
@@ -64,7 +64,7 @@ class VBConfigOptions(builder: Builder) {
         internal var toolbarTitleColor = Color.parseColor("#000000")
         internal var toolbarBackRes = R.mipmap.vb_ic_back_black
         internal var recyclerViewEmptyLayout = R.layout.vb_layout_empty
-        internal var recyclerViewErrorLayout = R.layout.vb_layout_error
+        internal var clickAnimator = true
 
         internal var netOptions = VBNetOptions.Builder().build()
 
@@ -102,10 +102,6 @@ class VBConfigOptions(builder: Builder) {
             return this
         }
 
-        fun setRecyclerViewErrorLayout(recyclerViewErrorLayout: Int): Builder {
-            this.recyclerViewErrorLayout = recyclerViewErrorLayout
-            return this
-        }
 
         fun setSmartRefreshHeader(header: DefaultRefreshHeaderCreator): Builder {
             this.smartRefreshHeader = header
@@ -114,6 +110,11 @@ class VBConfigOptions(builder: Builder) {
 
         fun setSmartRefreshFooter(footer: DefaultRefreshFooterCreator): Builder {
             this.smartRefreshFooter = footer
+            return this
+        }
+
+        fun setClickAnimator(open: Boolean): Builder {
+            this.clickAnimator = open
             return this
         }
 

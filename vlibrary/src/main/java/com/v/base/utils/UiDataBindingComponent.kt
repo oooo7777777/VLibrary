@@ -13,6 +13,7 @@ import androidx.databinding.BindingAdapter
 import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.v.base.R
+import com.v.base.VBConfig
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation.CornerType
 
@@ -210,7 +211,7 @@ fun View.vbClick(
     animationCancel: Boolean = false,
 ) {
     if (onClickListener != null) {
-        if (animationCancel) {
+        if (animationCancel || !VBConfig.options.clickAnimator) {
             this.setOnClickListener(ThrottleOnClickListener(clickTime) {
                 onClickListener.onClick(this)
             })
@@ -250,7 +251,15 @@ fun View.vbFinishActivity(isFinish: Boolean) {
         }
 
         val finalActivity = activity
-        vbOnClickAnimator(500L) {
+        if (VBConfig.options.clickAnimator) {
+            vbOnClickAnimator(500L) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    finalActivity!!.finishAfterTransition()
+                } else {
+                    finalActivity!!.finish()
+                }
+            }
+        } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 finalActivity!!.finishAfterTransition()
             } else {
