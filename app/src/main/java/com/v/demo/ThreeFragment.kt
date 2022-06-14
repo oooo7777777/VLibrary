@@ -7,6 +7,7 @@ import com.v.base.VBFragment
 import com.v.base.dialog.VBHintDialog
 import com.v.base.dialog.VBListDialog
 import com.v.base.utils.goActivity
+import com.v.base.utils.log
 import com.v.base.utils.toast
 import com.v.base.utils.vbCountDownCoroutines
 import com.v.demo.databinding.FragmentThreeBinding

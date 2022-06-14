@@ -203,22 +203,15 @@ fun TextView.vbDrawable(
 /**
  * view点击动画以及添加间隔做处理
  */
-@BindingAdapter(value = ["vb_click", "vb_click_time", "vb_click_animation_cancel"],
+@BindingAdapter(value = ["vb_click", "vb_click_animation_cancel"],
     requireAll = false)
 fun View.vbClick(
     onClickListener: View.OnClickListener?,
-    clickTime: Long = 0,
     animationCancel: Boolean = false,
 ) {
     if (onClickListener != null) {
-        if (animationCancel || !VBConfig.options.clickAnimator) {
-            this.setOnClickListener(ThrottleOnClickListener(clickTime) {
-                onClickListener.onClick(this)
-            })
-        } else {
-            vbOnClickAnimator(if (clickTime <= 0) 500L else clickTime) {
-                onClickListener.onClick(it)
-            }
+        this.vbOnClickListener(!animationCancel) {
+            onClickListener.onClick(it)
         }
     }
 
@@ -251,15 +244,8 @@ fun View.vbFinishActivity(isFinish: Boolean) {
         }
 
         val finalActivity = activity
-        if (VBConfig.options.clickAnimator) {
-            vbOnClickAnimator(500L) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    finalActivity!!.finishAfterTransition()
-                } else {
-                    finalActivity!!.finish()
-                }
-            }
-        } else {
+
+        this.vbOnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 finalActivity!!.finishAfterTransition()
             } else {

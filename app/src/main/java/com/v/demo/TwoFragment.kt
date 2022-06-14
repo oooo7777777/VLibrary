@@ -36,21 +36,12 @@ class TwoFragment : VBFragment<FragmentTowBinding, DemoViewModel>(), View.OnClic
 
     override fun onClick(v: View) {
         when (v.id) {
-
-            mDataBinding.bt0.id -> {
-                "点击间隔默认500".toast()
-                "点击间隔默认500".log()
-            }
-            mDataBinding.bt1.id -> {
-                "点击间隔1000".toast()
-                "点击间隔1000".log()
-            }
             mDataBinding.bt2.id -> {
-                "打印日志".logE()
-                "打印日志".logV()
-                "打印日志".logD()
-                "打印日志".logI()
-                "打印日志".logW()
+//                "打印日志".logE()
+//                "打印日志".logV()
+//                "打印日志".logD()
+//                "打印日志".logI()
+//                "打印日志".logW()
                 "打印日志".log()
             }
             mDataBinding.bt3.id -> {

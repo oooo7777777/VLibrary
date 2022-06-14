@@ -42,15 +42,17 @@ class OneFragment : VBFragment<FragmentOneBinding, DemoViewModel>() {
                     val item = data[position] as HomeBean.Data
                     item.title.toast()
                 },
-                onItemLongClick = { _, view, position ->
+                onItemChildClick = { _, view, position ->
+                    when (view.id) {
 
+                    }
                 },
-                emptyViewClickListener =  {
+                emptyViewClickListener = {
                     "点击了全局设置的空布局".toast()
                 },
                 emptyView = vbEmptyView(mContext,
                     res = R.mipmap.ic_movie,
-                    listener =  {
+                    listener = {
                         "点击了自定义空布局".toast()
                     })
             )

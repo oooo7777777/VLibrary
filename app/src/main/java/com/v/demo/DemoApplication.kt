@@ -23,6 +23,7 @@ class DemoApplication : VBApplication() {
 
         val options = VBConfigOptions.Builder()
             .setNetOptions(netOptions)
+            .setClickTime(300L)
             .setStatusBarColor(Color.parseColor("#ffffff"))
             .build()
 

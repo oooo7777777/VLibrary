@@ -28,6 +28,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.v.base.R
 import com.v.base.VBApplication
+import com.v.base.VBConfig
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import java.util.*
@@ -480,20 +481,19 @@ fun View.vbSetViewMargins(
 }
 
 /**
- * 点击动画效果
- */
-fun View.vbOnClickAnimator(clickTime: Long = 500L, onClick: ((v: View) -> Unit)) = run {
-    ViewClickAnimatorUtil(this, clickTime, onClick)
-    this
-}
-
-/**
  * 防抖动点击
  */
-fun View.vbOnClickListener(onClick: ((View) -> Unit)) {
-    this.setOnClickListener(ThrottleOnClickListener {
-        onClick.invoke(this)
-    })
+fun View.vbOnClickListener(
+    clickAnimator: Boolean = VBConfig.options.clickAnimator,
+    onClick: ((View) -> Unit),
+) {
+    if (clickAnimator) {
+        ViewClickAnimatorUtil(this, onClick)
+    } else {
+        this.setOnClickListener(ThrottleOnClickListener {
+            onClick.invoke(this)
+        })
+    }
 }
 
 
@@ -501,22 +501,38 @@ fun View.vbOnClickListener(onClick: ((View) -> Unit)) {
  * 点击防抖动
  */
 class ThrottleOnClickListener(
-    var clickTime: Long = 500L,
-    var onClick: (() -> Unit),
+    private var onClick: (() -> Unit),
 ) : View.OnClickListener {
 
-    // 上次点击时间
-    private var mLastTime = 0L
-
     override fun onClick(v: View?) {
-        val currentTime = System.currentTimeMillis()
-        if (currentTime - mLastTime >= clickTime) {
-            mLastTime = currentTime
-            // 调用点击方法
+        if (ClickEventUtils.isFastClick) {
             onClick.invoke()
         }
     }
 
+
+}
+
+object ClickEventUtils {
+    // 上次点击时间
+    private var mLastTime = 0L
+
+    private val LIMIT_TIME = VBConfig.options.clickTime
+
+    //设置标记号
+    val isFastClick: Boolean
+        get() {
+            //设置标记号
+            var flag = false
+            val currentTime = Calendar.getInstance().timeInMillis
+            if (currentTime - mLastTime >= LIMIT_TIME) {
+                mLastTime = currentTime
+                // 调用点击方法
+                flag = true
+            }
+            return flag
+
+        }
 
 
 }

@@ -139,7 +139,9 @@ fun <T> BaseQuickAdapter<T, *>.vbConfig(
 
     if (onItemClick != null) {
         setOnItemClickListener { adapter, view, position ->
-            onItemClick.invoke(adapter, view, position)
+            if (ClickEventUtils.isFastClick) {
+                onItemClick.invoke(adapter, view, position)
+            }
         }
     }
 
@@ -154,7 +156,9 @@ fun <T> BaseQuickAdapter<T, *>.vbConfig(
 
     if (onItemChildClick != null) {
         setOnItemChildClickListener { adapter, view, position ->
-            onItemChildClick.invoke(adapter, view, position)
+            if (ClickEventUtils.isFastClick) {
+                onItemChildClick.invoke(adapter, view, position)
+            }
         }
     }
 

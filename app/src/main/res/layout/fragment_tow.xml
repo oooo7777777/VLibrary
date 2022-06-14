@@ -30,23 +30,6 @@
             android:orientation="vertical">
 
 
-            <Button
-                android:id="@+id/bt0"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="点击间隔默认500"
-                android:textAllCaps="false"
-                app:vb_click="@{v}" />
-
-            <Button
-                android:id="@+id/bt1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="点击间隔1000"
-                android:textAllCaps="false"
-                app:vb_click="@{v}"
-                app:vb_click_time="@{1000}" />
-
 
             <Button
                 android:id="@+id/bt2"

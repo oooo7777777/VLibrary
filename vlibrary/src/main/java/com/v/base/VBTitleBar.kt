@@ -9,10 +9,7 @@ import android.view.View
 import android.widget.FrameLayout
 import androidx.databinding.DataBindingUtil
 import com.v.base.databinding.VbTitleBarBinding
-import com.v.base.utils.vbGetStatusBarHeight
-import com.v.base.utils.vbOnClickAnimator
-import com.v.base.utils.vbSetViewLayoutParams
-import com.v.base.utils.vbTextBold
+import com.v.base.utils.*
 
 /**
  * @Author : ww
@@ -81,7 +78,7 @@ class VBTitleBar @JvmOverloads constructor(
         mDataBinding.tvLeft.setTextColor(titleColor)
 
         if (listener != null) {
-            mDataBinding.flLeft.vbOnClickAnimator {
+            mDataBinding.flLeft.vbOnClickListener {
                 listener.onClick(it)
             }
         }
@@ -98,7 +95,7 @@ class VBTitleBar @JvmOverloads constructor(
         mDataBinding.ivLeft.setImageResource(res)
 
         if (listener != null) {
-            mDataBinding.flLeft.vbOnClickAnimator {
+            mDataBinding.flLeft.vbOnClickListener {
                 listener.onClick(it)
             }
         }
@@ -117,7 +114,7 @@ class VBTitleBar @JvmOverloads constructor(
         mDataBinding.tvRight.setTextColor(titleColor)
 
         if (listener != null) {
-            mDataBinding.flRight.vbOnClickAnimator {
+            mDataBinding.flRight.vbOnClickListener {
                 listener.onClick(it)
             }
         }
@@ -135,7 +132,7 @@ class VBTitleBar @JvmOverloads constructor(
         mDataBinding.ivRight.setImageResource(res)
 
         if (listener != null) {
-            mDataBinding.flRight.vbOnClickAnimator {
+            mDataBinding.flRight.vbOnClickListener {
                 listener.onClick(it)
             }
         }

@@ -21,7 +21,6 @@ import kotlin.math.roundToInt
 
 class ViewClickAnimatorUtil(
     var view: View,
-    var clickTime: Long = 500L,
     var onClick: ((v: View) -> Unit),
 
     ) : LifecycleObserver {
@@ -29,8 +28,6 @@ class ViewClickAnimatorUtil(
     private val animDuration = 150L
     private var mAnimation: ScaleAnimation? = null
 
-    // 上次点击时间
-    private var mLastTime = 0L
 
     init {
         addTouchListener()
@@ -104,9 +101,7 @@ class ViewClickAnimatorUtil(
 
 
     private fun dispose() {
-        val currentTime = System.currentTimeMillis()
-        if (currentTime - mLastTime >= clickTime) {
-            mLastTime = currentTime
+        if (ClickEventUtils.isFastClick) {
             onClick(view)
         }
     }

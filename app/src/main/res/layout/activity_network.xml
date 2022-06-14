@@ -98,7 +98,6 @@
                         android:layout_height="wrap_content"
                         android:text="自定义网络请求(返回去壳数据)"
                         android:textAllCaps="false"
-                        vb_click_animation_cancel="@{true}"
                         app:vb_click="@{v}" />
 
 

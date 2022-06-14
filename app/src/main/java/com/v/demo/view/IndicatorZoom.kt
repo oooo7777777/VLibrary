@@ -10,14 +10,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.v.base.VBFragmentAdapter
-import com.v.base.utils.vbOnClickListener
 import com.v.demo.R
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.CommonPagerTitleView
-import java.util.ArrayList
+import java.util.*
 
 /**
  * @Author : ww
@@ -30,7 +29,7 @@ class IndicatorZoom(
     fragments: ArrayList<Fragment>,
     titles: Array<String>,
     iconOffs: Array<Int>,
-    iconOns: Array<Int>
+    iconOns: Array<Int>,
 ) :
     CommonNavigator(context) {
 
@@ -85,7 +84,7 @@ class IndicatorZoom(
                         index: Int,
                         totalCount: Int,
                         leavePercent: Float,
-                        leftToRight: Boolean
+                        leftToRight: Boolean,
                     ) {
                         titleImg.scaleX = 1.3f + (0.8f - 1.3f) * leavePercent
                         titleImg.scaleY = 1.3f + (0.8f - 1.3f) * leavePercent
@@ -95,14 +94,14 @@ class IndicatorZoom(
                         index: Int,
                         totalCount: Int,
                         enterPercent: Float,
-                        leftToRight: Boolean
+                        leftToRight: Boolean,
                     ) {
                         titleImg.scaleX = 0.8f + (1.3f - 0.8f) * enterPercent
                         titleImg.scaleY = 0.8f + (1.3f - 0.8f) * enterPercent
                     }
                 }
 
-                commonPagerTitleView.vbOnClickListener {
+                commonPagerTitleView.setOnClickListener {
                     viewPager.currentItem = index
                 }
                 return commonPagerTitleView

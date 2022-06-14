@@ -38,9 +38,11 @@ class VBConfigOptions(builder: Builder) {
     //全局设置SmartRefreshLayout Footer
     var smartRefreshFooter: DefaultRefreshFooterCreator
 
-
     //点击是否加入点击动画
     var clickAnimator = true
+
+    //点击防抖动间隔
+    var clickTime = 0L
 
     //网络请求配置
     var netOptions: VBNetOptions
@@ -55,6 +57,7 @@ class VBConfigOptions(builder: Builder) {
         this.smartRefreshFooter = builder.smartRefreshFooter
         this.netOptions = builder.netOptions
         this.clickAnimator = builder.clickAnimator
+        this.clickTime = builder.clickTime
     }
 
     class Builder {
@@ -65,6 +68,7 @@ class VBConfigOptions(builder: Builder) {
         internal var toolbarBackRes = R.mipmap.vb_ic_back_black
         internal var recyclerViewEmptyLayout = R.layout.vb_layout_empty
         internal var clickAnimator = true
+        internal var clickTime = 500L
 
         internal var netOptions = VBNetOptions.Builder().build()
 
@@ -115,6 +119,11 @@ class VBConfigOptions(builder: Builder) {
 
         fun setClickAnimator(open: Boolean): Builder {
             this.clickAnimator = open
+            return this
+        }
+
+        fun setClickTime(time: Long): Builder {
+            this.clickTime = time
             return this
         }
 
