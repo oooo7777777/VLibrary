@@ -17,72 +17,80 @@
 
     </data>
 
-    <ScrollView
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-
-        <TextView
-            android:id="@+id/tvContent"
+        <ImageView
             android:layout_width="match_parent"
-            android:background="@android:color/black"
-            android:minHeight="200dp"
-            android:textColor="@android:color/white"
-            android:gravity="center"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_movie" />
 
 
-        <Button
-            android:id="@+id/bt1"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="倒计时"
-            android:textAllCaps="false"
-            app:vb_click="@{v}" />
-
-        <Button
-            android:id="@+id/bt2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="心跳"
-            android:textAllCaps="false"
-            app:vb_click="@{v}" />
-
-
-        <Button
+            android:layout_height="match_parent"
             android:layout_marginTop="100dp"
-            android:id="@+id/bt3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="网络请求"
-            android:textAllCaps="false"
-            app:vb_click="@{v}" />
+            android:orientation="vertical">
 
 
-        <Button
-            android:id="@+id/bt4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="dialog"
-            android:textAllCaps="false"
-            app:vb_click="@{v}" />
-
-        <Button
-            android:id="@+id/bt5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="dialog List"
-            android:textAllCaps="false"
-            app:vb_click="@{v}" />
+            <TextView
+                android:id="@+id/tvContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/black"
+                android:gravity="center"
+                android:minHeight="200dp"
+                android:textColor="@android:color/white" />
 
 
-    </LinearLayout>
-    </ScrollView>
+            <Button
+                android:id="@+id/bt1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="倒计时"
+                android:textAllCaps="false"
+                app:vb_click="@{v}" />
+
+            <Button
+                android:id="@+id/bt2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="心跳"
+                android:textAllCaps="false"
+                app:vb_click="@{v}" />
+
+
+            <Button
+                android:id="@+id/bt3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100dp"
+                android:text="网络请求"
+                android:textAllCaps="false"
+                app:vb_click="@{v}" />
+
+
+            <Button
+                android:id="@+id/bt4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="dialog"
+                android:textAllCaps="false"
+                app:vb_click="@{v}" />
+
+            <Button
+                android:id="@+id/bt5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="dialog List"
+                android:textAllCaps="false"
+                app:vb_click="@{v}" />
+
+
+        </LinearLayout>
+    </FrameLayout>
 </layout>

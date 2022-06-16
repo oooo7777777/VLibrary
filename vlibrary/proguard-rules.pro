@@ -69,3 +69,7 @@
 -keepclassmembers  class **$** extends com.chad.library.adapter.base.viewholder.BaseViewHolder {
      <init>(...);
 }
+
+#状态栏
+-keep class com.gyf.immersionbar.* {*;}
+ -dontwarn com.gyf.immersionbar.**

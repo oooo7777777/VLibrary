@@ -43,7 +43,7 @@ class MainActivity : VBActivity<MainActivityBinding, VBBlankViewModel>() {
     }
 
     override fun useTranslucent(): Boolean {
-        return super.useTranslucent()
+        return true
     }
 
     override fun initData() {

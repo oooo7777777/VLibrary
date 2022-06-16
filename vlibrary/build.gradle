@@ -11,8 +11,8 @@ android {
     defaultConfig {
         minSdk 21
         targetSdk 30
-        versionCode 371
-        versionName "3.7.1"
+        versionCode 372
+        versionName "3.7.2"
     }
 
     compileOptions {
@@ -50,7 +50,6 @@ dependencies {
     kapt 'com.github.bumptech.glide:compiler:4.11.0'//glide
     api 'com.github.bumptech.glide:okhttp3-integration:4.11.0'
 
-
     api "com.squareup.retrofit2:retrofit:2.9.0"
     api "com.alibaba:fastjson:1.2.73"
     api "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2"
@@ -58,7 +57,12 @@ dependencies {
     api "com.scwang.smart:refresh-layout-kernel:2.0.3"
     api "com.scwang.smart:refresh-header-classics:2.0.3"
     api "com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.7"
-    api "com.github.JavaNoober.BackgroundLibrary:libraryx:1.7.2"//BackgroundLibrary  （通过标签直接生成shape，无需再写shape.xml）
-    api "com.githang:status-bar-compat:0.7"//状态栏
+    //BackgroundLibrary  （通过标签直接生成shape，无需再写shape.xml）
+    api "com.github.JavaNoober.BackgroundLibrary:libraryx:1.7.2"
+
+    // 状态栏 基础依赖包，必须要依赖
+    api 'com.gyf.immersionbar:immersionbar:3.0.0'
+    // 状态栏 kotlin扩展（可选）
+    api 'com.gyf.immersionbar:immersionbar-ktx:3.0.0'
 }
 

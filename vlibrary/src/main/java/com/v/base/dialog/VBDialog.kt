@@ -15,7 +15,7 @@ import java.lang.reflect.ParameterizedType
  * desc    :
  * time    : 2021-03-16 09:52:45
  */
-abstract class VBDialog<VB : ViewDataBinding>(mContext: Context) : Dialog(mContext) {
+abstract class VBDialog<VB : ViewDataBinding>(private val mContext: Context) : Dialog(mContext) {
 
 
     protected val mDataBinding: VB by lazy {

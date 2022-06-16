@@ -1,5 +1,6 @@
 package com.v.base
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,9 +8,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.githang.statusbar.StatusBarCompat
+import com.gyf.immersionbar.BarHide
+import com.gyf.immersionbar.ImmersionBar
+import com.gyf.immersionbar.ktx.immersionBar
 import com.noober.background.BackgroundLibrary
-import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.v.base.databinding.VbRootActivityBinding
 import com.v.base.dialog.VBLoadingDialog
 import com.v.base.utils.*
@@ -102,15 +104,23 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
      * @param color 颜色
      */
     protected open fun statusBarColor(
-        color: Int = VBConfig.options.statusBarColor,
+        color: String = VBConfig.options.statusBarColor,
     ) {
-        //状态栏颜色趋近于白色时，会智能将状态栏字体颜色变换为黑色
-        StatusBarCompat.setLightStatusBar(window, isWhiteColor(color))
-        if (useTranslucent()) {
-            StatusBarCompat.setTranslucent(window, true)
-        } else {
-            StatusBarCompat.setStatusBarColor(this, color)
+
+        immersionBar {
+            if (useTranslucent()) {
+                transparentStatusBar()  //沉浸式状态栏(布局会顶进状态栏)
+                //状态栏颜色趋近于白色时，会智能将状态栏字体颜色变换为黑色
+                val isDarkFont = isWhiteColor(Color.parseColor(color))
+                statusBarDarkFont(isDarkFont)   //状态栏字体是深色，不写默认为亮色
+                navigationBarDarkIcon(isDarkFont) //导航栏图标是深色，不写默认为亮色
+            } else {
+                statusBarColor(color)     //状态栏颜色，不写默认透明色
+                fitsSystemWindows(true)  //使用该属性,必须指定状态栏颜色
+                autoDarkModeEnable(true) //自动状态栏字体和导航栏图标变色，必须指定状态栏颜色和导航栏颜色才可以自动变色哦
+            }
         }
+
     }
 
     /**
@@ -118,7 +128,7 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
      * @param title 文字 [title]不为空才会显示TitleBar
      * @param titleColor 文字颜色
      * @param isShowBottomLine 是否显示Toolbar下面的分割线
-     * @param res 返回键图片
+     * @param resLeft 返回键图片
      * @param listenerLeft 返回键点击事件
      */
     protected open fun toolBarTitle(
@@ -134,7 +144,7 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
             mTitleBar.useToolbar(true)
             mTitleBar.setTitle(title, titleColor, isShowBottomLine)
             if (listenerLeft == null) {
-                mTitleBar.setLeft {
+                mTitleBar.setLeft(resLeft) {
                     finish()
                 }
             } else {
@@ -187,7 +197,6 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
 
         //toast
         mViewModel.loadingChange.showToast.observe(this, Observer {
-
             if (!it.isNullOrEmpty()) {
                 it.toast()
             }

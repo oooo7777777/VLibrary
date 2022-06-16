@@ -15,112 +15,101 @@
 
     </data>
 
-
-    <ScrollView
-        android:id="@+id/scrollView"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:overScrollMode="never"
-        android:scrollbars="none">
+        android:orientation="vertical"
+        android:paddingTop="40dp">
+
+        <Button
+            android:id="@+id/bt2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="日志"
+            android:textAllCaps="false"
+            app:vb_click="@{v}" />
+
+
+        <Button
+            android:id="@+id/bt3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="设置DrawableLeft"
+            android:textAllCaps="false"
+            app:vb_click="@{v}"
+            app:vb_drawable_bottom="@{R.mipmap.ic_launcher}"
+            app:vb_drawable_left="@{R.mipmap.ic_launcher}"
+            app:vb_drawable_left_height="@{70}"
+            app:vb_drawable_left_width="@{70}"
+            app:vb_drawable_right="@{R.mipmap.ic_launcher}"
+            app:vb_drawable_top="@{R.mipmap.ic_launcher}"
+            app:vb_drawable_top_height="@{100}"
+            app:vb_drawable_top_width="@{100}" />
+
+
+        <Button
+            android:id="@+id/bt4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="设置DrawableRight"
+            android:textAllCaps="false"
+            app:vb_click="@{v}"
+            app:vb_drawable_height="@{20}"
+            app:vb_drawable_left="@{R.mipmap.ic_launcher}"
+            app:vb_drawable_right="@{R.mipmap.ic_launcher}"
+            app:vb_drawable_width="@{20}" />
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <Button
-                android:id="@+id/bt2"
-                android:layout_width="match_parent"
+                android:id="@+id/bt5"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="日志"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="图片圆角"
+                android:textAllCaps="false"
+                app:vb_click="@{v}" />
+
+            <Button
+                android:id="@+id/bt6"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="图片圆形"
                 android:textAllCaps="false"
                 app:vb_click="@{v}" />
 
 
             <Button
-                android:id="@+id/bt3"
-                android:layout_width="match_parent"
+                android:id="@+id/bt7"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:gravity="center"
-                android:text="设置DrawableLeft"
+                android:text="图片不同圆角"
                 android:textAllCaps="false"
-                app:vb_click="@{v}"
-                app:vb_drawable_bottom="@{R.mipmap.ic_launcher}"
-                app:vb_drawable_left="@{R.mipmap.ic_launcher}"
-                app:vb_drawable_left_height="@{70}"
-                app:vb_drawable_left_width="@{70}"
-                app:vb_drawable_right="@{R.mipmap.ic_launcher}"
-                app:vb_drawable_top="@{R.mipmap.ic_launcher}"
-                app:vb_drawable_top_height="@{100}"
-                app:vb_drawable_top_width="@{100}" />
+                app:vb_click="@{v}" />
 
-
-            <Button
-                android:id="@+id/bt4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="设置DrawableRight"
-                android:textAllCaps="false"
-                app:vb_click="@{v}"
-                app:vb_drawable_height="@{20}"
-                app:vb_drawable_left="@{R.mipmap.ic_launcher}"
-                app:vb_drawable_right="@{R.mipmap.ic_launcher}"
-                app:vb_drawable_width="@{20}" />
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/bt5"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="图片圆角"
-                    android:textAllCaps="false"
-                    app:vb_click="@{v}" />
-
-                <Button
-                    android:id="@+id/bt6"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="图片圆形"
-                    android:textAllCaps="false"
-                    app:vb_click="@{v}" />
-
-
-                <Button
-                    android:id="@+id/bt7"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="图片不同圆角"
-                    android:textAllCaps="false"
-                    app:vb_click="@{v}" />
-
-
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/ivIcon"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:scaleType="centerCrop"
-                app:vb_img_url="@{R.mipmap.ic_movie}"
-                tools:src="@mipmap/ic_movie" />
 
         </LinearLayout>
-    </ScrollView>
+
+        <ImageView
+            android:id="@+id/ivIcon"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:scaleType="centerCrop"
+            app:vb_img_url="@{R.mipmap.ic_movie}"
+            tools:src="@mipmap/ic_movie" />
+
+    </LinearLayout>
 </layout>

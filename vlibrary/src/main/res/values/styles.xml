@@ -99,4 +99,12 @@
         <item name="android:layerType">software</item>
     </style>
 
+    <!--自定义Dialog样式-->
+    <style name="MyDialog" parent="AlertDialog.AppCompat">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">false</item>
+    </style>
+
 </resources>
