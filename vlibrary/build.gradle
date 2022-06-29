@@ -11,8 +11,8 @@ android {
     defaultConfig {
         minSdk 21
         targetSdk 30
-        versionCode 372
-        versionName "3.7.2"
+        versionCode 373
+        versionName "3.7.3"
     }
 
     compileOptions {

@@ -1,5 +1,6 @@
 package com.v.base
 
+import com.chad.library.adapter.base.animation.BaseAnimation
 import com.v.base.net.VBNetApi
 
 
@@ -23,10 +24,17 @@ val apiBase: VBNetApi by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
  */
 object VBConfig {
 
-    var options: VBConfigOptions = VBConfigOptions.Builder().build()
+    val options: VBConfigOptions
+        get() {
+            if (op == null) {
+                op = VBConfigOptions.Builder().build()
+            }
+            return op!!
+        }
 
+    var op: VBConfigOptions? = null
     fun init(options: VBConfigOptions) {
-        this.options = options
+        this.op = options
     }
 
 }

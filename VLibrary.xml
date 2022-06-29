@@ -1,226 +1,241 @@
 <templateSet group="VLibrary">
-    <template name="vb_img_url" description="图片地址" toReformat="false"
-        toShortenFQNames="true" value="app:vb_img_url=&quot;$value$&quot;">
+    <template name="vb_img_url" description="图片地址" toReformat="false" toShortenFQNames="true"
+        value="app:vb_img_url=&quot;$value$&quot;">
         <variable name="value" alwaysStopAt="true" defaultValue="" expression="" />
         <context>
             <option name="XML" value="true" />
         </context>
     </template>
-    <template name="vb_img_radius" description="图片圆角宽度"
-        toReformat="true" toShortenFQNames="true" value="app:vb_img_radius=&quot;$value$&quot;">
+    <template name="vb_img_radius" description="图片圆角宽度" toReformat="true" toShortenFQNames="true"
+        value="app:vb_img_radius=&quot;$value$&quot;">
         <variable name="value" alwaysStopAt="true" defaultValue="" expression="" />
         <context>
             <option name="XML" value="true" />
         </context>
     </template>
-    <template name="vb_img_circle" description="图片是否设置为圆形"
-        toReformat="false" toShortenFQNames="true" value="app:vb_img_circle=&quot;$value$&quot;">
+    <template name="vb_img_circle" description="图片是否设置为圆形" toReformat="false"
+        toShortenFQNames="true" value="app:vb_img_circle=&quot;$value$&quot;">
         <variable name="value" alwaysStopAt="true" defaultValue="" expression="" />
         <context>
             <option name="XML" value="true" />
         </context>
     </template>
-    <template name="vb_img_error_res_id" description="图片加载失败占位图"
-        toReformat="false" toShortenFQNames="true" value="app:vb_img_error_res_id=&quot;$value$&quot;">
-        <variable name="value" alwaysStopAt="true" defaultValue="" expression="" />
-        <context>
-            <option name="XML" value="true" />
-        </context>
-    </template>
-
-    <template name="vb_img_top_left" description="图片左上方圆角"
-        toReformat="false" toShortenFQNames="true" value="app:vb_img_top_left=&quot;$value$&quot;">
+    <template name="vb_img_error_res_id" description="图片加载失败占位图" toReformat="false"
+        toShortenFQNames="true" value="app:vb_img_error_res_id=&quot;$value$&quot;">
         <variable name="value" alwaysStopAt="true" defaultValue="" expression="" />
         <context>
             <option name="XML" value="true" />
         </context>
     </template>
 
-    <template name="vb_img_top_right" description="图片右上方圆角"
-        toReformat="false" toShortenFQNames="true" value="app:vb_img_top_right=&quot;$value$&quot;">
+    <template name="vb_img_top_left" description="图片左上方圆角" toReformat="false"
+        toShortenFQNames="true" value="app:vb_img_top_left=&quot;$value$&quot;">
         <variable name="value" alwaysStopAt="true" defaultValue="" expression="" />
         <context>
             <option name="XML" value="true" />
         </context>
     </template>
 
-    <template name="vb_img_bottom_left" description="图片左下方圆角"
-        toReformat="false" toShortenFQNames="true" value="app:vb_img_bottom_left=&quot;$value$&quot;">
+    <template name="vb_img_top_right" description="图片右上方圆角" toReformat="false"
+        toShortenFQNames="true" value="app:vb_img_top_right=&quot;$value$&quot;">
         <variable name="value" alwaysStopAt="true" defaultValue="" expression="" />
         <context>
             <option name="XML" value="true" />
         </context>
     </template>
 
-    <template name="vb_img_bottom_right" description="图片右下方圆角"
-        toReformat="false" toShortenFQNames="true" value="app:vb_img_bottom_right=&quot;$value$&quot;">
+    <template name="vb_img_bottom_left" description="图片左下方圆角" toReformat="false"
+        toShortenFQNames="true" value="app:vb_img_bottom_left=&quot;$value$&quot;">
         <variable name="value" alwaysStopAt="true" defaultValue="" expression="" />
         <context>
             <option name="XML" value="true" />
         </context>
     </template>
 
-    <template name="vb_drawable_left" description="左边drawable图片"
-        toReformat="false" toShortenFQNames="true" value="app:vb_drawable_left=&quot;$value$&quot;">
+    <template name="vb_img_bottom_right" description="图片右下方圆角" toReformat="false"
+        toShortenFQNames="true" value="app:vb_img_bottom_right=&quot;$value$&quot;">
         <variable name="value" alwaysStopAt="true" defaultValue="" expression="" />
         <context>
             <option name="XML" value="true" />
         </context>
     </template>
-    <template name="vb_drawable_left_width" description="左边drawable图片的宽度"
-        toReformat="true" toShortenFQNames="true" value="app:vb_drawable_left_width=&quot;$value$&quot;">
+
+    <template name="vb_drawable_left" description="左边drawable图片" toReformat="false"
+        toShortenFQNames="true" value="app:vb_drawable_left=&quot;$value$&quot;">
         <variable name="value" alwaysStopAt="true" defaultValue="" expression="" />
         <context>
             <option name="XML" value="true" />
         </context>
     </template>
-    <template name="vb_drawable_left_height" description="左边drawable图片的高度"
-        toReformat="false" toShortenFQNames="true" value="app:vb_drawable_left_height=&quot;$value$&quot;">
+    <template name="vb_drawable_left_width" description="左边drawable图片的宽度" toReformat="true"
+        toShortenFQNames="true" value="app:vb_drawable_left_width=&quot;$value$&quot;">
         <variable name="value" alwaysStopAt="true" defaultValue="" expression="" />
         <context>
             <option name="XML" value="true" />
         </context>
     </template>
-    <template name="vb_drawable_right" description="右边drawable图片"
-        toReformat="false" toShortenFQNames="true" value="app:vb_drawable_right=&quot;$value$&quot;">
+    <template name="vb_drawable_left_height" description="左边drawable图片的高度" toReformat="false"
+        toShortenFQNames="true" value="app:vb_drawable_left_height=&quot;$value$&quot;">
         <variable name="value" alwaysStopAt="true" defaultValue="" expression="" />
         <context>
             <option name="XML" value="true" />
         </context>
     </template>
-    <template name="vb_drawable_right_width" description="右边drawable图片的宽度"
-        toReformat="true" toShortenFQNames="true" value="app:vb_drawable_right_width=&quot;$value$&quot;">
+    <template name="vb_drawable_right" description="右边drawable图片" toReformat="false"
+        toShortenFQNames="true" value="app:vb_drawable_right=&quot;$value$&quot;">
         <variable name="value" alwaysStopAt="true" defaultValue="" expression="" />
         <context>
             <option name="XML" value="true" />
         </context>
     </template>
-    <template name="vb_drawable_right_height"
-        description="右边drawable图片的高度" toReformat="false"
+    <template name="vb_drawable_right_width" description="右边drawable图片的宽度" toReformat="true"
+        toShortenFQNames="true" value="app:vb_drawable_right_width=&quot;$value$&quot;">
+        <variable name="value" alwaysStopAt="true" defaultValue="" expression="" />
+        <context>
+            <option name="XML" value="true" />
+        </context>
+    </template>
+    <template name="vb_drawable_right_height" description="右边drawable图片的高度" toReformat="false"
         toShortenFQNames="true" value="app:vb_drawable_right_height=&quot;$value$&quot;">
         <variable name="value" alwaysStopAt="true" defaultValue="" expression="" />
         <context>
             <option name="XML" value="true" />
         </context>
     </template>
-    <template name="vb_drawable_top" description="上边drawable图片"
-        toReformat="false" toShortenFQNames="true" value="app:vb_drawable_top=&quot;$value$&quot;">
+    <template name="vb_drawable_top" description="上边drawable图片" toReformat="false"
+        toShortenFQNames="true" value="app:vb_drawable_top=&quot;$value$&quot;">
         <variable name="value" alwaysStopAt="true" defaultValue="" expression="" />
         <context>
             <option name="XML" value="true" />
         </context>
     </template>
-    <template name="vb_drawable_top_width" description="上边drawable图片的宽度"
-        toReformat="true" toShortenFQNames="true" value="app:vb_drawable_top_width=&quot;$value$&quot;">
+    <template name="vb_drawable_top_width" description="上边drawable图片的宽度" toReformat="true"
+        toShortenFQNames="true" value="app:vb_drawable_top_width=&quot;$value$&quot;">
         <variable name="value" alwaysStopAt="true" defaultValue="" expression="" />
         <context>
             <option name="XML" value="true" />
         </context>
     </template>
-    <template name="vb_drawable_top_height" description="上边drawable图片的高度"
-        toReformat="false" toShortenFQNames="true" value="app:vb_drawable_top_height=&quot;$value$&quot;">
+    <template name="vb_drawable_top_height" description="上边drawable图片的高度" toReformat="false"
+        toShortenFQNames="true" value="app:vb_drawable_top_height=&quot;$value$&quot;">
         <variable name="value" alwaysStopAt="true" defaultValue="" expression="" />
         <context>
             <option name="XML" value="true" />
         </context>
     </template>
-    <template name="vb_drawable_bottom" description="下边drawable图片"
-        toReformat="false" toShortenFQNames="true" value="app:vb_drawable_bottom=&quot;$value$&quot;">
+    <template name="vb_drawable_bottom" description="下边drawable图片" toReformat="false"
+        toShortenFQNames="true" value="app:vb_drawable_bottom=&quot;$value$&quot;">
         <variable name="value" alwaysStopAt="true" defaultValue="" expression="" />
         <context>
             <option name="XML" value="true" />
         </context>
     </template>
-    <template name="vb_drawable_bottom_width"
-        description="下边drawable图片的宽度" toReformat="true"
+    <template name="vb_drawable_bottom_width" description="下边drawable图片的宽度" toReformat="true"
         toShortenFQNames="true" value="app:vb_drawable_bottom_width=&quot;$value$&quot;">
         <variable name="value" alwaysStopAt="true" defaultValue="" expression="" />
         <context>
             <option name="XML" value="true" />
         </context>
     </template>
-    <template name="vb_drawable_bottom_height"
-        description="下边drawable图片的高度" toReformat="false"
+    <template name="vb_drawable_bottom_height" description="下边drawable图片的高度" toReformat="false"
         toShortenFQNames="true" value="app:vb_drawable_bottom_height=&quot;$value$&quot;">
         <variable name="value" alwaysStopAt="true" defaultValue="" expression="" />
         <context>
             <option name="XML" value="true" />
         </context>
     </template>
-    <template name="vb_drawable_width" description="drawable图片的宽度"
-        toReformat="true" toShortenFQNames="true" value="app:vb_drawable_width=&quot;$value$&quot;">
+    <template name="vb_drawable_width" description="drawable图片的宽度" toReformat="true"
+        toShortenFQNames="true" value="app:vb_drawable_width=&quot;$value$&quot;">
         <variable name="value" alwaysStopAt="true" defaultValue="" expression="" />
         <context>
             <option name="XML" value="true" />
         </context>
     </template>
-    <template name="vb_drawable_height" description="drawable图片的高度"
-        toReformat="false" toShortenFQNames="true" value="app:vb_drawable_height=&quot;$value$&quot;">
+    <template name="vb_drawable_height" description="drawable图片的高度" toReformat="false"
+        toShortenFQNames="true" value="app:vb_drawable_height=&quot;$value$&quot;">
         <variable name="value" alwaysStopAt="true" defaultValue="" expression="" />
         <context>
             <option name="XML" value="true" />
         </context>
     </template>
-    <template name="vb_click" description="添加OnClickListener"
-        toReformat="true" toShortenFQNames="true" value="app:vb_click=&quot;$value$&quot;">
+    <template name="vb_click" description="添加OnClickListener点击动画根据全局的设定的参数来配置" toReformat="true"
+        toShortenFQNames="true" value="app:vb_click=&quot;$value$&quot;">
         <variable name="value" alwaysStopAt="true" defaultValue="" expression="" />
         <context>
             <option name="XML" value="true" />
         </context>
     </template>
-    <template name="vb_text_bold" description="字体加粗" toReformat="true"
-        toShortenFQNames="true" value="app:vb_text_bold=&quot;$value$&quot;">
+
+    <template name="vb_click_animator_off" description="添加OnClickListener关闭点击动画" toReformat="true"
+        toShortenFQNames="true" value="app:vb_click_animator_off=&quot;$value$&quot;">
         <variable name="value" alwaysStopAt="true" defaultValue="" expression="" />
         <context>
             <option name="XML" value="true" />
         </context>
     </template>
-    <template name="vb_finish" description="关闭当前activity" toReformat="true"
-        toShortenFQNames="true" value="app:vb_finish=&quot;$value$&quot;">
+
+
+    <template name="vb_click_animator_on" description="添加OnClickListener开启点击动画" toReformat="true"
+        toShortenFQNames="true" value="app:vb_click_animator_on=&quot;$value$&quot;">
         <variable name="value" alwaysStopAt="true" defaultValue="" expression="" />
         <context>
             <option name="XML" value="true" />
         </context>
     </template>
-    <template name="vb_view_visible" description="入参类型为:String 空为隐藏 非空为显示,为:Boolean true为显示 false为隐藏,为:Int 1为显示 其他为隐藏"
-        toReformat="true"
-        toShortenFQNames="true" value="app:vb_view_visible=&quot;$value$&quot;">
+
+    <template name="vb_text_bold" description="字体加粗" toReformat="true" toShortenFQNames="true"
+        value="app:vb_text_bold=&quot;$value$&quot;">
         <variable name="value" alwaysStopAt="true" defaultValue="" expression="" />
         <context>
             <option name="XML" value="true" />
         </context>
     </template>
-    <template name="vb_view_gone" description="入参类型为:String 空为隐藏 非空为显示,为:Boolean true为显示 false为隐藏,为:Int 1为显示 其他为隐藏"
-        toReformat="true"
-        toShortenFQNames="true" value="app:vb_view_gone=&quot;$value$&quot;">
+    <template name="vb_finish" description="关闭当前activity" toReformat="true" toShortenFQNames="true"
+        value="app:vb_finish=&quot;$value$&quot;">
         <variable name="value" alwaysStopAt="true" defaultValue="" expression="" />
         <context>
             <option name="XML" value="true" />
         </context>
     </template>
-    <template name="vb_text_line_center" description="设置文字中间横线"
-        toReformat="true" toShortenFQNames="true" value="app:vb_text_line_center=&quot;$value$&quot;">
+    <template name="vb_view_visible"
+        description="入参类型为:String 空为隐藏 非空为显示,为:Boolean true为显示 false为隐藏,为:Int 1为显示 其他为隐藏"
+        toReformat="true" toShortenFQNames="true" value="app:vb_view_visible=&quot;$value$&quot;">
         <variable name="value" alwaysStopAt="true" defaultValue="" expression="" />
         <context>
             <option name="XML" value="true" />
         </context>
     </template>
-    <template name="vb_text_line_bottom" description="设置文字下边横线"
-        toReformat="true" toShortenFQNames="true" value="app:vb_text_line_bottom=&quot;$value$&quot;">
+    <template name="vb_view_gone"
+        description="入参类型为:String 空为隐藏 非空为显示,为:Boolean true为显示 false为隐藏,为:Int 1为显示 其他为隐藏"
+        toReformat="true" toShortenFQNames="true" value="app:vb_view_gone=&quot;$value$&quot;">
         <variable name="value" alwaysStopAt="true" defaultValue="" expression="" />
         <context>
             <option name="XML" value="true" />
         </context>
     </template>
-    <template name="vb_text_format" description="设置文字 不管类型全部转换成string"
-        toReformat="true" toShortenFQNames="true" value="app:vb_text_format=&quot;$value$&quot;">
+    <template name="vb_text_line_center" description="设置文字中间横线" toReformat="true"
+        toShortenFQNames="true" value="app:vb_text_line_center=&quot;$value$&quot;">
         <variable name="value" alwaysStopAt="true" defaultValue="" expression="" />
         <context>
             <option name="XML" value="true" />
         </context>
     </template>
-    <template name="vb_img_color" description="设置图片颜色" toReformat="true"
-        toShortenFQNames="true" value="app:vb_img_color=&quot;$value$&quot;">
+    <template name="vb_text_line_bottom" description="设置文字下边横线" toReformat="true"
+        toShortenFQNames="true" value="app:vb_text_line_bottom=&quot;$value$&quot;">
+        <variable name="value" alwaysStopAt="true" defaultValue="" expression="" />
+        <context>
+            <option name="XML" value="true" />
+        </context>
+    </template>
+    <template name="vb_text_format" description="设置文字 不管类型全部转换成string" toReformat="true"
+        toShortenFQNames="true" value="app:vb_text_format=&quot;$value$&quot;">
+        <variable name="value" alwaysStopAt="true" defaultValue="" expression="" />
+        <context>
+            <option name="XML" value="true" />
+        </context>
+    </template>
+    <template name="vb_img_color" description="设置图片颜色" toReformat="true" toShortenFQNames="true"
+        value="app:vb_img_color=&quot;$value$&quot;">
         <variable name="value" alwaysStopAt="true" defaultValue="" expression="" />
         <context>
             <option name="XML" value="true" />

@@ -55,7 +55,6 @@ class ThreeFragment : VBFragment<FragmentThreeBinding, VBBlankViewModel>(), View
                     .setClickListener { hintDialog, position ->
                         hintDialog.dismiss()
                     }
-                    .setCanceled(false)
                     .show()
             }
             mDataBinding.bt5.id -> {

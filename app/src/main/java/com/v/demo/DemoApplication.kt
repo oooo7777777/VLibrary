@@ -1,6 +1,5 @@
 package com.v.demo
 
-import android.graphics.Color
 import com.v.base.VBApplication
 import com.v.base.VBConfig
 import com.v.base.VBConfigOptions
@@ -23,10 +22,10 @@ class DemoApplication : VBApplication() {
 
         val options = VBConfigOptions.Builder()
             .setNetOptions(netOptions)
-            .setStatusBarColor("#ffffff")
             .build()
 
         VBConfig.init(options)
+
 
     }
 

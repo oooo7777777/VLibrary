@@ -52,7 +52,9 @@
                 android:layout_height="wrap_content"
                 android:text="倒计时"
                 android:textAllCaps="false"
-                app:vb_click="@{v}" />
+                app:vb_click_animator_off="@{v}"
+
+                />
 
             <Button
                 android:id="@+id/bt2"
@@ -60,7 +62,7 @@
                 android:layout_height="wrap_content"
                 android:text="心跳"
                 android:textAllCaps="false"
-                app:vb_click="@{v}" />
+                app:vb_click_animator_on="@{v}" />
 
 
             <Button

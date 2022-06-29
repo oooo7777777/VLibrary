@@ -48,6 +48,8 @@ class VBTitleBar @JvmOverloads constructor(
 
     fun setToolbarTransparent() {
         mDataBinding.toolbar.setBackgroundColor(Color.TRANSPARENT)
+        mDataBinding.ivStatusBar.setBackgroundColor(Color.TRANSPARENT)
+        mDataBinding.ivStatusBar.vbSetViewLayoutParams(h = context.vbGetStatusBarHeight())
     }
 
     fun setTitle(

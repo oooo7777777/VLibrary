@@ -135,11 +135,16 @@ fun vbGetRandomNumber(min: Int, max: Int): Int {
 /**
  * toast
  */
-fun Any.toast(isLong: Boolean = false, gravity: Int = Gravity.CENTER) {
+fun Any.toast(
+    isLong: Boolean = false,
+    gravity: Int = Gravity.CENTER,
+    xOffset: Int = 0,
+    yOffset: Int = 0,
+) {
     val toast = Toast.makeText(VBApplication.getApplication(),
         this.toString(),
         if (isLong) Toast.LENGTH_LONG else Toast.LENGTH_SHORT)
-    toast.setGravity(gravity, 0, 0);
+    toast.setGravity(gravity, xOffset, yOffset)
     toast.show()
 }
 
@@ -388,18 +393,6 @@ fun vbCountDownCoroutines(
         .flowOn(Dispatchers.Main)
         .launchIn(scope)
 }
-
-
-/**
- * 反射获取类的所有属性
- */
-inline fun <reified T : Any> T.vbDescription() = this.javaClass.declaredFields
-    .map {
-        //注意我们访问的 Kotlin 属性对于 Java 来说是 private 的，getter 是 public 的
-        it.isAccessible = true
-        "${it.name}: ${it.get(this@vbDescription)}"
-    }
-    .joinToString(separator = ";")
 
 
 /**

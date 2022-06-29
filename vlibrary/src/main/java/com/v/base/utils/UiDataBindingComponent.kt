@@ -201,7 +201,7 @@ fun TextView.vbDrawable(
 
 
 /**
- * view点击
+ * view点击(动画根据全局的设定的参数来配置)
  */
 @BindingAdapter(value = ["vb_click"],
     requireAll = false)
@@ -213,7 +213,36 @@ fun View.vbClick(
             onClickListener.onClick(it)
         }
     }
+}
 
+/**
+ * view点击(带动画)
+ */
+@BindingAdapter(value = ["vb_click_animator_on"],
+    requireAll = false)
+fun View.vbClickAnimatorOn(
+    onClickListener: View.OnClickListener?,
+) {
+    if (onClickListener != null) {
+        this.vbOnClickListener(true) {
+            onClickListener.onClick(it)
+        }
+    }
+}
+
+/**
+ * view点击(不带动画)
+ */
+@BindingAdapter(value = ["vb_click_animator_off"],
+    requireAll = false)
+fun View.vbClickAnimatorOff(
+    onClickListener: View.OnClickListener?,
+) {
+    if (onClickListener != null) {
+        this.vbOnClickListener(false) {
+            onClickListener.onClick(it)
+        }
+    }
 }
 
 /**

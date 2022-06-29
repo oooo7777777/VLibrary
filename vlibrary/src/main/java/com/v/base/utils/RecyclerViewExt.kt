@@ -112,11 +112,12 @@ fun <T> BaseQuickAdapter<T, *>.vbConfig(
     onItemChildLongClick: ((adapter: BaseQuickAdapter<*, *>, view: View, position: Int) -> Unit)? = null,
     emptyView: View? = null,
     emptyViewClickListener: View.OnClickListener? = null,
+    refreshScrollDrag: Boolean = VBConfig.options.refreshScrollDrag,
 ) {
 
 
     if (refreshLayout != null) {
-
+        refreshLayout.setEnableOverScrollDrag(refreshScrollDrag)
         if (onRefresh == null) {
             refreshLayout.setEnableRefresh(false)
         } else {
@@ -125,7 +126,6 @@ fun <T> BaseQuickAdapter<T, *>.vbConfig(
                 onRefresh.invoke()
             }
         }
-
 
         if (onLoadMore == null && data.size <= 0) {
             refreshLayout.setEnableLoadMore(false)
