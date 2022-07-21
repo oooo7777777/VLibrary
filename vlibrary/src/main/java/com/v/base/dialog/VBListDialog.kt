@@ -2,6 +2,7 @@ package com.v.base.dialog
 
 import android.content.Context
 import android.view.View
+import android.view.ViewGroup
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.v.base.R
@@ -22,6 +23,7 @@ class VBListDialog(mContext: Context) : VBDialog<VbDialogListBinding>(mContext) 
 
     private var listener: ((dialog: VBListDialog, result: String, position: Int) -> Unit)? = null
 
+
     override fun useDirection(): VBDialogOrientation {
         return VBDialogOrientation.BOTTOM
     }
@@ -37,9 +39,9 @@ class VBListDialog(mContext: Context) : VBDialog<VbDialogListBinding>(mContext) 
         mAdapter.setOnItemChildClickListener { adapter, view, position ->
             listener?.run {
                 invoke(
-                    this@VBListDialog,
-                    mAdapter.getItem(position).toString(),
-                    position
+                        this@VBListDialog,
+                        mAdapter.getItem(position).toString(),
+                        position
                 )
             }
         }
@@ -55,7 +57,8 @@ class VBListDialog(mContext: Context) : VBDialog<VbDialogListBinding>(mContext) 
 
     fun setTitle(title: String): VBListDialog {
         if (!title.isNullOrEmpty()) {
-            mDataBinding.layoutTitle.visibility = View.VISIBLE
+            mDataBinding.line.visibility = View.VISIBLE
+            mDataBinding.tvTitle.visibility = View.VISIBLE
             mDataBinding.tvTitle.text = title
         }
         return this
@@ -76,6 +79,10 @@ class VBListDialog(mContext: Context) : VBDialog<VbDialogListBinding>(mContext) 
             helper.setText(R.id.tvContent, item)
         }
 
+    }
+
+    override fun useDim(): Boolean {
+        return false
     }
 
 

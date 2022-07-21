@@ -37,11 +37,6 @@ class TwoFragment : VBFragment<FragmentTowBinding, DemoViewModel>(), View.OnClic
     override fun onClick(v: View) {
         when (v.id) {
             mDataBinding.bt2.id -> {
-//                "打印日志".logE()
-//                "打印日志".logV()
-//                "打印日志".logD()
-//                "打印日志".logI()
-//                "打印日志".logW()
                 "打印日志".log()
             }
             mDataBinding.bt3.id -> {

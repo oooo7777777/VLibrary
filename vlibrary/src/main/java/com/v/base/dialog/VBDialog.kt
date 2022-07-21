@@ -1,13 +1,21 @@
 package com.v.base.dialog
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.view.*
 import androidx.databinding.ViewDataBinding
+import com.gyf.immersionbar.ImmersionBar
+import com.gyf.immersionbar.ktx.immersionBar
 import com.v.base.R
+import com.v.base.VBConfig
 import com.v.base.annotaion.VBDialogOrientation
+import com.v.base.utils.isWhiteColor
+import com.v.base.utils.log
 import com.v.base.utils.logI
+import com.v.base.utils.vbGetAllChildViews
 import java.lang.reflect.ParameterizedType
 
 /**
@@ -15,8 +23,9 @@ import java.lang.reflect.ParameterizedType
  * desc    :
  * time    : 2021-03-16 09:52:45
  */
-abstract class VBDialog<VB : ViewDataBinding>(private val mContext: Context) : Dialog(mContext) {
+abstract class VBDialog<VB : ViewDataBinding>(val mContext: Context) : Dialog(mContext, R.style.MyDialog) {
 
+    var isDialogCancelable = true
 
     protected val mDataBinding: VB by lazy {
         val type = javaClass.genericSuperclass as ParameterizedType
@@ -28,22 +37,35 @@ abstract class VBDialog<VB : ViewDataBinding>(private val mContext: Context) : D
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        javaClass.name.logI()
+        javaClass.name.log()
         setStyle()
         setContentView(mDataBinding.root)
+        setCanceled()
         initData()
 
     }
 
+
     protected abstract fun initData()
 
-    /**
-     * 设置是否返回按钮取消
-     */
-    fun setDialogCancelable(isCancelable: Boolean) {
-        setCanceledOnTouchOutside(isCancelable)
-        setCancelable(isCancelable)
+
+    fun setCanceled() {
+        setCanceledOnTouchOutside(isDialogCancelable)
+        setCancelable(isDialogCancelable)
+        if (isDialogCancelable) {
+            mDataBinding.root.setOnClickListener {
+                dismiss()
+            }
+            (mDataBinding.root as ViewGroup).vbGetAllChildViews().forEach {
+                it.isClickable = true
+            }
+        }
     }
+
+    /**
+     * 状态栏字体颜色 true为深色 false为亮色
+     */
+    open fun useStatusBarBright(): Boolean = isWhiteColor(Color.parseColor(VBConfig.options.statusBarColor))
 
     /**
      * 设置dialog弹出方向 [VBDialogOrientation]
@@ -55,6 +77,13 @@ abstract class VBDialog<VB : ViewDataBinding>(private val mContext: Context) : D
      */
     open fun useDim(): Boolean {
         return true
+    }
+
+    /**
+     * 变暗系数 系数0.0-1.0 系数越高暗度越高
+     */
+    open fun useDimAmount(): Float {
+        return 0.5f
     }
 
     /**
@@ -82,64 +111,81 @@ abstract class VBDialog<VB : ViewDataBinding>(private val mContext: Context) : D
      * 设置高
      */
     open fun useHeight(): Int {
-        return ViewGroup.LayoutParams.WRAP_CONTENT
+        return ViewGroup.LayoutParams.MATCH_PARENT
     }
 
     private fun setStyle() {
+        window?.run {
+            requestFeature(Window.FEATURE_NO_TITLE)
+            setBackgroundDrawableResource(android.R.color.transparent)
+            decorView.setPadding(0, 0, 0, 0)
+            val wlp = attributes
+            wlp.width = useWidth()
+            wlp.height = useHeight()
 
-        val window: Window = window!!
+            if (useDim()) {
+                wlp.dimAmount = useDimAmount()
+            } else {
+                wlp.dimAmount = 0f
+                clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+            }
 
-        window.requestFeature(Window.FEATURE_NO_TITLE)
-        window.setBackgroundDrawableResource(android.R.color.transparent)
-        window.decorView.setPadding(0, 0, 0, 0)
-        val wlp = window.attributes
-        wlp.width = useWidth()
-        wlp.height = useHeight()
 
-        if (useDim()) {
-            wlp.dimAmount = 0.7f
-        } else {
-            wlp.dimAmount = 0f
-            window.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+            when (useDirection()) {
+                VBDialogOrientation.TOP -> {
+                    wlp.gravity = Gravity.TOP
+                    if (useAnimations() && useAnimationsRes() == 0)
+                        setWindowAnimations(R.style.vb_top_dialog_anim)
+                }
+                VBDialogOrientation.BOTTOM -> {
+                    wlp.gravity = Gravity.BOTTOM
+                    if (useAnimations() && useAnimationsRes() == 0)
+                        setWindowAnimations(R.style.vb_bottom_dialog_anim)
+                }
+                VBDialogOrientation.LEFT -> {
+                    wlp.gravity = Gravity.CENTER
+                    if (useAnimations() && useAnimationsRes() == 0)
+                        setWindowAnimations(R.style.vb_left_dialog_anim)
+                }
+
+                VBDialogOrientation.RIGHT -> {
+                    wlp.gravity = Gravity.CENTER
+                    if (useAnimations() && useAnimationsRes() == 0)
+                        setWindowAnimations(R.style.vb_right_dialog_anim)
+                }
+
+                VBDialogOrientation.CENTRE -> {
+                    wlp.gravity = Gravity.CENTER
+                    if (useAnimations() && useAnimationsRes() == 0)
+                        setWindowAnimations(R.style.vb_dialog_anim)
+                }
+            }
+            if (useAnimations() && useAnimationsRes() != 0) {
+                setWindowAnimations(useAnimationsRes())
+            }
+
+            attributes = wlp
         }
 
-
-
-        when (useDirection()) {
-            VBDialogOrientation.TOP -> {
-                wlp.gravity = Gravity.TOP
-                if (useAnimations() && useAnimationsRes() == 0)
-                    window.setWindowAnimations(R.style.vb_top_dialog_anim)
-            }
-            VBDialogOrientation.BOTTOM -> {
-                wlp.gravity = Gravity.BOTTOM
-                if (useAnimations() && useAnimationsRes() == 0)
-                    window.setWindowAnimations(R.style.vb_bottom_dialog_anim)
-            }
-            VBDialogOrientation.LEFT -> {
-                wlp.gravity = Gravity.CENTER
-                if (useAnimations() && useAnimationsRes() == 0)
-                    window.setWindowAnimations(R.style.vb_left_dialog_anim)
-            }
-
-            VBDialogOrientation.RIGHT -> {
-                wlp.gravity = Gravity.CENTER
-                if (useAnimations() && useAnimationsRes() == 0)
-                    window.setWindowAnimations(R.style.vb_right_dialog_anim)
-            }
-
-            VBDialogOrientation.CENTRE -> {
-                wlp.gravity = Gravity.CENTER
-                if (useAnimations() && useAnimationsRes() == 0)
-                    window.setWindowAnimations(R.style.vb_dialog_anim)
-            }
-        }
-        if (useAnimations() && useAnimationsRes() != 0) {
-            window.setWindowAnimations(useAnimationsRes())
-        }
-
-        window.attributes = wlp
     }
 
+    override fun dismiss() {
+        super.dismiss()
+        if (mContext is Activity) {
+            ImmersionBar.destroy(mContext, this)
+        }
 
+    }
+
+    override fun show() {
+        super.show()
+        if (mContext is Activity) {
+            //状态栏颜色趋近于白色时，会智能将状态栏字体颜色变换为黑色
+            ImmersionBar.with(mContext, this)
+                    .statusBarDarkFont(useStatusBarBright())
+                    .navigationBarDarkIcon(useStatusBarBright())
+                    .init()
+
+        }
+    }
 }

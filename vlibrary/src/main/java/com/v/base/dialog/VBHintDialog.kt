@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.view.Gravity
 import android.view.View
 import com.v.base.databinding.VbDialogHintBinding
+import com.v.base.utils.vbGetScreenHeight
 
 
 /**
@@ -13,7 +14,7 @@ import com.v.base.databinding.VbDialogHintBinding
  * time    : 2021-03-16 09:52:45
  */
 class VBHintDialog(mContext: Context) : VBDialog<VbDialogHintBinding>(mContext),
-    View.OnClickListener {
+        View.OnClickListener {
 
     private var listener: ((hintDialog: VBHintDialog, position: Int) -> Unit)? = null
 
@@ -84,12 +85,6 @@ class VBHintDialog(mContext: Context) : VBDialog<VbDialogHintBinding>(mContext),
     }
 
 
-     fun setCanceled(isCancelable: Boolean): VBHintDialog {
-        super.setDialogCancelable(isCancelable)
-
-        return this
-    }
-
     override fun onClick(v: View) {
         when (v.id) {
             mDataBinding.tvLeft.id -> {
@@ -107,6 +102,11 @@ class VBHintDialog(mContext: Context) : VBDialog<VbDialogHintBinding>(mContext),
                 }
             }
         }
+    }
+
+    fun setDialogCanceled(isCancelable: Boolean): VBHintDialog {
+        isDialogCancelable = isCancelable
+        return this
     }
 
 

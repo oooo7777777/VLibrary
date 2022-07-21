@@ -72,7 +72,7 @@ class VBConfigOptions(builder: Builder) {
         internal var toolbarTitleColor = Color.parseColor("#000000")
         internal var toolbarBackRes = R.mipmap.vb_ic_back_black
         internal var recyclerViewEmptyLayout = R.layout.vb_layout_empty
-        internal var clickAnimator = false
+        internal var clickAnimator = true
         internal var clickTime = 300L
 
         internal var netOptions = VBNetOptions.Builder().build()

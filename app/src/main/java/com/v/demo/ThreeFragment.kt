@@ -36,12 +36,13 @@ class ThreeFragment : VBFragment<FragmentThreeBinding, VBBlankViewModel>(), View
     override fun onClick(v: View) {
         when (v.id) {
             mDataBinding.bt1.id -> {
-                countDown = 5
+//                countDown = 5
                 countDownStart()
             }
             mDataBinding.bt2.id -> {
-                countDown = Long.MAX_VALUE
-                countDownStart()
+//                countDown = Long.MAX_VALUE
+//                countDownStart()
+                countDownStop()
             }
 
             mDataBinding.bt3.id -> {
@@ -50,22 +51,22 @@ class ThreeFragment : VBFragment<FragmentThreeBinding, VBBlankViewModel>(), View
 
             mDataBinding.bt4.id -> {
                 VBHintDialog(mContext).setTitle("提示")
-                    .setContent("确定保存吗?")
-                    .setButtonText("取消", "确定")
-                    .setClickListener { hintDialog, position ->
-                        hintDialog.dismiss()
-                    }
-                    .show()
+                        .setContent("确定保存吗?")
+                        .setButtonText("取消", "确定")
+                        .setDialogCanceled(false)
+                        .setClickListener { hintDialog, position ->
+                            hintDialog.dismiss()
+                        }
+                        .show()
             }
             mDataBinding.bt5.id -> {
-
                 VBListDialog(mContext)
-                    .setTitle("shenme")
-                    .setItems("content0", "content1", "content3")
-                    .setClickListener { dialog, result, position ->
-                        result.toast()
-                        dialog.dismiss()
-                    }.show()
+                        .setTitle("List")
+                        .setItems("content0", "content1", "content3")
+                        .setClickListener { dialog, result, position ->
+                            result.toast()
+                            dialog.dismiss()
+                        }.show()
             }
 
 
@@ -73,15 +74,26 @@ class ThreeFragment : VBFragment<FragmentThreeBinding, VBBlankViewModel>(), View
     }
 
     private fun countDownStart() {
-        countDownStop()
+
         if (job == null) {
-            job = vbCountDownCoroutines(countDown, onTick = {
-                mDataBinding.tvContent.text = it.toString()
+            job = vbCountDownCoroutines(countDown,
+                    onStart = {
+                        "倒计时开始".log()
+                    },
+                    onTick = {
+                        mDataBinding.tvContent.text = it.toString()
+                        "正在倒计时$it".log()
 
-            }, onFinish = {
-                mDataBinding.tvContent.text = "倒计时结束"
+                    },
+                    onFinish = {
+                        mDataBinding.tvContent.text = "倒计时结束"
+                        "倒计时结束".log()
 
-            }, scope = lifecycleScope)
+                    },
+                    onCancel = {
+                        "倒计时取消".log()
+                    },
+                    scope = lifecycleScope)
         }
     }
 
@@ -91,6 +103,7 @@ class ThreeFragment : VBFragment<FragmentThreeBinding, VBBlankViewModel>(), View
             job = null
         }
     }
+
 
 }
 

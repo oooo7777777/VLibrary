@@ -54,5 +54,4 @@ dependencies {
     implementation "com.github.Hitomis.transferee:Transferee:1.6.1"
     implementation "com.github.Hitomis.transferee:GlideImageLoader:1.6.1"
     implementation "com.github.zhpanvip:BannerViewPager:3.5.0"
-
 }

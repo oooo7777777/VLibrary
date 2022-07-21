@@ -12,17 +12,19 @@
     </data>
 
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
             android:orientation="vertical"
             app:bl_corners_radius="12dp"
-            app:bl_solid_color="@android:color/white">
+            app:bl_solid_color="@android:color/white"
+            tools:background="@android:color/white">
 
 
             <RelativeLayout

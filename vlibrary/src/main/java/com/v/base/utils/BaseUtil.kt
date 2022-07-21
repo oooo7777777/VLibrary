@@ -440,11 +440,11 @@ fun Context.vbIsNetConnection(): Boolean {
  * 获取view所有子view
  */
 fun View.vbGetAllChildViews(): List<View> {
-    var list = ArrayList<View>();
+    val list = ArrayList<View>()
     if (this is ViewGroup) {
         for (i in 0 until this.childCount) {
-            var viewchild = this.getChildAt(i);
-            list.add(viewchild);
+            val viewchild = this.getChildAt(i)
+            list.add(viewchild)
             list.addAll(viewchild.vbGetAllChildViews());
         }
     }

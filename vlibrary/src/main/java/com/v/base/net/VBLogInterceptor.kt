@@ -3,8 +3,10 @@ package com.v.base.net
 import android.text.TextUtils
 import com.alibaba.fastjson.JSONObject
 import com.v.base.utils.logD
+import com.v.base.utils.logE
 import okhttp3.Headers
 import okhttp3.Interceptor
+import okhttp3.Protocol
 import okhttp3.Response
 import okhttp3.internal.http.HttpHeaders
 import okio.Buffer
@@ -30,170 +32,143 @@ open class VBLogInterceptor(var logTag: String = "PRETTY_LOGGER") : Interceptor 
     @Throws(IOException::class)
     fun requestBodyFormat(chain: Interceptor.Chain): Response {
         val request = chain.request()
+
+        val sb = StringBuffer()
         val requestBody = request.body()
         val hasRequestBody = requestBody != null
 
-        val sb = StringBuilder()
-        sb.append("--> ")
-            .append(request.method())
-            .append(" ")
-            .append(request.url())
+        val connection = chain.connection()
+        val protocol = if (connection != null) connection.protocol() else Protocol.HTTP_1_1
+        var requestStartMessage = "--> " + request.method() + ' ' + request.url() + ' ' + protocol
         if (hasRequestBody) {
-            sb.append(" (")
-                .append(requestBody!!.contentLength())
-                .append("-byte body)")
+            requestStartMessage += " (" + requestBody!!.contentLength() + "-byte body)"
         }
+        sb.append(requestStartMessage)
 
-        sb.append("\n")
 
         if (hasRequestBody) {
+            // Request body headers are only present when installed as a network interceptor. Force
+            // them to be included (when available) so there values are known.
             if (requestBody!!.contentType() != null) {
-                sb.append("Content-Type: ")
-                    .append(requestBody.contentType())
-                    .append("\n")
+                sb.append("Content-Type: " + requestBody!!.contentType())
             }
-            if (requestBody.contentLength() != -1L) {
-                sb.append("Content-Length: ")
-                    .append(requestBody.contentLength())
-                    .append("\n")
+            if (requestBody!!.contentLength() != -1L) {
+                sb.append("Content-Length: " + requestBody!!.contentLength())
             }
         }
-
-        val headers = request.headers()
-        run {
-            var i = 0
-            val count = headers.size()
-            while (i < count) {
-                val name = headers.name(i)
-                if (!"Content-Type".equals(name, ignoreCase = true) && !"Content-Length".equals(
-                        name,
-                        ignoreCase = true
-                    )
-                ) {
-                    sb.append(name)
-                        .append(": ")
-                        .append(headers.value(i))
-                        .append("\n")
-                }
-                i++
+        var headers = request.headers()
+        var i = 0
+        var count = headers.size()
+        while (i < count) {
+            val name = headers.name(i)
+            // Skip headers from the request body as they are explicitly logged above.
+            if (!"Content-Type".equals(name, ignoreCase = true) && !"Content-Length".equals(name,
+                    ignoreCase = true)
+            ) {
+                sb.append(name + ": " + headers.value(i))
             }
+            i++
         }
-
         if (!hasRequestBody) {
-            sb.append("--> END ")
-                .append(request.method())
-                .append("\n")
+            sb.append("\n")
+            sb.append("--> END " + request.method())
+        } else if (bodyEncoded(request.headers())) {
+            sb.append("\n")
+            sb.append("--> END " + request.method() + " (encoded body omitted)")
         } else {
-            //这里获取请求体
             val buffer = Buffer()
             requestBody!!.writeTo(buffer)
-            var parameter = ""
-            var charset = UTF8
-            val contentType = requestBody.contentType()
+            var charset: Charset = UTF8
+            val contentType = requestBody!!.contentType()
             if (contentType != null) {
-                charset = contentType.charset(UTF8)
+                charset = contentType.charset(UTF8)!!
             }
-            parameter = buffer.readString(charset!!)
-            sb.append("Required Parameter: ${parameter}")
-                .append("\n")
-
-            sb.append("--> END ")
-                .append(request.method())
-                .append(" (")
-                .append(requestBody.contentLength())
-                .append("-byte body)")
-                .append("\n")
-        }
-
-        // 这里获取响应体
-        val startNs = System.nanoTime()
-        val response = chain.proceed(request)
-        val tookMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNs)
-        val responseBody = response.body()
-
-        if (responseBody != null) {
-            val contentLength = responseBody.contentLength()
-            val bodySize = if (contentLength != -1L) "$contentLength-byte" else "unknown-length"
-            sb.append("<-- ")
-                .append(response.code())
-                .append(" ")
-                .append(response.message())
-                .append(" ")
-                .append(response.request().url())
-                .append(" (")
-                .append(tookMs)
-                .append("ms, ")
-                .append(bodySize)
-                .append(" body)")
-                .append("\n")
-
-            val headers1 = response.headers()
-            var i = 0
-            val count = headers1.size()
-            while (i < count) {
-                sb.append(headers1.name(i))
-                    .append(": ")
-                    .append(headers1.value(i))
-                    .append("\n")
-                i++
-            }
-
-            if (!HttpHeaders.hasBody(response)) {
-                sb.append("<-- END HTTP")
-                    .append("\n")
-            } else if (bodyEncoded(response.headers())) {
-                sb.append("<-- END HTTP (encoded body omitted)")
-                    .append("\n")
+            sb.append("")
+            if (isPlaintext(buffer)) {
+                sb.append(buffer.readString(charset))
+                sb.append("--> END ")
+                sb.append("\n")
+                sb.append(request.method()
+                        + " (" + requestBody!!.contentLength() + "-byte body)")
             } else {
-
-                val source = responseBody.source()
-                source.request(java.lang.Long.MAX_VALUE) // Buffer the entire body.
-                val buffer = source.buffer()
-
-                var charset = UTF8
-                val contentType = responseBody.contentType()
-
-                if (contentType != null) {
-                    try {
-                        charset = contentType.charset(UTF8)
-                    } catch (e: UnsupportedCharsetException) {
-                        sb.append("\n")
-                        sb.append("Couldn't decode the response body; charset is likely malformed.")
-                            .append("\n")
-                        sb.append("<-- END HTTP")
-                            .append("\n")
-
-                        return response
-                    }
-
-                }
-
-                if (isPlaintext(buffer)) {
-                    if (contentLength != 0L) {
-                        sb.append("\n")
-                        if (charset != null) {
-
-                            var json = ""
-                            json = buffer.clone()
-                                .readString(charset)
-                            sb.append(json)
-                                .append("\n\n")
-                            val str = prettyJson(json)
-                            sb.append(str)
-                                .append("\n")
-                        }
-                    }
-                }
-
-                sb.append("<-- END HTTP (")
-                    .append(buffer.size())
-                    .append("-byte body)")
-                    .append("\n")
+                sb.append("--> END ")
+                sb.append("\n")
+                sb.append(request.method() + " (binary "
+                        + requestBody!!.contentLength() + "-byte body omitted)")
             }
         }
+
+        val startNs = System.nanoTime()
+        val response = try {
+            chain.proceed(request)
+        } catch (e: java.lang.Exception) {
+            sb.append("\n")
+            sb.append("<-- HTTP FAILED: $e")
+            sb.logE()
+            throw e
+        }
+        val tookMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNs)
+
+        val responseBody = response.body()
+        val contentLength = responseBody!!.contentLength()
+        val bodySize = if (contentLength != -1L) "$contentLength-byte" else "unknown-length"
+        sb.append("\n")
+        sb.append("<-- " + response.code() + ' ' + response.message() + ' '
+                + response.request().url() + " (" + tookMs + "ms" +
+                bodySize + " body" + ')')
+        sb.append("\n\n")
+
+        headers = response.headers()
+        i = 0
+        count = headers.size()
+        while (i < count) {
+            sb.append(headers.name(i) + ": " + headers.value(i))
+            sb.append("\n")
+            i++
+        }
+        sb.append("\n")
+        if (!HttpHeaders.hasBody(response)) {
+            sb.append("<-- END HTTP")
+        } else if (bodyEncoded(response.headers())) {
+            sb.append("<-- END HTTP (encoded body omitted)")
+        } else {
+            val source = responseBody!!.source()
+            source.request(Long.MAX_VALUE) // Buffer the entire body.
+            val buffer = source.buffer()
+            var charset: Charset = UTF8
+            val contentType = responseBody!!.contentType()
+            if (contentType != null) {
+                try {
+                    charset = contentType.charset(UTF8)!!
+                } catch (e: UnsupportedCharsetException) {
+                    sb.append("\n")
+                    sb.append("")
+                    sb.append("Couldn't decode the response body; charset is likely malformed.")
+                    sb.append("<-- END HTTP")
+                    sb.logE()
+                    return response
+                }
+            }
+            if (!isPlaintext(buffer)) {
+                sb.append("\n")
+                sb.append("")
+                sb.append("<-- END HTTP (binary " + buffer.size() + "-byte body omitted)")
+                sb.logD(logTag)
+                return response
+            }
+            if (contentLength != 0L) {
+                sb.append("")
+                val json = buffer.clone().readString(charset)
+                sb.append(json)
+                sb.append("\n\n")
+                sb.append(prettyJson(json))
+            }
+            sb.append("\n\n")
+            sb.append("<-- END HTTP (" + buffer.size() + "-byte body)")
+        }
+
         sb.toString().logD(logTag)
         return response
-
     }
 
 
