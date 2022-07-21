@@ -39,9 +39,9 @@ class VBListDialog(mContext: Context) : VBDialog<VbDialogListBinding>(mContext) 
         mAdapter.setOnItemChildClickListener { adapter, view, position ->
             listener?.run {
                 invoke(
-                        this@VBListDialog,
-                        mAdapter.getItem(position).toString(),
-                        position
+                    this@VBListDialog,
+                    mAdapter.getItem(position).toString(),
+                    position
                 )
             }
         }
@@ -80,10 +80,5 @@ class VBListDialog(mContext: Context) : VBDialog<VbDialogListBinding>(mContext) 
         }
 
     }
-
-    override fun useDim(): Boolean {
-        return false
-    }
-
 
 }

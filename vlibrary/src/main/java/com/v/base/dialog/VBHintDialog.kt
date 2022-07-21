@@ -104,10 +104,9 @@ class VBHintDialog(mContext: Context) : VBDialog<VbDialogHintBinding>(mContext),
         }
     }
 
-    fun setDialogCanceled(isCancelable: Boolean): VBHintDialog {
-        isDialogCancelable = isCancelable
+    fun setCanceled(isCancelable: Boolean): VBHintDialog {
+        setDialogCancelable(isCancelable)
         return this
     }
-
 
 }

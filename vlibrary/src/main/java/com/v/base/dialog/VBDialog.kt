@@ -23,9 +23,10 @@ import java.lang.reflect.ParameterizedType
  * desc    :
  * time    : 2021-03-16 09:52:45
  */
-abstract class VBDialog<VB : ViewDataBinding>(val mContext: Context) : Dialog(mContext, R.style.MyDialog) {
+abstract class VBDialog<VB : ViewDataBinding>(private val mContext: Context) :
+    Dialog(mContext, R.style.MyDialog) {
 
-    var isDialogCancelable = true
+    private var isDialogCancelable = true
 
     protected val mDataBinding: VB by lazy {
         val type = javaClass.genericSuperclass as ParameterizedType
@@ -42,14 +43,13 @@ abstract class VBDialog<VB : ViewDataBinding>(val mContext: Context) : Dialog(mC
         setContentView(mDataBinding.root)
         setCanceled()
         initData()
-
     }
 
 
     protected abstract fun initData()
 
 
-    fun setCanceled() {
+    private fun setCanceled() {
         setCanceledOnTouchOutside(isDialogCancelable)
         setCancelable(isDialogCancelable)
         if (isDialogCancelable) {
@@ -59,13 +59,27 @@ abstract class VBDialog<VB : ViewDataBinding>(val mContext: Context) : Dialog(mC
             (mDataBinding.root as ViewGroup).vbGetAllChildViews().forEach {
                 it.isClickable = true
             }
+        } else {
+            mDataBinding.root.setOnClickListener {
+
+            }
+            (mDataBinding.root as ViewGroup).vbGetAllChildViews().forEach {
+                it.isClickable = false
+            }
         }
     }
+
+    fun setDialogCancelable(isCancelable: Boolean) {
+        this.isDialogCancelable = isCancelable
+        setCanceled()
+    }
+
 
     /**
      * 状态栏字体颜色 true为深色 false为亮色
      */
-    open fun useStatusBarBright(): Boolean = isWhiteColor(Color.parseColor(VBConfig.options.statusBarColor))
+    open fun useStatusBarBright(): Boolean =
+        isWhiteColor(Color.parseColor(VBConfig.options.statusBarColor))
 
     /**
      * 设置dialog弹出方向 [VBDialogOrientation]
@@ -182,9 +196,9 @@ abstract class VBDialog<VB : ViewDataBinding>(val mContext: Context) : Dialog(mC
         if (mContext is Activity) {
             //状态栏颜色趋近于白色时，会智能将状态栏字体颜色变换为黑色
             ImmersionBar.with(mContext, this)
-                    .statusBarDarkFont(useStatusBarBright())
-                    .navigationBarDarkIcon(useStatusBarBright())
-                    .init()
+                .statusBarDarkFont(useStatusBarBright())
+                .navigationBarDarkIcon(useStatusBarBright())
+                .init()
 
         }
     }

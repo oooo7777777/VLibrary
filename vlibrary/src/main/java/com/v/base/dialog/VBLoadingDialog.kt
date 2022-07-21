@@ -1,37 +1,34 @@
 package com.v.base.dialog
 
-import android.app.Dialog
 import android.content.Context
-import android.graphics.drawable.ColorDrawable
-import android.os.Bundle
+import android.graphics.Color
 import android.view.View
-import android.view.Window
 import android.widget.TextView
 import com.v.base.R
+import com.v.base.databinding.VbLayoutLoadingBinding
 
-class VBLoadingDialog(context: Context) : Dialog(context) {
+class VBLoadingDialog(mContext: Context) : VBDialog<VbLayoutLoadingBinding>(mContext) {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        requestWindowFeature(Window.FEATURE_NO_TITLE)
-        window!!.setBackgroundDrawable(ColorDrawable(0))
-        setContentView(R.layout.vb_layout_loading)
+
+    override fun initData() {
     }
 
-    fun setMsg(msg: String) {
-        if (msg.isEmpty()) {
-            val textView = findViewById<TextView>(R.id.tvMsg)
-            textView.text = msg
-            textView.visibility = View.VISIBLE
+
+    fun setMsg(msg: String, color: String = "#ffffff") {
+        if (!msg.isNullOrEmpty()) {
+            mDataBinding.tvMsg.text = msg
+            mDataBinding.tvMsg.visibility = View.VISIBLE
+            mDataBinding.tvMsg.setTextColor(Color.parseColor(color))
         }
     }
-    /**
-     * 设置是否返回按钮取消
-     */
-    fun setDialogCancelable(isCancelable: Boolean): VBLoadingDialog {
-        setCanceledOnTouchOutside(isCancelable)
-        setCancelable(isCancelable)
+
+    fun setCanceled(isCancelable: Boolean): VBLoadingDialog {
+        setDialogCancelable(isCancelable)
         return this
+    }
+
+    override fun useAnimations(): Boolean {
+        return false
     }
 
 }

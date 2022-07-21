@@ -36,13 +36,12 @@ class ThreeFragment : VBFragment<FragmentThreeBinding, VBBlankViewModel>(), View
     override fun onClick(v: View) {
         when (v.id) {
             mDataBinding.bt1.id -> {
-//                countDown = 5
+                countDown = 5
                 countDownStart()
             }
             mDataBinding.bt2.id -> {
-//                countDown = Long.MAX_VALUE
-//                countDownStart()
-                countDownStop()
+                countDown = Long.MAX_VALUE
+                countDownStart()
             }
 
             mDataBinding.bt3.id -> {
@@ -53,7 +52,7 @@ class ThreeFragment : VBFragment<FragmentThreeBinding, VBBlankViewModel>(), View
                 VBHintDialog(mContext).setTitle("提示")
                         .setContent("确定保存吗?")
                         .setButtonText("取消", "确定")
-                        .setDialogCanceled(false)
+                        .setCanceled(false)
                         .setClickListener { hintDialog, position ->
                             hintDialog.dismiss()
                         }
@@ -74,7 +73,7 @@ class ThreeFragment : VBFragment<FragmentThreeBinding, VBBlankViewModel>(), View
     }
 
     private fun countDownStart() {
-
+        countDownStop()
         if (job == null) {
             job = vbCountDownCoroutines(countDown,
                     onStart = {

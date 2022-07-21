@@ -61,7 +61,9 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
      * 初始化加载框
      */
     private val loadDialog by lazy {
-        VBLoadingDialog(this).setDialogCancelable(false)
+        VBLoadingDialog(this).apply {
+            setDialogCancelable(false)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

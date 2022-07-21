@@ -28,7 +28,7 @@ abstract class VBFragment<VB : ViewDataBinding, VM : VBViewModel> : Fragment() {
 
 
     private val loadDialog by lazy {
-        VBLoadingDialog(mContext).setDialogCancelable(false)
+        VBLoadingDialog(mContext).setCanceled(false)
     }
 
 
