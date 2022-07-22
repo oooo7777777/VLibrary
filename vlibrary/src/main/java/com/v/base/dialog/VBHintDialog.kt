@@ -4,6 +4,8 @@ import android.content.Context
 import android.graphics.Color
 import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
+import com.v.base.annotaion.VBDialogOrientation
 import com.v.base.databinding.VbDialogHintBinding
 import com.v.base.utils.vbGetScreenHeight
 

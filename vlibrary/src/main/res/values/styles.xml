@@ -105,6 +105,24 @@
         <item name="android:backgroundDimEnabled">true</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsFloating">false</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+
+    <!--自定义Dialog样式-->
+    <style name="MyDialog1" parent="AlertDialog.AppCompat">
+        <item name="android:windowBackground">@android:color/transparent</item>
+
+        <!--        &lt;!&ndash;设置透明状态栏，适用于SDK19（4.4）及以上版本&ndash;&gt;-->
+        <item name="android:windowTranslucentStatus">true</item>
+        <!--        &lt;!&ndash; 如果你不需要自定义状态栏颜色，下面两个可不要 &ndash;&gt;-->
+        <item name="android:windowDrawsSystemBarBackgrounds" tools:targetApi="lollipop">true</item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop">@android:color/transparent
+        </item>
+        <!--        tyle 这样就可以了-->
+        <!--        &lt;!&ndash; 透明导航栏 &ndash;&gt;-->
+        <item name="android:windowTranslucentNavigation">false</item>
     </style>
 
 </resources>

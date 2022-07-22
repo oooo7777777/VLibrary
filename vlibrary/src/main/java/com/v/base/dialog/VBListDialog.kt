@@ -81,4 +81,8 @@ class VBListDialog(mContext: Context) : VBDialog<VbDialogListBinding>(mContext) 
 
     }
 
+    override fun useDim(): Boolean {
+        return false
+    }
+
 }

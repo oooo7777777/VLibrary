@@ -3,6 +3,7 @@ package com.v.base.dialog
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
+import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
 import android.view.*
@@ -17,6 +18,12 @@ import com.v.base.utils.log
 import com.v.base.utils.logI
 import com.v.base.utils.vbGetAllChildViews
 import java.lang.reflect.ParameterizedType
+import android.view.WindowManager
+
+import android.os.Build
+import androidx.appcompat.app.AlertDialog
+import android.graphics.drawable.GradientDrawable
+
 
 /**
  * author  : ww
@@ -114,28 +121,20 @@ abstract class VBDialog<VB : ViewDataBinding>(private val mContext: Context) :
         return 0
     }
 
-    /**
-     * 设置宽
-     */
-    open fun useWidth(): Int {
-        return ViewGroup.LayoutParams.MATCH_PARENT
-    }
-
-    /**
-     * 设置高
-     */
-    open fun useHeight(): Int {
-        return ViewGroup.LayoutParams.MATCH_PARENT
-    }
 
     private fun setStyle() {
         window?.run {
             requestFeature(Window.FEATURE_NO_TITLE)
-            setBackgroundDrawableResource(android.R.color.transparent)
-            decorView.setPadding(0, 0, 0, 0)
+//            setBackgroundDrawableResource(android.R.color.transparent)
+//            decorView.setPadding(0, 0, 0, 0)
+
+            val gradientDrawable = GradientDrawable()
+            gradientDrawable.setColor(0x00000000)
+            window!!.setBackgroundDrawable(gradientDrawable) //设置对话框边框背景,必须在代码中设置对话框背景，不然对话框背景是黑色的
+
             val wlp = attributes
-            wlp.width = useWidth()
-            wlp.height = useHeight()
+//            wlp.width = useWidth()
+//            wlp.height = useHeight()
 
             if (useDim()) {
                 wlp.dimAmount = useDimAmount()
@@ -194,12 +193,12 @@ abstract class VBDialog<VB : ViewDataBinding>(private val mContext: Context) :
     override fun show() {
         super.show()
         if (mContext is Activity) {
+            //状态栏字体颜色 true为深色 false为亮色
             //状态栏颜色趋近于白色时，会智能将状态栏字体颜色变换为黑色
             ImmersionBar.with(mContext, this)
                 .statusBarDarkFont(useStatusBarBright())
                 .navigationBarDarkIcon(useStatusBarBright())
                 .init()
-
         }
     }
 }

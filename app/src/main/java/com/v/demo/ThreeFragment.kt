@@ -52,7 +52,6 @@ class ThreeFragment : VBFragment<FragmentThreeBinding, VBBlankViewModel>(), View
                 VBHintDialog(mContext).setTitle("提示")
                         .setContent("确定保存吗?")
                         .setButtonText("取消", "确定")
-                        .setCanceled(false)
                         .setClickListener { hintDialog, position ->
                             hintDialog.dismiss()
                         }
