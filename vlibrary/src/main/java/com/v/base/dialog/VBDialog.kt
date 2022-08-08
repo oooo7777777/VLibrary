@@ -121,6 +121,12 @@ abstract class VBDialog<VB : ViewDataBinding>(private val mContext: Context) :
         return 0
     }
 
+    /**
+     * 是否需要控制状态栏
+     */
+    open fun useImmersionBar(): Boolean {
+        return true
+    }
 
     private fun setStyle() {
         window?.run {
@@ -184,7 +190,7 @@ abstract class VBDialog<VB : ViewDataBinding>(private val mContext: Context) :
 
     override fun dismiss() {
         super.dismiss()
-        if (mContext is Activity) {
+        if (useImmersionBar() && mContext is Activity) {
             ImmersionBar.destroy(mContext, this)
         }
 
@@ -192,7 +198,7 @@ abstract class VBDialog<VB : ViewDataBinding>(private val mContext: Context) :
 
     override fun show() {
         super.show()
-        if (mContext is Activity) {
+        if (useImmersionBar() && mContext is Activity) {
             //状态栏字体颜色 true为深色 false为亮色
             //状态栏颜色趋近于白色时，会智能将状态栏字体颜色变换为黑色
             ImmersionBar.with(mContext, this)
@@ -201,4 +207,6 @@ abstract class VBDialog<VB : ViewDataBinding>(private val mContext: Context) :
                 .init()
         }
     }
+
+
 }

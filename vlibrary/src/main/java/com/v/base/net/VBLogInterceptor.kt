@@ -46,29 +46,7 @@ open class VBLogInterceptor(var logTag: String = "PRETTY_LOGGER") : Interceptor 
         sb.append(requestStartMessage)
 
 
-        if (hasRequestBody) {
-            // Request body headers are only present when installed as a network interceptor. Force
-            // them to be included (when available) so there values are known.
-            if (requestBody!!.contentType() != null) {
-                sb.append("Content-Type: " + requestBody!!.contentType())
-            }
-            if (requestBody!!.contentLength() != -1L) {
-                sb.append("Content-Length: " + requestBody!!.contentLength())
-            }
-        }
-        var headers = request.headers()
-        var i = 0
-        var count = headers.size()
-        while (i < count) {
-            val name = headers.name(i)
-            // Skip headers from the request body as they are explicitly logged above.
-            if (!"Content-Type".equals(name, ignoreCase = true) && !"Content-Length".equals(name,
-                    ignoreCase = true)
-            ) {
-                sb.append(name + ": " + headers.value(i))
-            }
-            i++
-        }
+
         if (!hasRequestBody) {
             sb.append("\n")
             sb.append("--> END " + request.method())
@@ -76,26 +54,13 @@ open class VBLogInterceptor(var logTag: String = "PRETTY_LOGGER") : Interceptor 
             sb.append("\n")
             sb.append("--> END " + request.method() + " (encoded body omitted)")
         } else {
-            val buffer = Buffer()
-            requestBody!!.writeTo(buffer)
-            var charset: Charset = UTF8
-            val contentType = requestBody!!.contentType()
-            if (contentType != null) {
-                charset = contentType.charset(UTF8)!!
-            }
-            sb.append("")
-            if (isPlaintext(buffer)) {
-                sb.append(buffer.readString(charset))
-                sb.append("--> END ")
-                sb.append("\n")
-                sb.append(request.method()
-                        + " (" + requestBody!!.contentLength() + "-byte body)")
-            } else {
-                sb.append("--> END ")
-                sb.append("\n")
-                sb.append(request.method() + " (binary "
-                        + requestBody!!.contentLength() + "-byte body omitted)")
-            }
+            sb.append("--> END ")
+            sb.append("\n")
+            sb.append(
+                request.method() + " (binary "
+                        + requestBody!!.contentLength() + "-byte body omitted)"
+            )
+
         }
 
         val startNs = System.nanoTime()
@@ -113,20 +78,65 @@ open class VBLogInterceptor(var logTag: String = "PRETTY_LOGGER") : Interceptor 
         val contentLength = responseBody!!.contentLength()
         val bodySize = if (contentLength != -1L) "$contentLength-byte" else "unknown-length"
         sb.append("\n")
-        sb.append("<-- " + response.code() + ' ' + response.message() + ' '
-                + response.request().url() + " (" + tookMs + "ms" +
-                bodySize + " body" + ')')
+        sb.append(
+            "<-- " + response.code() + ' ' + response.message() + ' '
+                    + response.request().url() + " (" + tookMs + "ms " +
+                    bodySize + " body" + ')'
+        )
         sb.append("\n\n")
 
-        headers = response.headers()
-        i = 0
-        count = headers.size()
-        while (i < count) {
-            sb.append(headers.name(i) + ": " + headers.value(i))
-            sb.append("\n")
-            i++
+
+        //请求头
+        request.headers().apply {
+            if (this.size() > 0) {
+                sb.append("Request Headers:  ")
+                    .append(" {")
+                for (i in 0 until this.size()) {
+                    sb.append(this.name(i) + "=" + this.value(i))
+                        .append(", ")
+                }
+                sb.append("}")
+                    .append("\n--> END ")
+                    .append("\n\n")
+            }
         }
-        sb.append("\n")
+
+
+        //获取请求体
+        if (hasRequestBody) {
+            val buffer = Buffer()
+            requestBody!!.writeTo(buffer)
+            var parameter = ""
+            var charset = UTF8
+            val contentType = requestBody.contentType()
+            if (contentType != null) {
+                charset = contentType.charset(UTF8)
+            }
+            parameter = buffer.readString(charset!!)
+            sb.append("Request Parameter: ${parameter}")
+                .append("\n")
+            sb.append("--> END ")
+                .append(" (")
+                .append(requestBody.contentLength())
+                .append("-byte body)")
+                .append("\n\n")
+        }
+
+
+        //返回的的请求头
+        response.headers().apply {
+            if (this.size() > 0) {
+                sb.append("Response Headers: {")
+                for (i in 0 until this.size()) {
+                    sb.append(this.name(i) + "=" + this.value(i))
+                        .append(", ")
+                }
+                sb.append("}")
+                    .append("\n--> END ")
+                    .append("\n\n")
+            }
+        }
+
         if (!HttpHeaders.hasBody(response)) {
             sb.append("<-- END HTTP")
         } else if (bodyEncoded(response.headers())) {
@@ -167,7 +177,7 @@ open class VBLogInterceptor(var logTag: String = "PRETTY_LOGGER") : Interceptor 
             sb.append("<-- END HTTP (" + buffer.size() + "-byte body)")
         }
 
-        sb.toString().logD(logTag)
+        (sb.toString().replace(", }", "}")).logD(logTag)
         return response
     }
 
