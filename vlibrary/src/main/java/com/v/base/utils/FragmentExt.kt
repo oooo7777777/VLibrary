@@ -130,7 +130,7 @@ fun <T : Fragment> Fragment.vbGetFragment(
     bundle: Bundle? = null,
 ): Fragment =
     run {
-        var fragment = childFragmentManager.findFragmentByTag(tag) as T
+        var fragment = childFragmentManager.findFragmentByTag(tag) as T?
         if (fragment == null) {
             fragment = clazz.newInstance()
         }

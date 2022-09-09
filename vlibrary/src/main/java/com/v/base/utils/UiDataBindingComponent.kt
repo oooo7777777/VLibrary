@@ -111,10 +111,12 @@ fun TextView.vbDrawable(
             val drawableRight: Drawable? = compoundDrawables[2]
             val drawableBottom: Drawable? = compoundDrawables[3]
 
-            this@vbDrawable.setCompoundDrawables(null,
+            this@vbDrawable.setCompoundDrawables(
+                null,
                 drawableTop,
                 drawableRight,
-                drawableBottom)
+                drawableBottom
+            )
         })
 
 
@@ -138,10 +140,12 @@ fun TextView.vbDrawable(
             val drawableBottom: Drawable? = compoundDrawables[3]
 
 
-            this@vbDrawable.setCompoundDrawables(drawableLeft,
+            this@vbDrawable.setCompoundDrawables(
+                drawableLeft,
                 drawableTop,
                 null,
-                drawableBottom)
+                drawableBottom
+            )
         })
 
 
@@ -157,10 +161,12 @@ fun TextView.vbDrawable(
             val drawableBottom: Drawable? = compoundDrawables[3]
 
 
-            this@vbDrawable.setCompoundDrawables(drawableLeft,
+            this@vbDrawable.setCompoundDrawables(
+                drawableLeft,
                 it,
                 drawableRight,
-                drawableBottom)
+                drawableBottom
+            )
         }, error = {
             val drawableLeft: Drawable? = compoundDrawables[0]
             val drawableTop: Drawable? = compoundDrawables[1]
@@ -168,10 +174,12 @@ fun TextView.vbDrawable(
             val drawableBottom: Drawable? = compoundDrawables[3]
 
 
-            this@vbDrawable.setCompoundDrawables(drawableLeft,
+            this@vbDrawable.setCompoundDrawables(
+                drawableLeft,
                 null,
                 drawableRight,
-                drawableBottom)
+                drawableBottom
+            )
         })
 
 
@@ -203,8 +211,10 @@ fun TextView.vbDrawable(
 /**
  * view点击(动画根据全局的设定的参数来配置)
  */
-@BindingAdapter(value = ["vb_click"],
-    requireAll = false)
+@BindingAdapter(
+    value = ["vb_click"],
+    requireAll = false
+)
 fun View.vbClick(
     onClickListener: View.OnClickListener?,
 ) {
@@ -218,8 +228,10 @@ fun View.vbClick(
 /**
  * view点击(带动画)
  */
-@BindingAdapter(value = ["vb_click_animator_on"],
-    requireAll = false)
+@BindingAdapter(
+    value = ["vb_click_animator_on"],
+    requireAll = false
+)
 fun View.vbClickAnimatorOn(
     onClickListener: View.OnClickListener?,
 ) {
@@ -233,8 +245,10 @@ fun View.vbClickAnimatorOn(
 /**
  * view点击(不带动画)
  */
-@BindingAdapter(value = ["vb_click_animator_off"],
-    requireAll = false)
+@BindingAdapter(
+    value = ["vb_click_animator_off"],
+    requireAll = false
+)
 fun View.vbClickAnimatorOff(
     onClickListener: View.OnClickListener?,
 ) {
@@ -394,6 +408,22 @@ fun TextView.vbTextFormat(any: Any?) = run {
 fun ImageView.vbSetColor(color: String?) = run {
     color?.run {
         setColorFilter(Color.parseColor(color))
+    }
+
+}
+
+/**
+ * 设置控件阴影
+ */
+@BindingAdapter(value = ["vb_shadow_color", "vb_shadow_color_elevation"], requireAll = false)
+fun View.vbShadowColor(color: String?, ev: Float = 10f) = run {
+    color?.run {
+        elevation = ev
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            outlineAmbientShadowColor = Color.parseColor(color)// 环境阴影
+            outlineSpotShadowColor = Color.parseColor(color)// 点阴影
+        }
+
     }
 
 }

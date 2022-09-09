@@ -3,26 +3,18 @@ package com.v.base.dialog
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
-import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
 import android.view.*
 import androidx.databinding.ViewDataBinding
 import com.gyf.immersionbar.ImmersionBar
-import com.gyf.immersionbar.ktx.immersionBar
 import com.v.base.R
 import com.v.base.VBConfig
 import com.v.base.annotaion.VBDialogOrientation
 import com.v.base.utils.isWhiteColor
 import com.v.base.utils.log
-import com.v.base.utils.logI
 import com.v.base.utils.vbGetAllChildViews
 import java.lang.reflect.ParameterizedType
-import android.view.WindowManager
-
-import android.os.Build
-import androidx.appcompat.app.AlertDialog
-import android.graphics.drawable.GradientDrawable
 
 
 /**
@@ -32,6 +24,19 @@ import android.graphics.drawable.GradientDrawable
  */
 abstract class VBDialog<VB : ViewDataBinding>(private val mContext: Context) :
     Dialog(mContext, R.style.MyDialog) {
+
+    private var onDismiss: (() -> Unit)? = null
+
+    fun setOnVBDismiss(onDismiss: (() -> Unit)) {
+        this.onDismiss = onDismiss
+    }
+
+    private var onShow: (() -> Unit)? = null
+
+    fun setOnVBShow(onShow: (() -> Unit)) {
+        this.onShow = onShow
+    }
+
 
     private var isDialogCancelable = true
 
@@ -131,12 +136,8 @@ abstract class VBDialog<VB : ViewDataBinding>(private val mContext: Context) :
     private fun setStyle() {
         window?.run {
             requestFeature(Window.FEATURE_NO_TITLE)
-//            setBackgroundDrawableResource(android.R.color.transparent)
-//            decorView.setPadding(0, 0, 0, 0)
-
-            val gradientDrawable = GradientDrawable()
-            gradientDrawable.setColor(0x00000000)
-            window!!.setBackgroundDrawable(gradientDrawable) //设置对话框边框背景,必须在代码中设置对话框背景，不然对话框背景是黑色的
+            setBackgroundDrawableResource(android.R.color.transparent)
+            decorView.setPadding(0, 0, 0, 0)
 
             val wlp = attributes
 //            wlp.width = useWidth()
@@ -193,7 +194,7 @@ abstract class VBDialog<VB : ViewDataBinding>(private val mContext: Context) :
         if (useImmersionBar() && mContext is Activity) {
             ImmersionBar.destroy(mContext, this)
         }
-
+        onDismiss?.invoke()
     }
 
     override fun show() {
@@ -206,6 +207,8 @@ abstract class VBDialog<VB : ViewDataBinding>(private val mContext: Context) :
                 .navigationBarDarkIcon(useStatusBarBright())
                 .init()
         }
+
+        onShow?.invoke()
     }
 
 

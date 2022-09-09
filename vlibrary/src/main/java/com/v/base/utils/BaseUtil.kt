@@ -5,6 +5,7 @@ import android.app.Activity
 import android.app.Application
 import android.content.*
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.os.Bundle
@@ -34,6 +35,7 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import java.util.*
 import kotlin.math.roundToInt
+import android.widget.LinearLayout
 
 
 private val viewModelMap: MutableMap<Class<*>, ViewModel?> =
@@ -141,9 +143,11 @@ fun Any.toast(
     xOffset: Int = 0,
     yOffset: Int = 0,
 ) {
-    val toast = Toast.makeText(VBApplication.getApplication(),
+    val toast = Toast.makeText(
+        VBApplication.getApplication(),
         this.toString(),
-        if (isLong) Toast.LENGTH_LONG else Toast.LENGTH_SHORT)
+        if (isLong) Toast.LENGTH_LONG else Toast.LENGTH_SHORT
+    )
     toast.setGravity(gravity, xOffset, yOffset)
     toast.show()
 }
@@ -159,6 +163,16 @@ fun toGrey(rgb: Int): Int {
     val red = rgb and 0x00FF0000 shr 16
     return red * 38 + green * 75 + blue * 15 shr 7
 }
+
+/** 根据百分比改变颜色透明度  */
+private fun vbChangeAlpha(color: Int, fraction: Float): Int {
+    val red = Color.red(color)
+    val green = Color.green(color)
+    val blue = Color.blue(color)
+    val alpha = (Color.alpha(color) * fraction).toInt()
+    return Color.argb(alpha, red, green, blue)
+}
+
 
 /**
  * 判断当前颜色视为为白色
@@ -316,21 +330,24 @@ fun Any.goActivity(cls: Class<*>, bundle: Bundle? = null, requestCode: Int = 0) 
         } else {
             this.startActivityForResult(intent, requestCode)
         }
+    } else {
+        throw IllegalStateException("Any 只能是 Context")
     }
 }
 
 
 /**
- * activity跳转
+ * activity finish带返回
  */
-fun Activity.finish(requestCode: Int = AppCompatActivity.RESULT_OK, bundle: Bundle? = null) = run {
-    val intent = Intent()
-    if (bundle != null) {
-        intent.putExtras(bundle)
+fun Activity.vbFinish(requestCode: Int = AppCompatActivity.RESULT_OK, bundle: Bundle? = null) =
+    run {
+        val intent = Intent()
+        if (bundle != null) {
+            intent.putExtras(bundle)
+        }
+        this.setResult(requestCode, intent)
+        this.finish()
     }
-    this.setResult(requestCode, intent)
-    this.finish()
-}
 
 
 /**
@@ -479,6 +496,22 @@ fun View.vbSetViewMargins(
         p.setMargins(left.vbDp2px(), top.vbDp2px(), right.vbDp2px(), bottom.vbDp2px())
         this.requestLayout()
     }
+}
+
+/**
+ * 获取view的宽度
+ */
+fun View.vbGetViewWidth(): Int {
+    this.measure(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+    return this.measuredWidth
+}
+
+/**
+ * 获取view的高度
+ */
+fun View.vbGetViewHeight(): Int {
+    this.measure(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+    return this.measuredHeight
 }
 
 /**
