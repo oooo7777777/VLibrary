@@ -24,10 +24,6 @@ class VBHintDialog(mContext: Context) : VBDialog<VbDialogHintBinding>(mContext),
         mDataBinding.v = this
     }
 
-    override fun useDimAmount(): Float {
-        return 0.8f
-    }
-
     fun getDataBinding(): VbDialogHintBinding {
         return mDataBinding
     }
