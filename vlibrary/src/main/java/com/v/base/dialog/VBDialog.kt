@@ -37,7 +37,6 @@ abstract class VBDialog<VB : ViewDataBinding>(private val mContext: Context) :
         this.onShow = onShow
     }
 
-
     private var isDialogCancelable = true
 
     protected val mDataBinding: VB by lazy {
@@ -109,7 +108,7 @@ abstract class VBDialog<VB : ViewDataBinding>(private val mContext: Context) :
      * 变暗系数 系数0.0-1.0 系数越高暗度越高
      */
     open fun useDimAmount(): Float {
-        return 0.5f
+        return VBConfig.options.dialogDimAmount
     }
 
     /**

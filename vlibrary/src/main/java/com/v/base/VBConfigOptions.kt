@@ -51,6 +51,9 @@ class VBConfigOptions(builder: Builder) {
     //网络请求配置
     var netOptions: VBNetOptions
 
+    //dialog变暗系数
+    var dialogDimAmount: Float
+
     init {
         this.statusBarColor = builder.statusBarColor
         this.toolbarColor = builder.toolbarColor
@@ -63,6 +66,7 @@ class VBConfigOptions(builder: Builder) {
         this.netOptions = builder.netOptions
         this.clickAnimator = builder.clickAnimator
         this.clickTime = builder.clickTime
+        this.dialogDimAmount = builder.dialogDimAmount
     }
 
     class Builder {
@@ -74,6 +78,7 @@ class VBConfigOptions(builder: Builder) {
         internal var recyclerViewEmptyLayout = R.layout.vb_layout_empty
         internal var clickAnimator = true
         internal var clickTime = 300L
+        internal var dialogDimAmount = 0.5f
 
         internal var netOptions = VBNetOptions.Builder().build()
 
@@ -166,6 +171,14 @@ class VBConfigOptions(builder: Builder) {
          */
         fun setClickTime(time: Long): Builder {
             this.clickTime = time
+            return this
+        }
+
+        /**
+         * dialog变暗系数
+         */
+        fun setDialogDimAmount(dimAmount: Float): Builder {
+            this.dialogDimAmount = dialogDimAmount
             return this
         }
 
