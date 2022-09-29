@@ -59,13 +59,19 @@ fun logCurrentThreadName(tag: String = TAG) = run {
 
 
 private fun log(level: LEVEL, tag: String, message: String) {
+    //tag最长为70 不然会打印不出来
+    var tagFormat = tag
+    if (tag.length > 70) {
+        tagFormat = tag.substring(0, 70)
+    }
 
     when (level) {
-        LEVEL.V -> Logger.t(tag).v(message)
-        LEVEL.D -> Logger.t(tag).d(message)
-        LEVEL.I -> Logger.t(tag).i(message)
-        LEVEL.W -> Logger.t(tag).w(message)
-        LEVEL.E -> Logger.t(tag).e(message)
+        LEVEL.V -> Logger.t(tagFormat).v(message)
+        LEVEL.D -> Logger.t(tagFormat).d(message)
+        LEVEL.I -> Logger.t(tagFormat).i(message)
+        LEVEL.W -> Logger.t(tagFormat).w(message)
+        LEVEL.E -> Logger.t(tagFormat).e(message)
     }
+
 
 }

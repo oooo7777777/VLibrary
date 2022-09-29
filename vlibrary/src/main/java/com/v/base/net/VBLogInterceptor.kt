@@ -2,7 +2,6 @@ package com.v.base.net
 
 import android.text.TextUtils
 import com.alibaba.fastjson.JSONObject
-import com.v.base.utils.log
 import com.v.base.utils.logD
 import com.v.base.utils.logE
 import okhttp3.Headers
@@ -16,7 +15,6 @@ import java.io.IOException
 import java.nio.charset.Charset
 import java.nio.charset.UnsupportedCharsetException
 import java.util.concurrent.TimeUnit
-import okhttp3.HttpUrl
 
 
 /**
@@ -179,7 +177,7 @@ open class VBLogInterceptor(var logTag: String = "PRETTY_LOGGER") : Interceptor 
             sb.append("<-- END HTTP (" + buffer.size() + "-byte body)")
         }
 
-        (sb.toString().replace(", }", "}")).logD("[${request.url()}]")
+        (sb.toString().replace(", }", "}")).logD("[${request.url().encodedPath()}]")
         return response
     }
 
