@@ -1,13 +1,16 @@
 package com.v.base.dialog
 
 import android.content.Context
+import android.content.res.Configuration
 import android.graphics.Color
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import com.v.base.annotaion.VBDialogOrientation
 import com.v.base.databinding.VbDialogHintBinding
+import com.v.base.utils.log
 import com.v.base.utils.vbGetScreenHeight
+import com.v.base.utils.vbSetViewLayoutParams
 
 
 /**
@@ -16,12 +19,17 @@ import com.v.base.utils.vbGetScreenHeight
  * time    : 2021-03-16 09:52:45
  */
 class VBHintDialog(mContext: Context) : VBDialog<VbDialogHintBinding>(mContext),
-        View.OnClickListener {
+    View.OnClickListener {
 
     private var listener: ((hintDialog: VBHintDialog, position: Int) -> Unit)? = null
 
     override fun initData() {
         mDataBinding.v = this
+
+        if (context.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            //横屏 重新设置宽高
+            mDataBinding.layoutContent.vbSetViewLayoutParams(context.vbGetScreenHeight())
+        }
     }
 
     fun getDataBinding(): VbDialogHintBinding {
