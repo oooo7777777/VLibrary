@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 33
     defaultConfig {
         applicationId "com.v.demo"
         minSdk 21
-        targetSdk 30
+        targetSdk 33
         versionCode 100
         versionName "1.0.0"
 

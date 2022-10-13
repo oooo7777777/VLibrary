@@ -51,15 +51,15 @@ private val viewModelMap: MutableMap<Class<*>, ViewModel?> =
  * @param <T>
  * @return
  */
-fun <T : ViewModel?> getApplicationViewModel(
-    application: Application?,
+fun <T : ViewModel> getApplicationViewModel(
+    application: Application,
     viewModelClass: Class<T>,
 ): T {
     if (viewModelMap.containsKey(viewModelClass)) {
         return viewModelMap[viewModelClass] as T
     }
     val t =
-        ViewModelProvider.AndroidViewModelFactory.getInstance(application!!).create(viewModelClass)
+        ViewModelProvider.AndroidViewModelFactory.getInstance(application).create(viewModelClass)
     viewModelMap[viewModelClass] = t
     return t
 }
