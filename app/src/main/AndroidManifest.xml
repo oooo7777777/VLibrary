@@ -4,15 +4,7 @@
     package="com.v.demo">
     <!-- 访问网络权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission
-        android:name="android.permission.WRITE_APN_SETTINGS"
-        tools:ignore="ProtectedPermissions" /> <!-- 获取WIFI状态 -->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 读取手机状态 -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 获取网络信息状态，如当前的网络连接是否有效 -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> <!-- 允许程序写入外部存储，如SD卡上读写文件 -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
 
     <application
         android:name=".DemoApplication"
