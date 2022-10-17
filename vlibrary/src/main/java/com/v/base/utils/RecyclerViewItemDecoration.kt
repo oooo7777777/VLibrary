@@ -323,6 +323,10 @@ class RecyclerViewItemDecoration constructor(private val context: Context) :
                     } else outRect.set(top, left, bottom, right)
                 }
             }
+            else ->
+            {
+
+            }
         }
     }
 
@@ -337,6 +341,10 @@ class RecyclerViewItemDecoration constructor(private val context: Context) :
             VBRecyclerViewItemOrientation.HORIZONTAL -> drawHorizontal(canvas, parent)
             VBRecyclerViewItemOrientation.VERTICAL -> drawVertical(canvas, parent)
             VBRecyclerViewItemOrientation.GRID -> drawGrid(canvas, parent)
+            else ->
+            {
+
+            }
         }
     }
 
