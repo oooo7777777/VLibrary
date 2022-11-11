@@ -79,5 +79,8 @@ dependencies {
     api 'com.gyf.immersionbar:immersionbar:3.0.0'
     // 状态栏 kotlin扩展（可选）
     api 'com.gyf.immersionbar:immersionbar-ktx:3.0.0'
+
+    // 语种切换框架：https://github.com/getActivity/MultiLanguages
+    api 'com.github.getActivity:MultiLanguages:8.0'
 }
 

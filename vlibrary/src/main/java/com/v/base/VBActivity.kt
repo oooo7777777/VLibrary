@@ -1,5 +1,6 @@
 package com.v.base
 
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.gyf.immersionbar.ktx.immersionBar
+import com.hjq.language.MultiLanguages
 import com.noober.background.BackgroundLibrary
 import com.v.base.databinding.VbRootActivityBinding
 import com.v.base.dialog.VBLoadingDialog
@@ -208,6 +210,11 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
         super.onDestroy()
         mDataBinding.unbind()
         mRootDataBinding.unbind()
+    }
+
+    override fun attachBaseContext(newBase: Context) {
+        // 绑定语种
+        super.attachBaseContext(MultiLanguages.attach(newBase))
     }
 
 }

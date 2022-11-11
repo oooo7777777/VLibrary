@@ -1,0 +1,21 @@
+<resources>
+    <string name="dm_app_name">VLibrary</string>
+
+    <string-array name="dm_tab">
+        <item> One </item>
+        <item> Two </item>
+        <item> Three </item>
+    </string-array>
+    <string name="string_activity_network_title">web request demo</string>
+
+    <string name="string_countdown">countdown</string>
+    <string name="string_heartbeat">heartbeat</string>
+    <string name="string_network_request">network request</string>
+    <string name="string_dialog">dialog</string>
+    <string name="string_list_dialog">list dialog</string>
+    <string name="string_current_language">English</string>
+
+
+</resources>
+
+

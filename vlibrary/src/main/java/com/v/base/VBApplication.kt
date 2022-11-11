@@ -1,6 +1,8 @@
 package com.v.base
 
 import android.app.Application
+import android.content.Context
+import com.hjq.language.MultiLanguages
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 
@@ -27,6 +29,9 @@ abstract class VBApplication : Application() {
         super.onCreate()
         context = this
 
+        // 初始化语种切换框架
+        MultiLanguages.init(this)
+
         isLog = isDebug()
         if (isLog) {
             Logger.addLogAdapter(AndroidLogAdapter())
@@ -37,4 +42,8 @@ abstract class VBApplication : Application() {
     protected abstract fun initData()
 
 
+    override fun attachBaseContext(base: Context) {
+        // 绑定语种
+        super.attachBaseContext(MultiLanguages.attach(base))
+    }
 }

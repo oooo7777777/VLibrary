@@ -1,0 +1,20 @@
+<resources>
+
+    <string name="vb_string_hint">hint</string>
+    <string name="vb_string_cancel">cancel</string>
+    <string name="vb_string_confirm">confirm</string>
+    <string name="vb_string_temporarily_no_data">temporarily no data</string>
+
+
+    <string name="vb_string_error_941000">Request failed, please try again later</string>
+    <string name="vb_string_error_941001">Parsing error, please try again later</string>
+    <string name="vb_string_error_941002">Network connection error, please try again later</string>
+    <string name="vb_string_error_941003">Certificate error, please try again later</string>
+    <string name="vb_string_error_941004">Network connection timed out, please try again later</string>
+
+    <string name="vb_string_save_locality">The saved content is only limited to View, Bitmap, String</string>
+    <string name="vb_string_save_locality_success">The picture has been saved to the local album</string>
+    <string name="vb_string_save_locality_error">Picture save failed</string>
+    <string name="vb_string_loading_failed">Loading failed, click retry</string>
+
+</resources>
