@@ -1,10 +1,14 @@
 package com.v.base.utils
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.pm.PackageManager
 import android.os.Build
 import android.provider.Settings
 import android.telephony.TelephonyManager
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import java.security.MessageDigest
 import java.util.*
 import kotlin.experimental.and
@@ -20,7 +24,17 @@ object DeviceIdUtil {
     fun getDeviceId(context: Context): String {
         val sbDeviceId = StringBuilder()
         //获得设备默认IMEI（>=6.0 需要ReadPhoneState权限）
-        val imei = getIMEI(context)
+        //Android 6.0 以后需要获取动态权限  检查权限
+        var imei = ""
+        val hasWriteStoragePermission = ContextCompat.checkSelfPermission(
+            context,
+            Manifest.permission.READ_PHONE_STATE
+        )
+        if (hasWriteStoragePermission == PackageManager.PERMISSION_GRANTED) {
+            //拥有权限，执行操作
+            imei = getIMEI(context)
+        }
+
         //获得AndroidId（无需权限）
         val androidid = getAndroidId(context)
         //获得设备序列号（无需权限）

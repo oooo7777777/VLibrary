@@ -43,7 +43,7 @@ fun ImageView.vbLoad(
  * @param topRight 顶部右边圆角
  * @param bottomLeft 底部左边圆角
  * @param bottomRight 底部右边圆角
-* @param errorResId 加载错误占位图
+ * @param errorResId 加载错误占位图
  */
 fun ImageView.vbLoadRounded(
     any: Any,
@@ -56,31 +56,40 @@ fun ImageView.vbLoadRounded(
 
     //顶部左边圆角
     val tfTopLeft =
-        RoundedCornersTransformation(topLeft.vbDp2px(),
+        RoundedCornersTransformation(
+            topLeft.vbDp2px(),
             0,
-            RoundedCornersTransformation.CornerType.TOP_LEFT)
+            RoundedCornersTransformation.CornerType.TOP_LEFT
+        )
 
     //顶部右边圆角
     val tfTopRight =
-        RoundedCornersTransformation(topRight.vbDp2px(),
+        RoundedCornersTransformation(
+            topRight.vbDp2px(),
             0,
-            RoundedCornersTransformation.CornerType.TOP_RIGHT)
+            RoundedCornersTransformation.CornerType.TOP_RIGHT
+        )
 
     //底部左边圆角
     val tfBottomLeft =
-        RoundedCornersTransformation(bottomLeft.vbDp2px(),
+        RoundedCornersTransformation(
+            bottomLeft.vbDp2px(),
             0,
-            RoundedCornersTransformation.CornerType.BOTTOM_LEFT)
+            RoundedCornersTransformation.CornerType.BOTTOM_LEFT
+        )
 
     //底部右边圆角
     val tfBottomRight =
-        RoundedCornersTransformation(bottomRight.vbDp2px(),
+        RoundedCornersTransformation(
+            bottomRight.vbDp2px(),
             0,
-            RoundedCornersTransformation.CornerType.BOTTOM_RIGHT)
+            RoundedCornersTransformation.CornerType.BOTTOM_RIGHT
+        )
 
     val tf =
         MultiTransformation(
-            CenterCrop(), tfTopLeft, tfTopRight, tfBottomLeft, tfBottomRight)
+            CenterCrop(), tfTopLeft, tfTopRight, tfBottomLeft, tfBottomRight
+        )
 
     loadDispose(this, any, 0, errorResId, tf)
 }
@@ -153,8 +162,6 @@ private fun loadDispose(
     transformation: Transformation<Bitmap>? = null,
 ) {
     image.run {
-
-
         try {
             val options = RequestOptions()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -169,11 +176,13 @@ private fun loadDispose(
                 //圆角
                 if (roundingRadius > 0) {
                     val radius = roundingRadius.vbDp2px()
-                    options.transform(CenterCrop(),
+                    options.transform(
+                        CenterCrop(),
                         RoundedCornersTransformation(
                             radius, 0,
                             RoundedCornersTransformation.CornerType.ALL,
-                        ))
+                        )
+                    )
                 } else if (roundingRadius < 0) {
                     //圆形
                     options.transform(CenterCrop(), RoundedCornersTransformation(1280, 0)) //圆形
@@ -184,9 +193,15 @@ private fun loadDispose(
                 .load(any)
                 .apply(options)
                 .apply {
-                    thumbnail(loadError(this@run.context,
-                        errorResId,
-                        options))
+                    if (errorResId != 0) {
+                        thumbnail(
+                            loadError(
+                                this@run.context,
+                                errorResId,
+                                options
+                            )
+                        )
+                    }
                 }
                 .into(this)
 
@@ -202,7 +217,7 @@ private fun loadDispose(
  */
 private fun loadError(
     context: Context,
-    @DrawableRes placeholderId: Int,
+    placeholderId: Int,
     options: BaseRequestOptions<*>,
 ): RequestBuilder<Drawable?>? {
     return Glide.with(context)
