@@ -430,30 +430,6 @@ fun Context.vbLifecycleOwner(): LifecycleOwner? {
 
 
 /**
- * 判断当前是否有网络连接,但是如果该连接的网络无法上网，也会返回true
- * @return true 能上网 false不能上网
- */
-@SuppressLint("MissingPermission")
-fun Context.vbIsNetConnection(): Boolean {
-
-    try {
-        val connectivityManager: ConnectivityManager =
-            this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val networkInfo: NetworkInfo = connectivityManager.activeNetworkInfo!!
-        val connected: Boolean = networkInfo.isConnected
-        if (networkInfo != null && connected) {
-            return networkInfo.state === NetworkInfo.State.CONNECTED
-        }
-    } catch (e: java.lang.Exception) {
-        e.printStackTrace()
-    }
-
-
-    return false
-}
-
-
-/**
  * 获取view所有子view
  */
 fun View.vbGetAllChildViews(): List<View> {

@@ -1,17 +1,14 @@
 package com.v.base.dialog
 
-import android.app.Activity
 import android.app.Dialog
 import android.content.Context
-import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.*
 import androidx.databinding.ViewDataBinding
-import com.gyf.immersionbar.ImmersionBar
 import com.v.base.R
 import com.v.base.VBConfig
 import com.v.base.annotaion.VBDialogOrientation
-import com.v.base.utils.isWhiteColor
 import com.v.base.utils.log
 import com.v.base.utils.vbGetAllChildViews
 import java.lang.reflect.ParameterizedType
@@ -87,12 +84,6 @@ abstract class VBDialog<VB : ViewDataBinding>(private val mContext: Context) :
 
 
     /**
-     * 状态栏字体颜色 true为深色 false为亮色
-     */
-    open fun useStatusBarBright(): Boolean =
-        isWhiteColor(Color.parseColor(VBConfig.options.statusBarColor))
-
-    /**
      * 设置dialog弹出方向 [VBDialogOrientation]
      */
     open fun useDirection(): VBDialogOrientation = VBDialogOrientation.CENTRE
@@ -125,19 +116,19 @@ abstract class VBDialog<VB : ViewDataBinding>(private val mContext: Context) :
         return 0
     }
 
-    /**
-     * 是否需要控制状态栏
-     */
-    open fun useImmersionBar(): Boolean {
-        return true
-    }
 
     private fun setStyle() {
         window?.run {
+
+//            setFlags(
+//                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+//                WindowManager.LayoutParams.FLAG_FULLSCREEN
+//            )
+            //设置全屏属性
+            addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
             requestFeature(Window.FEATURE_NO_TITLE)
             setBackgroundDrawableResource(android.R.color.transparent)
             decorView.setPadding(0, 0, 0, 0)
-
             val wlp = attributes
 //            wlp.width = useWidth()
 //            wlp.height = useHeight()
@@ -183,6 +174,10 @@ abstract class VBDialog<VB : ViewDataBinding>(private val mContext: Context) :
                 setWindowAnimations(useAnimationsRes())
             }
 
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                wlp.layoutInDisplayCutoutMode =
+                    WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+            }
             attributes = wlp
         }
 
@@ -190,23 +185,11 @@ abstract class VBDialog<VB : ViewDataBinding>(private val mContext: Context) :
 
     override fun dismiss() {
         super.dismiss()
-        if (useImmersionBar() && mContext is Activity) {
-            ImmersionBar.destroy(mContext, this)
-        }
         onDismiss?.invoke()
     }
 
     override fun show() {
         super.show()
-        if (useImmersionBar() && mContext is Activity) {
-            //状态栏字体颜色 true为深色 false为亮色
-            //状态栏颜色趋近于白色时，会智能将状态栏字体颜色变换为黑色
-            ImmersionBar.with(mContext, this)
-                .statusBarDarkFont(useStatusBarBright())
-                .navigationBarDarkIcon(useStatusBarBright())
-                .init()
-        }
-
         onShow?.invoke()
     }
 

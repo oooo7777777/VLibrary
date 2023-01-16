@@ -6,11 +6,8 @@ import android.graphics.Rect
 import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.View
-import android.view.animation.Animation
 import android.view.animation.ScaleAnimation
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.OnLifecycleEvent
 import kotlin.math.roundToInt
 
 /**
