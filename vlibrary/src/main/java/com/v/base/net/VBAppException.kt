@@ -40,7 +40,6 @@ class VBAppException : Exception {
     }
 
     override fun toString(): String {
-        return "errCode=$errCode\nerrorMsg=$errorMsg\nerrorLog=$errorLog"
-
+        return "errCode=$errCode errorMsg=$errorMsg errorLog=$errorLog"
     }
 }

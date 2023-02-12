@@ -6,7 +6,7 @@ import com.v.base.VBApplication
 
 const val TAG = "PRETTY_LOGGER"
 
-private enum class LEVEL {
+enum class LEVEL {
     V, D, I, W, E
 }
 
@@ -45,9 +45,16 @@ fun Any.logE(tag: String = TAG) =
         this.toString()
     )
 
-fun Any.log(tag: String = TAG) = run {
+fun Any.log(tag: String = TAG, level: LEVEL = LEVEL.I) = run {
     if (VBApplication.isLog()) {
-        Log.i(tag, this.toString())
+        when (level) {
+            LEVEL.V -> Log.v(tag, this.toString())
+            LEVEL.D -> Log.d(tag, this.toString())
+            LEVEL.I -> Log.i(tag, this.toString())
+            LEVEL.W -> Log.w(tag, this.toString())
+            LEVEL.E -> Log.e(tag, this.toString())
+        }
+
     }
 }
 

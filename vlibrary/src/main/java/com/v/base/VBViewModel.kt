@@ -34,7 +34,7 @@ abstract class VBViewModel : ViewModel() {
      */
     fun <T> vbRequest(
         block: suspend () -> VBResponse<T>,
-        success: (T) -> Unit,
+        success: (T?) -> Unit,
         error: ((VBAppException) -> Unit)? = null,
         code: (Int) -> Unit = {},
         dialog: Boolean = false,
@@ -133,7 +133,7 @@ abstract class VBViewModel : ViewModel() {
      */
     suspend fun <T> executeResponse(
         response: VBResponse<T>,
-        success: suspend CoroutineScope.(T) -> Unit,
+        success: suspend CoroutineScope.(T?) -> Unit,
     ) {
         coroutineScope {
             if (!response.isSuccess()) {

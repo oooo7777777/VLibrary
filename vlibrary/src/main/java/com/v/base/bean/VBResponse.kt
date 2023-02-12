@@ -10,7 +10,7 @@ abstract class VBResponse<T> {
 
     abstract fun isSuccess(): Boolean
 
-    abstract fun getResponseData(): T
+    abstract fun getResponseData(): T?
 
     abstract fun getResponseCode(): Int
 

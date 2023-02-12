@@ -36,6 +36,8 @@ import kotlinx.coroutines.flow.*
 import java.util.*
 import kotlin.math.roundToInt
 import android.widget.LinearLayout
+import androidx.lifecycle.viewModelScope
+import com.v.base.VBViewModel
 
 
 private val viewModelMap: MutableMap<Class<*>, ViewModel?> =
@@ -503,6 +505,31 @@ fun View.vbOnClickListener(
         this.setOnClickListener(ThrottleOnClickListener {
             onClick.invoke(this)
         })
+    }
+}
+
+
+/**
+ *  调用携程
+ * @param block 操作耗时操作任务
+ * @param success 成功回调
+ * @param error 失败回调 可不给
+ */
+fun <T> VBViewModel.launch(
+    block: () -> T,
+    success: (T) -> Unit,
+    error: (Throwable) -> Unit = {}
+) {
+    viewModelScope.launch {
+        kotlin.runCatching {
+            withContext(Dispatchers.IO) {
+                block()
+            }
+        }.onSuccess {
+            success(it)
+        }.onFailure {
+            error(it)
+        }
     }
 }
 
