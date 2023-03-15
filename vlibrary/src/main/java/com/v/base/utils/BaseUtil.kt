@@ -1,19 +1,17 @@
 package com.v.base.utils
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Application
 import android.content.*
 import android.content.pm.PackageManager
 import android.graphics.Color
-import android.net.ConnectivityManager
-import android.net.NetworkInfo
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.ColorRes
@@ -28,16 +26,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.v.base.R
+import androidx.lifecycle.viewModelScope
 import com.v.base.VBApplication
 import com.v.base.VBConfig
+import com.v.base.VBViewModel
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import java.util.*
 import kotlin.math.roundToInt
-import android.widget.LinearLayout
-import androidx.lifecycle.viewModelScope
-import com.v.base.VBViewModel
 
 
 private val viewModelMap: MutableMap<Class<*>, ViewModel?> =
@@ -139,19 +135,28 @@ fun vbGetRandomNumber(min: Int, max: Int): Int {
 /**
  * toast
  */
+var toast: Toast? = null
 fun Any.toast(
     isLong: Boolean = false,
     gravity: Int = Gravity.CENTER,
     xOffset: Int = 0,
     yOffset: Int = 0,
+    showCancel: Boolean = true
 ) {
-    val toast = Toast.makeText(
+    if (this.toString().isNullOrEmpty()) {
+        return
+    }
+    if (showCancel && toast != null) {
+        toast!!.cancel()
+        toast = null
+    }
+    toast = Toast.makeText(
         VBApplication.getApplication(),
         this.toString(),
         if (isLong) Toast.LENGTH_LONG else Toast.LENGTH_SHORT
     )
-    toast.setGravity(gravity, xOffset, yOffset)
-    toast.show()
+    toast!!.setGravity(gravity, xOffset, yOffset)
+    toast!!.show()
 }
 
 /**
@@ -534,42 +539,5 @@ fun <T> VBViewModel.launch(
 }
 
 
-/**
- * 点击防抖动
- */
-class ThrottleOnClickListener(
-    private var onClick: (() -> Unit),
-) : View.OnClickListener {
-
-    override fun onClick(v: View?) {
-        if (ClickEventUtils.isFastClick) {
-            onClick.invoke()
-        }
-    }
 
 
-}
-
-object ClickEventUtils {
-    // 上次点击时间
-    private var mLastTime = 0L
-
-    private val LIMIT_TIME = VBConfig.options.clickTime
-
-    //设置标记号
-    val isFastClick: Boolean
-        get() {
-            //设置标记号
-            var flag = false
-            val currentTime = Calendar.getInstance().timeInMillis
-            if (currentTime - mLastTime >= LIMIT_TIME) {
-                mLastTime = currentTime
-                // 调用点击方法
-                flag = true
-            }
-            return flag
-
-        }
-
-
-}

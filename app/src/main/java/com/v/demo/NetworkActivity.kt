@@ -3,7 +3,6 @@ package com.v.demo
 import android.view.View
 import androidx.lifecycle.Observer
 import com.v.base.VBActivity
-import com.v.base.utils.log
 import com.v.demo.databinding.ActivityNetworkBinding
 import com.v.demo.model.NetworkViewModel
 

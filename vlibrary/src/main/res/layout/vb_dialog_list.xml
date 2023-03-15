@@ -12,6 +12,7 @@
 
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/tvTitle"
             android:layout_width="match_parent"
             android:layout_height="60dp"
@@ -25,6 +26,7 @@
             tools:text="title" />
 
         <View
+            android:visibility="gone"
             android:id="@+id/line"
             style="@style/vb_line_horizontal_bold"
             app:layout_constraintBottom_toTopOf="@+id/recyclerView"

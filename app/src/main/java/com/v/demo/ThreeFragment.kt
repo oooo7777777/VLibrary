@@ -10,10 +10,11 @@ import com.v.base.VBFragment
 import com.v.base.dialog.VBHintDialog
 import com.v.base.dialog.VBListDialog
 import com.v.base.utils.goActivity
-import com.v.base.utils.log
 import com.v.base.utils.toast
 import com.v.base.utils.vbCountDownCoroutines
+import com.v.demo.bean.TestListBean
 import com.v.demo.databinding.FragmentThreeBinding
+import com.v.log.util.log
 import kotlinx.coroutines.Job
 import java.util.*
 
@@ -24,6 +25,9 @@ import java.util.*
  * time    : 2021/1/11 15:44
  */
 class ThreeFragment : VBFragment<FragmentThreeBinding, VBBlankViewModel>(), View.OnClickListener {
+    override fun viewModelSyn(): Boolean {
+        return true
+    }
 
 
     private var job: Job? = null
@@ -77,11 +81,19 @@ class ThreeFragment : VBFragment<FragmentThreeBinding, VBBlankViewModel>(), View
                     .show()
             }
             mDataBinding.bt5.id -> {
+
+                val list = ArrayList<TestListBean>()
+                repeat(3)
+                {
+                    list.add(TestListBean("content$it", it))
+                }
+
                 VBListDialog(mContext)
                     .setTitle("List")
-                    .setItems("content0", "content1", "content3")
-                    .setClickListener { dialog, result, position ->
-                        result.toast()
+                    .setList(list)
+                    .setClickListener { dialog, item, position ->
+                        val bean = item as TestListBean
+                        "${bean.content}  ${bean.code}".toast()
                         dialog.dismiss()
                     }.show()
             }

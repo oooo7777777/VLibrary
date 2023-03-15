@@ -7,7 +7,6 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.listener.DefaultRefreshFooterCreator
 import com.scwang.smart.refresh.layout.listener.DefaultRefreshHeaderCreator
 import com.v.base.net.VBNetOptions
-import com.v.base.utils.log
 
 
 /**
@@ -54,6 +53,9 @@ class VBConfigOptions(builder: Builder) {
     //dialog变暗系数
     var dialogDimAmount: Float
 
+    //图片加载错误图片
+    var errorResId: Int
+
     init {
         this.statusBarColor = builder.statusBarColor
         this.toolbarColor = builder.toolbarColor
@@ -67,6 +69,7 @@ class VBConfigOptions(builder: Builder) {
         this.clickAnimator = builder.clickAnimator
         this.clickTime = builder.clickTime
         this.dialogDimAmount = builder.dialogDimAmount
+        this.errorResId = builder.errorResId
     }
 
     class Builder {
@@ -79,6 +82,7 @@ class VBConfigOptions(builder: Builder) {
         internal var clickAnimator = true
         internal var clickTime = 300L
         internal var dialogDimAmount = 0.5f
+        internal var errorResId = R.mipmap.vb_iv_empty
 
         internal var netOptions = VBNetOptions.Builder().build()
 
@@ -179,6 +183,14 @@ class VBConfigOptions(builder: Builder) {
          */
         fun setDialogDimAmount(dimAmount: Float): Builder {
             this.dialogDimAmount = dialogDimAmount
+            return this
+        }
+
+        /**
+         * 设备固件加载错误站位图
+         */
+        fun setErrorResId(errorResId:Int): Builder {
+            this.errorResId = errorResId
             return this
         }
 

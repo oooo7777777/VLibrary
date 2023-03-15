@@ -15,28 +15,22 @@ import java.util.concurrent.TimeUnit
 class VBNetOptions(builder: Builder) {
 
     var logEnable: Boolean
-    var logTag: String
     var baseUrl: String?
-    var isNetToast: Boolean
 
     var okHttpClient: OkHttpClient
     var retrofitBuilder: Retrofit.Builder
 
 
     init {
-        this.logEnable = builder.logEnable
-        this.logTag = builder.logTag
-        this.baseUrl = builder.baseUrl
-        this.isNetToast = builder.isNetToast
+        this.logEnable = builder.logEnable//是否开启日志打印 默认开启
+        this.baseUrl = builder.baseUrl//baseUrl
         this.okHttpClient = builder.okHttpClient
         this.retrofitBuilder = builder.retrofitBuilder
     }
 
     class Builder {
         internal var logEnable: Boolean = true
-        internal var logTag: String = "PRETTY_LOGGER"
         internal var baseUrl: String? = null
-        internal var isNetToast: Boolean = true
 
 
         internal var okHttpClient: OkHttpClient = OkHttpClient.Builder().apply {
@@ -44,7 +38,7 @@ class VBNetOptions(builder: Builder) {
             readTimeout(5, TimeUnit.SECONDS)
             writeTimeout(5, TimeUnit.SECONDS)
             if (logEnable) {
-                addInterceptor(VBLogInterceptor(logTag))// 日志拦截器
+                addInterceptor(VBLogInterceptor())// 日志拦截器
             }
         }.build()
 
@@ -59,22 +53,10 @@ class VBNetOptions(builder: Builder) {
             return this
         }
 
-        fun setLogTag(logTag: String): Builder {
-            this.logTag = logTag
-            return this
-        }
-
-
         fun setBaseUrl(baseUrl: String): Builder {
             this.baseUrl = baseUrl
             return this
         }
-
-        fun setNetToast(isNetToast: Boolean): Builder {
-            this.isNetToast = isNetToast
-            return this
-        }
-
 
         fun setOkHttpClient(okHttpClient: OkHttpClient): Builder {
             this.okHttpClient = okHttpClient
@@ -92,7 +74,4 @@ class VBNetOptions(builder: Builder) {
         }
     }
 
-    override fun toString(): String {
-        return "ShineOptions(logEnable=$logEnable, logTag='$logTag', baseUrl=$baseUrl)"
-    }
 }

@@ -5,8 +5,6 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
-import androidx.annotation.DrawableRes
-import androidx.annotation.NonNull
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.load.DecodeFormat
@@ -18,9 +16,8 @@ import com.bumptech.glide.request.BaseRequestOptions
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
-import com.v.base.R
+import com.v.base.VBConfig
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation
-import kotlinx.coroutines.*
 
 
 /**
@@ -32,7 +29,7 @@ import kotlinx.coroutines.*
 fun ImageView.vbLoad(
     any: Any,
     roundingRadius: Int = 0,
-    errorResId: Int = R.mipmap.vb_iv_empty,
+    errorResId: Int = VBConfig.options.errorResId,
 ) = loadDispose(this, any, roundingRadius, errorResId, null)
 
 
@@ -51,7 +48,7 @@ fun ImageView.vbLoadRounded(
     topRight: Int = 0,
     bottomLeft: Int = 0,
     bottomRight: Int = 0,
-    errorResId: Int = R.mipmap.vb_iv_empty,
+    errorResId: Int = VBConfig.options.errorResId,
 ) {
 
     //顶部左边圆角
@@ -100,7 +97,7 @@ fun ImageView.vbLoadRounded(
  * @param any 图片资源Glide所支持的
  * @param errorResId 加载错误占位图
  */
-fun ImageView.vbLoadCircle(any: Any, errorResId: Int = R.mipmap.vb_iv_empty) =
+fun ImageView.vbLoadCircle(any: Any, errorResId: Int = VBConfig.options.errorResId) =
     loadDispose(this, any, -1, errorResId, null)
 
 
@@ -213,7 +210,7 @@ private fun loadDispose(
 
 
 /**
- * 对占位图的处理
+ * 对加载错误的占位图的处理成圆角
  */
 private fun loadError(
     context: Context,

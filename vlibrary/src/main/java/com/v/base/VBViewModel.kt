@@ -4,10 +4,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alibaba.fastjson.TypeReference
+import com.kunminx.architecture.ui.callback.UnPeekLiveData
 import com.v.base.bean.VBResponse
 import com.v.base.net.VBAppException
 import com.v.base.net.VBExceptionHandle
-import com.v.base.utils.EventLiveData
 import com.v.base.utils.vbToBean
 import kotlinx.coroutines.*
 import java.lang.reflect.Type
@@ -18,9 +18,9 @@ abstract class VBViewModel : ViewModel() {
     val loadingChange: UiLoadingChange by lazy { UiLoadingChange() }
 
     inner class UiLoadingChange {
-        val showDialog by lazy { EventLiveData<String>() }
-        val dismissDialog by lazy { EventLiveData<Boolean>() }
-        val showToast by lazy { EventLiveData<String>() }
+        val showDialog by lazy { UnPeekLiveData<String>() }
+        val dismissDialog by lazy { UnPeekLiveData<Boolean>() }
+        val showToast by lazy { UnPeekLiveData<String>() }
     }
 
     /**

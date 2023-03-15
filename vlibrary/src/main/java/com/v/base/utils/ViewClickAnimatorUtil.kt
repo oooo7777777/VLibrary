@@ -8,6 +8,8 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.animation.ScaleAnimation
 import androidx.lifecycle.LifecycleObserver
+import com.v.base.VBConfig
+import java.util.*
 import kotlin.math.roundToInt
 
 /**
@@ -86,13 +88,9 @@ class ViewClickAnimatorUtil(
                     dispose()
                 }
                 this.view.startAnimation(animation)
-
             }
-
-
         } catch (e: Exception) {
             e.printStackTrace()
-            e.toString().logE()
         }
     }
 
@@ -102,6 +100,41 @@ class ViewClickAnimatorUtil(
             onClick(view)
         }
     }
+}
 
+object ClickEventUtils {
+    // 上次点击时间
+    private var mLastTime = 0L
+
+    private val LIMIT_TIME = VBConfig.options.clickTime
+
+    //设置标记号
+    val isFastClick: Boolean
+        get() {
+            //设置标记号
+            var flag = false
+            val currentTime = Calendar.getInstance().timeInMillis
+            if (currentTime - mLastTime >= LIMIT_TIME) {
+                mLastTime = currentTime
+                // 调用点击方法
+                flag = true
+            }
+            return flag
+
+        }
+}
+
+/**
+ * 点击防抖动
+ */
+class ThrottleOnClickListener(
+    private var onClick: (() -> Unit),
+) : View.OnClickListener {
+
+    override fun onClick(v: View?) {
+        if (ClickEventUtils.isFastClick) {
+            onClick.invoke()
+        }
+    }
 
 }

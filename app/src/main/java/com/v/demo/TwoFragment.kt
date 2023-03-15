@@ -16,6 +16,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 
 import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.request.target.Target
+import com.v.log.util.log
 
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 

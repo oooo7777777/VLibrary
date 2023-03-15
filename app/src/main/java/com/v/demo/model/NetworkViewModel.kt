@@ -23,7 +23,7 @@ class NetworkViewModel : VBViewModel() {
             apiService.getBanner()
         }, success = {
             //成功数据
-            string.value = it.vbToJson()
+            string.value = it?.vbToJson()
         }, error = {
             //失败数据
             string.value = it.errorMsg

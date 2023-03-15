@@ -15,6 +15,7 @@ import com.noober.background.BackgroundLibrary
 import com.v.base.databinding.VbRootActivityBinding
 import com.v.base.dialog.VBLoadingDialog
 import com.v.base.utils.*
+import com.v.log.util.log
 import java.lang.reflect.ParameterizedType
 
 
@@ -188,21 +189,22 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
                 loadDialog.show()
                 loadDialog.setMsg(it)
             }
+            //activity与fragment共用一个ViewModel 是导致所有依附于activity的fragment都能收到 会弹出多个弹窗
+            //所以这里做收到了以后就做一次清除
+            mViewModel.loadingChange.showDialog.clean()
         })
         //关闭弹窗
         mViewModel.loadingChange.dismissDialog.observe(this, Observer {
             if (loadDialog.isShowing) {
                 loadDialog.dismiss()
             }
-
         })
-
         //toast
         mViewModel.loadingChange.showToast.observe(this, Observer {
-            if (!it.isNullOrEmpty()) {
-                it.toast()
-            }
-
+            it.toast()
+            //activity与fragment共用一个ViewModel 是导致所有依附于activity的fragment都能收到 会弹出多个弹窗
+            //所以这里做收到了以后就做一次清除
+            mViewModel.loadingChange.showToast.clean()
         })
     }
 

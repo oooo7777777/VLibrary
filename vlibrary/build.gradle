@@ -37,7 +37,7 @@ afterEvaluate {
                 from components.release
                 groupId = 'com.v.base'  // 包名
                 artifactId = 'vlibrary' // 库名
-                version = '3.8.1'       //版本号
+                version = '3.8.2'       //版本号
             }
         }
     }
@@ -64,7 +64,6 @@ dependencies {
     api "com.squareup.retrofit2:retrofit:2.9.0"
     api "com.alibaba:fastjson:1.2.73"
     api "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2"
-    api "com.orhanobut:logger:2.2.0"
     api "com.scwang.smart:refresh-layout-kernel:2.0.3"
     api "com.scwang.smart:refresh-header-classics:2.0.3"
     api "com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.7"
@@ -78,5 +77,12 @@ dependencies {
 
     // 语种切换框架：https://github.com/getActivity/MultiLanguages
     api 'com.github.getActivity:MultiLanguages:8.0'
+
+    //livedata防止数据倒灌
+    api 'com.kunminx.arch:unpeek-livedata:7.8.0'
+
+    //日志打印
+    api 'com.github.oooo7777777:Vlog:1.0.5'
+
 }
 

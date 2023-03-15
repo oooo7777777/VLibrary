@@ -3,8 +3,8 @@ package com.v.base
 import android.app.Application
 import android.content.Context
 import com.hjq.language.MultiLanguages
-import com.orhanobut.logger.AndroidLogAdapter
-import com.orhanobut.logger.Logger
+import com.v.log.LogConfig
+import com.v.log.VLog
 
 
 abstract class VBApplication : Application() {
@@ -33,9 +33,8 @@ abstract class VBApplication : Application() {
         MultiLanguages.init(this)
 
         isLog = isDebug()
-        if (isLog) {
-            Logger.addLogAdapter(AndroidLogAdapter())
-        }
+        VLog.init(LogConfig(this, isLog))
+
         initData()
     }
 

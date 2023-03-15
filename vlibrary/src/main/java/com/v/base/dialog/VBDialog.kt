@@ -9,7 +9,7 @@ import androidx.databinding.ViewDataBinding
 import com.v.base.R
 import com.v.base.VBConfig
 import com.v.base.annotaion.VBDialogOrientation
-import com.v.base.utils.log
+import com.v.log.util.log
 import com.v.base.utils.vbGetAllChildViews
 import java.lang.reflect.ParameterizedType
 

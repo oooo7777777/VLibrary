@@ -10,12 +10,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import com.bumptech.glide.load.MultiTransformation
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.v.base.R
-import com.v.base.VBConfig
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation.CornerType
 
 
 /**

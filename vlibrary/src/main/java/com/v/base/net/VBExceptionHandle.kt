@@ -1,7 +1,7 @@
 package com.v.base.net
 
 import com.v.base.annotaion.VBError
-import com.v.base.utils.logE
+import com.v.log.util.logE
 import org.apache.http.conn.ConnectTimeoutException
 import org.json.JSONException
 import retrofit2.HttpException
@@ -45,7 +45,7 @@ object VBExceptionHandle {
                 }
             }
         }
-        (ex.toString()).logE()
+        ex.logE()
         return ex
     }
 }

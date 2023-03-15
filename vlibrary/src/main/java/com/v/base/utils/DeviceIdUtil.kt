@@ -7,7 +7,6 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.provider.Settings
 import android.telephony.TelephonyManager
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import java.security.MessageDigest
 import java.util.*

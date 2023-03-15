@@ -7,7 +7,6 @@ import com.v.base.utils.vbGetFragment
 import com.v.demo.databinding.MainActivityBinding
 import com.v.demo.view.IndicatorZoom
 import net.lucode.hackware.magicindicator.ViewPagerHelper
-import java.util.*
 
 class MainActivity : VBActivity<MainActivityBinding, VBBlankViewModel>() {
 

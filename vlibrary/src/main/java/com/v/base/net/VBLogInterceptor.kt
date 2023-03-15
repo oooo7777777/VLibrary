@@ -2,8 +2,9 @@ package com.v.base.net
 
 import android.text.TextUtils
 import com.alibaba.fastjson.JSONObject
-import com.v.base.utils.logD
-import com.v.base.utils.logE
+import com.v.log.util.logD
+import com.v.log.util.logE
+import com.v.log.util.logJson
 import okhttp3.Headers
 import okhttp3.Interceptor
 import okhttp3.Protocol
@@ -22,7 +23,7 @@ import java.util.concurrent.TimeUnit
  * desc    : 网络请求日志打印
  * time    : 2021-03-16 09:52:45
  */
-open class VBLogInterceptor(var logTag: String = "PRETTY_LOGGER") : Interceptor {
+open class VBLogInterceptor : Interceptor {
 
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
@@ -155,7 +156,7 @@ open class VBLogInterceptor(var logTag: String = "PRETTY_LOGGER") : Interceptor 
                     sb.append("")
                     sb.append("Couldn't decode the response body; charset is likely malformed.")
                     sb.append("<-- END HTTP")
-                    sb.logE()
+                    sb.logE(save = false)
                     return response
                 }
             }
@@ -163,7 +164,7 @@ open class VBLogInterceptor(var logTag: String = "PRETTY_LOGGER") : Interceptor 
                 sb.append("\n")
                 sb.append("")
                 sb.append("<-- END HTTP (binary " + buffer.size() + "-byte body omitted)")
-                sb.logD(logTag)
+                sb.logD(save = false)
                 return response
             }
             if (contentLength != 0L) {
@@ -177,7 +178,11 @@ open class VBLogInterceptor(var logTag: String = "PRETTY_LOGGER") : Interceptor 
             sb.append("<-- END HTTP (" + buffer.size() + "-byte body)")
         }
 
-        (sb.toString().replace(", }", "}")).logD("[${request.url().encodedPath()}]")
+        (sb.toString().replace(", }", "}")).logD(
+            "V_LOG [${
+                request.url().encodedPath()
+            }]"
+        )
         return response
     }
 

@@ -6,7 +6,7 @@ import com.v.base.VBApplication
 import com.v.base.VBConfig
 import com.v.base.VBConfigOptions
 import com.v.base.net.VBNetOptions
-import com.v.base.utils.log
+import com.v.log.util.log
 import java.util.*
 
 class DemoApplication : VBApplication() {
