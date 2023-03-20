@@ -6,28 +6,24 @@ import com.v.base.VBApplication
 import com.v.base.VBConfig
 import com.v.base.VBConfigOptions
 import com.v.base.net.VBNetOptions
+import com.v.log.LogConfig
 import com.v.log.util.log
 import java.util.*
 
 class DemoApplication : VBApplication() {
 
-    /**
-     * 开启日志打印(日志TAG为 PRETTY_LOGGER)
-     */
-    override fun isDebug(): Boolean {
-        return true
+    override fun logConfig(): LogConfig {
+        return LogConfig(this, true)
     }
 
     override fun initData() {
-
-        val netOptions = VBNetOptions.Builder()
-            .setBaseUrl("https://www.wanandroid.com/")
-            .build()
-
         val options = VBConfigOptions.Builder()
-            .setNetOptions(netOptions)
+            .setNetOptions(
+                VBNetOptions.Builder()
+                    .setBaseUrl("https://www.wanandroid.com/")
+                    .build()
+            )
             .build()
-
         VBConfig.init(options)
 
 

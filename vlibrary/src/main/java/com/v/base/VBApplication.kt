@@ -11,19 +11,12 @@ abstract class VBApplication : Application() {
 
     companion object {
         private lateinit var context: VBApplication
-        private var isLog = true
-
         fun getApplication(): Application = context
-
-        fun isLog(): Boolean {
-            return isLog
-        }
     }
-
     /**
-     * 是否开启debug模式 关联输出日志
+     * 日志配置
      */
-    protected open fun isDebug(): Boolean = true
+    protected open fun logConfig(): LogConfig=LogConfig(this, true)
 
     override fun onCreate() {
         super.onCreate()
@@ -31,9 +24,8 @@ abstract class VBApplication : Application() {
 
         // 初始化语种切换框架
         MultiLanguages.init(this)
-
-        isLog = isDebug()
-        VLog.init(LogConfig(this, isLog))
+        //初始化日志
+        VLog.init(logConfig())
 
         initData()
     }
