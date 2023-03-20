@@ -11,6 +11,7 @@ import com.v.base.VBConfig
 import com.v.base.annotaion.VBDialogOrientation
 import com.v.log.util.log
 import com.v.base.utils.vbGetAllChildViews
+import com.v.log.util.logD
 import java.lang.reflect.ParameterizedType
 
 
@@ -46,7 +47,7 @@ abstract class VBDialog<VB : ViewDataBinding>(private val mContext: Context) :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        javaClass.name.log()
+        javaClass.name.logD()
         setStyle()
         setContentView(mDataBinding.root)
         setCanceled()

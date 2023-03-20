@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.v.base.dialog.VBLoadingDialog
 import com.v.base.utils.toast
 import com.v.log.util.log
+import com.v.log.util.logD
 import java.lang.reflect.ParameterizedType
 
 
@@ -95,7 +96,7 @@ abstract class VBFragment<VB : ViewDataBinding, VM : VBViewModel> : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        javaClass.log()
+        javaClass.logD()
         if (isFirstShow) {
             isFirstShow = false
             registerUiChange()

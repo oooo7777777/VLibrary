@@ -16,24 +16,20 @@ import com.v.base.databinding.VbRootActivityBinding
 import com.v.base.dialog.VBLoadingDialog
 import com.v.base.utils.*
 import com.v.log.util.log
+import com.v.log.util.logD
 import java.lang.reflect.ParameterizedType
 
 
 abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatActivity() {
 
-
     lateinit var mContext: AppCompatActivity
-
 
     val mTitleBar by lazy {
         mRootDataBinding.vbTitleBar
     }
-
     val mRootDataBinding by lazy {
         mContext.vbGetDataBinding<VbRootActivityBinding>(R.layout.vb_root_activity)
     }
-
-
     /**
      * 通过反射拿到ViewModel并且注册
      */
@@ -46,7 +42,6 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
         } else {
             ViewModelProvider(this).get(aClass)
         }
-
     }
 
     /**
@@ -92,15 +87,13 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
         initToolBar()
         initData()
         createObserver()
-        javaClass.name.log()
+        javaClass.name.logD()
     }
-
 
     private fun initToolBar() {
         statusBarColor()
         toolBarTitle()
     }
-
 
     /**
      * 设置状态栏颜色
@@ -122,7 +115,6 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
             statusBarDarkFont(isDarkFont)
             navigationBarDarkIcon(isDarkFont)
         }
-
 
     }
 
@@ -162,7 +154,6 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
      */
     protected open fun useTranslucent(): Boolean = false
 
-
     /**
      * ViewModel是否绑定Application生命周期
      */
@@ -177,7 +168,6 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
      * liveData 数据监听
      */
     protected abstract fun createObserver()
-
 
     /**
      * 注册UI 事件
