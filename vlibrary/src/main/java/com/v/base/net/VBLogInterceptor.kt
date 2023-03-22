@@ -2,9 +2,9 @@ package com.v.base.net
 
 import android.text.TextUtils
 import com.alibaba.fastjson.JSONObject
+import com.v.log.util.log
 import com.v.log.util.logD
 import com.v.log.util.logE
-import com.v.log.util.logJson
 import okhttp3.Headers
 import okhttp3.Interceptor
 import okhttp3.Protocol
@@ -178,11 +178,7 @@ open class VBLogInterceptor : Interceptor {
             sb.append("<-- END HTTP (" + buffer.size() + "-byte body)")
         }
 
-        (sb.toString().replace(", }", "}")).logD(
-            "V_LOG [${
-                request.url().encodedPath()
-            }]"
-        )
+        (sb.toString().replace(", }", "}")).logD(request.url().encodedPath(),save = false)
         return response
     }
 
