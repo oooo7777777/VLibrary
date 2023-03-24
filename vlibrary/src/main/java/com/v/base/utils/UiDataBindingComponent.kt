@@ -90,7 +90,7 @@ fun TextView.vbDrawable(
     ) {
 
 
-    this.context.vbLoadListener(left, (leftW ?: w).vbDp2px(), (leftH ?: h).vbDp2px(),
+    this.context.vbLoadListener(left, (leftW ?: w).vbDp2px2Int(), (leftH ?: h).vbDp2px2Int(),
         success = {
             it.setBounds(0, 0, it.intrinsicWidth, it.intrinsicHeight)
 
@@ -117,7 +117,7 @@ fun TextView.vbDrawable(
 
 
 
-    this.context.vbLoadListener(right, (rightW ?: w).vbDp2px(), (rightH ?: h).vbDp2px(),
+    this.context.vbLoadListener(right, (rightW ?: w).vbDp2px2Int(), (rightH ?: h).vbDp2px2Int(),
         success = {
             it.setBounds(0, 0, it.intrinsicWidth, it.intrinsicHeight)
 
@@ -146,7 +146,7 @@ fun TextView.vbDrawable(
 
 
 
-    this.context.vbLoadListener(top, (topW ?: w).vbDp2px(), (topH ?: h).vbDp2px(),
+    this.context.vbLoadListener(top, (topW ?: w).vbDp2px2Int(), (topH ?: h).vbDp2px2Int(),
         success = {
             it.setBounds(0, 0, it.intrinsicWidth, it.intrinsicHeight)
 
@@ -178,7 +178,7 @@ fun TextView.vbDrawable(
         })
 
 
-    this.context.vbLoadListener(bottom, (bottomW ?: w).vbDp2px(), (bottomH ?: h).vbDp2px(),
+    this.context.vbLoadListener(bottom, (bottomW ?: w).vbDp2px2Int(), (bottomH ?: h).vbDp2px2Int(),
         success = {
             it.setBounds(0, 0, it.intrinsicWidth, it.intrinsicHeight)
 

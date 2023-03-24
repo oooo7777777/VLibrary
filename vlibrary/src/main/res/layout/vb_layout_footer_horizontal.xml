@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:parentTag="android.widget.RelativeLayout">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp">
+
+        <ImageView
+            android:id="@+id/ivIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:rotation="-90"
+            android:src="@drawable/vb_shape_footer_detail" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_marginTop="5dp"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/vb_string_footer_detail_horizontal_pulling"
+            android:textColor="#848A9B"
+            android:textSize="11sp" />
+    </LinearLayout>
+
+</merge>

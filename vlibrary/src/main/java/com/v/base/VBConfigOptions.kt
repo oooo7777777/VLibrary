@@ -3,9 +3,11 @@ package com.v.base
 import android.graphics.Color
 import com.scwang.smart.refresh.footer.ClassicsFooter
 import com.scwang.smart.refresh.header.ClassicsHeader
+import com.scwang.smart.refresh.horizontal.SmartRefreshHorizontal
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.listener.DefaultRefreshFooterCreator
 import com.scwang.smart.refresh.layout.listener.DefaultRefreshHeaderCreator
+import com.scwang.smart.refresh.layout.wrapper.RefreshFooterWrapper
 import com.v.base.net.VBNetOptions
 
 
@@ -38,6 +40,9 @@ class VBConfigOptions(builder: Builder) {
     //全局设置SmartRefreshLayout Footer
     var smartRefreshFooter: DefaultRefreshFooterCreator
 
+    //全局设置SmartRefreshLayoutHorizontal Footer
+    var smartRefreshFooterHorizontal: DefaultRefreshFooterCreator
+
     //smartRefresh 是否启用越界拖动
     var refreshScrollDrag: Boolean
 
@@ -64,6 +69,7 @@ class VBConfigOptions(builder: Builder) {
         this.recyclerViewEmptyLayout = builder.recyclerViewEmptyLayout
         this.smartRefreshHeader = builder.smartRefreshHeader
         this.smartRefreshFooter = builder.smartRefreshFooter
+        this.smartRefreshFooterHorizontal = builder.smartRefreshFooterHorizontal
         this.refreshScrollDrag = builder.refreshScrollDrag
         this.netOptions = builder.netOptions
         this.clickAnimator = builder.clickAnimator
@@ -92,6 +98,10 @@ class VBConfigOptions(builder: Builder) {
 
         internal var smartRefreshFooter = DefaultRefreshFooterCreator { context, layout ->
             ClassicsFooter(context)
+        }
+
+        internal var smartRefreshFooterHorizontal = DefaultRefreshFooterCreator { context, layout ->
+            DetailHorizontalFooter(context)
         }
 
         internal var refreshScrollDrag = true
@@ -155,6 +165,14 @@ class VBConfigOptions(builder: Builder) {
         }
 
         /**
+         * 全局设置SmartRefreshLayoutHorizontal Footer
+         */
+        fun setSmartRefreshFooterHorizontal(footer: DefaultRefreshFooterCreator): Builder {
+            this.smartRefreshFooterHorizontal = footer
+            return this
+        }
+
+        /**
          * smartRefresh 是否启用越界拖动
          */
         fun setRefreshScrollDrag(isScrollDrag: Boolean): Builder {
@@ -189,7 +207,7 @@ class VBConfigOptions(builder: Builder) {
         /**
          * 设备固件加载错误站位图
          */
-        fun setErrorResId(errorResId:Int): Builder {
+        fun setErrorResId(errorResId: Int): Builder {
             this.errorResId = errorResId
             return this
         }
@@ -208,6 +226,10 @@ class VBConfigOptions(builder: Builder) {
             SmartRefreshLayout.setDefaultRefreshHeaderCreator(this.smartRefreshHeader)
             //设置全局的Footer构建器
             SmartRefreshLayout.setDefaultRefreshFooterCreator(this.smartRefreshFooter)
+
+            SmartRefreshHorizontal.setDefaultRefreshHeaderCreator(this.smartRefreshHeader)
+            //设置全局的横向Footer构建器
+            SmartRefreshHorizontal.setDefaultRefreshFooterCreator(this.smartRefreshFooterHorizontal)
             return VBConfigOptions(this)
         }
     }

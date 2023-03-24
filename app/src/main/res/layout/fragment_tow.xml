@@ -21,14 +21,6 @@
         android:orientation="vertical"
         android:paddingTop="40dp">
 
-        <Button
-            android:id="@+id/bt2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="日志"
-            android:textAllCaps="false"
-            app:vb_click="@{v}" />
-
 
         <Button
             android:id="@+id/bt3"

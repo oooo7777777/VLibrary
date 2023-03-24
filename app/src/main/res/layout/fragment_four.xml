@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <data>
+
+        <import type="com.v.demo.R" />
+
+        <variable
+            name="v"
+            type="com.v.demo.FourFragment" />
+
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/black"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <com.v.demo.view.DashBoard
+            android:id="@+id/dashBoard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/bt0"
+            vb_click="@{v}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="设置最大值0-160" />
+
+        <Button
+            android:id="@+id/bt1"
+            vb_click="@{v}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="设置最大值30-80" />
+
+        <Button
+            android:id="@+id/bt2"
+            vb_click="@{v}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="设置区间55-80" />
+
+        <Button
+            android:id="@+id/bt3"
+            vb_click="@{v}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="设置最大值10-150" />
+
+
+        <Button
+            android:id="@+id/bt4"
+            vb_click="@{v}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="设置区间40-60" />
+
+        <Button
+            android:id="@+id/bt5"
+            vb_click="@{v}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="进度0" />
+
+        <Button
+            android:id="@+id/bt6"
+            vb_click="@{v}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="进度10" />
+
+        <Button
+            android:id="@+id/bt7"
+            vb_click="@{v}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="进度20" />
+
+        <Button
+            android:id="@+id/bt8"
+            vb_click="@{v}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="进度35" />
+
+        <Button
+            android:id="@+id/bt9"
+            vb_click="@{v}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="进度80" />
+
+        <Button
+            android:id="@+id/bt10"
+            vb_click="@{v}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="进度200" />
+
+
+        <Button
+            android:id="@+id/bt12"
+            vb_click="@{v}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="随机进度" />
+    </LinearLayout>
+</layout>

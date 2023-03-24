@@ -17,4 +17,8 @@
     <string name="vb_string_save_locality_error">Picture save failed</string>
     <string name="vb_string_loading_failed">Loading failed, click retry</string>
 
+    <string name="vb_string_footer_detail_horizontal_pulling">滑动查看更多</string>
+    <string name="vb_string_footer_detail_horizontal_release">释放查看更多</string>
+
+
 </resources>

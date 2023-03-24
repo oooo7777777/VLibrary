@@ -54,7 +54,7 @@ fun ImageView.vbLoadRounded(
     //顶部左边圆角
     val tfTopLeft =
         RoundedCornersTransformation(
-            topLeft.vbDp2px(),
+            topLeft.vbDp2px2Int(),
             0,
             RoundedCornersTransformation.CornerType.TOP_LEFT
         )
@@ -62,7 +62,7 @@ fun ImageView.vbLoadRounded(
     //顶部右边圆角
     val tfTopRight =
         RoundedCornersTransformation(
-            topRight.vbDp2px(),
+            topRight.vbDp2px2Int(),
             0,
             RoundedCornersTransformation.CornerType.TOP_RIGHT
         )
@@ -70,7 +70,7 @@ fun ImageView.vbLoadRounded(
     //底部左边圆角
     val tfBottomLeft =
         RoundedCornersTransformation(
-            bottomLeft.vbDp2px(),
+            bottomLeft.vbDp2px2Int(),
             0,
             RoundedCornersTransformation.CornerType.BOTTOM_LEFT
         )
@@ -78,7 +78,7 @@ fun ImageView.vbLoadRounded(
     //底部右边圆角
     val tfBottomRight =
         RoundedCornersTransformation(
-            bottomRight.vbDp2px(),
+            bottomRight.vbDp2px2Int(),
             0,
             RoundedCornersTransformation.CornerType.BOTTOM_RIGHT
         )
@@ -172,7 +172,7 @@ private fun loadDispose(
             } else {
                 //圆角
                 if (roundingRadius > 0) {
-                    val radius = roundingRadius.vbDp2px()
+                    val radius = roundingRadius.vbDp2px2Int()
                     options.transform(
                         CenterCrop(),
                         RoundedCornersTransformation(

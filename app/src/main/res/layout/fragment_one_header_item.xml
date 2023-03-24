@@ -15,6 +15,7 @@
         android:orientation="vertical">
 
         <ImageView
+            vb_img_url="@{bean.imagePath}"
             android:id="@+id/ivIcon"
             android:layout_width="match_parent"
             android:scaleType="centerCrop"

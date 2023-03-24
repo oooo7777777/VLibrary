@@ -30,16 +30,11 @@ class TwoFragment : VBFragment<FragmentTowBinding, DemoViewModel>(), View.OnClic
     override fun initData() {
         mDataBinding.v = this
     }
-
     override fun createObserver() {
 
     }
-
     override fun onClick(v: View) {
         when (v.id) {
-            mDataBinding.bt2.id -> {
-                "打印日志".log()
-            }
             mDataBinding.bt3.id -> {
                 mDataBinding.bt3.vbDrawable(left = R.mipmap.ic_movie,
                     leftH = 30,
@@ -63,8 +58,6 @@ class TwoFragment : VBFragment<FragmentTowBinding, DemoViewModel>(), View.OnClic
             mDataBinding.bt7.id -> {
                 mDataBinding.ivIcon.vbLoadRounded(R.mipmap.ic_movie, 0, 0, 30, 40)
             }
-
-
         }
     }
 }

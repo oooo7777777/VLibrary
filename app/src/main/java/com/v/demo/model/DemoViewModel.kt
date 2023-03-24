@@ -17,7 +17,7 @@ class DemoViewModel : VBViewModel() {
 
     var homeBean = MutableLiveData<ApiResponse<HomeBean>>()
 
-    var bannerBean = MutableLiveData<ApiResponse<List<BannerBean>>>()
+    var bannerBean = MutableLiveData<ApiResponse<ArrayList<BannerBean>>>()
 
     //使用VLibrary库 网络请求
     fun getList(page: Int) {

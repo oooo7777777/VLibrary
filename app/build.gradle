@@ -51,5 +51,4 @@ android {
 dependencies {
     implementation project(':vlibrary')
     implementation "com.github.hackware1993:MagicIndicator:1.7.0"
-    implementation "com.github.zhpanvip:BannerViewPager:3.5.0"
 }

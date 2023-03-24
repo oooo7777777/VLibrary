@@ -66,38 +66,71 @@ fun <T : ViewModel> getApplicationViewModel(
 /**
  * dp2px
  */
-fun Int.vbDp2px(): Int = run {
+fun Number.vbDp2px2Int(context: Context?=null): Int = run {
     return TypedValue.applyDimension(
         TypedValue.COMPLEX_UNIT_DIP,
-        this.toFloat(), VBApplication.getApplication().resources.displayMetrics
+        this.toFloat(), (context ?: VBApplication.getApplication()).resources.displayMetrics
     ).roundToInt()
-
+}
+/**
+ * dp2px
+ */
+fun Number.vbDp2px2Float(context: Context?=null): Float = run {
+    return TypedValue.applyDimension(
+        TypedValue.COMPLEX_UNIT_DIP,
+        this.toFloat(), (context ?: VBApplication.getApplication()).resources.displayMetrics
+    )
+}
+/**
+ * sp2px
+ */
+fun Number.vbSp2px2Int(context: Context?=null): Int = run {
+    return TypedValue.applyDimension(
+        TypedValue.COMPLEX_UNIT_SP,
+        this.toFloat(), (context ?: VBApplication.getApplication()).resources.displayMetrics
+    ).roundToInt()
 }
 
 /**
  * sp2px
  */
-fun Int.vbSp2px(): Int = run {
+fun Number.vbSp2px2Float(context: Context?=null): Float = run {
     return TypedValue.applyDimension(
         TypedValue.COMPLEX_UNIT_SP,
-        this.toFloat(), VBApplication.getApplication().resources.displayMetrics
-    ).roundToInt()
+        this.toFloat(), (context ?: VBApplication.getApplication()).resources.displayMetrics
+    )
 }
 
 /**
  * px2dp
  */
-fun Int.vbPx2dp(): Int = run {
-    val scale: Float = VBApplication.getApplication().resources.displayMetrics.density
-    return (this / scale + 0.5f).roundToInt()
+fun Number.vbPx2dp2Int(context: Context?=null): Int = run {
+    val scale: Float = (context ?: VBApplication.getApplication()).resources.displayMetrics.density
+    return (this.toFloat() / scale + 0.5f).roundToInt()
+}
+
+/**
+ * px2dp
+ */
+fun Number.vbPx2dp2Float(context: Context?=null): Float = run {
+    val scale: Float = (context ?: VBApplication.getApplication()).resources.displayMetrics.density
+    return (this.toFloat() / scale + 0.5f)
 }
 
 /**
  * px2sp
  */
-fun Int.vbPx2sp(): Int = run {
-    val fontScale: Float = VBApplication.getApplication().resources.displayMetrics.scaledDensity
-    return (this / fontScale + 0.5).roundToInt()
+fun Number.vbPx2sp2Int(context: Context?=null): Int = run {
+    val fontScale: Float = (context ?: VBApplication.getApplication()).resources.displayMetrics.scaledDensity
+    return (this.toFloat() / fontScale + 0.5f).roundToInt()
+}
+
+/**
+ * px2sp
+ */
+fun Number.vbPx2sp2Float(context: Context?=null): Float = run {
+    val fontScale: Float = (context ?: VBApplication.getApplication()).resources.displayMetrics.scaledDensity
+    return (this.toFloat() / fontScale + 0.5f)
 }
 
 /**
@@ -476,7 +509,7 @@ fun View.vbSetViewMargins(
 
     if (this.layoutParams is ViewGroup.MarginLayoutParams) {
         val p = this.layoutParams as ViewGroup.MarginLayoutParams
-        p.setMargins(left.vbDp2px(), top.vbDp2px(), right.vbDp2px(), bottom.vbDp2px())
+        p.setMargins(left.vbDp2px2Int(), top.vbDp2px2Int(), right.vbDp2px2Int(), bottom.vbDp2px2Int())
         this.requestLayout()
     }
 }

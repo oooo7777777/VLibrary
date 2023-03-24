@@ -1,26 +1,19 @@
 package com.v.demo.adapter
 
-import android.widget.ImageView
-import com.v.base.utils.vbLoad
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
 import com.v.demo.R
 import com.v.demo.bean.BannerBean
-import com.zhpan.bannerview.BaseBannerAdapter
-import com.zhpan.bannerview.BaseViewHolder
-
+import com.v.demo.databinding.FragmentOneHeaderItemBinding
 
 class BannerAdapter :
-    BaseBannerAdapter<BannerBean>() {
+    BaseQuickAdapter<BannerBean, BaseDataBindingHolder<FragmentOneHeaderItemBinding>>(R.layout.fragment_one_header_item) {
 
-    override fun bindData(
-        holder: BaseViewHolder<BannerBean>,
-        data: BannerBean,
-        position: Int,
-        pageSize: Int
-    ) {
-        holder.findViewById<ImageView>(R.id.ivIcon).vbLoad(data.imagePath)
+    override fun convert(holder: BaseDataBindingHolder<FragmentOneHeaderItemBinding>, item: BannerBean) {
+        holder.dataBinding?.run {
+            bean = item
+            executePendingBindings()
+        }
     }
-
-    override fun getLayoutId(viewType: Int) = R.layout.fragment_one_header_item
-
 
 }
