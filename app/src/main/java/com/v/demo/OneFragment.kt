@@ -1,6 +1,8 @@
 package com.v.demo
 
+import android.view.Gravity
 import androidx.lifecycle.Observer
+import com.hjq.toast.Toaster
 import com.scwang.smart.refresh.footer.ClassicsFooter
 import com.scwang.smart.refresh.header.ClassicsHeader
 import com.scwang.smart.refresh.horizontal.SmartRefreshHorizontal
@@ -111,7 +113,6 @@ class OneFragment : VBFragment<FragmentOneBinding, DemoViewModel>() {
 
 
         mDataBinding.refreshLayout.autoRefresh()
-
 
 
 //        mDataBinding.refreshLayoutHorizontal .setRefreshHeader( ClassicsHeader(context));

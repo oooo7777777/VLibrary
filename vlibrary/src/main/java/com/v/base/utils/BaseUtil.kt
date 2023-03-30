@@ -1,5 +1,6 @@
 package com.v.base.utils
 
+import android.R
 import android.app.Activity
 import android.app.Application
 import android.content.*
@@ -13,7 +14,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.annotation.ColorRes
 import androidx.annotation.LayoutRes
 import androidx.annotation.Nullable
@@ -27,6 +27,9 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.hjq.toast.ToastParams
+import com.hjq.toast.Toaster
+import com.hjq.toast.style.CustomToastStyle
 import com.v.base.VBApplication
 import com.v.base.VBConfig
 import com.v.base.VBViewModel
@@ -66,25 +69,27 @@ fun <T : ViewModel> getApplicationViewModel(
 /**
  * dp2px
  */
-fun Number.vbDp2px2Int(context: Context?=null): Int = run {
+fun Number.vbDp2px2Int(context: Context? = null): Int = run {
     return TypedValue.applyDimension(
         TypedValue.COMPLEX_UNIT_DIP,
         this.toFloat(), (context ?: VBApplication.getApplication()).resources.displayMetrics
     ).roundToInt()
 }
+
 /**
  * dp2px
  */
-fun Number.vbDp2px2Float(context: Context?=null): Float = run {
+fun Number.vbDp2px2Float(context: Context? = null): Float = run {
     return TypedValue.applyDimension(
         TypedValue.COMPLEX_UNIT_DIP,
         this.toFloat(), (context ?: VBApplication.getApplication()).resources.displayMetrics
     )
 }
+
 /**
  * sp2px
  */
-fun Number.vbSp2px2Int(context: Context?=null): Int = run {
+fun Number.vbSp2px2Int(context: Context? = null): Int = run {
     return TypedValue.applyDimension(
         TypedValue.COMPLEX_UNIT_SP,
         this.toFloat(), (context ?: VBApplication.getApplication()).resources.displayMetrics
@@ -94,7 +99,7 @@ fun Number.vbSp2px2Int(context: Context?=null): Int = run {
 /**
  * sp2px
  */
-fun Number.vbSp2px2Float(context: Context?=null): Float = run {
+fun Number.vbSp2px2Float(context: Context? = null): Float = run {
     return TypedValue.applyDimension(
         TypedValue.COMPLEX_UNIT_SP,
         this.toFloat(), (context ?: VBApplication.getApplication()).resources.displayMetrics
@@ -104,7 +109,7 @@ fun Number.vbSp2px2Float(context: Context?=null): Float = run {
 /**
  * px2dp
  */
-fun Number.vbPx2dp2Int(context: Context?=null): Int = run {
+fun Number.vbPx2dp2Int(context: Context? = null): Int = run {
     val scale: Float = (context ?: VBApplication.getApplication()).resources.displayMetrics.density
     return (this.toFloat() / scale + 0.5f).roundToInt()
 }
@@ -112,7 +117,7 @@ fun Number.vbPx2dp2Int(context: Context?=null): Int = run {
 /**
  * px2dp
  */
-fun Number.vbPx2dp2Float(context: Context?=null): Float = run {
+fun Number.vbPx2dp2Float(context: Context? = null): Float = run {
     val scale: Float = (context ?: VBApplication.getApplication()).resources.displayMetrics.density
     return (this.toFloat() / scale + 0.5f)
 }
@@ -120,16 +125,18 @@ fun Number.vbPx2dp2Float(context: Context?=null): Float = run {
 /**
  * px2sp
  */
-fun Number.vbPx2sp2Int(context: Context?=null): Int = run {
-    val fontScale: Float = (context ?: VBApplication.getApplication()).resources.displayMetrics.scaledDensity
+fun Number.vbPx2sp2Int(context: Context? = null): Int = run {
+    val fontScale: Float =
+        (context ?: VBApplication.getApplication()).resources.displayMetrics.scaledDensity
     return (this.toFloat() / fontScale + 0.5f).roundToInt()
 }
 
 /**
  * px2sp
  */
-fun Number.vbPx2sp2Float(context: Context?=null): Float = run {
-    val fontScale: Float = (context ?: VBApplication.getApplication()).resources.displayMetrics.scaledDensity
+fun Number.vbPx2sp2Float(context: Context? = null): Float = run {
+    val fontScale: Float =
+        (context ?: VBApplication.getApplication()).resources.displayMetrics.scaledDensity
     return (this.toFloat() / fontScale + 0.5f)
 }
 
@@ -167,29 +174,36 @@ fun vbGetRandomNumber(min: Int, max: Int): Int {
 
 /**
  * toast
+ * @param isLong 是否显示长toast
+ * @param gravity 重心
+ * @param xOffset 偏移x
+ * @param yOffset 偏移y
+ * @param layoutId 自定义view当次生效
+ * @param isCancel 清除toast
  */
-var toast: Toast? = null
 fun Any.toast(
     isLong: Boolean = false,
     gravity: Int = Gravity.CENTER,
     xOffset: Int = 0,
     yOffset: Int = 0,
-    showCancel: Boolean = true
+    layoutId: Int = 0,
+    isCancel: Boolean = false
 ) {
     if (this.toString().isNullOrEmpty()) {
         return
     }
-    if (showCancel && toast != null) {
-        toast!!.cancel()
-        toast = null
+    if (isCancel) {
+        Toaster.cancel()
     }
-    toast = Toast.makeText(
-        VBApplication.getApplication(),
-        this.toString(),
-        if (isLong) Toast.LENGTH_LONG else Toast.LENGTH_SHORT
-    )
-    toast!!.setGravity(gravity, xOffset, yOffset)
-    toast!!.show()
+    val params = ToastParams()
+    params.text = this.toString()
+    params.style = CustomToastStyle(layoutId)
+    Toaster.setGravity(gravity, xOffset, yOffset)
+    if (isLong) {
+        Toaster.showLong(this)
+    } else {
+        Toaster.showShort(this)
+    }
 }
 
 /**
@@ -509,7 +523,12 @@ fun View.vbSetViewMargins(
 
     if (this.layoutParams is ViewGroup.MarginLayoutParams) {
         val p = this.layoutParams as ViewGroup.MarginLayoutParams
-        p.setMargins(left.vbDp2px2Int(), top.vbDp2px2Int(), right.vbDp2px2Int(), bottom.vbDp2px2Int())
+        p.setMargins(
+            left.vbDp2px2Int(),
+            top.vbDp2px2Int(),
+            right.vbDp2px2Int(),
+            bottom.vbDp2px2Int()
+        )
         this.requestLayout()
     }
 }

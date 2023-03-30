@@ -33,28 +33,33 @@ class FourFragment : VBFragment<FragmentFourBinding, DemoViewModel>(), View.OnCl
     override fun initData() {
         mDataBinding.v = this
         mDataBinding.dashBoard.setDefaultData(num)
+        mDataBinding.dashBoard.setInterval(40, 80)
     }
 
     override fun createObserver() {
-
+//        mDataBinding.dashBoard.setData(0, 160)
     }
 
     override fun onClick(v: View) {
         when (v.id) {
             mDataBinding.bt0.id -> {
                 mDataBinding.dashBoard.setData(0, 160)
+                mDataBinding.dashBoard.setInterval(140, 160)
             }
             mDataBinding.bt1.id -> {
-                mDataBinding.dashBoard.setData(30, 80)
+                mDataBinding.dashBoard.setData(100, 140)
+                mDataBinding.dashBoard.setInterval(110, 120)
             }
             mDataBinding.bt2.id -> {
-                mDataBinding.dashBoard.setInterval(55, 80)
+                mDataBinding.dashBoard.setData(0, 150)
+                mDataBinding.dashBoard.setInterval(0, 40)
             }
             mDataBinding.bt3.id -> {
-                mDataBinding.dashBoard.setData(10, 150)
+                mDataBinding.dashBoard.setData(30, 160)
+                mDataBinding.dashBoard.setInterval(80, 160)
             }
             mDataBinding.bt4.id -> {
-                mDataBinding.dashBoard.setInterval(40, 60)
+                mDataBinding.dashBoard.setInterval(40, 80)
             }
             mDataBinding.bt5.id -> {
                 mDataBinding.dashBoard.setProgress(0)
@@ -72,12 +77,26 @@ class FourFragment : VBFragment<FragmentFourBinding, DemoViewModel>(), View.OnCl
                 mDataBinding.dashBoard.setProgress(80)
             }
             mDataBinding.bt10.id -> {
+                mDataBinding.dashBoard.setProgress(100)
+            }
+            mDataBinding.bt11.id -> {
+                mDataBinding.dashBoard.setProgress(140)
+            }
+            mDataBinding.bt12.id -> {
+                mDataBinding.dashBoard.setProgress(150)
+            }
+            mDataBinding.bt13.id -> {
+                mDataBinding.dashBoard.setProgress(160)
+            }
+            mDataBinding.bt14.id -> {
                 mDataBinding.dashBoard.setProgress(200)
             }
-
-            mDataBinding.bt12.id -> {
+            mDataBinding.bt15.id -> {
+                mDataBinding.dashBoard.setProgress(-200)
+            }
+            mDataBinding.bt16.id -> {
                 vbCountDownCoroutines(onTick = {
-                    val p = vbGetRandomNumber(0, 220)
+                    val p = vbGetRandomNumber(0, 200)
                     mDataBinding.dashBoard.setProgress(p)
                 })
             }

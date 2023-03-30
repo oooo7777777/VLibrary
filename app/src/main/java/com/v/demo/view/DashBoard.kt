@@ -13,7 +13,6 @@ import com.v.base.utils.vbDp2px2Float
 import com.v.base.utils.vbSp2px2Float
 import com.v.log.util.log
 import kotlin.math.ceil
-import kotlin.math.roundToInt
 
 /**
  * author  : ww
@@ -27,6 +26,13 @@ class DashBoard @JvmOverloads constructor(
     defStyleAttr: Int = 0,
 ) : View(context, attrs, defStyleAttr), DefaultLifecycleObserver {
 
+
+    //到达选中区间回调
+    private var onSelect: ((status: Int) -> Unit)? = null
+
+    fun setOnSelectListener(onSelect: ((status: Int) -> Unit)) {
+        this.onSelect = onSelect
+    }
 
     //动画执行时间
     private var animDuration = 300L
@@ -42,6 +48,12 @@ class DashBoard @JvmOverloads constructor(
 
     //图表最大刻度
     private var maxNum = 180
+
+    //设备默认最大值
+    private var maxDefault = maxNum
+
+    //设备默认最小值
+    private var minDefault = minNum
 
     //选中区间最小值
     private var minSelect = 0f
@@ -62,7 +74,7 @@ class DashBoard @JvmOverloads constructor(
     private var startRotate = 90f
 
     //结束的角度
-    private var endRotate = 280f
+    private val endRotate = 270f
 
     //刻度角度偏移
     private var scaleRotate = -90f
@@ -87,8 +99,6 @@ class DashBoard @JvmOverloads constructor(
     //变色环宽度
     private val paintColorWidth = 15.vbDp2px2Float(context)
 
-    // 变色范围
-    private var radioRadius = paintColorWidth / 1.3f
 
     //指针动画
     private var progressAnimator: ValueAnimator? = null
@@ -206,7 +216,7 @@ class DashBoard @JvmOverloads constructor(
         //刻度文字
         initScale(canvas)
         //绘制进度文字
-        initText(canvas)
+//        initText(canvas)
         //绘制指针
         initPointer(canvas)
     }
@@ -222,11 +232,13 @@ class DashBoard @JvmOverloads constructor(
         canvas.drawCircle(0f, 0f, length - paintColorWidth, paintColor)
 
         //选中颜色快
-        if (minSelect != 0f && maxSelect != 0f) {
+        if (minSelect != maxSelect) {
             if (progress * 10f in minSelect..maxSelect) {
                 paintSelect.color = Color.parseColor("#00FFFF")
+                onSelect?.invoke(1)
             } else {
                 paintSelect.color = Color.parseColor("#CDCDCD")
+                onSelect?.invoke(0)
             }
 
             canvas.rotate(selectRotate, 0f, 0f)
@@ -235,22 +247,6 @@ class DashBoard @JvmOverloads constructor(
             val startAngle = totalRotate + lw * (minSelect * 10f - minNum)
             val sweepAngle = lw * ((maxSelect - minSelect) * 10f)
 
-//            70
-//           val a = sweepAngle -((totalRotate/sweepAngle).roundToInt()*10f)
-
-//            //整个圆盘角度
-//            totalRotate = 160f
-//            //选中的颜色块偏移角度
-//            selectRotate = 30f
-//            //开始的角度
-//            startRotate = 100f
-//            //结束的角度
-//            endRotate = 270f
-//            //刻度角度偏移
-//            scaleRotate = -80f
-
-            //90
-//            val sweepAngle = 70f
 
             val margin = paintColorWidth / 2
             rect = RectF(
@@ -280,7 +276,7 @@ class DashBoard @JvmOverloads constructor(
         for (i in minNum..maxNum) {
             if (i == (minSelect * 10).toInt() || i == (maxSelect * 10).toInt())
 //            if (i % 10 == 0)
-                            {
+            {
                 canvas.drawText(
                     i.toString(),
                     0f,
@@ -323,37 +319,37 @@ class DashBoard @JvmOverloads constructor(
         var degrees =
             startRotate + ((progress * 100.0f - minNum) / (maxNum - minNum)) * totalRotate
 
-        //如果最小的刻度是等于 则表示表盘是平的
-        if (minNum<=0)
-        {
-            if (degrees > endRotate) {
-                degrees = 270f
-            }
-        }
-        else
-        {
-            if (degrees > endRotate) {
-                degrees = endRotate
-            }
-        }
-
-
+        //计算最小值剩余的区间
         if (degrees < startRotate) {
             degrees = startRotate - 10f / minNum * (minNum - progress * 100f)
         }
+        if (degrees <= 90) {
+            degrees = 90f
+        }
+
+        //计算最大值剩余的区间
+        if (maxNum != maxDefault && degrees > endRotate - 10f) {
+            val num = maxDefault - maxNum
+            degrees = (endRotate - 10f) - 10f / num * (maxNum - progress * 100f)
+        }
+        if (degrees > endRotate) {
+            degrees = endRotate
+        }
+
+//        "progress:${progress * 100}  degrees:$degrees".log()
 
         //根据参数得到旋转角度
         canvas.rotate(degrees, 0f, 0f)
 
         val path = Path()
         path.moveTo(0f, length - 10)
-        path.lineTo(-3f, length / 1.5f - paintColorWidth)
-        path.lineTo(3f, length / 1.5f - paintColorWidth)
+        path.lineTo(-3f, length / 1.4f - paintColorWidth)
+        path.lineTo(3f, length / 1.4f - paintColorWidth)
         path.lineTo(0f, length - 10)
         path.close()
 
         //绘制一个圆形到指针底部 使指针看起来像个圆角指针
-        canvas.drawCircle(0f, length / 1.5f - paintColorWidth, 3f, paintPointer)
+        canvas.drawCircle(0f, length / 1.4f - paintColorWidth, 3f, paintPointer)
         canvas.drawPath(path, paintPointer)
     }
 
@@ -373,34 +369,53 @@ class DashBoard @JvmOverloads constructor(
      */
     fun setData(minNum: Int, maxNum: Int) {
         "最小刻度:$minNum 最大刻度:$maxNum".log()
-
-        //如果最小角度大于0  则要做角度倾斜
-        if (minNum > 0) {
-            //整个圆盘角度
-            totalRotate = 160f
-            //选中的颜色块偏移角度
-            selectRotate = 30f
-            //开始的角度
-            startRotate = 100f
-            //结束的角度
-            endRotate = 270f
-            //刻度角度偏移
-            scaleRotate = -80f
-        } else {
+        //如果仪表盘的最大最小值都跟设备默认的最大最小值一直 则仪表盘是平的(- -)
+        if (minDefault == minNum && maxDefault == maxNum) {
             //整个圆盘角度
             totalRotate = 180f
             //选中的颜色块偏移角度
             selectRotate = 0f
             //开始的角度
             startRotate = 90f
-            //结束的角度
-            endRotate = 280f
             //刻度角度偏移
             scaleRotate = -90f
+        } else {
+            //如果最小值大于0 最大值小于设备最小值  则要做角度倾斜(\/)
+            if (minNum > 0 && maxNum < maxDefault) {
+                //整个圆盘角度
+                totalRotate = 160f
+                //选中的颜色块偏移角度
+                selectRotate = 30f
+                //开始的角度
+                startRotate = 100f
+                //刻度角度偏移
+                scaleRotate = -80f
+            }
+            //(-/)
+            if (minNum == 0 && maxNum < maxDefault) {
+                //整个圆盘角度
+                totalRotate = 170f
+                //选中的颜色块偏移角度
+                selectRotate = 10f
+                //开始的角度
+                startRotate = 90f
+                //刻度角度偏移
+                scaleRotate = -90f
+            }
+
+            //(\-)
+            if (minNum > 0 && maxNum == maxDefault) {
+                //整个圆盘角度
+                totalRotate = 170f
+                //选中的颜色块偏移角度
+                selectRotate = 20f
+                //开始的角度
+                startRotate = 100f
+                //刻度角度偏移
+                scaleRotate = -80f
+            }
         }
         tempRou = totalRotate / totalCount
-
-
         this.minNum = minNum
         this.maxNum = maxNum
         this.itemNum = ceil((maxNum - minNum) / totalCount.toDouble()).toInt()
@@ -424,7 +439,6 @@ class DashBoard @JvmOverloads constructor(
         if (perOld == per || progressAnimator != null && progressAnimator!!.isRunning) {
             return
         }
-
         progressAnimator?.cancel()
         progressAnimator = ValueAnimator.ofFloat(perOld, per).apply {
             duration = animDuration
@@ -483,6 +497,8 @@ class DashBoard @JvmOverloads constructor(
                 max = 60
             }
         }
+        maxDefault = max
+        minDefault = min
         setData(min, max)
         invalidate()
     }

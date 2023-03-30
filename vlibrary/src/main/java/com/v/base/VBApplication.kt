@@ -3,6 +3,7 @@ package com.v.base
 import android.app.Application
 import android.content.Context
 import com.hjq.language.MultiLanguages
+import com.hjq.toast.Toaster
 import com.v.log.LogConfig
 import com.v.log.VLog
 
@@ -26,7 +27,8 @@ abstract class VBApplication : Application() {
         MultiLanguages.init(this)
         //初始化日志
         VLog.init(logConfig())
-
+        // 初始化 Toast 框架
+        Toaster.init(this)
         initData()
     }
 
