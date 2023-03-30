@@ -72,4 +72,8 @@
 
 #状态栏
 -keep class com.gyf.immersionbar.* {*;}
- -dontwarn com.gyf.immersionbar.**
+-dontwarn com.gyf.immersionbar.**
+
+#toast
+-keep class com.hjq.toast.* {*;}
+-dontwarn com.hjq.toast.**

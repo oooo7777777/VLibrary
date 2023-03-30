@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.ColorRes
 import androidx.annotation.LayoutRes
 import androidx.annotation.Nullable
@@ -191,17 +192,17 @@ fun Any.vbToast(
     if (this.toString().isNullOrEmpty()) {
         return
     }
-    if (isCancel) {
-        Toaster.cancel()
-    }
-    val params = ToastParams()
-    params.text = this.toString()
-    params.style = CustomToastStyle(layoutId)
+    if (isCancel) Toaster.cancel()
+
     Toaster.setGravity(gravity, xOffset, yOffset)
-    if (isLong) {
-        Toaster.showLong(this)
+    if (layoutId != 0) {
+        Toaster.show(ToastParams().apply {
+            text = this.toString()
+            style = CustomToastStyle(layoutId)
+            duration = if (isLong) Toast.LENGTH_LONG else Toast.LENGTH_SHORT
+        })
     } else {
-        Toaster.showShort(this)
+        if (isLong) Toaster.showLong(this) else Toaster.showShort(this)
     }
 }
 
