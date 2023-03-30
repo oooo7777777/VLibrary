@@ -1,17 +1,10 @@
 package com.v.demo
 
-import android.view.Gravity
 import androidx.lifecycle.Observer
-import com.hjq.toast.Toaster
-import com.scwang.smart.refresh.footer.ClassicsFooter
-import com.scwang.smart.refresh.header.ClassicsHeader
-import com.scwang.smart.refresh.horizontal.SmartRefreshHorizontal
-import com.scwang.smart.refresh.layout.wrapper.RefreshFooterWrapper
 import com.v.base.VBFragment
 import com.v.base.utils.*
 import com.v.demo.adapter.BannerAdapter
 import com.v.demo.adapter.OneFragmentAdapter
-import com.v.demo.bean.BannerBean
 import com.v.demo.bean.HomeBean
 import com.v.demo.databinding.FragmentOneBinding
 import com.v.demo.model.DemoViewModel
@@ -43,7 +36,7 @@ class OneFragment : VBFragment<FragmentOneBinding, DemoViewModel>() {
                 },
                 onItemClick = { _, _, position ->
                     val item = data[position] as HomeBean.Data
-                    item.title.toast()
+                    item.title.vbToast()
                 },
                 onItemChildClick = { _, view, position ->
                     when (view.id) {
@@ -51,12 +44,12 @@ class OneFragment : VBFragment<FragmentOneBinding, DemoViewModel>() {
                     }
                 },
                 emptyViewClickListener = {
-                    "点击了全局设置的空布局".toast()
+                    "点击了全局设置的空布局".vbToast()
                 },
                 emptyView = vbEmptyView(mContext,
                     res = R.mipmap.ic_movie,
                     listener = {
-                        "点击了自定义空布局".toast()
+                        "点击了自定义空布局".vbToast()
                     })
             )
         } as OneFragmentAdapter
@@ -83,12 +76,12 @@ class OneFragment : VBFragment<FragmentOneBinding, DemoViewModel>() {
                     }
                 },
                 emptyViewClickListener = {
-                    "点击了全局设置的空布局".toast()
+                    "点击了全局设置的空布局".vbToast()
                 },
                 emptyView = vbEmptyView(mContext,
                     res = R.mipmap.ic_movie,
                     listener = {
-                        "点击了自定义空布局".toast()
+                        "点击了自定义空布局".vbToast()
                     })
             )
         } as BannerAdapter

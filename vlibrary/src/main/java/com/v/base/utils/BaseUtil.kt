@@ -1,6 +1,5 @@
 package com.v.base.utils
 
-import android.R
 import android.app.Activity
 import android.app.Application
 import android.content.*
@@ -181,7 +180,7 @@ fun vbGetRandomNumber(min: Int, max: Int): Int {
  * @param layoutId 自定义view当次生效
  * @param isCancel 清除toast
  */
-fun Any.toast(
+fun Any.vbToast(
     isLong: Boolean = false,
     gravity: Int = Gravity.CENTER,
     xOffset: Int = 0,
@@ -412,7 +411,7 @@ fun Context.vbCopyToClipboard(text: String) = run {
     val cm = this.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?
     val mClipData = ClipData.newPlainText("Label", text)
     cm!!.setPrimaryClip(mClipData)
-    "内容已复制到粘贴板".toast()
+    "内容已复制到粘贴板".vbToast()
 }
 
 /**

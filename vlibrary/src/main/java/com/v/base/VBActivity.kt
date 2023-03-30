@@ -191,7 +191,7 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
         })
         //toast
         mViewModel.loadingChange.showToast.observe(this, Observer {
-            it.toast()
+            it.vbToast()
             //activity与fragment共用一个ViewModel 是导致所有依附于activity的fragment都能收到 会弹出多个弹窗
             //所以这里做收到了以后就做一次清除
             mViewModel.loadingChange.showToast.clean()

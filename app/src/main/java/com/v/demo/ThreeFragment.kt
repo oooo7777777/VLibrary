@@ -10,8 +10,8 @@ import com.v.base.VBFragment
 import com.v.base.dialog.VBHintDialog
 import com.v.base.dialog.VBListDialog
 import com.v.base.utils.goActivity
-import com.v.base.utils.toast
 import com.v.base.utils.vbCountDownCoroutines
+import com.v.base.utils.vbToast
 import com.v.demo.bean.TestListBean
 import com.v.demo.databinding.FragmentThreeBinding
 import com.v.log.util.log
@@ -93,7 +93,7 @@ class ThreeFragment : VBFragment<FragmentThreeBinding, VBBlankViewModel>(), View
                     .setList(list)
                     .setClickListener { dialog, item, position ->
                         val bean = item as TestListBean
-                        "${bean.content}  ${bean.code}".toast()
+                        "${bean.content}  ${bean.code}".vbToast()
                         dialog.dismiss()
                     }.show()
             }
