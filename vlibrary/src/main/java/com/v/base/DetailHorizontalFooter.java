@@ -13,6 +13,9 @@ import com.scwang.smart.refresh.layout.api.RefreshKernel;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.constant.RefreshState;
 
+/**
+ *  SmartRefreshHorizontal 自定义footer
+ */
 public class DetailHorizontalFooter extends HorizontalFooter {
 
     private TextView mTvTitle;

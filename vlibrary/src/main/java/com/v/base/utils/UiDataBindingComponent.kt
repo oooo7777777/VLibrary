@@ -418,9 +418,7 @@ fun View.vbShadowColor(color: String?, ev: Float = 10f) = run {
             outlineAmbientShadowColor = Color.parseColor(color)// 环境阴影
             outlineSpotShadowColor = Color.parseColor(color)// 点阴影
         }
-
     }
-
 }
 
 

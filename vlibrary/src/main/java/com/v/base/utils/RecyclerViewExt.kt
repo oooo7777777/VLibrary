@@ -190,6 +190,7 @@ fun <T> BaseQuickAdapter<T, *>.vbConfig(
  * @param mCurrentPageNum 当前分页
  * @param refreshLayout SmartRefreshLayout
  * @param isEmptyViewShow 是否展示空布局
+ * @param scrollToTop 加载第一页的时候 recyclerView是否需要滑动到顶部
  * @return 返回下一页的page
  */
 fun <T> BaseQuickAdapter<T, *>.vbLoad(
@@ -197,6 +198,7 @@ fun <T> BaseQuickAdapter<T, *>.vbLoad(
     mCurrentPageNum: Int = 1,
     refreshLayout: SmartRefreshLayout? = null,
     isEmptyViewShow: Boolean = true,
+    scrollToTop: Boolean = true
 ): Int {
 
     refreshLayout?.finishRefresh()
@@ -204,8 +206,9 @@ fun <T> BaseQuickAdapter<T, *>.vbLoad(
 
     if (mCurrentPageNum == 1) {
         setList(list)
-        recyclerView.scrollToPosition(0)
-
+        if (scrollToTop) {
+            recyclerView.scrollToPosition(0)
+        }
         if (hasHeaderLayout() || hasFooterLayout()) {
             removeEmptyView()
         } else {
@@ -219,7 +222,6 @@ fun <T> BaseQuickAdapter<T, *>.vbLoad(
     } else {
         addData(list)
     }
-
 
     return if (list.isNullOrEmpty()) {
         mCurrentPageNum

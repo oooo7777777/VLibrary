@@ -1,6 +1,5 @@
 package com.v.base
 
-import com.chad.library.adapter.base.animation.BaseAnimation
 import com.v.base.net.VBNetApi
 
 

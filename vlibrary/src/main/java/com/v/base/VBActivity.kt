@@ -102,7 +102,7 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
      */
     protected open fun statusBarColor(
         color: String = VBConfig.options.statusBarColor,
-        isDarkFont: Boolean = isWhiteColor(Color.parseColor(color)),
+        isDarkFont: Boolean = vbIsWhiteColor(Color.parseColor(color)),
     ) {
         immersionBar {
             if (useTranslucent()) {

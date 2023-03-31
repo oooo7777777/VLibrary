@@ -197,26 +197,15 @@ fun Any.vbToast(
     Toaster.setGravity(gravity, xOffset, yOffset)
     if (layoutId != 0) {
         Toaster.show(ToastParams().apply {
-            text = this.toString()
-            style = CustomToastStyle(layoutId)
-            duration = if (isLong) Toast.LENGTH_LONG else Toast.LENGTH_SHORT
+            this.text = this@vbToast.toString()
+            this.style = CustomToastStyle(layoutId)
+            this.duration = if (isLong) Toast.LENGTH_LONG else Toast.LENGTH_SHORT
         })
     } else {
         if (isLong) Toaster.showLong(this) else Toaster.showShort(this)
     }
 }
 
-/**
- * 颜色转换成灰度值
- * @param rgb 颜色
- * @return　灰度值
- */
-fun toGrey(rgb: Int): Int {
-    val blue = rgb and 0x000000FF
-    val green = rgb and 0x0000FF00 shr 8
-    val red = rgb and 0x00FF0000 shr 16
-    return red * 38 + green * 75 + blue * 15 shr 7
-}
 
 /** 根据百分比改变颜色透明度  */
 private fun vbChangeAlpha(color: Int, fraction: Float): Int {
@@ -231,8 +220,13 @@ private fun vbChangeAlpha(color: Int, fraction: Float): Int {
 /**
  * 判断当前颜色视为为白色
  */
-fun isWhiteColor(color: Int): Boolean {
-    val grey = toGrey(color)
+fun vbIsWhiteColor(color: Int): Boolean {
+    //颜色转换成灰度值
+    //灰度值
+    val blue = color and 0x000000FF
+    val green = color and 0x0000FF00 shr 8
+    val red = color and 0x00FF0000 shr 16
+    val grey = red * 38 + green * 75 + blue * 15 shr 7
     return grey > 200
 }
 
@@ -356,7 +350,6 @@ fun Context.vbGetAppVersionName(packageName: String = this.packageName): String 
  */
 fun Context.vbGetDeviceId(): String = run {
     DeviceIdUtil.getDeviceId(this)
-
 }
 
 /**
@@ -572,7 +565,7 @@ fun View.vbOnClickListener(
  * @param success 成功回调
  * @param error 失败回调 可不给
  */
-fun <T> VBViewModel.launch(
+fun <T> VBViewModel.vbLaunch(
     block: () -> T,
     success: (T) -> Unit,
     error: (Throwable) -> Unit = {}
