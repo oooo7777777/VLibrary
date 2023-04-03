@@ -19,12 +19,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/black"
-        android:gravity="center"
+        android:gravity="center_horizontal"
+        android:paddingTop="50dp"
         android:orientation="vertical">
 
         <com.v.demo.view.DashBoard
             android:id="@+id/dashBoard"
-            android:layout_width="wrap_content"
+            android:layout_width="300dp"
             android:layout_height="wrap_content" />
 
         <Button
@@ -39,21 +40,21 @@
             vb_click="@{v}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="设置最大值100-140(斜)" />
+            android:text="设置最大值21-139(斜)" />
 
         <Button
             android:id="@+id/bt2"
             vb_click="@{v}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="设置最大值0-150(左平右斜)" />
+            android:text="设置最大值0-141(左平右斜)" />
 
         <Button
             android:id="@+id/bt3"
             vb_click="@{v}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="设置最大值30-160(左斜右平)" />
+            android:text="设置最大值35-160(左斜右平)" />
 
 
         <Button

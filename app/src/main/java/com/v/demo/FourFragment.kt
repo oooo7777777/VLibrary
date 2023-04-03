@@ -47,15 +47,15 @@ class FourFragment : VBFragment<FragmentFourBinding, DemoViewModel>(), View.OnCl
                 mDataBinding.dashBoard.setInterval(140, 160)
             }
             mDataBinding.bt1.id -> {
-                mDataBinding.dashBoard.setData(100, 140)
-                mDataBinding.dashBoard.setInterval(110, 120)
+                mDataBinding.dashBoard.setData(21, 139)
+                mDataBinding.dashBoard.setInterval(101, 120)
             }
             mDataBinding.bt2.id -> {
-                mDataBinding.dashBoard.setData(0, 150)
+                mDataBinding.dashBoard.setData(0, 141)
                 mDataBinding.dashBoard.setInterval(0, 40)
             }
             mDataBinding.bt3.id -> {
-                mDataBinding.dashBoard.setData(30, 160)
+                mDataBinding.dashBoard.setData(35, 160)
                 mDataBinding.dashBoard.setInterval(80, 160)
             }
             mDataBinding.bt4.id -> {

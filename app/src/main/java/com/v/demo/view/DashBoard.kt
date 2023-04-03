@@ -62,7 +62,7 @@ class DashBoard @JvmOverloads constructor(
     private var maxSelect = 0f
 
     //每个间隔增加的数字
-    private var itemNum = 0
+    private var itemNum = 0f
 
     //整个圆盘角度
     private var totalRotate = 180f
@@ -82,8 +82,8 @@ class DashBoard @JvmOverloads constructor(
     //整个view宽度
     private var viewWidth = 0f
 
-    //仪表盘半径
-    private var length = 0f
+    //整个view高度
+    private var viewHeight = 0f
 
     //进度百分比
     private var progress = 0f
@@ -103,6 +103,7 @@ class DashBoard @JvmOverloads constructor(
     //指针动画
     private var progressAnimator: ValueAnimator? = null
 
+    val position = floatArrayOf(0f, 0.9f)
 
     //背景画笔
     private val paintBg by lazy {
@@ -112,10 +113,10 @@ class DashBoard @JvmOverloads constructor(
                 Color.parseColor("#B3616161"),
                 Color.parseColor("#00616161")
             )
-            val position = floatArrayOf(0f, 1f)
+
             val linearGradient = LinearGradient(
                 0f,
-                -length,
+                -viewHeight,
                 0f, 0f,
                 colors, position,
                 Shader.TileMode.CLAMP
@@ -130,10 +131,10 @@ class DashBoard @JvmOverloads constructor(
         Paint(Paint.ANTI_ALIAS_FLAG).apply {
             strokeWidth = paintColorWidth
             style = Paint.Style.FILL
-            val position = floatArrayOf(0f, 1f)
+
             val linearGradient = LinearGradient(
                 0f,
-                -length,
+                -viewHeight,
                 0f, 0f,
                 intArrayOf(
                     Color.parseColor("#B3616161"),
@@ -204,17 +205,20 @@ class DashBoard @JvmOverloads constructor(
 
     private fun initIndex(specSize: Int) {
         viewWidth = specSize.toFloat()
-        length = viewWidth / 4 * 3
+        viewHeight = viewWidth 
         progress = 0f
         perOld = 0f
     }
 
 
     override fun onDraw(canvas: Canvas) {
+//        canvas.drawColor(Color.parseColor("#ff0000"))
         //绘制背景
         initBg(canvas)
-        //刻度文字
+        //刻度
         initScale(canvas)
+        //刻度文字
+        initScaleText(canvas)
         //绘制进度文字
 //        initText(canvas)
         //绘制指针
@@ -228,8 +232,8 @@ class DashBoard @JvmOverloads constructor(
         canvas.translate((canvas.width / 2).toFloat(), viewWidth)
 
         //背景
-        canvas.drawCircle(0f, 0f, length, paintBg)
-        canvas.drawCircle(0f, 0f, length - paintColorWidth, paintColor)
+        canvas.drawCircle(0f, 0f, viewHeight, paintBg)
+        canvas.drawCircle(0f, 0f, viewHeight - paintColorWidth, paintColor)
 
         //选中颜色快
         if (minSelect != maxSelect) {
@@ -250,16 +254,16 @@ class DashBoard @JvmOverloads constructor(
 
             val margin = paintColorWidth / 2
             rect = RectF(
-                -length + margin,
-                -length + margin,
-                length - margin,
-                length - margin
+                -viewHeight + margin,
+                -viewHeight + margin,
+                viewHeight - margin,
+                viewHeight - margin
             )
             canvas.drawArc(rect, startAngle, sweepAngle, false, paintSelect)
         }
     }
 
-    //绘制刻度与刻度文字
+    //绘制刻度
     private fun initScale(canvas: Canvas) {
 
         canvas.restore()
@@ -274,24 +278,53 @@ class DashBoard @JvmOverloads constructor(
         val lw = tempRou / itemNum
         //绘制刻度和百分比
         for (i in minNum..maxNum) {
-            if (i == (minSelect * 10).toInt() || i == (maxSelect * 10).toInt())
-//            if (i % 10 == 0)
-            {
+//            if (i == (minSelect * 10).toInt() || i == (maxSelect * 10).toInt())
+            if (i % 10 == 0) {
+
                 canvas.drawText(
                     i.toString(),
                     0f,
-                    -length + paintColorWidth * 2.5f,
+                    -viewHeight + paintColorWidth * 2.5f,
                     paintScaleText
                 )
+
                 canvas.drawLine(
                     0f,
-                    -length + paintColorWidth + 5f,
+                    -viewHeight + paintColorWidth + 5f,
                     0f,
-                    -length + paintColorWidth * 1.5f,
+                    -viewHeight + paintColorWidth * 1.5f,
                     paintScale
                 )
             }
             canvas.rotate(lw, 0f, 0f)
+        }
+    }
+
+
+    //绘制刻度文字
+    private fun initScaleText(canvas: Canvas) {
+        canvas.restore()
+        canvas.save()
+        canvas.translate(paintColorWidth*3f, viewHeight - paintScaleText.textSize/2)
+
+        if (minSelect == maxSelect) {
+            return
+        }
+        val lw = tempRou / itemNum
+
+
+        //绘制刻度和百分比
+        for (i in minNum..maxNum) {
+
+            if (i % 10 == 0) {
+                canvas.drawText(
+                    i.toString(),
+                     i*tempRou,
+                    i* -lw,
+                    paintScaleText
+                )
+
+            }
         }
     }
 
@@ -305,7 +338,7 @@ class DashBoard @JvmOverloads constructor(
         val number = (progress * totalCount * 10).toInt()
 
         paintText.textSize = 32.vbSp2px2Float(context)
-        canvas.drawText(number.toString(), 0f, -length / 3, paintText)
+        canvas.drawText(number.toString(), 0f, -viewHeight / 3, paintText)
 
         paintText.textSize = 12.vbSp2px2Float(context)
         canvas.drawText(unit, 0f, -20f, paintText)
@@ -342,14 +375,14 @@ class DashBoard @JvmOverloads constructor(
         canvas.rotate(degrees, 0f, 0f)
 
         val path = Path()
-        path.moveTo(0f, length - 10)
-        path.lineTo(-3f, length / 1.4f - paintColorWidth)
-        path.lineTo(3f, length / 1.4f - paintColorWidth)
-        path.lineTo(0f, length - 10)
+        path.moveTo(0f, viewHeight - 10)
+        path.lineTo(-3f, viewHeight / 1.4f - paintColorWidth)
+        path.lineTo(3f, viewHeight / 1.4f - paintColorWidth)
+        path.lineTo(0f, viewHeight - 10)
         path.close()
 
         //绘制一个圆形到指针底部 使指针看起来像个圆角指针
-        canvas.drawCircle(0f, length / 1.4f - paintColorWidth, 3f, paintPointer)
+        canvas.drawCircle(0f, viewHeight / 1.4f - paintColorWidth, 3f, paintPointer)
         canvas.drawPath(path, paintPointer)
     }
 
@@ -418,7 +451,7 @@ class DashBoard @JvmOverloads constructor(
         tempRou = totalRotate / totalCount
         this.minNum = minNum
         this.maxNum = maxNum
-        this.itemNum = ceil((maxNum - minNum) / totalCount.toDouble()).toInt()
+        this.itemNum = (maxNum - minNum) / totalCount.toFloat()
         invalidate()
     }
 
@@ -501,5 +534,19 @@ class DashBoard @JvmOverloads constructor(
         minDefault = min
         setData(min, max)
         invalidate()
+    }
+
+
+    fun getTextWidth(paint: Paint, str: String): Int {
+        var iRet = 0
+        if (str.isNotEmpty()) {
+            val len = str.length
+            val widths = FloatArray(len)
+            paint.getTextWidths(str, widths)
+            for (j in 0 until len) {
+                iRet += ceil(widths[j].toDouble()).toInt()
+            }
+        }
+        return iRet
     }
 }
