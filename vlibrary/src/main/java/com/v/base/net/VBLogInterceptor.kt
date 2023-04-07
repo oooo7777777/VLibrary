@@ -2,7 +2,6 @@ package com.v.base.net
 
 import android.text.TextUtils
 import com.alibaba.fastjson.JSONObject
-import com.v.log.util.log
 import com.v.log.util.logD
 import com.v.log.util.logE
 import okhttp3.Headers

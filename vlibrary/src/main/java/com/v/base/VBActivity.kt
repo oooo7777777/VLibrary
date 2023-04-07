@@ -14,9 +14,11 @@ import com.hjq.language.MultiLanguages
 import com.noober.background.BackgroundLibrary
 import com.v.base.databinding.VbRootActivityBinding
 import com.v.base.dialog.VBLoadingDialog
-import com.v.base.utils.*
-import com.v.log.util.log
-import com.v.log.util.logD
+import com.v.base.utils.getApplicationViewModel
+import com.v.base.utils.vbGetDataBinding
+import com.v.base.utils.vbIsWhiteColor
+import com.v.base.utils.vbToast
+import com.v.log.util.logI
 import java.lang.reflect.ParameterizedType
 
 
@@ -87,7 +89,7 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
         initToolBar()
         initData()
         createObserver()
-        javaClass.name.logD()
+        javaClass.name.logI()
     }
 
     private fun initToolBar() {
