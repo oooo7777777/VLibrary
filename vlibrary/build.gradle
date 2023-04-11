@@ -56,38 +56,36 @@ dependencies {
     api "androidx.recyclerview:recyclerview:1.2.1"
     api "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1"
 
+
+    //glide
     api 'jp.wasabeef:glide-transformations:4.3.0'//glide转换器
     api 'com.github.bumptech.glide:glide:4.11.0'//glide
     kapt 'com.github.bumptech.glide:compiler:4.11.0'//glide
-    api 'com.github.bumptech.glide:okhttp3-integration:4.11.0'
-
-    api "com.squareup.retrofit2:retrofit:2.9.0"
-    api "com.alibaba:fastjson:1.2.73"
-    api "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2"
+    api 'com.github.bumptech.glide:okhttp3-integration:4.11.0' //glide
+    //retrofit
+    api "com.squareup.retrofit2:retrofit:2.9.0"//retrofit
+    api "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2"//retrofit
+    //fastjson
+    api "com.alibaba:fastjson:1.2.83"
+    //refresh-layout
     api "com.scwang.smart:refresh-layout-kernel:2.0.3"
     api "com.scwang.smart:refresh-header-classics:2.0.3"
     api 'com.scwang.smart:refresh-layout-horizontal:2.0.0'
+    //BaseRecyclerViewAdapterHelper
     api "com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.7"
     //BackgroundLibrary  （通过标签直接生成shape，无需再写shape.xml）
     api "com.github.JavaNoober.BackgroundLibrary:libraryx:1.7.2"
-
     // 状态栏 基础依赖包，必须要依赖
     api 'com.gyf.immersionbar:immersionbar:3.0.0'
     // 状态栏 kotlin扩展（可选）
     api 'com.gyf.immersionbar:immersionbar-ktx:3.0.0'
-
     // 语种切换框架：https://github.com/getActivity/MultiLanguages
     api 'com.github.getActivity:MultiLanguages:8.0'
-
     //livedata防止数据倒灌
     api 'com.kunminx.arch:unpeek-livedata:7.8.0'
-
     //日志打印
     api 'com.github.oooo7777777:Vlog:1.1.2'
-
     //toast
     api 'com.github.getActivity:Toaster:12.0'
-
-
 }
 
