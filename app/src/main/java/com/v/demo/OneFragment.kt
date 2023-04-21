@@ -7,7 +7,9 @@ import com.v.demo.adapter.BannerAdapter
 import com.v.demo.adapter.OneFragmentAdapter
 import com.v.demo.bean.HomeBean
 import com.v.demo.databinding.FragmentOneBinding
+import com.v.demo.databinding.ViewHeaderBinding
 import com.v.demo.model.DemoViewModel
+import com.v.log.util.log
 
 /**
  * @Author : ww
@@ -22,8 +24,7 @@ class OneFragment : VBFragment<FragmentOneBinding, DemoViewModel>() {
     private val mAdapter by lazy {
         mDataBinding.recyclerView.vbDivider {
             setDivider(10)
-            isStartVisible = true
-            isEndVisible = true
+            isCludeVisible = true
         }.vbLinear(OneFragmentAdapter()).apply {
             vbConfig(
                 mDataBinding.refreshLayout,
@@ -59,8 +60,7 @@ class OneFragment : VBFragment<FragmentOneBinding, DemoViewModel>() {
     private val mAdapterBanner by lazy {
         mDataBinding.recyclerViewHorizontal.vbDivider {
             setDivider(10)
-            isStartVisible = true
-            isEndVisible = true
+            isCludeVisible = true
         }.vbLinearHorizontal(BannerAdapter()).apply {
             vbConfig(
                 mDataBinding.refreshLayoutHorizontal,
@@ -74,43 +74,14 @@ class OneFragment : VBFragment<FragmentOneBinding, DemoViewModel>() {
                     when (view.id) {
 
                     }
-                },
-                emptyViewClickListener = {
-                    "点击了全局设置的空布局".vbToast()
-                },
-                emptyView = vbEmptyView(mContext,
-                    res = R.mipmap.ic_movie,
-                    listener = {
-                        "点击了自定义空布局".vbToast()
-                    })
+                }
             )
         } as BannerAdapter
     }
 
 
-//    private val mViewPager by lazy {
-//        (mAdapterHeaderView.bannerViewPager as BannerViewPager<BannerBean>).apply {
-//            adapter = BannerAdapter()
-//            setLifecycleRegistry(lifecycle)
-//            setPageMargin(15.vbDp2px())
-//            setRevealWidth(15.vbDp2px())
-//            setPageStyle(PageStyle.MULTI_PAGE_OVERLAP)
-//            setIndicatorSlideMode(IndicatorSlideMode.WORM)
-//        }
-//    }
-
-
     override fun initData() {
-        mAdapter
-        mAdapterBanner
-
-
-        mDataBinding.refreshLayout.autoRefresh()
-
-
-//        mDataBinding.refreshLayoutHorizontal .setRefreshHeader( ClassicsHeader(context));
-//        mDataBinding.refreshLayoutHorizontal.setRefreshFooter( RefreshFooterWrapper( ClassicsFooter(mContext)), -1, -2);
-
+        mViewModel.getList(page)
     }
 
 
@@ -123,11 +94,10 @@ class OneFragment : VBFragment<FragmentOneBinding, DemoViewModel>() {
 
 
         mViewModel.bannerBean.observe(this, Observer {
-
-//                mViewPager.create(this.data)
-
-            page = mAdapterBanner.vbLoad(it.data!!, page, mDataBinding.refreshLayout)
-
+            mAdapterBanner.vbLoad(
+                it.data!!,
+                refreshLayout = mDataBinding.refreshLayoutHorizontal
+            )
         })
     }
 
