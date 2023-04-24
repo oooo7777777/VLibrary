@@ -7,9 +7,7 @@ import com.v.demo.adapter.BannerAdapter
 import com.v.demo.adapter.OneFragmentAdapter
 import com.v.demo.bean.HomeBean
 import com.v.demo.databinding.FragmentOneBinding
-import com.v.demo.databinding.ViewHeaderBinding
 import com.v.demo.model.DemoViewModel
-import com.v.log.util.log
 
 /**
  * @Author : ww

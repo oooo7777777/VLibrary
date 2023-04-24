@@ -1,11 +1,12 @@
 package com.v.base.dialog
 
 import android.app.Dialog
-import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.view.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.LifecycleOwner
 import com.v.base.R
 import com.v.base.VBConfig
 import com.v.base.annotaion.VBDialogOrientation
@@ -19,20 +20,17 @@ import java.lang.reflect.ParameterizedType
  * desc    :
  * time    : 2021-03-16 09:52:45
  */
-abstract class VBDialog<VB : ViewDataBinding>(private val mContext: Context) :
+abstract class VBDialog<VB : ViewDataBinding>(private val mContext: AppCompatActivity) :
     Dialog(mContext, R.style.MyDialog) {
 
     private var onDismiss: (() -> Unit)? = null
+    private var onShow: (() -> Unit)? = null
 
-    fun setOnVBDismiss(onDismiss: (() -> Unit)) {
+    fun setListener(onShow: (() -> Unit), onDismiss: (() -> Unit)) {
+        this.onShow = onShow
         this.onDismiss = onDismiss
     }
 
-    private var onShow: (() -> Unit)? = null
-
-    fun setOnVBShow(onShow: (() -> Unit)) {
-        this.onShow = onShow
-    }
 
     private var isDialogCancelable = true
 
@@ -47,6 +45,7 @@ abstract class VBDialog<VB : ViewDataBinding>(private val mContext: Context) :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         javaClass.name.logI()
+        lifecycleOwner(mContext)
         setStyle()
         setContentView(mDataBinding.root)
         setCanceled()
@@ -84,6 +83,25 @@ abstract class VBDialog<VB : ViewDataBinding>(private val mContext: Context) :
 
 
     /**
+     * 将对话框附加到生命周期并在生命周期被销毁时将其关闭。
+     */
+    private fun lifecycleOwner(owner: LifecycleOwner? = null): VBDialog<*> {
+        val observer = DialogLifecycleObserver(::dismiss)
+
+//        val lifecycleOwner = owner ?: (mContext as? LifecycleOwner
+//            ?: throw IllegalStateException(
+//                "$mContext is not a LifecycleOwner."
+//            ))
+//        lifecycleOwner.lifecycle.addObserver(observer)
+
+        //如果当前的$mContext 不是LifecycleOwner 则不会添加
+        val lifecycleOwner = owner ?: mContext as? LifecycleOwner
+        lifecycleOwner?.lifecycle?.addObserver(observer)
+        return this
+    }
+
+
+    /**
      * 设置dialog弹出方向 [VBDialogOrientation]
      */
     open fun useDirection(): VBDialogOrientation = VBDialogOrientation.CENTRE
@@ -116,22 +134,29 @@ abstract class VBDialog<VB : ViewDataBinding>(private val mContext: Context) :
         return 0
     }
 
+    /**
+     * dialog是否全屏,会隐藏掉状态栏
+     */
+    open fun useFullScreen(): Boolean {
+        return false
+    }
 
     private fun setStyle() {
         window?.run {
-
-//            setFlags(
-//                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-//                WindowManager.LayoutParams.FLAG_FULLSCREEN
-//            )
             //设置全屏属性
             addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
             requestFeature(Window.FEATURE_NO_TITLE)
+
+            if (useFullScreen()) {
+                setFlags(
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN
+                )
+            }
+
             setBackgroundDrawableResource(android.R.color.transparent)
             decorView.setPadding(0, 0, 0, 0)
             val wlp = attributes
-//            wlp.width = useWidth()
-//            wlp.height = useHeight()
 
             if (useDim()) {
                 wlp.dimAmount = useDimAmount()
@@ -192,6 +217,5 @@ abstract class VBDialog<VB : ViewDataBinding>(private val mContext: Context) :
         super.show()
         onShow?.invoke()
     }
-
 
 }

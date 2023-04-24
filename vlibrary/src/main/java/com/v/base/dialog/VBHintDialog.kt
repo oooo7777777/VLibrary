@@ -1,10 +1,10 @@
 package com.v.base.dialog
 
-import android.content.Context
 import android.content.res.Configuration
 import android.graphics.Color
 import android.view.Gravity
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import com.v.base.databinding.VbDialogHintBinding
 import com.v.base.utils.vbGetScreenHeight
 import com.v.base.utils.vbSetViewLayoutParams
@@ -15,7 +15,7 @@ import com.v.base.utils.vbSetViewLayoutParams
  * desc    : 提示框
  * time    : 2021-03-16 09:52:45
  */
-class VBHintDialog(mContext: Context) : VBDialog<VbDialogHintBinding>(mContext),
+class VBHintDialog(mContext: AppCompatActivity) : VBDialog<VbDialogHintBinding>(mContext),
     View.OnClickListener {
 
     private var listener: ((hintDialog: VBHintDialog, position: Int) -> Unit)? = null
@@ -116,4 +116,7 @@ class VBHintDialog(mContext: Context) : VBDialog<VbDialogHintBinding>(mContext),
         return this
     }
 
+    override fun useFullScreen(): Boolean {
+        return true
+    }
 }

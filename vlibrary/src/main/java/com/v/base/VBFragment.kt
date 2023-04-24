@@ -1,12 +1,12 @@
 package com.v.base
 
-import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.NonNull
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -22,7 +22,7 @@ abstract class VBFragment<VB : ViewDataBinding, VM : VBViewModel> : Fragment() {
 
     private var isFirstShow = true
 
-    protected lateinit var mContext: Activity
+    protected lateinit var mContext: AppCompatActivity
 
     protected lateinit var mDataBinding: VB
 
@@ -45,7 +45,7 @@ abstract class VBFragment<VB : ViewDataBinding, VM : VBViewModel> : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is Activity) {
+        if (context is AppCompatActivity) {
             this.mContext = context
         }
     }

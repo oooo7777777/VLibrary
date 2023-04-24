@@ -1,13 +1,11 @@
 package com.v.base.dialog
 
-import android.content.Context
 import android.graphics.Color
 import android.view.View
-import android.widget.TextView
-import com.v.base.R
+import androidx.appcompat.app.AppCompatActivity
 import com.v.base.databinding.VbLayoutLoadingBinding
 
-class VBLoadingDialog(mContext: Context) : VBDialog<VbLayoutLoadingBinding>(mContext) {
+class VBLoadingDialog(mContext: AppCompatActivity) : VBDialog<VbLayoutLoadingBinding>(mContext) {
 
 
     override fun initData() {
