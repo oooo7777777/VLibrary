@@ -1,6 +1,7 @@
 package com.v.base.dialog
 
 import android.app.Dialog
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.view.*
@@ -20,7 +21,7 @@ import java.lang.reflect.ParameterizedType
  * desc    :
  * time    : 2021-03-16 09:52:45
  */
-abstract class VBDialog<VB : ViewDataBinding>(private val mContext: AppCompatActivity) :
+abstract class VBDialog<VB : ViewDataBinding>(private val mContext: Context) :
     Dialog(mContext, R.style.MyDialog) {
 
     private var onDismiss: (() -> Unit)? = null
@@ -45,7 +46,9 @@ abstract class VBDialog<VB : ViewDataBinding>(private val mContext: AppCompatAct
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         javaClass.name.logI()
-        lifecycleOwner(mContext)
+        if (mContext is AppCompatActivity) {
+            lifecycleOwner(mContext)
+        }
         setStyle()
         setContentView(mDataBinding.root)
         setCanceled()

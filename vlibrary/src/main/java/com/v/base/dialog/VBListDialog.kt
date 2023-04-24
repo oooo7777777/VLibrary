@@ -1,5 +1,6 @@
 package com.v.base.dialog
 
+import android.content.Context
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -17,7 +18,7 @@ import com.v.base.utils.vbLinear
  * desc    : 列表提示框
  * time    : 2021-03-16 09:52:45
  */
-class VBListDialog(mContext: AppCompatActivity) : VBDialog<VbDialogListBinding>(mContext) {
+class VBListDialog(mContext: Context) : VBDialog<VbDialogListBinding>(mContext) {
 
     private var list = ArrayList<VBListBean>()
 

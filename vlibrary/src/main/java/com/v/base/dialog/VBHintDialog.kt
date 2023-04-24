@@ -1,5 +1,6 @@
 package com.v.base.dialog
 
+import android.content.Context
 import android.content.res.Configuration
 import android.graphics.Color
 import android.view.Gravity
@@ -15,7 +16,7 @@ import com.v.base.utils.vbSetViewLayoutParams
  * desc    : 提示框
  * time    : 2021-03-16 09:52:45
  */
-class VBHintDialog(mContext: AppCompatActivity) : VBDialog<VbDialogHintBinding>(mContext),
+class VBHintDialog(mContext: Context) : VBDialog<VbDialogHintBinding>(mContext),
     View.OnClickListener {
 
     private var listener: ((hintDialog: VBHintDialog, position: Int) -> Unit)? = null
