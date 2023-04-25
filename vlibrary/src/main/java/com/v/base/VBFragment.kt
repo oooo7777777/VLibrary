@@ -20,7 +20,7 @@ import java.lang.reflect.ParameterizedType
 abstract class VBFragment<VB : ViewDataBinding, VM : VBViewModel> : Fragment() {
 
 
-    private var isFirstShow = true
+    private var isFirstShow = false
 
     protected lateinit var mContext: AppCompatActivity
 
@@ -81,7 +81,9 @@ abstract class VBFragment<VB : ViewDataBinding, VM : VBViewModel> : Fragment() {
     /**
      * 对用户可见
      */
-    open fun onFragmentResume() {}
+    open fun onFragmentResume() {
+        javaClass.logI()
+    }
 
     /**
      * 对用户不可见
@@ -95,9 +97,8 @@ abstract class VBFragment<VB : ViewDataBinding, VM : VBViewModel> : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        javaClass.logI()
-        if (isFirstShow) {
-            isFirstShow = false
+        if (!isFirstShow) {
+            isFirstShow = true
             registerUiChange()
             initData()
             createObserver()
@@ -113,7 +114,7 @@ abstract class VBFragment<VB : ViewDataBinding, VM : VBViewModel> : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         mDataBinding.unbind()
-        isFirstShow = true
+        isFirstShow = false
     }
 
 
@@ -147,5 +148,11 @@ abstract class VBFragment<VB : ViewDataBinding, VM : VBViewModel> : Fragment() {
         })
     }
 
+    /**
+     * 判断当前fragment是否初始化过
+     */
+    fun isInitialized(): Boolean {
+        return isFirstShow
+    }
 
 }
