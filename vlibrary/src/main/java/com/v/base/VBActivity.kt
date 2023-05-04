@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.gyf.immersionbar.ktx.immersionBar
+import com.gyf.immersionbar.ImmersionBar
 import com.hjq.language.MultiLanguages
 import com.noober.background.BackgroundLibrary
 import com.v.base.databinding.VbRootActivityBinding
@@ -32,6 +32,7 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
     val mRootDataBinding by lazy {
         mContext.vbGetDataBinding<VbRootActivityBinding>(R.layout.vb_root_activity)
     }
+
     /**
      * 通过反射拿到ViewModel并且注册
      */
@@ -106,18 +107,17 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
         color: String = VBConfig.options.statusBarColor,
         isDarkFont: Boolean = vbIsWhiteColor(Color.parseColor(color)),
     ) {
-        immersionBar {
-            if (useTranslucent()) {
-                transparentStatusBar()  //沉浸式状态栏(布局会顶进状态栏)
-            } else {
-                statusBarColor(color)     //状态栏颜色，不写默认透明色
-                fitsSystemWindows(true)  //使用该属性,必须指定状态栏颜色
-            }
-            //状态栏颜色趋近于白色时，会智能将状态栏字体颜色变换为黑色
-            statusBarDarkFont(isDarkFont)
-            navigationBarDarkIcon(isDarkFont)
+        val immersionBar = ImmersionBar.with(this)
+        if (useTranslucent()) {
+            immersionBar.transparentStatusBar()  //沉浸式状态栏(布局会顶进状态栏)
+        } else {
+            immersionBar.statusBarColor(color)     //状态栏颜色，不写默认透明色
+            immersionBar.fitsSystemWindows(true)  //使用该属性,必须指定状态栏颜色
         }
-
+        //状态栏颜色趋近于白色时，会智能将状态栏字体颜色变换为黑色
+        immersionBar.statusBarDarkFont(isDarkFont)
+        immersionBar.navigationBarDarkIcon(isDarkFont)
+        immersionBar.init()
     }
 
     /**

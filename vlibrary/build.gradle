@@ -75,10 +75,8 @@ dependencies {
     api "com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.7"
     //BackgroundLibrary  （通过标签直接生成shape，无需再写shape.xml）
     api "com.github.JavaNoober.BackgroundLibrary:libraryx:1.7.2"
-    // 状态栏 基础依赖包，必须要依赖
+    // 状态栏 https://github.com/gyf-dev/ImmersionBar
     api 'com.geyifeng.immersionbar:immersionbar:3.2.2'
-    // 状态栏 kotlin扩展（可选）
-    api 'com.geyifeng.immersionbar:immersionbar-ktx:3.2.2'
     // 语种切换框架：https://github.com/getActivity/MultiLanguages
     api 'com.github.getActivity:MultiLanguages:8.0'
     //livedata防止数据倒灌

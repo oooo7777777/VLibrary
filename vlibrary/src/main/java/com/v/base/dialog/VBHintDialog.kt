@@ -7,6 +7,7 @@ import android.view.Gravity
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.v.base.databinding.VbDialogHintBinding
+import com.v.base.utils.vbDp2px2Int
 import com.v.base.utils.vbGetScreenHeight
 import com.v.base.utils.vbSetViewLayoutParams
 
@@ -26,7 +27,7 @@ class VBHintDialog(mContext: Context) : VBDialog<VbDialogHintBinding>(mContext),
 
         if (context.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             //横屏 重新设置宽高
-            mDataBinding.layoutContent.vbSetViewLayoutParams(context.vbGetScreenHeight())
+            mDataBinding.layoutContent.vbSetViewLayoutParams(330.vbDp2px2Int())
         }
     }
 
