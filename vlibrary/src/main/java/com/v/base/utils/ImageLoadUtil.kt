@@ -162,9 +162,6 @@ private fun loadDispose(
         try {
             val options = RequestOptions()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .format(DecodeFormat.PREFER_RGB_565)
-                .error(errorResId)
-                .dontAnimate()
 
             //不同圆角
             if (transformation != null) {
@@ -186,13 +183,12 @@ private fun loadDispose(
                 }
             }
 
-            Glide.with(this)
+            Glide.with(this.context)
                 .load(any)
                 .apply(options)
                 .apply {
                     if (errorResId != 0) {
-                        thumbnail(
-                            loadError(
+                        error(loadError(
                                 this@run.context,
                                 errorResId,
                                 options

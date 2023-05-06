@@ -59,9 +59,7 @@ dependencies {
 
     //glide
     api 'jp.wasabeef:glide-transformations:4.3.0'//glide转换器
-    api 'com.github.bumptech.glide:glide:4.11.0'//glide
-    kapt 'com.github.bumptech.glide:compiler:4.11.0'//glide
-    api 'com.github.bumptech.glide:okhttp3-integration:4.11.0' //glide
+    api 'com.github.bumptech.glide:glide:4.15.1'//glide
     //retrofit
     api "com.squareup.retrofit2:retrofit:2.9.0"//retrofit
     api "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2"//retrofit
