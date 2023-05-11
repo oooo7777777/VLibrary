@@ -1,10 +1,15 @@
 package com.v.base.dialog
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
-import android.view.*
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import android.view.Window
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.LifecycleOwner
@@ -12,6 +17,7 @@ import com.v.base.R
 import com.v.base.VBConfig
 import com.v.base.annotaion.VBDialogOrientation
 import com.v.base.utils.vbGetAllChildViews
+import com.v.log.util.log
 import com.v.log.util.logI
 import java.lang.reflect.ParameterizedType
 
@@ -137,25 +143,16 @@ abstract class VBDialog<VB : ViewDataBinding>(private val mContext: Context) :
         return 0
     }
 
-    /**
-     * dialog是否全屏,会隐藏掉状态栏
-     */
-    open fun useFullScreen(): Boolean {
-        return false
-    }
 
     private fun setStyle() {
         window?.run {
-            //设置全屏属性
             addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
             requestFeature(Window.FEATURE_NO_TITLE)
 
-            if (useFullScreen()) {
-                setFlags(
-                    WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                    WindowManager.LayoutParams.FLAG_FULLSCREEN
-                )
-            }
+            setFlags(
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+            )
 
             setBackgroundDrawableResource(android.R.color.transparent)
             decorView.setPadding(0, 0, 0, 0)
@@ -175,11 +172,13 @@ abstract class VBDialog<VB : ViewDataBinding>(private val mContext: Context) :
                     if (useAnimations() && useAnimationsRes() == 0)
                         setWindowAnimations(R.style.vb_top_dialog_anim)
                 }
+
                 VBDialogOrientation.BOTTOM -> {
                     wlp.gravity = Gravity.BOTTOM
                     if (useAnimations() && useAnimationsRes() == 0)
                         setWindowAnimations(R.style.vb_bottom_dialog_anim)
                 }
+
                 VBDialogOrientation.LEFT -> {
                     wlp.gravity = Gravity.CENTER
                     if (useAnimations() && useAnimationsRes() == 0)
@@ -208,17 +207,27 @@ abstract class VBDialog<VB : ViewDataBinding>(private val mContext: Context) :
             }
             attributes = wlp
         }
-
     }
 
     override fun dismiss() {
         super.dismiss()
+        isStatusBarShown().log()
         onDismiss?.invoke()
     }
 
     override fun show() {
         super.show()
+        isStatusBarShown().log()
         onShow?.invoke()
+    }
+
+    /**
+     * 状态栏是否存在
+     */
+    private fun isStatusBarShown(): Boolean {
+        val params = (mContext as Activity).window.attributes
+        val paramsFlag = params.flags and WindowManager.LayoutParams.FLAG_FULLSCREEN.inv()
+        return paramsFlag == params.flags
     }
 
 }

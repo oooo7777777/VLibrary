@@ -5,10 +5,8 @@ import android.content.res.Configuration
 import android.graphics.Color
 import android.view.Gravity
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import com.v.base.databinding.VbDialogHintBinding
 import com.v.base.utils.vbDp2px2Int
-import com.v.base.utils.vbGetScreenHeight
 import com.v.base.utils.vbSetViewLayoutParams
 
 
@@ -116,9 +114,5 @@ class VBHintDialog(mContext: Context) : VBDialog<VbDialogHintBinding>(mContext),
     fun setCanceled(isCancelable: Boolean): VBHintDialog {
         setDialogCancelable(isCancelable)
         return this
-    }
-
-    override fun useFullScreen(): Boolean {
-        return true
     }
 }
