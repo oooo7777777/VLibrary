@@ -211,23 +211,12 @@ abstract class VBDialog<VB : ViewDataBinding>(private val mContext: Context) :
 
     override fun dismiss() {
         super.dismiss()
-        isStatusBarShown().log()
         onDismiss?.invoke()
     }
 
     override fun show() {
         super.show()
-        isStatusBarShown().log()
         onShow?.invoke()
-    }
-
-    /**
-     * 状态栏是否存在
-     */
-    private fun isStatusBarShown(): Boolean {
-        val params = (mContext as Activity).window.attributes
-        val paramsFlag = params.flags and WindowManager.LayoutParams.FLAG_FULLSCREEN.inv()
-        return paramsFlag == params.flags
     }
 
 }
