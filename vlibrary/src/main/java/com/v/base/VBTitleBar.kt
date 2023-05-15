@@ -22,10 +22,12 @@ class VBTitleBar @JvmOverloads constructor(
 
 
     var mDataBinding: VbTitleBarBinding =
-        DataBindingUtil.inflate(LayoutInflater.from(context),
+        DataBindingUtil.inflate(
+            LayoutInflater.from(context),
             R.layout.vb_title_bar,
             this,
-            true)
+            true
+        )
 
     init {
         mDataBinding.ivLeft.setImageResource(VBConfig.options.toolbarBackRes)
@@ -33,12 +35,12 @@ class VBTitleBar @JvmOverloads constructor(
     }
 
 
-    fun useToolbar(show: Boolean) {
+    fun useToolbar(show: Boolean, isShowBottomLine: Boolean = VBConfig.options.toolbarLine) {
         mDataBinding.toolbar.visibility = if (show) View.VISIBLE else View.GONE
-        mDataBinding.ivLine.visibility = if (show) View.VISIBLE else View.GONE
+        mDataBinding.ivLine.visibility = if (isShowBottomLine) View.VISIBLE else View.GONE
     }
 
-    fun useLine(show: Boolean) {
+    fun useLine(show: Boolean = VBConfig.options.toolbarLine) {
         mDataBinding.ivLine.visibility = if (show) View.VISIBLE else View.GONE
     }
 
@@ -56,7 +58,7 @@ class VBTitleBar @JvmOverloads constructor(
     fun setTitle(
         title: String = "",
         titleColor: Int = VBConfig.options.toolbarTitleColor,
-        isShowBottomLine: Boolean = true,
+        isShowBottomLine: Boolean = VBConfig.options.toolbarLine,
     ) {
         mDataBinding.tvTitle.text = title
         mDataBinding.tvTitle.setTextColor(titleColor)

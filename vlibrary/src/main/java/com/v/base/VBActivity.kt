@@ -131,7 +131,7 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
     protected open fun toolBarTitle(
         title: String = "",
         titleColor: Int = VBConfig.options.toolbarTitleColor,
-        isShowBottomLine: Boolean = true,
+        isShowBottomLine: Boolean =  VBConfig.options.toolbarLine,
         resLeft: Int = VBConfig.options.toolbarBackRes,
         listenerLeft: View.OnClickListener? = null,
     ): Boolean {

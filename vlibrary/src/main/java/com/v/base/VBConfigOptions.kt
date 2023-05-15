@@ -28,6 +28,10 @@ class VBConfigOptions(builder: Builder) {
     //顶部栏Title颜色
     var toolbarTitleColor: Int
 
+    //顶部栏下面的横线是否显示 默认显示
+    var toolbarLine: Boolean
+
+
     //设置状态栏颜色 状态栏颜色趋近于白色时 会智能将状态栏字体颜色变换为黑色
     var statusBarColor: String
 
@@ -66,6 +70,7 @@ class VBConfigOptions(builder: Builder) {
         this.toolbarColor = builder.toolbarColor
         this.toolbarBackRes = builder.toolbarBackRes
         this.toolbarTitleColor = builder.toolbarTitleColor
+        this.toolbarLine = builder.toolbarLine
         this.recyclerViewEmptyLayout = builder.recyclerViewEmptyLayout
         this.smartRefreshHeader = builder.smartRefreshHeader
         this.smartRefreshFooter = builder.smartRefreshFooter
@@ -83,6 +88,7 @@ class VBConfigOptions(builder: Builder) {
         internal var statusBarColor = "#ffffff"
         internal var toolbarColor = Color.parseColor("#FFFFFF")
         internal var toolbarTitleColor = Color.parseColor("#000000")
+        internal var toolbarLine = true
         internal var toolbarBackRes = R.mipmap.vb_ic_back_black
         internal var recyclerViewEmptyLayout = R.layout.vb_layout_empty
         internal var clickAnimator = true
@@ -128,6 +134,15 @@ class VBConfigOptions(builder: Builder) {
          */
         fun setToolbarTitleColor(toolbarTitleColor: Int): Builder {
             this.toolbarTitleColor = toolbarTitleColor
+            return this
+        }
+
+        /**
+         *
+         * 顶部栏下面的横线是否显示 默认显示
+         */
+        fun setToolbarLine(boolean: Boolean): Builder {
+            this.toolbarLine = boolean
             return this
         }
 
