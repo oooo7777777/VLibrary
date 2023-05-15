@@ -143,16 +143,25 @@ abstract class VBDialog<VB : ViewDataBinding>(private val mContext: Context) :
         return 0
     }
 
+    /**
+     * dialog是否全屏(单独使用此方法不会生效,需先把activity的状态栏给隐藏)
+     */
+    open fun useFullScreen(): Boolean {
+        return false
+    }
+
 
     private fun setStyle() {
         window?.run {
             addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
             requestFeature(Window.FEATURE_NO_TITLE)
 
-            setFlags(
-                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
-            )
+            if (useFullScreen()) {
+                setFlags(
+                    WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                    WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                )
+            }
 
             setBackgroundDrawableResource(android.R.color.transparent)
             decorView.setPadding(0, 0, 0, 0)
