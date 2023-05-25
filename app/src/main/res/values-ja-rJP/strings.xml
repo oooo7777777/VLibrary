@@ -12,6 +12,6 @@
     <string name="string_network_request">ネットワークリクエスト</string>
     <string name="string_dialog">ポップアップ</string>
     <string name="string_list_dialog">リストポップアップ</string>
-    <string name="string_current_language">日本</string>
+    <string name="string_current_language">日语</string>
 
 </resources>

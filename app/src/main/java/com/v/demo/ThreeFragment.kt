@@ -114,11 +114,34 @@ class ThreeFragment : VBFragment<FragmentThreeBinding, VBBlankViewModel>(), View
                 languages()
             }
             mDataBinding.bt9.id -> {
+                // 法语
+                restart = MultiLanguages.setAppLanguage(mContext, Locale.FRENCH)
+                languages()
+            }
+
+            mDataBinding.bt10.id -> {
+                // 意大利语
+                restart = MultiLanguages.setAppLanguage(mContext, Locale.ITALIAN)
+                languages()
+            }
+
+            mDataBinding.bt11.id -> {
+                // 德语
+                restart = MultiLanguages.setAppLanguage(mContext, Locale.GERMAN)
+                languages()
+            }
+            mDataBinding.bt12.id -> {
+                // 西班牙语
+                val locale =  Locale("es")
+                restart = MultiLanguages.setAppLanguage(mContext, locale)
+                languages()
+            }
+            mDataBinding.bt13.id -> {
                 //跟随系统
                 restart = MultiLanguages.clearAppLanguage(mContext)
                 languages()
             }
-            mDataBinding.bt10.id -> {
+            mDataBinding.bt14.id -> {
                 //韩语(没有配置这个语言,如果没有 则会拿去values里面配置的语言)
                 restart = MultiLanguages.setAppLanguage(mContext, Locale.KOREAN)
                 languages()

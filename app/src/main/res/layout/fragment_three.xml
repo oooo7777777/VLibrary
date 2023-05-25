@@ -22,166 +22,203 @@
         android:layout_height="wrap_content">
 
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-
-            <TextView
-                android:id="@+id/tvContent"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:background="@android:color/holo_blue_light"
-                android:gravity="center"
-                android:textColor="@android:color/white" />
-
-
-            <Button
-                android:id="@+id/bt1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/string_countdown"
-                android:textAllCaps="false"
-                app:vb_click_animator_off="@{v}" />
-
-            <Button
-                android:id="@+id/bt2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/string_heartbeat"
-                android:textAllCaps="false"
-                app:vb_click_animator_on="@{v}" />
-
-
-            <Button
-                android:id="@+id/bt3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/string_network_request"
-                android:textAllCaps="false"
-                app:vb_click="@{v}" />
-
-
-            <Button
-                android:id="@+id/bt4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/string_dialog"
-                android:textAllCaps="false"
-                app:vb_click="@{v}" />
-
-            <Button
-                android:id="@+id/bt5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/string_list_dialog"
-                android:textAllCaps="false"
-                app:vb_click="@{v}" />
-
-
-            <Button
-                android:id="@+id/bt6"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="语言切换-中文"
-                android:textAllCaps="false"
-                app:vb_click="@{v}" />
-
-            <Button
-                android:id="@+id/bt7"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="语言切换-英文"
-                android:textAllCaps="false"
-                app:vb_click="@{v}" />
-
-            <Button
-                android:id="@+id/bt8"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="语言切换-日文"
-                android:textAllCaps="false"
-                app:vb_click="@{v}" />
-
-            <Button
-                android:id="@+id/bt9"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="语言切换-跟随系统"
-                android:textAllCaps="false"
-                app:vb_click="@{v}" />
-
-
-            <Button
-                android:id="@+id/bt10"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="语言切换-韩语(没有配置这个语言)"
-                android:textAllCaps="false"
-                app:vb_click="@{v}" />
+            android:layout_height="match_parent">
 
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="当前 Activity 语种："
-                    android:textColor="@android:color/black" />
+                    android:id="@+id/tvContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:background="@android:color/holo_blue_light"
+                    android:gravity="center"
+                    android:textColor="@android:color/white" />
 
-                <TextView
-                    android:id="@+id/tvLanguageActivity"
+
+                <Button
+                    android:id="@+id/bt1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/string_countdown"
+                    android:textAllCaps="false"
+                    app:vb_click_animator_off="@{v}" />
+
+                <Button
+                    android:id="@+id/bt2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/string_heartbeat"
+                    android:textAllCaps="false"
+                    app:vb_click_animator_on="@{v}" />
+
+
+                <Button
+                    android:id="@+id/bt3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/string_network_request"
+                    android:textAllCaps="false"
+                    app:vb_click="@{v}" />
+
+
+                <Button
+                    android:id="@+id/bt4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/string_dialog"
+                    android:textAllCaps="false"
+                    app:vb_click="@{v}" />
+
+                <Button
+                    android:id="@+id/bt5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/string_list_dialog"
+                    android:textAllCaps="false"
+                    app:vb_click="@{v}" />
+
+
+                <Button
+                    android:id="@+id/bt6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="语言切换-中文"
+                    android:textAllCaps="false"
+                    app:vb_click="@{v}" />
+
+                <Button
+                    android:id="@+id/bt7"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="语言切换-英文"
+                    android:textAllCaps="false"
+                    app:vb_click="@{v}" />
+
+                <Button
+                    android:id="@+id/bt8"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="语言切换-日文"
+                    android:textAllCaps="false"
+                    app:vb_click="@{v}" />
+
+                <Button
+                    android:id="@+id/bt9"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="语言切换-法语"
+                    android:textAllCaps="false"
+                    app:vb_click="@{v}" />
+
+                <Button
+                    android:id="@+id/bt10"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="语言切换-意大利语"
+                    android:textAllCaps="false"
+                    app:vb_click="@{v}" />
+
+                <Button
+                    android:id="@+id/bt11"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="语言切换-德语"
+                    android:textAllCaps="false"
+                    app:vb_click="@{v}" />
+
+                <Button
+                    android:id="@+id/bt12"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="语言切换-西班牙语"
+                    android:textAllCaps="false"
+                    app:vb_click="@{v}" />
+
+                <Button
+                    android:id="@+id/bt13"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="语言切换-跟随系统"
+                    android:textAllCaps="false"
+                    app:vb_click="@{v}" />
+
+
+                <Button
+                    android:id="@+id/bt14"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="语言切换-韩语(没有配置这个语言)"
+                    android:textAllCaps="false"
+                    app:vb_click="@{v}" />
+
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="40dp"
-                    android:textColor="@android:color/black" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="当前 Activity 语种："
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/tvLanguageActivity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="40dp"
+                        android:textColor="@android:color/black" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+
+                        android:layout_height="wrap_content"
+                        android:text="当前 Application 语种："
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/tvLanguageApplication"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="40dp"
+                        android:textColor="@android:color/black" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="当前 System 语种："
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/tvLanguageSystem"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="40dp"
+                        android:textColor="@android:color/black" />
+                </LinearLayout>
+
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-
-                    android:layout_height="wrap_content"
-                    android:text="当前 Application 语种："
-                    android:textColor="@android:color/black" />
-
-                <TextView
-                    android:id="@+id/tvLanguageApplication"
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="40dp"
-                    android:textColor="@android:color/black" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="当前 System 语种："
-                    android:textColor="@android:color/black" />
-
-                <TextView
-                    android:id="@+id/tvLanguageSystem"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="40dp"
-                    android:textColor="@android:color/black" />
-            </LinearLayout>
-
-        </LinearLayout>
+        </ScrollView>
     </FrameLayout>
 </layout>
