@@ -57,4 +57,8 @@ class NetworkActivity : VBActivity<ActivityNetworkBinding, NetworkViewModel>(),
         }
     }
 
+    override fun initBaseTag(): String {
+       return "NetworkActivity"
+    }
+
 }

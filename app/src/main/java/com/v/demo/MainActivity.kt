@@ -6,6 +6,7 @@ import com.v.base.VBBlankViewModel
 import com.v.base.utils.vbGetFragment
 import com.v.demo.databinding.MainActivityBinding
 import com.v.demo.view.IndicatorZoom
+import com.v.log.util.log
 import net.lucode.hackware.magicindicator.ViewPagerHelper
 
 class MainActivity : VBActivity<MainActivityBinding, VBBlankViewModel>() {
@@ -51,6 +52,10 @@ class MainActivity : VBActivity<MainActivityBinding, VBBlankViewModel>() {
     }
 
     override fun createObserver() {
+    }
+
+    override fun initBaseTag(): String {
+        return "MainActivity"
     }
 
 

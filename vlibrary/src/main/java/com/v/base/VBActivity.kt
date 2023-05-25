@@ -22,7 +22,12 @@ import com.v.log.util.logI
 import java.lang.reflect.ParameterizedType
 
 
-abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatActivity() {
+abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatActivity(),
+    VBBaseTagInterface {
+
+    fun getBaseTag(): String {
+        return initBaseTag()
+    }
 
     lateinit var mContext: AppCompatActivity
 
@@ -131,7 +136,7 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
     protected open fun toolBarTitle(
         title: String = "",
         titleColor: Int = VBConfig.options.toolbarTitleColor,
-        isShowBottomLine: Boolean =  VBConfig.options.toolbarLine,
+        isShowBottomLine: Boolean = VBConfig.options.toolbarLine,
         resLeft: Int = VBConfig.options.toolbarBackRes,
         listenerLeft: View.OnClickListener? = null,
     ): Boolean {
