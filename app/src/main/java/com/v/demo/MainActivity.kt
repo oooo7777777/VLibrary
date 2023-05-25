@@ -54,11 +54,6 @@ class MainActivity : VBActivity<MainActivityBinding, VBBlankViewModel>() {
     override fun createObserver() {
     }
 
-    override fun initBaseTag(): String {
-        return "MainActivity"
-    }
-
-
     private fun initMg() {
         mDataBinding.magicIndicator.navigator = commonNavigator
         ViewPagerHelper.bind(mDataBinding.magicIndicator, mDataBinding.viewPager);

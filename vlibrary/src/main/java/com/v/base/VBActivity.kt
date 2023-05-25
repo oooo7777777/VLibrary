@@ -25,6 +25,10 @@ import java.lang.reflect.ParameterizedType
 abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatActivity(),
     VBBaseTagInterface {
 
+    override fun initBaseTag(): String {
+       return ""
+    }
+
     fun getBaseTag(): String {
         return initBaseTag()
     }
