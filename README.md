@@ -84,4 +84,9 @@ open class *** : VBApplication() {
 - **[wiki](https://github.com/oooo7777777/VLibrary/wiki)**
 
 - **[wiki](https://github.com/oooo7777777/VLibrary/wiki)**
+- 
+
+#### 与master分支差异
+1.此版本.VBActivity有实现VBBaseTagInterface
+2.此版本.有引入第三方多语言切换库
 
