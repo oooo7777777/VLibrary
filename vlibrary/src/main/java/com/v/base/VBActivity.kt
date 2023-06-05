@@ -110,11 +110,13 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
     /**
      * 设置状态栏颜色
      * @param color 颜色
-     * @param isDarkFont  状态栏字体深色或亮色
+     * @param isDarkFont  状态栏字体深色或亮色  true 深色
+     * @param navigationBarColor  底部导航栏颜色(如果是空,则直接拿isDarkFont来做是显示白色还是黑色)
      */
     protected open fun statusBarColor(
         color: String = VBConfig.options.statusBarColor,
         isDarkFont: Boolean = vbIsWhiteColor(Color.parseColor(color)),
+        navigationBarColor: String = VBConfig.options.navigationBarColor
     ) {
         val immersionBar = ImmersionBar.with(this)
         if (useTranslucent()) {
@@ -123,9 +125,11 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
             immersionBar.statusBarColor(color)     //状态栏颜色，不写默认透明色
             immersionBar.fitsSystemWindows(true)  //使用该属性,必须指定状态栏颜色
         }
+        immersionBar.navigationBarColor(navigationBarColor)
+        immersionBar.navigationBarDarkIcon(vbIsWhiteColor(Color.parseColor(navigationBarColor)))
+
         //状态栏颜色趋近于白色时，会智能将状态栏字体颜色变换为黑色
         immersionBar.statusBarDarkFont(isDarkFont)
-        immersionBar.navigationBarDarkIcon(isDarkFont)
         immersionBar.init()
     }
 

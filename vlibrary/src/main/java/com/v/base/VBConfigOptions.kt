@@ -35,6 +35,9 @@ class VBConfigOptions(builder: Builder) {
     //设置状态栏颜色 状态栏颜色趋近于白色时 会智能将状态栏字体颜色变换为黑色
     var statusBarColor: String
 
+    //底部导航栏颜色
+    var navigationBarColor: String
+
     //设置默认RecyclerView 数据为空界面 只会在page为1并且没有数据的时候显示
     var recyclerViewEmptyLayout: Int
 
@@ -67,6 +70,7 @@ class VBConfigOptions(builder: Builder) {
 
     init {
         this.statusBarColor = builder.statusBarColor
+        this.navigationBarColor = builder.navigationBarColor
         this.toolbarColor = builder.toolbarColor
         this.toolbarBackRes = builder.toolbarBackRes
         this.toolbarTitleColor = builder.toolbarTitleColor
@@ -86,6 +90,7 @@ class VBConfigOptions(builder: Builder) {
     class Builder {
 
         internal var statusBarColor = "#ffffff"
+        internal var navigationBarColor = "#ffffff"
         internal var toolbarColor = Color.parseColor("#FFFFFF")
         internal var toolbarTitleColor = Color.parseColor("#000000")
         internal var toolbarLine = true
@@ -118,6 +123,15 @@ class VBConfigOptions(builder: Builder) {
          */
         fun setStatusBarColor(statusBarColor: String): Builder {
             this.statusBarColor = statusBarColor
+            return this
+        }
+
+        /**
+         *  底部导航栏颜色
+         *  @param navigationBarColor  "#ffffff"
+         */
+        fun setNavigationBarColor(navigationBarColor: String): Builder {
+            this.navigationBarColor = navigationBarColor
             return this
         }
 
