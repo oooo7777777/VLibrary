@@ -5,8 +5,6 @@ plugins {
     id 'kotlin-parcelize'
     id 'maven-publish'
 }
-group = 'com.github.oooo7777777'
-
 afterEvaluate {
     publishing {
         publications {
