@@ -1,6 +1,5 @@
 package com.v.base
 
-import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,7 +9,6 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.gyf.immersionbar.ImmersionBar
-import com.hjq.language.MultiLanguages
 import com.noober.background.BackgroundLibrary
 import com.v.base.databinding.VbRootActivityBinding
 import com.v.base.dialog.VBLoadingDialog
@@ -22,16 +20,7 @@ import com.v.log.util.logI
 import java.lang.reflect.ParameterizedType
 
 
-abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatActivity(),
-    VBBaseTagInterface {
-
-    override fun initBaseTag(): String {
-        return ""
-    }
-
-    fun getBaseTag(): String {
-        return initBaseTag()
-    }
+abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatActivity(){
 
     lateinit var mContext: AppCompatActivity
 
@@ -218,10 +207,4 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
         mDataBinding.unbind()
         mRootDataBinding.unbind()
     }
-
-    override fun attachBaseContext(newBase: Context) {
-        // 绑定语种
-        super.attachBaseContext(MultiLanguages.attach(newBase))
-    }
-
 }

@@ -561,6 +561,28 @@ fun View.vbGetViewHeight(): Int {
 }
 
 /**
+ * 显示view
+ */
+fun View.vbVisible() {
+    visibility = View.VISIBLE
+}
+
+/**
+ * 隐藏view
+ */
+fun View.vbGone() {
+    visibility = View.GONE
+}
+
+/**
+ * view不可见
+ */
+fun View.vbInvisible() {
+    visibility = View.INVISIBLE
+}
+
+
+/**
  * 防抖动点击
  */
 fun View.vbOnClickListener(
