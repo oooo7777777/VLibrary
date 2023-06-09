@@ -5,6 +5,21 @@ plugins {
     id 'kotlin-parcelize'
     id 'maven-publish'
 }
+group = 'com.github.oooo7777777'
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                groupId = 'com.v.base'  // 包名
+                artifactId = 'vlibrary' // 库名
+                version = '3.8.6'  //版本号
+            }
+        }
+    }
+}
+
 android {
     compileSdkVersion 33
     defaultConfig {
@@ -27,19 +42,6 @@ android {
     }
     buildFeatures {
         dataBinding = true
-    }
-}
-
-afterEvaluate {
-    publishing {
-        publications {
-            release(MavenPublication) {
-                from components.release
-                groupId = 'com.v.base'  // 包名
-                artifactId = 'vlibrary' // 库名
-                version = '3.8.6'       //版本号
-            }
-        }
     }
 }
 
