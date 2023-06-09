@@ -1,7 +1,10 @@
 package com.v.demo
 
+import android.content.Intent
 import android.view.View
 import androidx.lifecycle.lifecycleScope
+import com.hjq.language.MultiLanguages
+import com.v.base.VBApplication.Companion.getApplication
 import com.v.base.VBBlankViewModel
 import com.v.base.VBFragment
 import com.v.base.dialog.VBHintDialog
@@ -13,6 +16,7 @@ import com.v.demo.bean.TestListBean
 import com.v.demo.databinding.FragmentThreeBinding
 import com.v.log.util.log
 import kotlinx.coroutines.Job
+import java.util.*
 
 
 /**
@@ -33,6 +37,18 @@ class ThreeFragment : VBFragment<FragmentThreeBinding, VBBlankViewModel>(), View
 
     override fun initData() {
         mDataBinding.v = this
+
+        mDataBinding.tvLanguageActivity.text =
+            this.resources.getString(R.string.string_current_language)
+
+        mDataBinding.tvLanguageApplication.text =
+            getApplication().resources.getString(R.string.string_current_language)
+
+        mDataBinding.tvLanguageSystem.text = MultiLanguages.getLanguageString(
+            mContext,
+            MultiLanguages.getSystemLanguage(),
+            R.string.string_current_language
+        )
     }
 
     override fun createObserver() {
@@ -80,9 +96,72 @@ class ThreeFragment : VBFragment<FragmentThreeBinding, VBBlankViewModel>(), View
                         dialog.dismiss()
                     }.show()
             }
+
+            mDataBinding.bt6.id -> {
+                // 中文
+                restart = MultiLanguages.setAppLanguage(mContext, Locale.CHINA)
+                languages()
+            }
+            mDataBinding.bt7.id -> {
+                // 英语
+                restart = MultiLanguages.setAppLanguage(mContext, Locale.ENGLISH)
+                languages()
+            }
+            mDataBinding.bt8.id -> {
+                // 日文
+                restart = MultiLanguages.setAppLanguage(mContext, Locale.JAPAN)
+                languages()
+            }
+            mDataBinding.bt9.id -> {
+                // 法语
+                restart = MultiLanguages.setAppLanguage(mContext, Locale.FRENCH)
+                languages()
+            }
+
+            mDataBinding.bt10.id -> {
+                // 意大利语
+                restart = MultiLanguages.setAppLanguage(mContext, Locale.ITALIAN)
+                languages()
+            }
+
+            mDataBinding.bt11.id -> {
+                // 德语
+                restart = MultiLanguages.setAppLanguage(mContext, Locale.GERMAN)
+                languages()
+            }
+            mDataBinding.bt12.id -> {
+                // 西班牙语
+                val locale =  Locale("es")
+                restart = MultiLanguages.setAppLanguage(mContext, locale)
+                languages()
+            }
+            mDataBinding.bt13.id -> {
+                //跟随系统
+                restart = MultiLanguages.clearAppLanguage(mContext)
+                languages()
+            }
+            mDataBinding.bt14.id -> {
+                //韩语(没有配置这个语言,如果没有 则会拿去values里面配置的语言)
+                restart = MultiLanguages.setAppLanguage(mContext, Locale.KOREAN)
+                languages()
+            }
         }
     }
 
+    private fun languages() {
+        // 1.使用recreate来重启Activity的效果差，有闪屏的缺陷
+        // recreate();
+
+        // 2.使用常规startActivity来重启Activity，有从左向右的切换动画，稍微比recreate的效果好一点，但是这种并不是最佳的效果
+        // startActivity(new Intent(this, LanguageActivity.class));
+        // finish();
+
+        // 3.我们可以充分运用 Activity 跳转动画，在跳转的时候设置一个渐变的效果，相比前面的两种带来的体验是最佳的
+        if (restart) {
+            startActivity(Intent(mContext, MainActivity::class.java))
+            mContext.finish()
+        }
+    }
 
     private fun countDownStart() {
         countDownStop()

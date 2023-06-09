@@ -1,0 +1,18 @@
+<resources>
+    <string name="dm_app_name">VLibrary</string>
+
+    <string-array name="dm_tab">
+        <item> 法语 </item>
+        <item> 法语 </item>
+        <item> 法语 </item>
+    </string-array>
+    <string name="string_activity_network_title">网络请求演示</string>
+    <string name="string_countdown">倒计时</string>
+    <string name="string_heartbeat">心跳</string>
+    <string name="string_network_request">网络请求</string>
+    <string name="string_dialog">弹窗</string>
+    <string name="string_list_dialog">列表弹窗</string>
+    <string name="string_current_language">法语</string>
+
+
+</resources>

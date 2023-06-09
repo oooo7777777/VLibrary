@@ -2,6 +2,7 @@ package com.v.base
 
 import android.app.Application
 import android.content.Context
+import com.hjq.language.MultiLanguages
 import com.hjq.toast.Toaster
 import com.v.log.LogConfig
 import com.v.log.VLog
@@ -21,6 +22,9 @@ abstract class VBApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         context = this
+
+        // 初始化语种切换框架
+        MultiLanguages.init(this)
         //初始化日志
         VLog.init(logConfig())
         // 初始化 Toast 框架
@@ -30,4 +34,9 @@ abstract class VBApplication : Application() {
 
     protected abstract fun initData()
 
+
+    override fun attachBaseContext(base: Context) {
+        // 绑定语种
+        super.attachBaseContext(MultiLanguages.attach(base))
+    }
 }
