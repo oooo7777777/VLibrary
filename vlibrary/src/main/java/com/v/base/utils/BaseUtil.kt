@@ -2,7 +2,11 @@ package com.v.base.utils
 
 import android.app.Activity
 import android.app.Application
-import android.content.*
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import android.content.ContextWrapper
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
@@ -33,9 +37,23 @@ import com.hjq.toast.style.CustomToastStyle
 import com.v.base.VBApplication
 import com.v.base.VBConfig
 import com.v.base.VBViewModel
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.*
-import java.util.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.math.BigDecimal
+import java.math.RoundingMode
+import java.text.DecimalFormat
+import java.util.Random
 import kotlin.math.roundToInt
 
 
@@ -583,6 +601,35 @@ fun <T> VBViewModel.vbLaunch(
     }
 }
 
+/**
+ * 保留小数 使用这种写法若小数点后均为零，则保留一位小数
+ * @param scale 小数位数
+ * @param mode 转换模型  RoundingMode.UP 不遵循四舍五入直接进1  RoundingMode.DOWN不四舍五入直接减1
+ * @param mode 转换模型  RoundingMode.HALF_UP 四舍五入  RoundingMode.HALF_DOWN 四舍五入
+ */
+fun Number.vbFormatDecimal(
+    scale: Int = 2,
+    mode: RoundingMode = RoundingMode.HALF_UP,
+): Double {
+    val bd = BigDecimal(this.toDouble())
+    return bd.setScale(scale, mode).toDouble()
+}
+
+/**
+ * 将double格式化为指定小数位的String，不足小数位用0补全
+ * @param scale 小数点后保留几位
+ * @return
+ */
+fun Double.vbFormatZero(scale: Int = 2): String {
+    if (scale == 0) {
+        return DecimalFormat("0").format(this)
+    }
+    var formatStr = "0."
+    for (i in 0 until scale) {
+        formatStr += "0"
+    }
+    return DecimalFormat(formatStr).format(scale)
+}
 
 
 
