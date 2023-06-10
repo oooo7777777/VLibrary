@@ -6,6 +6,8 @@ plugins {
     id 'maven-publish'
 }
 group = 'com.github.oooo7777777'
+version = '3.8.6'
+
 
 afterEvaluate {
     publishing {
@@ -30,6 +32,9 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
     }
 
     buildTypes {
