@@ -22,7 +22,7 @@ abstract class VBApplication : Application() {
         context = this
 
         //初始化日志
-        VLog.init(logConfig())
+//        VLog.init(logConfig())
         // 初始化 Toast 框架
         Toaster.init(this)
         initData()
