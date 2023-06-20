@@ -8,7 +8,7 @@ import com.v.log.LogConfig
 
 class DemoApplication : VBApplication() {
 
-    override fun logConfig(): LogConfig {
+    override fun logConfig(): LogConfig? {
         return LogConfig(this, true)
     }
 

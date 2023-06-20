@@ -12,17 +12,21 @@ abstract class VBApplication : Application() {
         private lateinit var context: VBApplication
         fun getApplication(): Application = context
     }
+
     /**
      * 日志配置
      */
-    protected open fun logConfig(): LogConfig=LogConfig(this, true)
+    protected open fun logConfig(): LogConfig? = LogConfig(this, true)
 
     override fun onCreate() {
         super.onCreate()
         context = this
 
         //初始化日志
-        VLog.init(logConfig())
+        logConfig()?.run {
+            VLog.init(this)
+        }
+
         // 初始化 Toast 框架
         Toaster.init(this)
         initData()
