@@ -10,6 +10,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.gyf.immersionbar.ImmersionBar
+import com.hjq.language.MultiLanguages
 import com.noober.background.BackgroundLibrary
 import com.v.base.databinding.VbRootActivityBinding
 import com.v.base.dialog.VBLoadingDialog
@@ -24,13 +25,8 @@ import java.lang.reflect.ParameterizedType
 abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatActivity(),
     VBBaseTagInterface {
 
-    override fun initBaseTag(): String {
-        return ""
-    }
 
-    fun getBaseTag(): String {
-        return initBaseTag()
-    }
+
 
     lateinit var mContext: AppCompatActivity
 
@@ -75,6 +71,18 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
         }
     }
 
+    override fun attachBaseContext(newBase: Context) {
+        // 绑定语种
+        super.attachBaseContext(MultiLanguages.attach(newBase))
+    }
+    override fun initBaseTag(): String {
+        return ""
+    }
+
+    fun getBaseTag(): String {
+        return initBaseTag()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         //注册BackgroundLibrary 可以直接在xml里面写shape
         BackgroundLibrary.inject2(this)
@@ -100,6 +108,7 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
         createObserver()
         javaClass.name.logI()
     }
+
 
     private fun initToolBar() {
         statusBarColor()
