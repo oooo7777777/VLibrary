@@ -32,7 +32,7 @@ allprojects {
 ```
 dependencies {
   ...
-  implementation 'com.github.oooo7777777:VLibrary:latestVersion'
+  implementation 'com.github.oooo7777777:VLibrary:3.8.6'
 }
 ```
 
