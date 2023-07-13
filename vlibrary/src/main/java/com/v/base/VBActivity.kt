@@ -196,7 +196,26 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
     /**
      * autoSize 高度
      */
-    protected open fun autoSize(): Float = VBConfig.options.screenHeight
+    protected open fun autoSizeHeight(): Float = VBConfig.options.screenHeight
+
+    /**
+     * autoSize 宽度
+     */
+    protected open fun autoSizeWidth(): Float = VBConfig.options.screenWidth
+
+    /**
+     * autoSize 宽度  是否按照宽度进行等比例适配, true 为以宽度进行等比例适配, false 为以高度进行等比例适配
+     */
+    protected open fun autoSizeIsWidth(): Boolean = false
+
+
+    /**
+     * 当前页面是否为竖屏 true 竖屏(会交换宽高)
+     */
+    protected open fun autoSizeIsPortrait(): Boolean {
+        return true
+    }
+
 
     /**
      * 注册UI 事件
@@ -234,7 +253,21 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
     }
 
     override fun getResources(): Resources {
-        AutoSizeCompat.autoConvertDensity(super.getResources(), autoSize(), false)//如果有自定义需求就用这个方法
+        if (autoSizeIsPortrait()) {
+            AutoSizeCompat.autoConvertDensity(
+                super.getResources(),
+                if (autoSizeIsWidth()) autoSizeWidth() else autoSizeHeight(),
+                autoSizeIsWidth()
+            )
+        } else {
+            AutoSizeCompat.autoConvertDensity(
+                super.getResources(),
+                if (autoSizeIsWidth()) autoSizeHeight() else autoSizeWidth(),
+                autoSizeIsWidth()
+            )
+        }
         return super.getResources()
     }
+
+
 }
