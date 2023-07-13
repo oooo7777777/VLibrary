@@ -1,6 +1,7 @@
 package com.v.base
 
 import android.content.Context
+import android.content.res.Resources
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -19,14 +20,12 @@ import com.v.base.utils.vbGetDataBinding
 import com.v.base.utils.vbIsWhiteColor
 import com.v.base.utils.vbToast
 import com.v.log.util.logI
+import me.jessyan.autosize.AutoSizeCompat
 import java.lang.reflect.ParameterizedType
 
 
 abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatActivity(),
     VBBaseTagInterface {
-
-
-
 
     lateinit var mContext: AppCompatActivity
 
@@ -75,6 +74,7 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
         // 绑定语种
         super.attachBaseContext(MultiLanguages.attach(newBase))
     }
+
     override fun initBaseTag(): String {
         return ""
     }
@@ -192,6 +192,12 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
      */
     protected abstract fun createObserver()
 
+
+    /**
+     * autoSize 高度
+     */
+    protected open fun autoSize(): Float = VBConfig.options.screenHeight
+
     /**
      * 注册UI 事件
      */
@@ -225,5 +231,10 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
         super.onDestroy()
         mDataBinding.unbind()
         mRootDataBinding.unbind()
+    }
+
+    override fun getResources(): Resources {
+        AutoSizeCompat.autoConvertDensity(super.getResources(), autoSize(), false)//如果有自定义需求就用这个方法
+        return super.getResources()
     }
 }

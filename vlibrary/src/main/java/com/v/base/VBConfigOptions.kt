@@ -68,6 +68,12 @@ class VBConfigOptions(builder: Builder) {
     //图片加载错误图片
     var errorResId: Int
 
+    //app设计图宽度
+    var screenWidth: Float
+
+    //app设计图高度
+    var screenHeight: Float
+
     init {
         this.statusBarColor = builder.statusBarColor
         this.navigationBarColor = builder.navigationBarColor
@@ -85,6 +91,8 @@ class VBConfigOptions(builder: Builder) {
         this.clickTime = builder.clickTime
         this.dialogDimAmount = builder.dialogDimAmount
         this.errorResId = builder.errorResId
+        this.screenWidth = builder.screenWidth
+        this.screenHeight = builder.screenHeight
     }
 
     class Builder {
@@ -100,6 +108,8 @@ class VBConfigOptions(builder: Builder) {
         internal var clickTime = 300L
         internal var dialogDimAmount = 0.5f
         internal var errorResId = R.mipmap.vb_iv_empty
+        internal var screenWidth = 375f
+        internal var screenHeight = 812f
 
         internal var netOptions = VBNetOptions.Builder().build()
 
@@ -249,6 +259,17 @@ class VBConfigOptions(builder: Builder) {
             return this
         }
 
+        //设置设计图宽度
+        fun setScreenWidth(screenWidth: Float): Builder {
+            this.screenWidth = screenWidth
+            return this
+        }
+
+        //设置设计图高度
+        fun setScreenHeight(screenHeight: Float): Builder {
+            this.screenHeight = screenHeight
+            return this
+        }
 
         fun build(): VBConfigOptions {
             //设置全局的Header构建器

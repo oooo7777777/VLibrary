@@ -8,7 +8,7 @@ import com.v.demo.databinding.MainActivityBinding
 import com.v.demo.view.IndicatorZoom
 import net.lucode.hackware.magicindicator.ViewPagerHelper
 
-class MainActivity : VBActivity<MainActivityBinding, VBBlankViewModel>() {
+class MainActivity : VBActivity<MainActivityBinding, VBBlankViewModel>()  {
 
 
     private val commonNavigator by lazy {
