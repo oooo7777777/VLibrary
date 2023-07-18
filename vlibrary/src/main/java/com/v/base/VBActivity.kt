@@ -206,7 +206,7 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
     /**
      * autoSize 宽度  是否按照宽度进行等比例适配, true 为以宽度进行等比例适配, false 为以高度进行等比例适配
      */
-    protected open fun autoSizeIsWidth(): Boolean = false
+    protected open fun autoSizeIsWidth(): Boolean = VBConfig.options.autoSizeIsWidth
 
 
     /**
