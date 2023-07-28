@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import com.v.log.util.log
 
 /**
  * @Author : ww
@@ -40,7 +41,7 @@ private fun Fragment.bundleFormat(tag: String = this.javaClass.name, mBundle: Bu
     var tagV = tag
     this.arguments?.run {
         if (this.containsKey(tagKey)) {
-            tagV = bundle.getString(tagKey).toString()
+            tagV = this.getString(tagKey).toString()
         }
     }
     bundle.putString(tagKey, tagV)
