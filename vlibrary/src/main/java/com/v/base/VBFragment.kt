@@ -20,6 +20,16 @@ import java.lang.reflect.ParameterizedType
 abstract class VBFragment<VB : ViewDataBinding, VM : VBViewModel> : Fragment() {
 
 
+    private var resumeListener: (() -> Unit)? = null
+    open fun setFragmentResume(listener: (() -> Unit)) {
+        this.resumeListener = listener
+    }
+
+    private var pauseListener: (() -> Unit)? = null
+    open fun setFragmentPause(listener: (() -> Unit)) {
+        this.pauseListener = listener
+    }
+
     private var isFirstShow = false
 
     protected lateinit var mContext: AppCompatActivity
@@ -83,12 +93,15 @@ abstract class VBFragment<VB : ViewDataBinding, VM : VBViewModel> : Fragment() {
      */
     open fun onFragmentResume() {
         javaClass.logI()
+        resumeListener?.invoke()
     }
 
     /**
      * 对用户不可见
      */
-    open fun onFragmentPause() {}
+    open fun onFragmentPause() {
+        pauseListener?.invoke()
+    }
 
 
     protected abstract fun initData()
