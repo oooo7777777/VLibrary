@@ -36,7 +36,7 @@ private fun Any.getFragmentManager(): FragmentManager? {
  * 在fragment的arguments里面添加tag并且返回tag
  */
 private fun Fragment.bundleFormat(tag: String = this.javaClass.name, mBundle: Bundle?): String {
-    val bundle = Bundle()
+    val bundle = this.arguments ?: Bundle()
     val tagKey = "vbGetFragmentTag"
     var tagV = tag
     this.arguments?.run {
