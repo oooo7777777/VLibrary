@@ -77,6 +77,9 @@ class VBConfigOptions(builder: Builder) {
     //autoSize 宽度  是否按照宽度进行等比例适配, true 为以宽度进行等比例适配, false 为以高度进行等比例适配
     var autoSizeIsWidth: Boolean
 
+    //是否开启autoSize适配
+    var autoSizeOpen: Boolean
+
     init {
         this.statusBarColor = builder.statusBarColor
         this.navigationBarColor = builder.navigationBarColor
@@ -97,6 +100,7 @@ class VBConfigOptions(builder: Builder) {
         this.screenWidth = builder.screenWidth
         this.screenHeight = builder.screenHeight
         this.autoSizeIsWidth = builder.autoSizeIsWidth
+        this.autoSizeOpen = builder.autoSizeOpen
     }
 
     class Builder {
@@ -115,6 +119,7 @@ class VBConfigOptions(builder: Builder) {
         internal var screenWidth = 375f
         internal var screenHeight = 812f
         internal var autoSizeIsWidth = false
+        internal var autoSizeOpen = true
 
         internal var netOptions = VBNetOptions.Builder().build()
 
@@ -279,6 +284,11 @@ class VBConfigOptions(builder: Builder) {
         //autoSize 宽度  是否按照宽度进行等比例适配, true 为以宽度进行等比例适配, false 为以高度进行等比例适配
         fun setAutoSizeIsWidth(autoSizeIsWidth: Boolean): Builder {
             this.autoSizeIsWidth = autoSizeIsWidth
+            return this
+        }
+
+        fun setAutoSizeOpen(autoSizeOpen: Boolean): Builder {
+            this.autoSizeOpen = autoSizeOpen
             return this
         }
 

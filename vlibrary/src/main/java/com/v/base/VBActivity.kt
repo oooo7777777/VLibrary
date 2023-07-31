@@ -216,6 +216,11 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
         return true
     }
 
+    /**
+     * 当前页面是否使用autoSize适配
+     */
+    protected open fun autoSizeOpen(): Boolean = true
+
 
     /**
      * 注册UI 事件
@@ -253,18 +258,20 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
     }
 
     override fun getResources(): Resources {
-        if (autoSizeIsPortrait()) {
-            AutoSizeCompat.autoConvertDensity(
-                super.getResources(),
-                if (autoSizeIsWidth()) autoSizeWidth() else autoSizeHeight(),
-                autoSizeIsWidth()
-            )
-        } else {
-            AutoSizeCompat.autoConvertDensity(
-                super.getResources(),
-                if (autoSizeIsWidth()) autoSizeHeight() else autoSizeWidth(),
-                autoSizeIsWidth()
-            )
+        if (VBConfig.options.autoSizeOpen && autoSizeOpen()) {
+            if (autoSizeIsPortrait()) {
+                AutoSizeCompat.autoConvertDensity(
+                    super.getResources(),
+                    if (autoSizeIsWidth()) autoSizeWidth() else autoSizeHeight(),
+                    autoSizeIsWidth()
+                )
+            } else {
+                AutoSizeCompat.autoConvertDensity(
+                    super.getResources(),
+                    if (autoSizeIsWidth()) autoSizeHeight() else autoSizeWidth(),
+                    autoSizeIsWidth()
+                )
+            }
         }
         return super.getResources()
     }
