@@ -21,8 +21,6 @@ class DemoApplication : VBApplication() {
                     .setBaseUrl("https://www.wanandroid.com/")
                     .build()
             )
-            .setScreenWidth(375f)
-            .setScreenHeight(812f - this.vbGetStatusBarHeight())
             .build()
         VBConfig.init(options)
     }

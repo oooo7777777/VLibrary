@@ -1,7 +1,6 @@
 package com.v.base
 
 import android.content.Context
-import android.content.res.Resources
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -20,7 +19,6 @@ import com.v.base.utils.vbGetDataBinding
 import com.v.base.utils.vbIsWhiteColor
 import com.v.base.utils.vbToast
 import com.v.log.util.logI
-import me.jessyan.autosize.AutoSizeCompat
 import java.lang.reflect.ParameterizedType
 
 
@@ -194,35 +192,6 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
 
 
     /**
-     * autoSize 高度
-     */
-    protected open fun autoSizeHeight(): Float = VBConfig.options.screenHeight
-
-    /**
-     * autoSize 宽度
-     */
-    protected open fun autoSizeWidth(): Float = VBConfig.options.screenWidth
-
-    /**
-     * autoSize 宽度  是否按照宽度进行等比例适配, true 为以宽度进行等比例适配, false 为以高度进行等比例适配
-     */
-    protected open fun autoSizeIsWidth(): Boolean = VBConfig.options.autoSizeIsWidth
-
-
-    /**
-     * 当前页面是否为竖屏 true 竖屏(会交换宽高)
-     */
-    protected open fun autoSizeIsPortrait(): Boolean {
-        return true
-    }
-
-    /**
-     * 当前页面是否使用autoSize适配
-     */
-    protected open fun autoSizeOpen(): Boolean = true
-
-
-    /**
      * 注册UI 事件
      */
     private fun registerUiChange() {
@@ -256,25 +225,5 @@ abstract class VBActivity<VB : ViewDataBinding, VM : VBViewModel> : AppCompatAct
         mDataBinding.unbind()
         mRootDataBinding.unbind()
     }
-
-    override fun getResources(): Resources {
-        if (VBConfig.options.autoSizeOpen && autoSizeOpen()) {
-            if (autoSizeIsPortrait()) {
-                AutoSizeCompat.autoConvertDensity(
-                    super.getResources(),
-                    if (autoSizeIsWidth()) autoSizeWidth() else autoSizeHeight(),
-                    autoSizeIsWidth()
-                )
-            } else {
-                AutoSizeCompat.autoConvertDensity(
-                    super.getResources(),
-                    if (autoSizeIsWidth()) autoSizeHeight() else autoSizeWidth(),
-                    autoSizeIsWidth()
-                )
-            }
-        }
-        return super.getResources()
-    }
-
 
 }

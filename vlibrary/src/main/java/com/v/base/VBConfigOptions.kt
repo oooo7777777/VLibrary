@@ -68,18 +68,6 @@ class VBConfigOptions(builder: Builder) {
     //图片加载错误图片
     var errorResId: Int
 
-    //app设计图宽度
-    var screenWidth: Float
-
-    //autoSize app设计图高度
-    var screenHeight: Float
-
-    //autoSize 宽度  是否按照宽度进行等比例适配, true 为以宽度进行等比例适配, false 为以高度进行等比例适配
-    var autoSizeIsWidth: Boolean
-
-    //是否开启autoSize适配
-    var autoSizeOpen: Boolean
-
     init {
         this.statusBarColor = builder.statusBarColor
         this.navigationBarColor = builder.navigationBarColor
@@ -97,10 +85,6 @@ class VBConfigOptions(builder: Builder) {
         this.clickTime = builder.clickTime
         this.dialogDimAmount = builder.dialogDimAmount
         this.errorResId = builder.errorResId
-        this.screenWidth = builder.screenWidth
-        this.screenHeight = builder.screenHeight
-        this.autoSizeIsWidth = builder.autoSizeIsWidth
-        this.autoSizeOpen = builder.autoSizeOpen
     }
 
     class Builder {
@@ -116,10 +100,6 @@ class VBConfigOptions(builder: Builder) {
         internal var clickTime = 300L
         internal var dialogDimAmount = 0.5f
         internal var errorResId = R.mipmap.vb_iv_empty
-        internal var screenWidth = 375f
-        internal var screenHeight = 812f
-        internal var autoSizeIsWidth = false
-        internal var autoSizeOpen = true
 
         internal var netOptions = VBNetOptions.Builder().build()
 
@@ -266,29 +246,6 @@ class VBConfigOptions(builder: Builder) {
          */
         fun setNetOptions(netOptions: VBNetOptions): Builder {
             this.netOptions = netOptions
-            return this
-        }
-
-        //设置设计图宽度
-        fun setScreenWidth(screenWidth: Float): Builder {
-            this.screenWidth = screenWidth
-            return this
-        }
-
-        //设置设计图高度
-        fun setScreenHeight(screenHeight: Float): Builder {
-            this.screenHeight = screenHeight
-            return this
-        }
-
-        //autoSize 宽度  是否按照宽度进行等比例适配, true 为以宽度进行等比例适配, false 为以高度进行等比例适配
-        fun setAutoSizeIsWidth(autoSizeIsWidth: Boolean): Builder {
-            this.autoSizeIsWidth = autoSizeIsWidth
-            return this
-        }
-
-        fun setAutoSizeOpen(autoSizeOpen: Boolean): Builder {
-            this.autoSizeOpen = autoSizeOpen
             return this
         }
 

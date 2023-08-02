@@ -83,8 +83,5 @@ dependencies {
     api 'com.github.oooo7777777:Vlog:1.1.6'
     //toast
     api 'com.github.getActivity:Toaster:12.3'
-    //AndroidAutoSize
-    api 'com.github.JessYanCoding:AndroidAutoSize:v1.2.1'
-
 }
 
