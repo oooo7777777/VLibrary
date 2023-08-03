@@ -8,12 +8,6 @@ import com.hjq.language.MultiLanguages
 import com.hjq.toast.Toaster
 import com.v.log.LogConfig
 import com.v.log.VLog
-import com.v.log.util.log
-import me.jessyan.autosize.AutoSize
-import me.jessyan.autosize.AutoSizeConfig
-import me.jessyan.autosize.onAdaptListener
-import me.jessyan.autosize.utils.ScreenUtils
-import kotlin.math.roundToInt
 
 
 abstract class VBApplication : Application() {
