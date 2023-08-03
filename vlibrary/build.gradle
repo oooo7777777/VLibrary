@@ -47,6 +47,7 @@ afterEvaluate {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     api "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    api "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     api "androidx.core:core-ktx:1.9.0"
     api "androidx.appcompat:appcompat:1.5.1"
     api "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
