@@ -1,12 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:paddingTop="40dp">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.v.demo.view.CircularProgressView
+                android:id="@+id/progress"
+                android:layout_width="100dp"
+                android:layout_height="100dp" />
+
+
+            <FrameLayout
+                android:layout_width="190dp"
+                android:layout_height="184dp"
+                android:layout_marginStart="10dp">
+
+
+                <ImageView
+                    android:id="@+id/ivCoverBg"
+                    android:layout_width="172dp"
+                    android:layout_height="155dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="19dp"
+                    android:rotation="5"
+                    tools:background="#1E2F38" />
+
+
+                <com.v.demo.view.RotationImageView
+                    android:id="@+id/ivCover"
+                    android:layout_width="165dp"
+                    android:layout_height="138dp"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginTop="8dp"
+                    android:rotation="-1"
+                    tools:background="#792C2C" />
+
+
+                <ImageView
+                    android:id="@+id/ivRadius"
+                    android:layout_marginBottom="5dp"
+                    android:layout_width="7dp"
+                    android:layout_height="73dp"
+                    tools:background="#1E2F38"
+                    android:layout_gravity="bottom"
+                    app:bl_solid_color="#1E2F38"
+                    app:bl_corners_radius="8dp" />
+
+                <ImageView
+                    android:id="@+id/ivBottom"
+                    android:layout_width="172dp"
+                    android:layout_height="63dp"
+                    tools:background="#1E2F38"
+                    android:layout_marginBottom="3dp"
+                    android:layout_gravity="bottom"
+                    app:bl_solid_color="#1E2F38"
+                    app:bl_corners_radius="8dp" />
+
+
+                <ImageView
+                    android:id="@+id/ivCoverMask"
+                    android:layout_width="165dp"
+                    android:layout_height="138dp"
+                    android:rotation="-1"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginTop="8dp"
+                    tools:background="@android:color/holo_blue_dark" />
+
+
+                <ImageView
+                    android:layout_width="168dp"
+                    android:layout_height="80dp"
+                    android:layout_gravity="bottom"
+                    android:adjustViewBounds="true"
+                    android:src="@mipmap/h_icon_ip_course_watermark" />
+
+            </FrameLayout>
+
+
+        </LinearLayout>
+
 
         <LinearLayout
             android:id="@+id/layoutBanner"
@@ -35,6 +121,7 @@
             android:id="@+id/refreshLayout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_weight="1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -49,5 +136,5 @@
 
         </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 </layout>

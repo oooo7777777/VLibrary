@@ -226,11 +226,11 @@ fun Any.vbToast(
 
 
 /** 根据百分比改变颜色透明度  */
-private fun vbChangeAlpha(color: Int, fraction: Float): Int {
-    val red = Color.red(color)
-    val green = Color.green(color)
-    val blue = Color.blue(color)
-    val alpha = (Color.alpha(color) * fraction).toInt()
+fun Int.vbChangeAlpha(fraction: Float): Int {
+    val red = Color.red(this)
+    val green = Color.green(this)
+    val blue = Color.blue(this)
+    val alpha = (Color.alpha(this) * fraction).toInt()
     return Color.argb(alpha, red, green, blue)
 }
 

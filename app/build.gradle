@@ -51,4 +51,6 @@ android {
 dependencies {
     implementation project(':vlibrary')
     implementation "com.github.hackware1993:MagicIndicator:1.7.0"
+    implementation 'androidx.palette:palette:1.0.0'//读取图片颜色
+
 }
