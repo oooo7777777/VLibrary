@@ -24,71 +24,7 @@
                 android:layout_height="100dp" />
 
 
-            <FrameLayout
-                android:layout_width="190dp"
-                android:layout_height="184dp"
-                android:layout_marginStart="10dp">
 
-
-                <ImageView
-                    android:id="@+id/ivCoverBg"
-                    android:layout_width="172dp"
-                    android:layout_height="155dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="19dp"
-                    android:rotation="5"
-                    tools:background="#1E2F38" />
-
-
-                <com.v.demo.view.RotationImageView
-                    android:id="@+id/ivCover"
-                    android:layout_width="165dp"
-                    android:layout_height="138dp"
-                    android:layout_marginStart="6dp"
-                    android:layout_marginTop="8dp"
-                    android:rotation="-1"
-                    tools:background="#792C2C" />
-
-
-                <ImageView
-                    android:id="@+id/ivRadius"
-                    android:layout_marginBottom="5dp"
-                    android:layout_width="7dp"
-                    android:layout_height="73dp"
-                    tools:background="#1E2F38"
-                    android:layout_gravity="bottom"
-                    app:bl_solid_color="#1E2F38"
-                    app:bl_corners_radius="8dp" />
-
-                <ImageView
-                    android:id="@+id/ivBottom"
-                    android:layout_width="172dp"
-                    android:layout_height="63dp"
-                    tools:background="#1E2F38"
-                    android:layout_marginBottom="3dp"
-                    android:layout_gravity="bottom"
-                    app:bl_solid_color="#1E2F38"
-                    app:bl_corners_radius="8dp" />
-
-
-                <ImageView
-                    android:id="@+id/ivCoverMask"
-                    android:layout_width="165dp"
-                    android:layout_height="138dp"
-                    android:rotation="-1"
-                    android:layout_marginStart="6dp"
-                    android:layout_marginTop="8dp"
-                    tools:background="@android:color/holo_blue_dark" />
-
-
-                <ImageView
-                    android:layout_width="168dp"
-                    android:layout_height="80dp"
-                    android:layout_gravity="bottom"
-                    android:adjustViewBounds="true"
-                    android:src="@mipmap/h_icon_ip_course_watermark" />
-
-            </FrameLayout>
 
 
         </LinearLayout>
