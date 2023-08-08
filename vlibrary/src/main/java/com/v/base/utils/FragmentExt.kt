@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import com.v.log.util.log
 
 /**
  * @Author : ww
@@ -17,6 +18,40 @@ private fun FragmentManager.inTransaction(func: FragmentTransaction.() -> Fragme
     beginTransaction().func().commitAllowingStateLoss()
 }
 
+private fun Any.getFragmentManager(): FragmentManager? {
+    return when (this) {
+        is AppCompatActivity ->
+            supportFragmentManager
+
+        is Fragment ->
+            childFragmentManager
+
+        else ->
+            null
+    }
+}
+
+
+/**
+ * 在fragment的arguments里面添加tag并且返回tag
+ */
+private fun Fragment.bundleFormat(tag: String = this.javaClass.name, mBundle: Bundle?): String {
+    val bundle = this.arguments ?: Bundle()
+    val tagKey = "vbGetFragmentTag"
+    var tagV = tag
+    this.arguments?.run {
+        if (this.containsKey(tagKey)) {
+            tagV = this.getString(tagKey).toString()
+        }
+    }
+    bundle.putString(tagKey, tagV)
+    mBundle?.run {
+        bundle.putAll(this)
+    }
+    this.arguments = bundle
+    return tagV
+}
+
 /**
  * 添加Fragment
  * @param fragment Fragment对象
@@ -24,14 +59,8 @@ private fun FragmentManager.inTransaction(func: FragmentTransaction.() -> Fragme
  * @param bundle 传值
  */
 fun Context.vbAddFragment(fragment: Fragment, frameId: Int, bundle: Bundle? = null) = run {
-    if (bundle != null) {
-        fragment.arguments = bundle
-    }
-    if (this is AppCompatActivity) {
-        supportFragmentManager.inTransaction { add(frameId, fragment) }
-    } else if (this is Fragment) {
-        childFragmentManager.inTransaction { add(frameId, fragment) }
-    }
+    val tag = fragment.bundleFormat(mBundle = bundle)
+    this.getFragmentManager()?.inTransaction { add(frameId, fragment, tag) }
 }
 
 /**
@@ -42,15 +71,8 @@ fun Context.vbAddFragment(fragment: Fragment, frameId: Int, bundle: Bundle? = nu
  */
 fun Context.vbReplaceFragment(fragment: Fragment, frameId: Int, bundle: Bundle? = null) =
     run {
-        if (bundle != null) {
-            fragment.arguments = bundle
-        }
-        if (this is AppCompatActivity) {
-            supportFragmentManager.inTransaction { replace(frameId, fragment) }
-        } else if (this is Fragment) {
-            childFragmentManager.inTransaction { replace(frameId, fragment) }
-        }
-
+        val tag = fragment.bundleFormat(mBundle = bundle)
+        this.getFragmentManager()?.inTransaction { replace(frameId, fragment, tag) }
     }
 
 /**
@@ -58,11 +80,7 @@ fun Context.vbReplaceFragment(fragment: Fragment, frameId: Int, bundle: Bundle? 
  * @param fragment Fragment对象
  */
 fun Context.vbRemoveFragment(fragment: Fragment) = run {
-    if (this is AppCompatActivity) {
-        supportFragmentManager.inTransaction { remove(fragment) }
-    } else if (this is Fragment) {
-        childFragmentManager.inTransaction { remove(fragment) }
-    }
+    this.getFragmentManager()?.inTransaction { remove(fragment) }
 }
 
 
@@ -71,12 +89,7 @@ fun Context.vbRemoveFragment(fragment: Fragment) = run {
  * @param fragment Fragment对象
  */
 fun Context.vbHideFragment(fragment: Fragment) = run {
-
-    if (this is AppCompatActivity) {
-        supportFragmentManager.inTransaction { hide(fragment) }
-    } else if (this is Fragment) {
-        childFragmentManager.inTransaction { hide(fragment) }
-    }
+    this.getFragmentManager()?.inTransaction { hide(fragment) }
 }
 
 
@@ -85,18 +98,13 @@ fun Context.vbHideFragment(fragment: Fragment) = run {
  * @param fragment Fragment对象
  */
 fun Context.vbShowFragment(fragment: Fragment) = run {
-
-    if (this is AppCompatActivity) {
-        supportFragmentManager.inTransaction { show(fragment) }
-    } else if (this is Fragment) {
-        childFragmentManager.inTransaction { show(fragment) }
-    }
+    this.getFragmentManager()?.inTransaction { show(fragment) }
 }
 
 
 /**
  * Activity 获取Fragment
- * 如果通过tag能获取得到Fragment则返回 否则新建
+ * 如果通过tag能获取得到Fragment则返回 否则新建(请确保tag为唯一值)
  * @param tag Fragment tag
  * @param clazz Fragment对象
  * @param bundle 传值
@@ -106,14 +114,11 @@ fun <T : Fragment> AppCompatActivity.vbGetFragment(
     clazz: Class<T>,
     bundle: Bundle? = null,
 ): Fragment = run {
-    var fragment = supportFragmentManager.findFragmentByTag(tag) as T?
-    if (fragment == null) {
-        fragment = clazz.newInstance()
+    val fragment = supportFragmentManager.findFragmentByTag(tag).run {
+        this ?: clazz.newInstance()
     }
-    if (bundle != null) {
-        fragment!!.arguments = bundle
-    }
-    return fragment!!
+    fragment.bundleFormat(tag, bundle)
+    return fragment
 }
 
 
@@ -130,14 +135,11 @@ fun <T : Fragment> Fragment.vbGetFragment(
     bundle: Bundle? = null,
 ): Fragment =
     run {
-        var fragment = childFragmentManager.findFragmentByTag(tag) as T?
-        if (fragment == null) {
-            fragment = clazz.newInstance()
+        val fragment = childFragmentManager.findFragmentByTag(tag).run {
+            this ?: clazz.newInstance()
         }
-        if (bundle != null) {
-            fragment!!.arguments = bundle
-        }
-        return fragment!!
+        fragment.bundleFormat(tag, bundle)
+        return fragment
     }
 
 
@@ -154,6 +156,17 @@ fun Any.vbRemoveAllFragment() = run {
             childFragmentManager.inTransaction { remove(fragment) }
         }
     }
+}
 
-
+/**
+ * 通过tag查询fragment是否存在
+ */
+fun Any.vbFindFragment(tag: String): Boolean {
+    return this.getFragmentManager().let {
+        if (it == null) {
+            return false
+        } else {
+            return it.findFragmentByTag(tag) != null
+        }
+    }
 }

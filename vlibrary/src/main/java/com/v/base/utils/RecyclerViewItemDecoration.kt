@@ -221,16 +221,30 @@ class RecyclerViewItemDecoration constructor(private val context: Context) :
         adjustOrientation(layoutManager)
 
         when (orientation) {
-            VBRecyclerViewItemOrientation.HORIZONTAL -> {
-                val top = if (isStartVisible && edge.top) height else 0
-                val bottom = if ((isEndVisible && edge.bottom) || !edge.bottom) height else 0
+            VBRecyclerViewItemOrientation.VERTICAL -> {
+                var top = if (isStartVisible && edge.top) height else 0
+                var bottom = if ((isEndVisible && edge.bottom) || !edge.bottom) height else 0
+                if (edge.top) {
+                    top += marginStart
+                }
+                if (edge.bottom) {
+                    bottom += marginEnd
+                }
                 outRect.set(0, top, 0, bottom)
             }
-            VBRecyclerViewItemOrientation.VERTICAL -> {
-                val left = if (isStartVisible && edge.left) width else 0
-                val right = if ((isEndVisible && edge.right) || !edge.right) width else 0
+
+            VBRecyclerViewItemOrientation.HORIZONTAL -> {
+                var left = if (isStartVisible && edge.left) width else 0
+                var right = if ((isEndVisible && edge.right) || !edge.right) width else 0
+                if (edge.left) {
+                    left += marginStart
+                }
+                if (edge.right) {
+                    right += marginEnd
+                }
                 outRect.set(left, 0, right, 0)
             }
+
             VBRecyclerViewItemOrientation.GRID -> {
 
                 val spanCount = when (layoutManager) {
@@ -244,6 +258,7 @@ class RecyclerViewItemDecoration constructor(private val context: Context) :
                         state.itemCount - 1,
                         spanCount
                     ) + 1
+
                     is StaggeredGridLayoutManager -> ceil(state.itemCount / spanCount.toFloat()).toInt()
                     else -> 1
                 }
@@ -253,6 +268,7 @@ class RecyclerViewItemDecoration constructor(private val context: Context) :
                         position,
                         spanCount
                     )
+
                     is StaggeredGridLayoutManager -> (layoutManager.findViewByPosition(position)!!.layoutParams as StaggeredGridLayoutManager.LayoutParams).spanIndex
                     else -> 0
                 }
@@ -262,6 +278,7 @@ class RecyclerViewItemDecoration constructor(private val context: Context) :
                         position,
                         spanCount
                     )
+
                     is StaggeredGridLayoutManager -> ceil((position + 1) / spanCount.toFloat()).toInt() - 1
                     else -> 0
                 }
@@ -297,6 +314,7 @@ class RecyclerViewItemDecoration constructor(private val context: Context) :
                             if (edge.left) if (isEndVisible) width else 0 else 0
                         }
                     }
+
                     (isStartVisible || isEndVisible) && orientation == RecyclerView.VERTICAL -> height - spanGroupIndex * height / spanGroupCount
                     else -> spanGroupIndex * height / spanGroupCount
                 }
@@ -310,6 +328,7 @@ class RecyclerViewItemDecoration constructor(private val context: Context) :
                             if (edge.right) if (isEndVisible) width else 0 else height
                         }
                     }
+
                     isStartVisible && orientation == RecyclerView.VERTICAL && layoutManager is StaggeredGridLayoutManager -> if (spanGroupIndex == 0) height else 0
                     (isStartVisible || isEndVisible) && orientation == RecyclerView.VERTICAL -> (spanGroupIndex + 1) * height / spanGroupCount
                     else -> height - (spanGroupIndex + 1) * height / spanGroupCount
@@ -323,8 +342,8 @@ class RecyclerViewItemDecoration constructor(private val context: Context) :
                     } else outRect.set(top, left, bottom, right)
                 }
             }
-            else ->
-            {
+
+            else -> {
 
             }
         }
@@ -341,8 +360,7 @@ class RecyclerViewItemDecoration constructor(private val context: Context) :
             VBRecyclerViewItemOrientation.HORIZONTAL -> drawHorizontal(canvas, parent)
             VBRecyclerViewItemOrientation.VERTICAL -> drawVertical(canvas, parent)
             VBRecyclerViewItemOrientation.GRID -> drawGrid(canvas, parent)
-            else ->
-            {
+            else -> {
 
             }
         }
@@ -354,7 +372,7 @@ class RecyclerViewItemDecoration constructor(private val context: Context) :
     private fun adjustOrientation(layoutManager: RecyclerView.LayoutManager) {
         if (layoutManager !is GridLayoutManager && layoutManager is LinearLayoutManager) {
             orientation =
-                if ((layoutManager as? LinearLayoutManager)?.orientation == RecyclerView.VERTICAL) VBRecyclerViewItemOrientation.HORIZONTAL else VBRecyclerViewItemOrientation.VERTICAL
+                if ((layoutManager as? LinearLayoutManager)?.orientation == RecyclerView.VERTICAL) VBRecyclerViewItemOrientation.VERTICAL else VBRecyclerViewItemOrientation.HORIZONTAL
         } else if (layoutManager is StaggeredGridLayoutManager || layoutManager is GridLayoutManager) {
             orientation = VBRecyclerViewItemOrientation.GRID
         }
@@ -691,6 +709,7 @@ class RecyclerViewItemDecoration constructor(private val context: Context) :
                                 bottom = spanIndex == spanCount
                             }
                         }
+
                         is GridLayoutManager -> {
                             val spanSizeLookup = layoutManager.spanSizeLookup
                             val spanCount = layoutManager.spanCount
@@ -717,6 +736,7 @@ class RecyclerViewItemDecoration constructor(private val context: Context) :
                                 bottom = spanIndex + spanSize - 1 == spanCount
                             }
                         }
+
                         is LinearLayoutManager -> {
                             if (layoutManager.orientation == RecyclerView.VERTICAL) {
                                 left = true
