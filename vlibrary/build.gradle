@@ -66,7 +66,7 @@ dependencies {
     //fastjson
     api "com.alibaba:fastjson:1.2.83"
     //refresh-layout
-    api "com.scwang.smart:refresh-layout-kernel:2.0.3"
+    compileOnly("com.scwang.smart:refresh-layout-kernel:2.0.3")
     api "com.scwang.smart:refresh-header-classics:2.0.3"
     api 'com.scwang.smart:refresh-layout-horizontal:2.0.0'
     //BaseRecyclerViewAdapterHelper
