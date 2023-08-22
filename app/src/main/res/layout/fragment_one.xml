@@ -14,18 +14,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:gravity="center"
+            android:background="@android:color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <com.v.demo.view.CircularProgressView
                 android:id="@+id/progress"
-                android:layout_width="100dp"
-                android:layout_height="100dp" />
-
-
-
-
+                android:layout_width="72dp"
+                android:layout_height="72dp" />
 
         </LinearLayout>
 
