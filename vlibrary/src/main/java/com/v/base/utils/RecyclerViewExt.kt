@@ -100,6 +100,7 @@ fun RecyclerView.vbDivider(
  * @param onItemLongClick item的长按
  * @param onItemChildClick itemChild的点击
  * @param onItemChildLongClick itemChild的长按
+ * @param enableLoadMoreSize 如果数据少于等于这个值就不开启上拉加载更多
  */
 fun <T> BaseQuickAdapter<T, *>.vbConfig(
     refreshLayout: SmartRefreshLayout? = null,
@@ -112,6 +113,7 @@ fun <T> BaseQuickAdapter<T, *>.vbConfig(
     emptyView: View? = null,
     emptyViewClickListener: View.OnClickListener? = null,
     refreshScrollDrag: Boolean = VBConfig.options.refreshScrollDrag,
+    enableLoadMoreSize: Int = 0
 ) {
 
 
@@ -126,7 +128,7 @@ fun <T> BaseQuickAdapter<T, *>.vbConfig(
             }
         }
 
-        if (onLoadMore == null && data.size <= 0) {
+        if (onLoadMore == null && data.size <= enableLoadMoreSize) {
             refreshLayout.setEnableLoadMore(false)
         } else {
             refreshLayout.setEnableLoadMore(true)
@@ -276,7 +278,7 @@ fun vbEmptyView(
 
 
 /**
- * RecyclerView动画滑动到顶部
+ * RecyclerView动画滑动到指定位置
  */
 fun RecyclerView.vbScrollToUp(position: Int = 10, selectPosition: Int = 0) {
     //先滑动到指定item 然后在动画滑动
@@ -284,7 +286,7 @@ fun RecyclerView.vbScrollToUp(position: Int = 10, selectPosition: Int = 0) {
         this.scrollToPosition(position)
     }
     val smoothScroller =
-        object : androidx.recyclerview.widget.LinearSmoothScroller(this.context) {
+        object : LinearSmoothScroller(this.context) {
             override fun getVerticalSnapPreference(): Int {
                 return SNAP_TO_START
             }

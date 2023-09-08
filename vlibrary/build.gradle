@@ -37,7 +37,7 @@ afterEvaluate {
                 from components.release
                 groupId = 'com.v.base'  // 包名
                 artifactId = 'vlibrary' // 库名
-                version = '3.8.6.1'       //版本号
+                version = '3.8.6.2'       //版本号
             }
         }
     }

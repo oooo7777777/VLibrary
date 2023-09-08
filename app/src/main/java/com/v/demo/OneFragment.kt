@@ -35,26 +35,8 @@ class OneFragment : VBFragment<FragmentOneBinding, DemoViewModel>() {
                     mViewModel.getList(page)
                 },
                 onItemClick = { _, _, position ->
-
-                    when (position) {
-                        0 ->
-                            mDataBinding.progress.setProgress(100f, 500)
-
-                        1 ->
-                            mDataBinding.progress.setCalories()
-
-                        2 ->
-                            mDataBinding.progress.setTime()
-
-                        3 ->
-                            mDataBinding.progress.setStepCount()
-
-                        else ->
-                            mDataBinding.progress.setProgress(300.vbGetRandomNumber().toFloat(), 500)
-                    }
-
-//                    val item = data[position] as HomeBean.Data
-//                    item.title.vbToast()
+                    val item = data[position] as HomeBean.Data
+                    item.title.vbToast()
                 },
                 onItemChildClick = { _, view, position ->
                     when (view.id) {
@@ -85,7 +67,6 @@ class OneFragment : VBFragment<FragmentOneBinding, DemoViewModel>() {
 
                 },
                 onItemClick = { _, _, position ->
-                    mDataBinding.progress.progress.log()
                 },
                 onItemChildClick = { _, view, position ->
                     when (view.id) {
@@ -99,7 +80,6 @@ class OneFragment : VBFragment<FragmentOneBinding, DemoViewModel>() {
 
     override fun initData() {
         mViewModel.getList(page)
-        mDataBinding.progress.setCalories()
     }
 
 
