@@ -15,7 +15,7 @@ interface VBNetApi {
     suspend fun post(@Url url: String): String
 
     @POST
-    suspend fun post(@Url url: String, body: RequestBody): String
+    suspend fun post(@Url url: String, @Body body: RequestBody): String
 
     @POST
     suspend fun post(@Url url: String, @Body map: Map<String, @JvmSuppressWildcards Any>): String
