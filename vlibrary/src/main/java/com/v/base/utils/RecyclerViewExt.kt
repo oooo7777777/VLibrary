@@ -280,7 +280,6 @@ fun vbEmptyView(
     return view
 }
 
-
 /**
  * RecyclerView动画滑动到指定位置
  */
