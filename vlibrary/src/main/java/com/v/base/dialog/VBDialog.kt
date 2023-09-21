@@ -224,8 +224,15 @@ abstract class VBDialog<VB : ViewDataBinding>(private val mContext: Context) :
     }
 
     override fun show() {
-        super.show()
-        onShow?.invoke()
+        if (mContext is AppCompatActivity) {
+            if (!mContext.isFinishing) {
+                super.show()
+                onShow?.invoke()
+            }
+        } else {
+            super.show()
+            onShow?.invoke()
+        }
     }
 
 }

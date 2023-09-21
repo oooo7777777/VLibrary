@@ -128,12 +128,16 @@ fun <T> BaseQuickAdapter<T, *>.vbConfig(
             }
         }
 
-        if (onLoadMore == null && data.size <= enableLoadMoreSize) {
+        if (onLoadMore==null){
             refreshLayout.setEnableLoadMore(false)
-        } else {
-            refreshLayout.setEnableLoadMore(true)
-            refreshLayout.setOnLoadMoreListener {
-                onLoadMore!!.invoke()
+        }else{
+            if (onLoadMore != null && data.size <= enableLoadMoreSize) {
+                refreshLayout.setEnableLoadMore(false)
+            } else {
+                refreshLayout.setEnableLoadMore(true)
+                refreshLayout.setOnLoadMoreListener {
+                    onLoadMore!!.invoke()
+                }
             }
         }
     }
