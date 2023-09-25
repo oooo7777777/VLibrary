@@ -100,7 +100,6 @@ fun RecyclerView.vbDivider(
  * @param onItemLongClick item的长按
  * @param onItemChildClick itemChild的点击
  * @param onItemChildLongClick itemChild的长按
- * @param enableLoadMoreSize 如果数据少于等于这个值就不开启上拉加载更多
  */
 fun <T> BaseQuickAdapter<T, *>.vbConfig(
     refreshLayout: SmartRefreshLayout? = null,
@@ -112,8 +111,7 @@ fun <T> BaseQuickAdapter<T, *>.vbConfig(
     onItemChildLongClick: ((adapter: BaseQuickAdapter<*, *>, view: View, position: Int) -> Unit)? = null,
     emptyView: View? = null,
     emptyViewClickListener: View.OnClickListener? = null,
-    refreshScrollDrag: Boolean = VBConfig.options.refreshScrollDrag,
-    enableLoadMoreSize: Int = 0
+    refreshScrollDrag: Boolean = VBConfig.options.refreshScrollDrag
 ) {
 
 
@@ -128,16 +126,12 @@ fun <T> BaseQuickAdapter<T, *>.vbConfig(
             }
         }
 
-        if (onLoadMore==null){
+        if (onLoadMore == null && data.size <= 0) {
             refreshLayout.setEnableLoadMore(false)
-        }else{
-            if (onLoadMore != null && data.size <= enableLoadMoreSize) {
-                refreshLayout.setEnableLoadMore(false)
-            } else {
-                refreshLayout.setEnableLoadMore(true)
-                refreshLayout.setOnLoadMoreListener {
-                    onLoadMore!!.invoke()
-                }
+        } else {
+            refreshLayout.setEnableLoadMore(true)
+            refreshLayout.setOnLoadMoreListener {
+                onLoadMore!!.invoke()
             }
         }
     }
