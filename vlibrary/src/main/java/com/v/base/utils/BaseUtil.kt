@@ -212,14 +212,14 @@ fun Any.vbToast(
     }
     if (isCancel) Toaster.cancel()
 
-    Toaster.setGravity(gravity, xOffset, yOffset)
     if (layoutId != 0) {
         Toaster.show(ToastParams().apply {
             this.text = this@vbToast.toString()
-            this.style = CustomToastStyle(layoutId)
+            this.style = CustomToastStyle(layoutId, gravity, xOffset, yOffset)
             this.duration = if (isLong) Toast.LENGTH_LONG else Toast.LENGTH_SHORT
         })
     } else {
+        Toaster.setGravity(gravity, xOffset, yOffset)
         if (isLong) Toaster.showLong(this) else Toaster.showShort(this)
     }
 }
