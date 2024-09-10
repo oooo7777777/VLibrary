@@ -20,10 +20,7 @@ class OneFragment : VBFragment<FragmentOneBinding, DemoViewModel>() {
     private var page = 1
 
     private val mAdapter by lazy {
-        mDataBinding.recyclerView.vbDivider {
-            setDivider(10)
-            isCludeVisible = true
-        }.vbLinear(OneFragmentAdapter()).apply {
+        mDataBinding.recyclerView.vbLinear(OneFragmentAdapter()).apply {
             vbConfig(
                 mDataBinding.refreshLayout,
                 onRefresh = {
@@ -33,11 +30,11 @@ class OneFragment : VBFragment<FragmentOneBinding, DemoViewModel>() {
                 onLoadMore = {
                     mViewModel.getList(page)
                 },
-                onItemClick = { _, _, position ->
-                    val item = data[position] as HomeBean.Data
+                onItemClick = { adapter, _, position ->
+                    val item = adapter.data[position]
                     item.title.vbToast()
                 },
-                onItemChildClick = { _, view, position ->
+                onItemChildClick = { adapter, view, position ->
                     when (view.id) {
 
                     }
@@ -51,15 +48,15 @@ class OneFragment : VBFragment<FragmentOneBinding, DemoViewModel>() {
                         "点击了自定义空布局".vbToast()
                     })
             )
-        } as OneFragmentAdapter
+        }.vbDivider {
+            setDivider(10)
+            isCludeVisible = true
+        }
     }
 
 
     private val mAdapterBanner by lazy {
-        mDataBinding.recyclerViewHorizontal.vbDivider {
-            setDivider(10)
-            isCludeVisible = true
-        }.vbLinearHorizontal(BannerAdapter()).apply {
+        mDataBinding.recyclerViewHorizontal.vbLinearHorizontal(BannerAdapter()).apply {
             vbConfig(
                 mDataBinding.refreshLayoutHorizontal,
                 onLoadMore = {
@@ -74,7 +71,10 @@ class OneFragment : VBFragment<FragmentOneBinding, DemoViewModel>() {
                     }
                 }
             )
-        } as BannerAdapter
+        }.vbDivider {
+            setDivider(10)
+            isCludeVisible = true
+        }
     }
 
 

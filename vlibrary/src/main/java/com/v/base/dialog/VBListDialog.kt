@@ -2,7 +2,6 @@ package com.v.base.dialog
 
 import android.content.Context
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.v.base.R
@@ -30,9 +29,11 @@ class VBListDialog(mContext: Context) : VBDialog<VbDialogListBinding>(mContext) 
     }
 
     private val mAdapter by lazy {
-        mDataBinding.recyclerView.vbDivider {
-            setDivider(1)
-        }.vbLinear(MyAdapter()) as MyAdapter
+        mDataBinding.recyclerView
+            .vbLinear(MyAdapter())
+            .vbDivider {
+                setDivider(1)
+            }
     }
 
 

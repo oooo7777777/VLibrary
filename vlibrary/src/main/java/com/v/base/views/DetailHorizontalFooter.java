@@ -1,4 +1,4 @@
-package com.v.base;
+package com.v.base.views;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -12,6 +12,7 @@ import com.scwang.smart.refresh.horizontal.HorizontalFooter;
 import com.scwang.smart.refresh.layout.api.RefreshKernel;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.constant.RefreshState;
+import com.v.base.R;
 
 /**
  *  SmartRefreshHorizontal 自定义footer

@@ -2,7 +2,8 @@ package com.v.demo.model
 
 import androidx.lifecycle.MutableLiveData
 import com.v.base.VBViewModel
-import com.v.base.apiBase
+import com.v.base.net.vbNetApi
+import com.v.base.net.vbRequest
 import com.v.demo.bean.BannerBean
 import com.v.demo.bean.HomeBean
 import com.v.demo.net.ApiResponse
@@ -26,7 +27,7 @@ class DemoViewModel : VBViewModel() {
         }
         vbRequest(
             {
-                apiBase.get("article/list/$page/json")
+                vbNetApi.get("article/list/$page/json")
             },
             homeBean
         )
@@ -36,9 +37,11 @@ class DemoViewModel : VBViewModel() {
     private fun getBanner() {
         vbRequest(
             {
-                apiBase.get("banner/json")
+                vbNetApi.get("banner/json")
             },
-            bannerBean
+            success = {
+
+            }
         )
     }
 

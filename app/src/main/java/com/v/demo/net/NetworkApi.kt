@@ -18,7 +18,7 @@ interface NetworkApi {
     }
 
     @GET("banner/json")
-    suspend fun getBanner(): ApiResponse<ArrayList<BannerBean>>
+    suspend fun getBanner(): ArrayList<BannerBean>
 
 
     @GET("article/list/{page}/json")

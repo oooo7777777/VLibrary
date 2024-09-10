@@ -8,7 +8,7 @@
         android:fitsSystemWindows="false"
         android:orientation="vertical">
 
-        <com.v.base.VBTitleBar
+        <com.v.base.views.VBTitleBar
             android:id="@+id/vbTitleBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

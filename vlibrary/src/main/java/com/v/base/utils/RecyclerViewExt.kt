@@ -14,9 +14,9 @@ import com.v.base.VBConfig
 /**
  * 线性列表
  */
-fun RecyclerView.vbLinear(
-    adapter: BaseQuickAdapter<*, *>,
-): BaseQuickAdapter<*, *> {
+fun <T : BaseQuickAdapter<*, *>> RecyclerView.vbLinear(
+    adapter: T
+): T {
     layoutManager = LinearLayoutManager(context)
     (this.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
     this.adapter = adapter
@@ -26,9 +26,9 @@ fun RecyclerView.vbLinear(
 /**
  * 横向列表
  */
-fun RecyclerView.vbLinearHorizontal(
-    adapter: BaseQuickAdapter<*, *>,
-): BaseQuickAdapter<*, *> {
+fun <T : BaseQuickAdapter<*, *>> RecyclerView.vbLinearHorizontal(
+    adapter: T
+): T {
     layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
     (this.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
     this.adapter = adapter
@@ -39,10 +39,10 @@ fun RecyclerView.vbLinearHorizontal(
  * 表格列表
  * @param count 每一列的数据
  */
-fun RecyclerView.vbGrid(
-    adapter: BaseQuickAdapter<*, *>,
+fun <T : BaseQuickAdapter<*, *>> RecyclerView.vbGrid(
+    adapter: T,
     count: Int,
-): BaseQuickAdapter<*, *> {
+): T {
     layoutManager = GridLayoutManager(context, count)
     (this.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
     this.adapter = adapter
@@ -53,11 +53,11 @@ fun RecyclerView.vbGrid(
  * 瀑布流列表
  * @param count 每一列的数据
  */
-fun RecyclerView.vbGridStaggered(
-    adapter: BaseQuickAdapter<*, *>,
+fun <T : BaseQuickAdapter<*, *>> RecyclerView.vbGridStaggered(
+    adapter: T,
     count: Int,
     orientation: Int = StaggeredGridLayoutManager.HORIZONTAL,
-): BaseQuickAdapter<*, *> {
+): T {
     layoutManager = StaggeredGridLayoutManager(count, orientation)
     (this.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
     this.adapter = adapter
@@ -68,10 +68,10 @@ fun RecyclerView.vbGridStaggered(
  * 自定义LayoutManager
  * LayoutManager
  */
-fun RecyclerView.vbLayoutManager(
-    adapter: BaseQuickAdapter<*, *>,
+fun <T : BaseQuickAdapter<*, *>> RecyclerView.vbLayoutManager(
+    adapter: T,
     layoutManager: RecyclerView.LayoutManager,
-): BaseQuickAdapter<*, *> {
+): T {
     this.layoutManager = layoutManager
     this.adapter = adapter
     return adapter
@@ -79,16 +79,24 @@ fun RecyclerView.vbLayoutManager(
 
 
 /**
- * 函数配置分割线
- * 具体配置参数查看[RecyclerViewItemDecoration]
+ * 设置分割线
  */
-fun RecyclerView.vbDivider(
-    block: RecyclerViewItemDecoration.() -> Unit,
-): RecyclerView {
-    val itemDecoration = RecyclerViewItemDecoration(context).apply(block)
-    addItemDecoration(itemDecoration)
+fun <T : BaseQuickAdapter<*, *>> T.vbDivider(
+    block: RecyclerViewItemDecoration.() -> Unit
+): T {
+    val recyclerView = this.recyclerView
+
+    // 检查是否设置了 LayoutManager
+    if (recyclerView.layoutManager == null) {
+        throw IllegalStateException("LayoutManager未设置, 请在设置LayoutManager后再调用vbDivider")
+    }
+
+    // 应用分割线
+    RecyclerViewItemDecoration(recyclerView).apply(block).create()
+
     return this
 }
+
 
 
 /**
@@ -101,17 +109,17 @@ fun RecyclerView.vbDivider(
  * @param onItemChildClick itemChild的点击
  * @param onItemChildLongClick itemChild的长按
  */
-fun <T> BaseQuickAdapter<T, *>.vbConfig(
+fun <T : BaseQuickAdapter<*, *>> T.vbConfig(
     refreshLayout: SmartRefreshLayout? = null,
     onRefresh: (() -> Unit)? = null,
     onLoadMore: (() -> Unit)? = null,
-    onItemClick: ((adapter: BaseQuickAdapter<*, *>, view: View, position: Int) -> Unit)? = null,
-    onItemLongClick: ((adapter: BaseQuickAdapter<*, *>, view: View, position: Int) -> Unit)? = null,
-    onItemChildClick: ((adapter: BaseQuickAdapter<*, *>, view: View, position: Int) -> Unit)? = null,
-    onItemChildLongClick: ((adapter: BaseQuickAdapter<*, *>, view: View, position: Int) -> Unit)? = null,
+    onItemClick: ((adapter: T, view: View, position: Int) -> Unit)? = null,
+    onItemLongClick: ((adapter: T, view: View, position: Int) -> Unit)? = null,
+    onItemChildClick: ((adapter:T, view: View, position: Int) -> Unit)? = null,
+    onItemChildLongClick: ((adapter: T, view: View, position: Int) -> Unit)? = null,
     emptyView: View? = null,
     emptyViewClickListener: View.OnClickListener? = null,
-    refreshScrollDrag: Boolean = VBConfig.options.refreshScrollDrag,
+    refreshScrollDrag: Boolean = VBConfig.options.refreshScrollDrag
 ) {
 
 
@@ -126,12 +134,12 @@ fun <T> BaseQuickAdapter<T, *>.vbConfig(
             }
         }
 
-        if (onLoadMore == null && data.size <= 0) {
+        if (onLoadMore == null) {
             refreshLayout.setEnableLoadMore(false)
         } else {
             refreshLayout.setEnableLoadMore(true)
             refreshLayout.setOnLoadMoreListener {
-                onLoadMore!!.invoke()
+                onLoadMore.invoke()
             }
         }
     }
@@ -139,7 +147,7 @@ fun <T> BaseQuickAdapter<T, *>.vbConfig(
     if (onItemClick != null) {
         setOnItemClickListener { adapter, view, position ->
             if (ClickEventUtils.isFastClick) {
-                onItemClick.invoke(adapter, view, position)
+                onItemClick.invoke(adapter as T, view, position)
             }
         }
     }
@@ -147,7 +155,7 @@ fun <T> BaseQuickAdapter<T, *>.vbConfig(
 
     if (onItemLongClick != null) {
         setOnItemLongClickListener { adapter, view, position ->
-            onItemLongClick.invoke(adapter, view, position)
+            onItemLongClick.invoke(adapter as T, view, position)
             true
         }
     }
@@ -156,14 +164,14 @@ fun <T> BaseQuickAdapter<T, *>.vbConfig(
     if (onItemChildClick != null) {
         setOnItemChildClickListener { adapter, view, position ->
             if (ClickEventUtils.isFastClick) {
-                onItemChildClick.invoke(adapter, view, position)
+                onItemChildClick.invoke(adapter as T, view, position)
             }
         }
     }
 
     if (onItemChildLongClick != null) {
         setOnItemChildLongClickListener { adapter, view, position ->
-            onItemChildLongClick.invoke(adapter, view, position)
+            onItemChildLongClick.invoke(adapter as T, view, position)
             true
         }
 
@@ -223,7 +231,7 @@ fun <T> BaseQuickAdapter<T, *>.vbLoad(
         addData(list)
     }
 
-    return if (list.isNullOrEmpty()) {
+    return if (list.isEmpty()) {
         mCurrentPageNum
     } else {
         mCurrentPageNum + 1
@@ -274,9 +282,10 @@ fun vbEmptyView(
     return view
 }
 
-
 /**
- * RecyclerView动画滑动到顶部
+ * RecyclerView动画滑动到指定位置
+ * @param  position 先滑动的某个位置
+ * @param  selectPosition 在滑动到最终的位置
  */
 fun RecyclerView.vbScrollToUp(position: Int = 10, selectPosition: Int = 0) {
     //先滑动到指定item 然后在动画滑动
@@ -284,7 +293,7 @@ fun RecyclerView.vbScrollToUp(position: Int = 10, selectPosition: Int = 0) {
         this.scrollToPosition(position)
     }
     val smoothScroller =
-        object : androidx.recyclerview.widget.LinearSmoothScroller(this.context) {
+        object : LinearSmoothScroller(this.context) {
             override fun getVerticalSnapPreference(): Int {
                 return SNAP_TO_START
             }

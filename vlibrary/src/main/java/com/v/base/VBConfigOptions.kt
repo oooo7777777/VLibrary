@@ -7,8 +7,8 @@ import com.scwang.smart.refresh.horizontal.SmartRefreshHorizontal
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.listener.DefaultRefreshFooterCreator
 import com.scwang.smart.refresh.layout.listener.DefaultRefreshHeaderCreator
-import com.scwang.smart.refresh.layout.wrapper.RefreshFooterWrapper
 import com.v.base.net.VBNetOptions
+import com.v.base.views.DetailHorizontalFooter
 
 
 /**
@@ -17,8 +17,6 @@ import com.v.base.net.VBNetOptions
  * time    : 2022-02-16
  */
 class VBConfigOptions(builder: Builder) {
-
-
     //顶部栏背景颜色
     var toolbarColor: Int
 
@@ -59,8 +57,6 @@ class VBConfigOptions(builder: Builder) {
     //点击防抖动间隔
     var clickTime: Long
 
-    //网络请求配置
-    var netOptions: VBNetOptions
 
     //dialog变暗系数
     var dialogDimAmount: Float
@@ -80,7 +76,6 @@ class VBConfigOptions(builder: Builder) {
         this.smartRefreshFooter = builder.smartRefreshFooter
         this.smartRefreshFooterHorizontal = builder.smartRefreshFooterHorizontal
         this.refreshScrollDrag = builder.refreshScrollDrag
-        this.netOptions = builder.netOptions
         this.clickAnimator = builder.clickAnimator
         this.clickTime = builder.clickTime
         this.dialogDimAmount = builder.dialogDimAmount
@@ -234,7 +229,7 @@ class VBConfigOptions(builder: Builder) {
         }
 
         /**
-         * 设备固件加载错误站位图
+         * 加载错误占位图
          */
         fun setErrorResId(errorResId: Int): Builder {
             this.errorResId = errorResId
@@ -248,7 +243,6 @@ class VBConfigOptions(builder: Builder) {
             this.netOptions = netOptions
             return this
         }
-
 
         fun build(): VBConfigOptions {
             //设置全局的Header构建器

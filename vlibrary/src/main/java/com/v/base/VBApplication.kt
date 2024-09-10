@@ -16,7 +16,7 @@ abstract class VBApplication : Application() {
     /**
      * 日志配置
      */
-    protected open fun logConfig(): LogConfig? = LogConfig(this, true)
+    protected open fun logConfig(): LogConfig? = LogConfig(this, true, true)
 
     override fun onCreate() {
         super.onCreate()

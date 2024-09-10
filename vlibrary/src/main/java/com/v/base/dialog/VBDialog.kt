@@ -1,6 +1,5 @@
 package com.v.base.dialog
 
-import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.os.Build
@@ -14,10 +13,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.LifecycleOwner
 import com.v.base.R
-import com.v.base.VBConfig
 import com.v.base.annotaion.VBDialogOrientation
 import com.v.base.utils.vbGetAllChildViews
-import com.v.log.util.log
 import com.v.log.util.logI
 import java.lang.reflect.ParameterizedType
 

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="HorizontalProgressBarControl">
+        <attr name="progress_unreached_color1" format="color" />
+        <attr name="progress_reached_color1" format="color" />
+        <attr name="progress_reached_bar_height1" format="dimension" />
+        <attr name="progress_unreached_bar_height1" format="dimension" />
+        <attr name="progress_text_size1" format="dimension" />
+        <attr name="progress_text_color1" format="color" />
+        <attr name="progress_text_offset1" format="dimension" />
+        <attr name="progress_radius" format="dimension" />
+        <attr name="progress_text_content" format="string" />
+        <attr name="progress_indicator_text" format="boolean" /><!--指示器文本还是图片-->
+        <attr name="progress_text_content_size" format="integer" />
+        <attr name="progress_text_progress_size" format="integer" />
+        <attr name="progress_text_margin" format="dimension" />
+        <attr name="progress_margin" format="dimension" />
+        <attr name="progress_indicator_icon" format="reference" />
+
+    </declare-styleable>
+
+
+
+</resources>

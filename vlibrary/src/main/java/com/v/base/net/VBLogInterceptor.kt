@@ -1,6 +1,7 @@
 package com.v.base.net
 
 import android.text.TextUtils
+import android.util.Log
 import com.alibaba.fastjson.JSONObject
 import com.v.log.util.logD
 import com.v.log.util.logE
@@ -46,7 +47,6 @@ open class VBLogInterceptor : Interceptor {
         sb.append(requestStartMessage)
 
 
-
         if (!hasRequestBody) {
             sb.append("\n")
             sb.append("--> END " + request.method())
@@ -69,7 +69,9 @@ open class VBLogInterceptor : Interceptor {
         } catch (e: java.lang.Exception) {
             sb.append("\n")
             sb.append("<-- HTTP FAILED: $e")
-            sb.logE()
+            sb.append("\n")
+            sb.append(Log.getStackTraceString(e))
+            sb.logE("MrkLogInterceptor")
             throw e
         }
         val tookMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNs)
@@ -155,7 +157,7 @@ open class VBLogInterceptor : Interceptor {
                     sb.append("")
                     sb.append("Couldn't decode the response body; charset is likely malformed.")
                     sb.append("<-- END HTTP")
-                    sb.logE(save = false)
+                    sb.logE("MrkLogInterceptor",save = false)
                     return response
                 }
             }
@@ -177,7 +179,7 @@ open class VBLogInterceptor : Interceptor {
             sb.append("<-- END HTTP (" + buffer.size() + "-byte body)")
         }
 
-        (sb.toString().replace(", }", "}")).logD(request.url().encodedPath(),save = false)
+        (sb.toString().replace(", }", "}")).logD(request.url().encodedPath(), save = false)
         return response
     }
 
@@ -238,6 +240,5 @@ open class VBLogInterceptor : Interceptor {
 
         }
     }
-
 
 }

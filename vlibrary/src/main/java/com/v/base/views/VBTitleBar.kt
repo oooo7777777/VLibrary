@@ -1,4 +1,4 @@
-package com.v.base
+package com.v.base.views
 
 
 import android.content.Context
@@ -8,6 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import androidx.databinding.DataBindingUtil
+import com.v.base.R
+import com.v.base.VBConfig
 import com.v.base.databinding.VbTitleBarBinding
 import com.v.base.utils.*
 
