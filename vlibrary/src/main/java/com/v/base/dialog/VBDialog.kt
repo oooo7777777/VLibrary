@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.LifecycleOwner
 import com.v.base.R
+import com.v.base.VBConfig
 import com.v.base.annotaion.VBDialogOrientation
 import com.v.base.utils.vbGetAllChildViews
 import com.v.log.util.logI

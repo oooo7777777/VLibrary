@@ -1,4 +1,4 @@
-package com.v.demo.model
+package com.v.demo.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import com.v.base.VBViewModel
@@ -6,7 +6,7 @@ import com.v.base.net.vbNetApi
 import com.v.base.net.vbRequest
 import com.v.demo.bean.BannerBean
 import com.v.demo.bean.HomeBean
-import com.v.demo.net.ApiResponse
+import com.v.demo.net.NetworkApiResponse
 
 
 /**
@@ -14,11 +14,11 @@ import com.v.demo.net.ApiResponse
  * desc    :
  * time    : 2021/1/12 16:11
  */
-class DemoViewModel : VBViewModel() {
+class OneViewModel : VBViewModel() {
 
-    var homeBean = MutableLiveData<ApiResponse<HomeBean>>()
+    var homeBean = MutableLiveData<NetworkApiResponse<HomeBean.Data>>()
 
-    var bannerBean = MutableLiveData<ApiResponse<ArrayList<BannerBean>>>()
+    var bannerBean = MutableLiveData<NetworkApiResponse<ArrayList<BannerBean.Data>>>()
 
     //使用VLibrary库 网络请求
     fun getList(page: Int) {
@@ -38,12 +38,8 @@ class DemoViewModel : VBViewModel() {
         vbRequest(
             {
                 vbNetApi.get("banner/json")
-            },
-            success = {
-
-            }
+            }, bannerBean
         )
     }
-
 
 }

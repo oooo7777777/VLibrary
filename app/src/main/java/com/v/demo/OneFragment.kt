@@ -5,16 +5,15 @@ import com.v.base.VBFragment
 import com.v.base.utils.*
 import com.v.demo.adapter.BannerAdapter
 import com.v.demo.adapter.OneFragmentAdapter
-import com.v.demo.bean.HomeBean
 import com.v.demo.databinding.FragmentOneBinding
-import com.v.demo.model.DemoViewModel
+import com.v.demo.viewmodel.OneViewModel
 
 /**
  * @Author : ww
  * desc    :
  * time    : 2021/1/11 15:44
  */
-class OneFragment : VBFragment<FragmentOneBinding, DemoViewModel>() {
+class OneFragment : VBFragment<FragmentOneBinding, OneViewModel>() {
 
 
     private var page = 1
@@ -92,10 +91,13 @@ class OneFragment : VBFragment<FragmentOneBinding, DemoViewModel>() {
 
 
         mViewModel.bannerBean.observe(this, Observer {
-            mAdapterBanner.vbLoad(
-                it.data!!,
-                refreshLayout = mDataBinding.refreshLayoutHorizontal
-            )
+            it.data?.run {
+                mAdapterBanner.vbLoad(
+                    this,
+                    refreshLayout = mDataBinding.refreshLayoutHorizontal
+                )
+            }
+
         })
     }
 

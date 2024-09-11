@@ -1,17 +1,19 @@
 package com.v.base.net
 
-import android.widget.Toast
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import com.alibaba.fastjson.JSON
-import com.alibaba.fastjson.JSONArray
-import com.alibaba.fastjson.JSONObject
+import com.alibaba.fastjson.JSONException
 import com.alibaba.fastjson.TypeReference
 import com.v.base.VBViewModel
 import com.v.base.bean.VBResponse
+import com.v.base.utils.vbToast
+import com.v.log.util.logE
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -26,168 +28,122 @@ import java.lang.reflect.Type
  * time    : 2024/3/19 11:19
  */
 
-/**
- * 协程请求(返回处理过的数据)
- * @param block 协程体
- * @param success 成功回调
- * @param error 失败回调
- * @param dialog 是否显示请求框
- * @param isToast 网络请求失败 是否显示toast
- */
-//fun <T> Any.vbRequest(
-//    block: suspend () -> VBResponse<T>,
-//    resultState: MutableLiveData<T>? = null,
-//    state: (Int) -> Unit = {},
-//    success: (T) -> Unit = {},
-//    error: (String) -> Unit = {},
-//    loadingMsg: String = "",
-//    dialog: Boolean = false,
-//    showErrorToast: Boolean = true,
-//): Job {
-//    return when (this) {
-//        is VBViewModel -> viewModelScope
-//        is AppCompatActivity -> lifecycleScope
-//        is Fragment -> lifecycleScope
-//        else -> {
-//            throw ClassCastException("类型错误,请求只能在ViewModel,AppCompatActivity,Fragment上使用")
-//        }
-//    }.launch {
-//        runCatching {
-//            state.invoke(0)
-//            if (dialog && this@vbRequest is VBViewModel) {
-//                loadingChange.showDialog.postValue(loadingMsg)
-//            }
-//            withContext(Dispatchers.IO) {
-//                val response = block() // 执行网络请求
-//                val type: Type = object : TypeReference<T>() {}.type
-//                val data = JSON.parseObject(response.toString(), type) as T
-//                if (response.isSuccess()) {
-//                    data
-//                } else {
-//                    throw VBAppException(
-//                        response.getResponseCode(),
-//                        response.getResponseMsg(),
-//                        type.toString()
-//                    )
-//                }
-//            }
-//        }.onSuccess {data ->
-//            withContext(Dispatchers.Main) {
-//                if (dialog && this@vbRequest is VBViewModel) {
-//                    loadingChange.dismissDialog.postValue(false)
-//                }
-//                success.invoke(data)
-//                resultState?.postValue(data)
-//                state.invoke(1)
-//            }
-//        }.onFailure {
-//            withContext(Dispatchers.Main) {
-//                error(this@vbRequest, showErrorToast, dialog, it) {
-//                    error.invoke(it)
-//                    state.invoke(1)
-//                }
-//            }
-//        }
-//    }
-//}
-
 
 /**
- * 协程请求(返回最原始的数据,如果对象继承了BaseResponse,则会判断是否成功)
  * @param block 协程体
+ * @param resultState MutableLiveData<T>
  * @param state 请求步骤(0开始请求 1请求结束)
  * @param success 成功回调
  * @param error 失败回调
- * @param dialog 是否显示请求框(只有在MrkViewModel才会生效,其他的请通过state来自行做处理)
- * @param showErrorToast 网络请求失败 是否显示toast
+ * @param loadingDialogMsg 加载dialog显示的时候的提示语
+ * @param loadingDialog loadingDialog只有在继承VBViewModel的类里面起效,其他类请通过state()自行做弹窗处理
+ * @param showErrorToast 错误的的提示语是否使用Toast弹出提醒
  */
 inline fun <reified T> Any.vbRequest(
-    crossinline block: suspend CoroutineScope.() -> String,
+    crossinline block: suspend CoroutineScope.() -> Any, // 支持任意返回类型
     resultState: MutableLiveData<T>? = null,
     crossinline state: (Int) -> Unit = {},
-    crossinline success: (T) -> Unit = {},
+    crossinline success: (T?) -> Unit = {},
     crossinline error: (String) -> Unit = {},
-    loadingMsg: String = "",
-    dialog: Boolean = false,
-    showErrorToast: Boolean = true,
+    loadingDialogMsg: String = "",
+    loadingDialog: Boolean = false,
+    showErrorToast: Boolean = true
 ): Job {
     return when (this) {
-        is VBViewModel -> viewModelScope
+        is ViewModel -> viewModelScope
         is AppCompatActivity -> lifecycleScope
         is Fragment -> lifecycleScope
-        else -> {
-            throw ClassCastException("类型错误,请求只能在ViewModel,AppCompatActivity,Fragment上使用")
-        }
+        else -> throw ClassCastException("请求只能在 ViewModel, AppCompatActivity, Fragment 上使用")
     }.launch {
+
         runCatching {
             state.invoke(0)
-            if (dialog && this@vbRequest is VBViewModel) {
-                loadingChange.showDialog.postValue(loadingMsg)
+            if (loadingDialog) {
+                if (this@vbRequest is VBViewModel) {
+                    loadingChange.showDialog.postValue(loadingDialogMsg)
+                } else {
+                    "loadingDialog只有在继承VBViewModel的类里面起效,其他类请通过state()自行做弹窗处理".logE()
+                }
             }
             withContext(Dispatchers.IO) {
-                val response = block() // 执行网络请求
-                val type: Type = object : TypeReference<T>() {}.type
-                val data = JSON.parseObject(response, type) as T
+                val response = block()
+                // 处理普通数据或者继承 BaseResponse 的情况
+                val result = handleBaseOrRawResponse<T>(response)
+                withContext(Dispatchers.Main) {
+                    success.invoke(result)
+                    resultState?.postValue(result)
+                }
 
-                // 判断 type 是否继承自 VBResponse
-                val isSubclass = isSubtypeOfBaseResponse(type, VBResponse::class.java)
-                if (isSubclass) {
-                    val bean = data as VBResponse<*>
-                    if (bean.isSuccess()) {
-                        data
-                    } else {
-                        throw VBAppException(
-                            bean.getResponseCode(),
-                            bean.getResponseMsg(),
-                            type.toString()
-                        )
-                    }
-                } else {
-                    data
-                }
             }
-        }.onSuccess { data ->
-            withContext(Dispatchers.Main) {
-                if (dialog && this@vbRequest is VBViewModel) {
-                    loadingChange.dismissDialog.postValue(false)
-                }
-                success.invoke(data)
-                resultState?.postValue(data)
-                state.invoke(1)
+        }.onSuccess {
+            if (loadingDialog && this@vbRequest is VBViewModel) {
+                loadingChange.dismissDialog.postValue(false)
             }
+            state.invoke(1)
         }.onFailure {
             withContext(Dispatchers.Main) {
-                error(this@vbRequest, showErrorToast, dialog, it) {
+                error(this@vbRequest, showErrorToast, loadingDialog, it) {
                     error.invoke(it)
                     state.invoke(1)
                 }
             }
         }
     }
-
 }
 
 
 /**
- *  调用携程
- * @param block 操作耗时操作任务
- * @param success 成功回调
- * @param error 失败回调 可不给
+ * 处理 BaseResponse 或者非 ApiResponse 类型的返回数据
  */
-fun <T> VBViewModel.launch(
-    block: () -> T,
-    success: (T) -> Unit,
-    error: (Throwable) -> Unit = {}
-) {
-    viewModelScope.launch {
-        kotlin.runCatching {
-            withContext(Dispatchers.IO) {
-                block()
+inline fun <reified T> handleBaseOrRawResponse(response: Any): T {
+    val type: Type = object : TypeReference<T>() {}.type//传入的类型
+    val responseType: Type = response::class.java
+
+    // 处理直接匹配的情况
+    if (responseType == type) {
+        return response as T
+    }
+
+    // 尝试反序列化为指定类型
+    return try {
+        // 判断是否是 BaseResponse 类型
+        val isSubclass = isSubtypeOfBaseResponse(type, VBResponse::class.java)
+        val parsedData = JSON.parseObject(response.toString(), type) as T
+        if (isSubclass) {
+            val baseResponse = parsedData as VBResponse<*>
+            if (baseResponse.isSuccess()) {
+                parsedData
+            } else {
+                throw VBAppException(
+                    baseResponse.getResponseCode(),
+                    baseResponse.getResponseMsg(),
+                    type.toString()
+                )
             }
-        }.onSuccess {
-            success(it)
-        }.onFailure {
-            error(it)
+        } else {
+            parsedData
+        }
+    } catch (e: Exception) {
+        when (e) {
+            is VBAppException -> {
+                throw e
+            }
+
+            is JSONException -> {
+                throw VBAppException(
+                    0,
+                    "JSON解析类型不匹配",
+                    "$type  \n$response \n${Log.getStackTraceString(e)}"
+                )
+            }
+
+            else -> {
+                throw VBAppException(
+                    0,
+                    e.message,
+                    "$type  \n$response \n${Log.getStackTraceString(e)}"
+                )
+            }
         }
     }
 }
@@ -202,14 +158,13 @@ fun <T> VBViewModel.launch(
 fun error(
     any: Any? = null,
     showErrorToast: Boolean,
-    dialog: Boolean,
+    loadingDialog: Boolean,
     throwable: Throwable,
     error: (String) -> Unit = {}
 ) {
     val msg = VBNetworkConfig.options.exceptionHandling.onException(throwable)
-
     if (any is VBViewModel) {
-        if (dialog) {
+        if (loadingDialog) {
             any.loadingChange.dismissDialog.postValue(false)
         }
         if (msg.isNotEmpty() && showErrorToast) {
@@ -218,86 +173,25 @@ fun error(
     }
 
     if (msg.isNotEmpty() && showErrorToast) {
-        when (any) {
-            is AppCompatActivity -> {
-                Toast.makeText(any, msg, Toast.LENGTH_SHORT).show()
-            }
-
-            is Fragment -> {
-                val context = any.context
-                if (context != null) {
-                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
-                }
-            }
-
-            else -> {
-                // 处理其他情况或抛出异常
-            }
-        }
+        msg.vbToast()
     }
 
     error.invoke(msg)
 }
 
 
-/**
- * 判断当前类型是否为一个正常的json
- */
-fun isJson(string: String?): Boolean {
-    try {
-        if (string.isNullOrEmpty()) return false
-        return when (JSON.parse(string)) {
-            is JSONArray, is JSONObject, is Boolean, is String, is Int, is Long, is Double, is Float -> {
-                true
-            }
-
-            else -> {
-                false
-            }
-        }
-    } catch (e: Exception) {
-        e.toString()
-        e.printStackTrace()
-    }
-    return false
-}
-
-
-/**
- * 生成默认的类型数据
- */
-inline fun <reified T> getType(any: Any?): Any {
-    val type = object : TypeReference<T>() {}.type
-    return when (type) {
-        object : TypeReference<MutableLiveData<Int>>() {}.type,
-        object : TypeReference<Int>() {}.type -> {
-            any?.toString()?.toInt() ?: 0
-        }
-
-        object : TypeReference<MutableLiveData<Long>>() {}.type,
-        object : TypeReference<Long>() {}.type -> {
-            any?.toString()?.toLong() ?: 0L
-        }
-
-        object : TypeReference<MutableLiveData<String>>() {}.type,
-        object : TypeReference<String>() {}.type -> {
-            any?.toString() ?: ""
-        }
-
-        object : TypeReference<MutableLiveData<Boolean>>() {}.type,
-        object : TypeReference<Boolean>() {}.type,
-        -> {
-            any?.toString()?.toBoolean() ?: false
-        }
-
-        else -> {
-            if (any == null) {
-                ""
-            } else {
-                JSON.parseObject(any.toString(), type)
-            }
+inline fun <reified T> String.executeResponse(
+    crossinline error: (String) -> Unit = {},
+): T? {
+    var result: T? = null
+    runCatching {
+        result = handleBaseOrRawResponse<T>(this)
+    }.onFailure {
+        error(null, false, false, it) {
+            error.invoke(it)
         }
     }
+    return result
 }
 
 

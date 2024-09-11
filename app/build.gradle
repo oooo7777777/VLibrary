@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    compileSdkVersion 33
+    compileSdk 33
     defaultConfig {
         applicationId "com.v.demo"
         minSdk 21

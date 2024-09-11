@@ -41,7 +41,7 @@ open class VBExceptionHandling {
             } else {
                 errorLog
             }
-            logMessage.logE("MrkExceptionHandling")
+            logMessage.logE("VBExceptionHandling")
         }
         return msg
     }

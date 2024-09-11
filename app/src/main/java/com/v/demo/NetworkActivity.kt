@@ -4,7 +4,7 @@ import android.view.View
 import androidx.lifecycle.Observer
 import com.v.base.VBActivity
 import com.v.demo.databinding.ActivityNetworkBinding
-import com.v.demo.model.NetworkViewModel
+import com.v.demo.viewmodel.NetworkViewModel
 
 /**
  * author  :
@@ -22,11 +22,13 @@ class NetworkActivity : VBActivity<ActivityNetworkBinding, NetworkViewModel>(),
         resLeft: Int,
         listenerLeft: View.OnClickListener?,
     ): Boolean {
-        return super.toolBarTitle(this.getString(R.string.string_activity_network_title),
+        return super.toolBarTitle(
+            this.getString(R.string.string_activity_network_title),
             titleColor,
             isShowBottomLine,
             resLeft,
-            listenerLeft)
+            listenerLeft
+        )
     }
 
     override fun initData() {
@@ -34,26 +36,45 @@ class NetworkActivity : VBActivity<ActivityNetworkBinding, NetworkViewModel>(),
     }
 
     override fun createObserver() {
-        mViewModel.string.observe(this, Observer {
-            val string = it
-            mDataBinding.tvContent.text = string
-        })
+        mViewModel.data1.observe(this) {
+            mDataBinding.tvContent.text = it.toString()
+        }
+        mViewModel.data2.observe(this) {
+            mDataBinding.tvContent.text = it.toString()
+        }
+        mViewModel.data3.observe(this) {
+            mDataBinding.tvContent.text = it.toString()
+        }
+        mViewModel.data4.observe(this) {
+            mDataBinding.tvContent.text = it.toString()
+        }
+        mViewModel.data5.observe(this) {
+            mDataBinding.tvContent.text = it.toString()
+        }
     }
 
     override fun onClick(v: View) {
+        mDataBinding.tvContent.text = ""
         when (v.id) {
-            mDataBinding.bt0.id -> {
-                mViewModel.getCustom()
-            }
-
             mDataBinding.bt1.id -> {
-                mViewModel.getCustomDefault()
+                mViewModel.getData1()
             }
 
             mDataBinding.bt2.id -> {
-                mViewModel.getBase()
+                mViewModel.getData2()
             }
 
+            mDataBinding.bt3.id -> {
+                mViewModel.getData3()
+            }
+
+            mDataBinding.bt4.id -> {
+                mViewModel.getData4()
+            }
+
+            mDataBinding.bt5.id -> {
+                mViewModel.getData5()
+            }
         }
     }
 }

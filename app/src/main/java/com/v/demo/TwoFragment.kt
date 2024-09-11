@@ -4,21 +4,7 @@ import android.view.View
 import com.v.base.VBFragment
 import com.v.base.utils.*
 import com.v.demo.databinding.FragmentTowBinding
-import com.v.demo.model.DemoViewModel
-import com.bumptech.glide.request.RequestOptions
-
-import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
-
-import com.bumptech.glide.Glide
-
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
-
-import com.bumptech.glide.load.MultiTransformation
-import com.bumptech.glide.request.target.Target
-import com.v.log.util.log
-
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation
+import com.v.demo.viewmodel.OneViewModel
 
 
 /**
@@ -26,7 +12,7 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation
  * desc    :
  * time    : 2021/1/11 15:44
  */
-class TwoFragment : VBFragment<FragmentTowBinding, DemoViewModel>(), View.OnClickListener {
+class TwoFragment : VBFragment<FragmentTowBinding, OneViewModel>(), View.OnClickListener {
     override fun initData() {
         mDataBinding.v = this
     }

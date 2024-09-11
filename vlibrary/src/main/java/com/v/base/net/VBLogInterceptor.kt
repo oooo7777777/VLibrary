@@ -71,7 +71,7 @@ open class VBLogInterceptor : Interceptor {
             sb.append("<-- HTTP FAILED: $e")
             sb.append("\n")
             sb.append(Log.getStackTraceString(e))
-            sb.logE("MrkLogInterceptor")
+            sb.logE("VBLogInterceptor")
             throw e
         }
         val tookMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNs)
@@ -157,7 +157,7 @@ open class VBLogInterceptor : Interceptor {
                     sb.append("")
                     sb.append("Couldn't decode the response body; charset is likely malformed.")
                     sb.append("<-- END HTTP")
-                    sb.logE("MrkLogInterceptor",save = false)
+                    sb.logE("VBLogInterceptor",save = false)
                     return response
                 }
             }

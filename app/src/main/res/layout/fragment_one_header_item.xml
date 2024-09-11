@@ -6,7 +6,7 @@
 
         <variable
             name="bean"
-            type="com.v.demo.bean.BannerBean" />
+            type="com.v.demo.bean.BannerBean.Data" />
     </data>
 
     <LinearLayout

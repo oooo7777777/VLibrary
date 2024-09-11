@@ -7,9 +7,9 @@ import com.v.demo.bean.BannerBean
 import com.v.demo.databinding.FragmentOneHeaderItemBinding
 
 class BannerAdapter :
-    BaseQuickAdapter<BannerBean, BaseDataBindingHolder<FragmentOneHeaderItemBinding>>(R.layout.fragment_one_header_item) {
+    BaseQuickAdapter<BannerBean.Data, BaseDataBindingHolder<FragmentOneHeaderItemBinding>>(R.layout.fragment_one_header_item) {
 
-    override fun convert(holder: BaseDataBindingHolder<FragmentOneHeaderItemBinding>, item: BannerBean) {
+    override fun convert(holder: BaseDataBindingHolder<FragmentOneHeaderItemBinding>, item: BannerBean.Data) {
         holder.dataBinding?.run {
             bean = item
             executePendingBindings()

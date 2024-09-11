@@ -93,29 +93,47 @@
                     android:orientation="vertical">
 
                     <Button
-                        android:id="@+id/bt0"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="自定义网络请求(返回去壳数据)"
-                        android:textAllCaps="false"
-                        app:vb_click="@{v}" />
-
-
-                    <Button
                         android:id="@+id/bt1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="自定义网络请求(返回未去壳数据)"
+                        android:gravity="center"
+                        android:text="第一种:使用VB库请求\n传入泛型\n传入什么类型就返回什么类型"
                         android:textAllCaps="false"
                         app:vb_click="@{v}" />
-
 
                     <Button
                         android:id="@+id/bt2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="30dp"
-                        android:text="VLibrary库网络请求"
+                        android:gravity="center"
+                        android:text="第二种:使用VB库请求\n传入MutableLiveData\nSDK内部会自动调用postValue()"
+                        android:textAllCaps="false"
+                        app:vb_click="@{v}" />
+
+                    <Button
+                        android:id="@+id/bt3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="第三种:使用VB库请求\n根据自己的业务判断数据是否成功\n需基类继承BaseResponse重写isSuccess方法"
+                        android:textAllCaps="false"
+                        app:vb_click="@{v}" />
+
+
+                    <Button
+                        android:id="@+id/bt4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="第四种:使用自定义的Api请求"
+                        android:textAllCaps="false"
+                        app:vb_click="@{v}" />
+
+
+                    <Button
+                        android:id="@+id/bt5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="第四种:串行请求\n集体成功才算成功"
                         android:textAllCaps="false"
                         app:vb_click="@{v}" />
 

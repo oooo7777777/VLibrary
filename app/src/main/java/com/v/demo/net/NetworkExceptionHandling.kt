@@ -78,7 +78,7 @@ class NetworkExceptionHandling : VBExceptionHandling() {
 /**
  * 网络请求返回的基类,用于校验数据的成功与否
  */
-data class NetworkApiResponse<T>(val errorCode: Int, val errorMsg: String, val data: T) :
+data class NetworkApiResponse<T>(val errorCode: Int, val errorMsg: String, val data: T?) :
     VBResponse<T>() {
 
     // 这里是示例，wanandroid 网站返回的 错误码为 0 就代表请求成功，请你根据自己的业务需求来编写

@@ -12,9 +12,9 @@ import com.v.demo.databinding.FragmentOneItemBinding
  * time    : 2021/1/12 16:09
  */
 class OneFragmentAdapter :
-    BaseQuickAdapter<HomeBean.Data, BaseDataBindingHolder<FragmentOneItemBinding>>(R.layout.fragment_one_item) {
+    BaseQuickAdapter<HomeBean.Data.Datas, BaseDataBindingHolder<FragmentOneItemBinding>>(R.layout.fragment_one_item) {
 
-    override fun convert(holder: BaseDataBindingHolder<FragmentOneItemBinding>, item: HomeBean.Data) {
+    override fun convert(holder: BaseDataBindingHolder<FragmentOneItemBinding>, item: HomeBean.Data.Datas) {
         holder.dataBinding?.run {
             bean = item
             executePendingBindings()

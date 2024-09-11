@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit
 
 /**
  * @Author : ww
- * desc    :
+ * desc    : 自定义网络请求
  * time    : 2021/3/20 11:01O
  */
 
