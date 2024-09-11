@@ -28,7 +28,6 @@ class DemoApplication : VBApplication() {
             .setInterceptor(NetworkHeadInterceptor())
             .setExceptionHandling(NetworkExceptionHandling())
             .build()
-
         VBNetworkConfig.init(netOptions)
     }
 

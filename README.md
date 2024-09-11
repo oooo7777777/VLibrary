@@ -32,7 +32,7 @@ allprojects {
 ```
 dependencies {
   ...
-  implementation 'com.github.oooo7777777:VLibrary:3.8.6'
+  implementation 'com.github.oooo7777777:VLibrary:3.9.0'
 }
 ```
 
@@ -56,16 +56,18 @@ open class *** : VBApplication() {
 
     override fun initData() {
     //设置全局通用配置
+              //基类配置
+        val vbOptions = VBConfigOptions.Builder()
+            .build()
+        VBConfig.init(vbOptions)
+
+        //网络请求配置
         val netOptions = VBNetOptions.Builder()
             .setBaseUrl("https://www.wanandroid.com/")
+            .setInterceptor(NetworkHeadInterceptor())
+            .setExceptionHandling(NetworkExceptionHandling())
             .build()
-
-        val options = VBConfigOptions.Builder()
-            .setNetOptions(netOptions)
-            .setStatusBarColor(Color.parseColor("#ffffff"))
-            .build()
-
-        VBConfig.init(options)
+        VBNetworkConfig.init(netOptions)
     }
     
 }
@@ -85,8 +87,4 @@ open class *** : VBApplication() {
 
 - **[wiki](https://github.com/oooo7777777/VLibrary/wiki)**
 - 
-
-#### 与master分支差异
-1.此版本.VBActivity有实现VBBaseTagInterface
-2.此版本.有引入第三方多语言切换库
 
