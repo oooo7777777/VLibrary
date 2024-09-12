@@ -84,8 +84,8 @@ class OneFragment : VBFragment<FragmentOneBinding, OneViewModel>() {
 
     override fun createObserver() {
         mViewModel.homeBean.observe(this, Observer {
-            it?.data?.let {
-                page = mAdapter.vbLoad(it.datas, page, mDataBinding.refreshLayout)
+            it?.data?.run {
+                page = mAdapter.vbLoad(this.datas, page, mDataBinding.refreshLayout)
             }
         })
 
@@ -97,7 +97,6 @@ class OneFragment : VBFragment<FragmentOneBinding, OneViewModel>() {
                     refreshLayout = mDataBinding.refreshLayoutHorizontal
                 )
             }
-
         })
     }
 

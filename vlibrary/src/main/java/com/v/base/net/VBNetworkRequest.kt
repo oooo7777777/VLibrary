@@ -53,7 +53,7 @@ inline fun <reified T> Any.vbRequest(
         is ViewModel -> viewModelScope
         is AppCompatActivity -> lifecycleScope
         is Fragment -> lifecycleScope
-        else -> throw ClassCastException("请求只能在 ViewModel, AppCompatActivity, Fragment 上使用")
+        else -> throw ClassCastException("请求只能在 ViewModel, AppCompatActivity, Fragment 中使用")
     }.launch {
 
         runCatching {
@@ -62,7 +62,7 @@ inline fun <reified T> Any.vbRequest(
                 if (this@vbRequest is VBViewModel) {
                     loadingChange.showDialog.postValue(loadingDialogMsg)
                 } else {
-                    "loadingDialog只有在继承VBViewModel的类里面起效,其他类请通过state()自行做弹窗处理".logE()
+                    "loadingDialog只有在继承VBViewModel的类里面起效,其他类请通过state()自行处理".logE()
                 }
             }
             withContext(Dispatchers.IO) {
