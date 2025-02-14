@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
@@ -19,6 +18,16 @@ import java.lang.reflect.ParameterizedType
 
 abstract class VBFragment<VB : ViewDataBinding, VM : VBViewModel> : Fragment() {
 
+
+    private var resumeListener: (() -> Unit)? = null
+    open fun setFragmentResume(listener: (() -> Unit)) {
+        this.resumeListener = listener
+    }
+
+    private var pauseListener: (() -> Unit)? = null
+    open fun setFragmentPause(listener: (() -> Unit)) {
+        this.pauseListener = listener
+    }
 
     private var isFirstShow = false
 
@@ -52,23 +61,17 @@ abstract class VBFragment<VB : ViewDataBinding, VM : VBViewModel> : Fragment() {
 
 
     override fun onCreateView(
-        @NonNull inflater: LayoutInflater,
+        inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        super.onCreateView(inflater, container, savedInstanceState)
         val type = javaClass.genericSuperclass as ParameterizedType
-        val aClass = type.actualTypeArguments[0] as Class<*>
-        val method = aClass.getDeclaredMethod(
-            "inflate",
-            LayoutInflater::class.java,
-            ViewGroup::class.java,
-            Boolean::class.java
+        val bindingClass = type.actualTypeArguments[0] as Class<*>
+        val inflateMethod = bindingClass.getDeclaredMethod(
+            "inflate", LayoutInflater::class.java, ViewGroup::class.java, Boolean::class.java
         )
-        method.isAccessible = true//关掉安全检查
-        mDataBinding = method.invoke(null, layoutInflater, container, false) as VB
-        mDataBinding.lifecycleOwner = this
-
+        mDataBinding = inflateMethod.invoke(null, inflater, container, false) as VB
+        mDataBinding.lifecycleOwner = viewLifecycleOwner
         return mDataBinding.root
     }
 
@@ -83,12 +86,15 @@ abstract class VBFragment<VB : ViewDataBinding, VM : VBViewModel> : Fragment() {
      */
     open fun onFragmentResume() {
         javaClass.logI()
+        resumeListener?.invoke()
     }
 
     /**
      * 对用户不可见
      */
-    open fun onFragmentPause() {}
+    open fun onFragmentPause() {
+        pauseListener?.invoke()
+    }
 
 
     protected abstract fun initData()
@@ -154,5 +160,4 @@ abstract class VBFragment<VB : ViewDataBinding, VM : VBViewModel> : Fragment() {
     fun isInitialized(): Boolean {
         return isFirstShow
     }
-
 }

@@ -18,8 +18,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingTop="40dp">
+        android:orientation="vertical">
 
 
         <Button
@@ -27,7 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="设置DrawableLeft"
+            android:text="设置Drawable"
             android:textAllCaps="false"
             app:vb_click="@{v}"
             app:vb_drawable_bottom="@{R.mipmap.ic_launcher}"
@@ -40,18 +39,6 @@
             app:vb_drawable_top_width="@{100}" />
 
 
-        <Button
-            android:id="@+id/bt4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="设置DrawableRight"
-            android:textAllCaps="false"
-            app:vb_click="@{v}"
-            app:vb_drawable_height="@{20}"
-            app:vb_drawable_left="@{R.mipmap.ic_launcher}"
-            app:vb_drawable_right="@{R.mipmap.ic_launcher}"
-            app:vb_drawable_width="@{20}" />
 
 
         <LinearLayout
@@ -65,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="图片圆角"
+                android:text="图片"
                 android:textAllCaps="false"
                 app:vb_click="@{v}" />
 
@@ -75,7 +62,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="图片圆形"
+                android:text="圆角"
                 android:textAllCaps="false"
                 app:vb_click="@{v}" />
 
@@ -86,11 +73,20 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="图片不同圆角"
+                android:text="不同圆角"
                 android:textAllCaps="false"
                 app:vb_click="@{v}" />
 
 
+            <Button
+                android:id="@+id/bt8"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="圆形带边框"
+                android:textAllCaps="false"
+                app:vb_click="@{v}" />
         </LinearLayout>
 
         <ImageView
@@ -100,8 +96,11 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:scaleType="centerCrop"
-            app:vb_img_url="@{R.mipmap.ic_movie}"
-            tools:src="@mipmap/ic_movie" />
+            app:vb_img_url="@{R.mipmap.bg_wechatimg11}"
+            app:vb_img_stroke_width="@{10}"
+            app:vb_img_stroke_color="@{0xFFFF0000}"
+            app:vb_img_color="@{0x55FF0000}"
+            tools:src="@mipmap/bg_wechatimg11" />
 
     </LinearLayout>
 </layout>

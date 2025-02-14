@@ -9,6 +9,7 @@ import android.os.Build
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.ColorInt
 import androidx.databinding.BindingAdapter
 import com.v.base.R
 
@@ -17,44 +18,39 @@ import com.v.base.R
  * 设置ImageView图片
  */
 @BindingAdapter(
-    value = ["vb_img_url", "vb_img_radius", "vb_img_circle", "vb_img_error_res_id", "vb_img_top_left", "vb_img_top_right", "vb_img_bottom_left", "vb_img_bottom_right"],
+    value = ["vb_img_url", "vb_img_radius", "vb_img_circle", "vb_img_error_res_id", "vb_img_top_left", "vb_img_top_right", "vb_img_bottom_left", "vb_img_bottom_right", "vb_img_stroke_width", "vb_img_stroke_color", "vb_img_color"],
     requireAll = false
 )
 fun ImageView.vbImgUrl(
     any: Any?,
-    roundingRadius: Int = 0,
-    circle: Boolean = false,
+    cornersRadius: Int = 0,
+    isCircle: Boolean = false,
     errorResId: Int = R.mipmap.vb_iv_empty,
     topLeft: Int = 0,
     topRight: Int = 0,
     bottomLeft: Int = 0,
     bottomRight: Int = 0,
+    strokeWidth: Int = 0,
+    @ColorInt strokeColor: Int = Color.TRANSPARENT,
+    @ColorInt imgColor: Int = Color.TRANSPARENT,
 ) {
 
     any?.let {
-
-
-        if (circle) {
-            //圆形
-            this.vbLoadCircle(it, errorResId)
-        } else {
-            if (topLeft == 0 && topRight == 0 && bottomLeft == 0 && bottomRight == 0) {
-                //全部圆角
-                this.vbLoad(it, roundingRadius, errorResId)
-            } else {
-                //不同圆角
-                this.vbLoadRounded(it, topLeft, topRight, bottomLeft, bottomRight, errorResId)
-            }
-        }
+        //圆形
+        this.vbLoad(
+            any = any,
+            cornersRadius = cornersRadius,
+            topLeft = topLeft,
+            topRight = topRight,
+            bottomLeft = bottomLeft,
+            bottomRight = bottomRight,
+            errorResId = errorResId,
+            strokeWidth = strokeWidth,
+            strokeColor = strokeColor,
+            isCircle = isCircle,
+            imgColor = imgColor
+        )
     }
-
-//    RoundedCornersTransformation.CornerType
-//    val TOP_LEFT: CornerType? =
-//        null, var TOP_RIGHT:CornerType? = null, var BOTTOM_LEFT:CornerType? = null, var BOTTOM_RIGHT:CornerType? = null,
-//    val TOP: CornerType? =
-//        null, var BOTTOM:CornerType? = null, var LEFT:CornerType? = null, var RIGHT:CornerType? = null
-
-
 }
 
 
@@ -90,7 +86,9 @@ fun TextView.vbDrawable(
     ) {
 
 
-    this.context.vbLoadListener(left, (leftW ?: w).vbDp2px2Int(), (leftH ?: h).vbDp2px2Int(),
+    this.context.vbLoadListener<Drawable>(left,
+        (leftW ?: w).vbDp2px2Int(),
+        (leftH ?: h).vbDp2px2Int(),
         success = {
             it.setBounds(0, 0, it.intrinsicWidth, it.intrinsicHeight)
 
@@ -100,7 +98,8 @@ fun TextView.vbDrawable(
             val drawableBottom: Drawable? = compoundDrawables[3]
 
             this@vbDrawable.setCompoundDrawables(it, drawableTop, drawableRight, drawableBottom)
-        }, error = {
+        },
+        error = {
             val drawableLeft: Drawable? = compoundDrawables[0]
             val drawableTop: Drawable? = compoundDrawables[1]
             val drawableRight: Drawable? = compoundDrawables[2]
@@ -117,7 +116,9 @@ fun TextView.vbDrawable(
 
 
 
-    this.context.vbLoadListener(right, (rightW ?: w).vbDp2px2Int(), (rightH ?: h).vbDp2px2Int(),
+    this.context.vbLoadListener<Drawable>(right,
+        (rightW ?: w).vbDp2px2Int(),
+        (rightH ?: h).vbDp2px2Int(),
         success = {
             it.setBounds(0, 0, it.intrinsicWidth, it.intrinsicHeight)
 
@@ -128,7 +129,8 @@ fun TextView.vbDrawable(
 
 
             this@vbDrawable.setCompoundDrawables(drawableLeft, drawableTop, it, drawableBottom)
-        }, error = {
+        },
+        error = {
             val drawableLeft: Drawable? = compoundDrawables[0]
             val drawableTop: Drawable? = compoundDrawables[1]
             val drawableRight: Drawable? = compoundDrawables[2]
@@ -146,7 +148,7 @@ fun TextView.vbDrawable(
 
 
 
-    this.context.vbLoadListener(top, (topW ?: w).vbDp2px2Int(), (topH ?: h).vbDp2px2Int(),
+    this.context.vbLoadListener<Drawable>(top, (topW ?: w).vbDp2px2Int(), (topH ?: h).vbDp2px2Int(),
         success = {
             it.setBounds(0, 0, it.intrinsicWidth, it.intrinsicHeight)
 
@@ -178,7 +180,9 @@ fun TextView.vbDrawable(
         })
 
 
-    this.context.vbLoadListener(bottom, (bottomW ?: w).vbDp2px2Int(), (bottomH ?: h).vbDp2px2Int(),
+    this.context.vbLoadListener<Drawable>(bottom,
+        (bottomW ?: w).vbDp2px2Int(),
+        (bottomH ?: h).vbDp2px2Int(),
         success = {
             it.setBounds(0, 0, it.intrinsicWidth, it.intrinsicHeight)
 
@@ -188,7 +192,8 @@ fun TextView.vbDrawable(
             val drawableBottom: Drawable? = compoundDrawables[3]
 
             this@vbDrawable.setCompoundDrawables(drawableLeft, drawableTop, drawableRight, it)
-        }, error =
+        },
+        error =
         {
 
             val drawableLeft: Drawable? = compoundDrawables[0]
@@ -311,6 +316,7 @@ fun View.vbViewVisible(any: Any?) {
                 View.VISIBLE
             }
         }
+
         is Boolean -> {
             visibility = if (any) {
                 View.VISIBLE
@@ -318,6 +324,7 @@ fun View.vbViewVisible(any: Any?) {
                 View.INVISIBLE
             }
         }
+
         is Int -> {
             visibility = if (any == 1) {
                 View.VISIBLE
@@ -347,6 +354,7 @@ fun View.vbViewGone(any: Any?) {
                 View.VISIBLE
             }
         }
+
         is Boolean -> {
             visibility = if (any) {
                 View.VISIBLE
@@ -354,6 +362,7 @@ fun View.vbViewGone(any: Any?) {
                 View.GONE
             }
         }
+
         is Int -> {
             visibility = if (any == 1) {
                 View.VISIBLE
@@ -377,6 +386,7 @@ fun TextView.vbTextCenterLine(boolean: Boolean) = run {
 
 /**
  * 设置文字下划线
+ * @param boolean 是否需要设置下划线
  */
 @BindingAdapter(value = ["vb_text_line_bottom"], requireAll = false)
 fun TextView.vbTextLineBottom(boolean: Boolean) = run {
@@ -387,6 +397,7 @@ fun TextView.vbTextLineBottom(boolean: Boolean) = run {
 
 /**
  * 设置文字 不管类型全部转换成string
+ * @param any 需要转换的文字 vb_text_format
  */
 @BindingAdapter(value = ["vb_text_format"], requireAll = false)
 fun TextView.vbTextFormat(any: Any?) = run {
@@ -397,18 +408,9 @@ fun TextView.vbTextFormat(any: Any?) = run {
 
 
 /**
- * 设置图片颜色
- */
-@BindingAdapter(value = ["vb_img_color"], requireAll = false)
-fun ImageView.vbSetColor(color: String?) = run {
-    color?.run {
-        setColorFilter(Color.parseColor(color))
-    }
-
-}
-
-/**
  * 设置控件阴影
+ * @param color 阴影颜色 vb_shadow_color
+ * @param ev 阴影大小 vb_shadow_color_elevation
  */
 @BindingAdapter(value = ["vb_shadow_color", "vb_shadow_color_elevation"], requireAll = false)
 fun View.vbShadowColor(color: String?, ev: Float = 10f) = run {
@@ -420,10 +422,3 @@ fun View.vbShadowColor(color: String?, ev: Float = 10f) = run {
         }
     }
 }
-
-
-
-
-
-
-

@@ -42,7 +42,7 @@ class OneFragment : VBFragment<FragmentOneBinding, OneViewModel>() {
                     "点击了全局设置的空布局".vbToast()
                 },
                 emptyView = vbEmptyView(mContext,
-                    res = R.mipmap.ic_movie,
+                    res = R.mipmap.bg_wechatimg11,
                     listener = {
                         "点击了自定义空布局".vbToast()
                     })
